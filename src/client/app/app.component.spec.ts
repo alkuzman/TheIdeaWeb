@@ -15,8 +15,6 @@ import {
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { ToolbarComponent } from './shared/toolbar/toolbar.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 import { MaterialModule } from './shared/material.module';
 
 export function main() {
@@ -24,7 +22,7 @@ export function main() {
   describe('App component', () => {
 
     let config: Route[] = [
-      { path: '', component: HomeComponent },
+      { path: 'idea', component: HomeComponent },
       { path: 'about', component: AboutComponent }
     ];
     beforeEach(() => {
