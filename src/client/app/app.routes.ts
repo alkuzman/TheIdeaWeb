@@ -4,7 +4,7 @@ import {MainNavComponent} from "./main-nav/main-nav.component"
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'main',
     component: MainNavComponent
   }
 ];

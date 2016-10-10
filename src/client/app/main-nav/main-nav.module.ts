@@ -12,7 +12,7 @@ import {AboutModule} from "../about/about.module"
 
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes), SharedModule, HomeModule, AboutModule],
+    imports: [ RouterModule.forRoot(routes), SharedModule.forRoot(), HomeModule, AboutModule],
     declarations: [MainNavComponent],
     exports: [MainNavComponent],
 })
