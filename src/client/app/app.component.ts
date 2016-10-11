@@ -7,8 +7,11 @@ import { Config } from './shared/index';
  */
 @Component({
   moduleId: module.id,
-  selector: 'sd-app',
+  selector: 'ideal-app',
   templateUrl: 'app.component.html',
+  styleUrls: [
+    './app.component.css'
+  ]
 })
 
 export class AppComponent {

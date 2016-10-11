@@ -5,5 +5,9 @@ export const HomeRoutes: Route[] = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: '',
+    redirectTo: "home"
   }
 ];

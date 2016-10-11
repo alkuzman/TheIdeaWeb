@@ -1,4 +1,12 @@
-.flex {
-    flex: 1 auto;
+.activeLink {
+  font-weight: bold;
 }
 
+.flex {
+  flex: 1 1 auto;
+}
+
+
+md-sidenav {
+  width: 250px;
+}

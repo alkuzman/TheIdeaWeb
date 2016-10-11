@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     moduleId: module.id,
-    selector: 'idea-main-nav',
+    selector: 'ideal-main-nav',
     templateUrl: 'main-nav.component.html',
     styleUrls: ['main-nav.component.css'],
 })

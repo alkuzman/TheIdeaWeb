@@ -2,6 +2,8 @@ import { join } from 'path';
 
 import { SeedConfig } from './seed.config';
 
+const proxy = require('proxy-middleware');
+
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
  * below.
@@ -13,6 +15,32 @@ export class ProjectConfig extends SeedConfig {
 
   constructor() {
     super();
+    this.PLUGIN_CONFIGS['browser-sync'] = {
+      middleware: [
+        proxy({
+          protocol: 'http:',
+          hostname: 'localhost',
+          port: 8080,
+          pathname: '',
+          route: '/api'
+        }),
+        require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})
+      ],
+      port: this.PORT,
+      startPath: this.APP_BASE,
+      open: true, //argv['b'] ? false : true,
+      injectChanges: false,
+      server: {
+        baseDir: `${this.DIST_DIR}/empty/`,
+        routes: {
+          [`${this.APP_BASE}${this.APP_SRC}`]: this.APP_SRC,
+          [`${this.APP_BASE}${this.APP_DEST}`]: this.APP_DEST,
+          [`${this.APP_BASE}node_modules`]: 'node_modules',
+          [`${this.APP_BASE.replace(/\/$/, '')}`]: this.APP_DEST
+        }
+      }
+    };
+
     this.APP_TITLE = 'iDeal Hub';
 
     /* Enable typeless compiler runs (faster) between typed compiler runs. */

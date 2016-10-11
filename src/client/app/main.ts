@@ -14,6 +14,14 @@ if (String('<%= ENV %>') === 'prod') { enableProdMode(); }
 // Compile and launch the module
 platformBrowserDynamic().bootstrapModule(AppModule);
 
+/*import { platformBrowser } from '@angular/platform-browser';
+
+// The app module factory produced by the static offline compiler
+import { AppModuleNgFactory } from './app.module.ngfactory';
+
+// Launch with the app module factory.
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);*/
+
 // In order to start the Service Worker located at "./worker.js"
 // uncomment this line. More about Service Workers here
 // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
