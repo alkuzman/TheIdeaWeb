@@ -8,6 +8,7 @@ import {MainNavComponent} from "./main-nav.component"
 import {HomeModule} from "../home/home.module";
 import {AboutModule} from "../about/about.module"
 import {IdeaModule} from "../idea/idea.module";
+import {MainNavRoutingModule} from "./main-nav-routing.module";
 
 
 @NgModule({

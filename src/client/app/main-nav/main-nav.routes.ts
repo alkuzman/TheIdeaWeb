@@ -6,7 +6,7 @@ import {AboutRoutes} from "../about/index";
 import {HomeRoutes} from "../home/index";
 import {IdeaRoutes} from "../idea/idea.routes";
 
-export const MainRoutes: Routes = [
+export const mainRoutes: Routes = [
   ...HomeRoutes,
   ...AboutRoutes,
   ...IdeaRoutes
