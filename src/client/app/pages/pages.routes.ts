@@ -5,7 +5,8 @@ import {Routes} from "@angular/router";
 import {AboutRoutes} from "../pages/about/index";
 import {HomeRoutes} from "../pages/home/index";
 import {PagesComponent} from "./pages.component";
-import {NewProblemRoutes} from "./new-problem/new-problem.routes";
+import {NewProblemPageRoutes} from "./problem-pages/new-problem-page/new-problem-page.routes";
+import {ProblemPagesRoutes} from "./problem-pages/problem-pages.routes";
 
 export const PagesRoutes: Routes = [
   {
@@ -14,7 +15,7 @@ export const PagesRoutes: Routes = [
     children: [
       ...HomeRoutes,
       ...AboutRoutes,
-      ...NewProblemRoutes
+      ...ProblemPagesRoutes
     ]
   }
 ];

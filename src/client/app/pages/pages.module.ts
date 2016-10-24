@@ -8,9 +8,9 @@ import {PagesComponent} from "./pages.component";
 import {SharedModule} from "../shared/shared.module";
 import {HomeModule} from "./home/home.module";
 import {AboutModule} from "./about/about.module";
-import {NewProblemModule} from "./new-problem/new-problem.module";
+import {ProblemPagesModule} from "./problem-pages/problem-pages.module";
 @NgModule({
-  imports: [SharedModule.forRoot(), HomeModule, AboutModule, NewProblemModule],
+  imports: [SharedModule.forRoot(), HomeModule, AboutModule, ProblemPagesModule],
   declarations: [PagesComponent],
   exports: [PagesComponent],
   providers: []

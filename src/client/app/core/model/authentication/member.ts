@@ -11,19 +11,19 @@ export class Member extends BaseEntityImpl implements Person {
   public user: User;
   public role: MemberRole;
 
-  get firstName(): string {
-    return this.user.firstName;
-  }
-
   get lastName(): string {
     return this.user.lastName;
   }
 
-  set firstName(firstName:string) {
-    this.user.firstName = firstName;
+  set lastName(value: string) {
+    this.user.lastName = value;
+  }
+  get firstName(): string {
+    return this.user.firstName;
   }
 
-  set lastName(lastName:string) {
-    this.user.lastName = lastName;
+  set firstName(value: string) {
+    this.user.firstName = value;
   }
+
 }

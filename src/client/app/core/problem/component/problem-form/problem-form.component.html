@@ -1,9 +1,14 @@
 <form *ngIf="active" (ngSubmit)="ideaForm.form.valid && save()" #ideaForm="ngForm">
-  <md-input  name="title" placeholder="Problem Title" style="width: 100%" [(ngModel)]="problem.title" required>
+  <label for="title"><strong>Title</strong></label>&nbsp;&nbsp;<md-input id="title" name="title" placeholder="Place your title here. Be specific" style="flex: auto" [(ngModel)]="problem.title" required>
   </md-input>
   <div>
-    <label for="problem">Text:</label> <br/>
-    <textarea id="problem" name="problem" style="width: 100%" [(ngModel)]="problem.text"></textarea>
+    <ideal-text-editor id="problem" title="Problem body" [(ngModel)]="problem.text" name="problem"></ideal-text-editor>
+  </div>
+  <div style="width: 100%">
+    <label for="tags"><strong>Tags</strong></label>&nbsp;&nbsp;
+    <md-input style="flex: auto;" id="tags" name="tags" placeholder='at least one tag such as (machine learning), max 5 tags'>
+
+    </md-input>
   </div>
   <div style="text-align: right">
     <button type="button" md-button (click)="clearForm()">Clear</button>

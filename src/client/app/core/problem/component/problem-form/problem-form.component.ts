@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import {Problem} from "../../../model/ideas/problem";
 import {ProblemService} from "../../problem.service";
+import {ValueAccessorDirective} from "../../../text-editor/directives/value-accessor.directive";
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */
@@ -17,10 +18,6 @@ export class ProblemFormComponent implements OnInit {
   active = true;
   errorMessage: any;
 
-  constructor(private problemService: ProblemService) {
-
-  }
-
   ngOnInit(): void {
     if (this.problem == null) {
       this.problem = new Problem();
@@ -28,18 +25,8 @@ export class ProblemFormComponent implements OnInit {
   }
 
   save(): boolean {
-    console.log(this.problem);
-    this.problemService.addProblem(this.problem)
-      .then(
-        problem => this.problemCreated(problem),
-        error => this.errorMessage = <any>error
-      );
-    return true;
-  }
-
-  problemCreated(problem: Problem):void {
-    this.problem = problem;
     this.problemReady.emit(this.problem);
+    return true;
   }
 
   clearForm(): void {
