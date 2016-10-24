@@ -1,0 +1,6 @@
+<md-card [routerLink]="[ idea.id ]" *ngFor="let idea of ideas" class="idea-card">
+  <md-card-title highlight>{{idea.title}}</md-card-title>
+  <md-card-content>
+    <div>{{idea?.problem?.text}}</div>
+  </md-card-content>
+</md-card>

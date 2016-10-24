@@ -1,14 +1,9 @@
 import { Routes } from '@angular/router';
 
-import {MainNavComponent} from "./main-nav/main-nav.component"
-import {mainRoutes} from "./main-nav/main-nav.routes"
+import {CoreComponent} from "./core/core.component"
+import {PagesRoutes} from "./pages/pages.routes";
+import {PagesComponent} from "./pages/pages.component";
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: MainNavComponent,
-    children: [
-      ...mainRoutes
-    ]
-  }
+  ...PagesRoutes
 ];

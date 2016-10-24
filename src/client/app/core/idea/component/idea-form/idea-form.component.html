@@ -1,0 +1,16 @@
+<form *ngIf="active" (ngSubmit)="ideaForm.form.valid && save()" #ideaForm="ngForm">
+  <md-input  name="title" placeholder="Idea Title" style="width: 100%" [(ngModel)]="idea.title" required>
+  </md-input>
+  <div>
+    <label for="problem">Problem:</label> <br/>
+    <textarea id="problem" name="problem" style="width: 100%" [(ngModel)]="idea.problem.text"></textarea>
+  </div>
+  <div>
+    <label for="solution">Solution</label> <br/>
+    <textarea id="solution" name="solution" style="width: 100%" [(ngModel)]="idea.solution"></textarea>
+  </div>
+  <div style="text-align: right">
+    <button type="button" md-button (click)="clearForm()">Clear</button>
+    <button type="submit" md-raised-button color="accent">Submit</button>
+  </div>
+</form>
