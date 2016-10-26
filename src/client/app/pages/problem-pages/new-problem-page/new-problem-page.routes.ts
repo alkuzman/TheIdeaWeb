@@ -5,7 +5,7 @@ import {Routes} from "@angular/router";
  */
 export const NewProblemPageRoutes: Routes = [
   {
-    path: 'new',
+    path: '',
     component: NewProblemPageComponent
   }
 ];

@@ -5,5 +5,8 @@ import {PagesRoutes} from "./pages/pages.routes";
 import {PagesComponent} from "./pages/pages.component";
 
 export const routes: Routes = [
-  ...PagesRoutes
+  {
+    path: "",
+    loadChildren: "app/pages/pages.module#PagesModule"
+  }
 ];

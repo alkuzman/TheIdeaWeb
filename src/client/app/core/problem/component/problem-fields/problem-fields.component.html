@@ -1,0 +1,11 @@
+<label for="problemTitle"><strong>Title</strong></label>&nbsp;&nbsp;<md-input id="problemTitle" name="problemTitle" placeholder="Place your title here. Be specific" style="flex: auto" [(ngModel)]="problem.title" (ngModelChange)="onChange()" required>
+</md-input>
+<div>
+  <ideal-text-editor id="problemBody" title="Problem body" [(ngModel)]="problem.text" name="problemBody" (ngModelChange)="onChange()"></ideal-text-editor>
+</div>
+<div style="width: 100%">
+  <label for="problemTags"><strong>Tags</strong></label>&nbsp;&nbsp;
+  <md-input style="flex: auto;" id="problemTags" name="problemTags" placeholder='at least one tag such as (machine learning), max 5 tags'>
+
+  </md-input>
+</div>
