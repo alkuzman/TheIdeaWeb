@@ -16,8 +16,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Directive({
-  selector: 'ideal-problem-fields',
-  host: {'(textChange)': 'onChange($event)'},
+  selector: 'ideal-solution-fields',
+  host: {'(solutionChange)': 'onChange($event)'},
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class SolutionValueAccessorDirective implements ControlValueAccessor {

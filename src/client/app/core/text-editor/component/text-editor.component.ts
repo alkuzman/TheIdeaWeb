@@ -43,7 +43,7 @@ export class TextEditorComponent {
     }
   }
 
-  onChange(value) {
+  onChange(value: string) {
     this.textChange.emit(value);
   }
 }

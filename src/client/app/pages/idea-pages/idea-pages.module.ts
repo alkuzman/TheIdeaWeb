@@ -7,10 +7,9 @@ import {NewIdeaPageModule} from "./new-idea-page/new-idea-page.module";
 import {SharedModule} from "../../shared/shared.module";
 import {IdeaPagesRoutingModule} from "./idea-pages-routing.module";
 @NgModule({
-  imports: [SharedModule.forRoot(), NewIdeaPageModule, IdeaPagesRoutingModule],
+  imports: [SharedModule.forRoot(), IdeaPagesRoutingModule, NewIdeaPageModule, IdeaPagesRoutingModule],
   declarations: [IdeaPagesComponent],
   exports: [IdeaPagesComponent]
 })
 export class IdeaPagesModule {
-
 }

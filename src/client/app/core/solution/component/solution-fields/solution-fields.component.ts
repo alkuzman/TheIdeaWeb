@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 25/10/2016.
  */
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Output, EventEmitter, Input} from "@angular/core";
 import {Solution} from "../../../model/ideas/solution";
 @Component({
   moduleId: module.id,
@@ -9,11 +9,18 @@ import {Solution} from "../../../model/ideas/solution";
   templateUrl: "solution-fields.component.html"
 })
 export class SolutionFieldsComponent {
-  @Output("problemChange") problemChange: EventEmitter<Solution>;
+  @Input("bodyLabel") bodyLabel:string = "Solution Body";
+  @Input("problemTitleLabel") problemTitleLabel:string = "Problem Title";
+  @Input("ideaTitleLabel") ideaTitleLabel:string = "Idea Title";
+  @Input("problemBodyLabel") problemBodyLabel:string = "Problem Body";
+  @Input("problemTagsLabel") problemTagsLabel:string = "Problem Tags";
+  @Input("ideaSnackPeakLabel") ideaSnackPeakLabel:string = "Snack Peak";
+  @Input("tagsLabel") tagsLabel = "Solution Tags Label";
+  @Output("solutionChange") solutionChange: EventEmitter<Solution>;
   private solution: Solution;
 
   constructor() {
-    this.problemChange = new EventEmitter<Solution>();
+    this.solutionChange = new EventEmitter<Solution>();
   }
 
   ngOnInit(): void {
@@ -29,12 +36,16 @@ export class SolutionFieldsComponent {
 
   //set accessor including call the onchange callback
   set value(v: Solution) {
-    if (v !== this.solution) {
+    if (v == null) {
+      this.solution = new Solution();
+      this.onChange();
+    }
+    else {
       this.solution = v;
     }
   }
 
   onChange() {
-    this.problemChange.emit(this.solution);
+    this.solutionChange.emit(this.solution);
   }
 }

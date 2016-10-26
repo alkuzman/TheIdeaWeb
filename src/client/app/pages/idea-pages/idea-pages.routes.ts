@@ -6,6 +6,11 @@ import {NewIdeaPageRoutes} from "./new-idea-page/new-idea-page.routes";
  */
 export const IdeaPagesRoutes: Routes = [
   {
+    path: "",
+    component: IdeaPagesComponent,
+    loadChildren: "app/pages/idea-pages/ideas-page/ideas-page.module#IdeasPageModule"
+  },
+  {
     path: "new",
     component: IdeaPagesComponent,
     loadChildren: "app/pages/idea-pages/new-idea-page/new-idea-page.module#NewIdeaPageModule"

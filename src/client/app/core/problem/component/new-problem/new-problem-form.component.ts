@@ -25,7 +25,7 @@ export class NewProblemFormComponent implements OnInit {
       this.problem = new Problem();
   }
 
-  save(p): boolean {
+  save(p: Problem): boolean {
     this.problem = p;
     this.problemService.addProblem(this.problem)
       .then(

@@ -7,6 +7,7 @@ import {User} from "../authentication/user";
 
 export class Idea extends BaseEntityImpl {
   public problem: Problem;
+  public snackPeak: string;
   public title: string;
   public owner: User;
 
