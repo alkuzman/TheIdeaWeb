@@ -1,17 +1,17 @@
 /**
- * Created by AKuzmanoski on 19/10/2016.
+ * Created by AKuzmanoski on 26/10/2016.
  */
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {PagesRoutes} from "./pages.routes";
+import {AboutRoutes} from "./about.routes";
 
 @NgModule({
   imports: [
-    RouterModule.forChild(PagesRoutes)
+    RouterModule.forChild(AboutRoutes)
   ],
   exports: [
     RouterModule
   ]
 })
-export class PagesRoutingModule {
+export class AboutRoutingModule {
 }

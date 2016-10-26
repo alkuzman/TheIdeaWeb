@@ -11,12 +11,14 @@ import {TextEditorModule} from "../text-editor/text-editor.module";
 import {NewProblemFormComponent} from "./component/new-problem/new-problem-form.component";
 import {ProblemListComponent} from "./component/problem-list/problem-list.component";
 import {ProblemCardComponent} from "./component/problem-card/problem-card.component";
+import {ProblemFieldsComponent} from "./component/problem-fields/problem-fields.component";
+import {ProblemValueAccessorDirective} from "./directives/problem-value-accessor.directive";
 
 @NgModule({
   imports: [SharedModule.forRoot(), HttpModule, JsonpModule, TextEditorModule],
-  declarations: [ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent],
+  declarations: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent],
   providers: [ProblemService],
-  exports: [NewProblemFormComponent, ProblemListComponent],
+  exports: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent],
 })
 export class ProblemModule {
 

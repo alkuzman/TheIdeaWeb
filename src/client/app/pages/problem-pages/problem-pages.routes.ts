@@ -7,11 +7,13 @@ import {ProblemsPageRoutes} from "./problems-page/problems-page.routes";
  */
 export const ProblemPagesRoutes: Routes = [
   {
-    path: 'problems',
+    path: '',
     component: ProblemPagesComponent,
-    children: [
-      ...NewProblemPageRoutes,
-      ...ProblemsPageRoutes
-    ]
+    loadChildren: "app/pages/problem-pages/problems-page/problems-page.module#ProblemsPageModule"
+  },
+  {
+    path: 'new',
+    component: ProblemPagesComponent,
+    loadChildren: "app/pages/problem-pages/new-problem-page/new-problem-page.module#NewProblemPageModule"
   }
 ];

@@ -3,11 +3,7 @@ import { HomeComponent } from './index';
 
 export const HomeRoutes: Route[] = [
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
     path: '',
-    redirectTo: "home"
+    component: HomeComponent
   }
 ];
