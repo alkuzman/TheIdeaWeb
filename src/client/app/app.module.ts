@@ -9,7 +9,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {PagesModule} from "./pages/pages.module";
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, PagesModule, SharedModule.forRoot()],
+  imports: [BrowserModule, HttpModule, AppRoutingModule, SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [Logger,
     {

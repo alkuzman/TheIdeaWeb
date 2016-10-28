@@ -8,7 +8,7 @@ import {ProblemPagesRoutingModule} from "./problem-pages-routing.module";
  * Created by AKuzmanoski on 24/10/2016.
  */
 @NgModule({
-  imports: [SharedModule.forRoot(), ProblemsPageModule, NewProblemPageModule, ProblemPagesRoutingModule],
+  imports: [SharedModule.forRoot(), ProblemPagesRoutingModule],
   declarations: [ProblemPagesComponent],
   exports: [ProblemPagesComponent],
   providers: []
