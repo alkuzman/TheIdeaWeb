@@ -1,4 +1,4 @@
-<div>
+<div [ngClass]="{right: isRight(), left: isLeft(), center: isCenter()}">
   <ideal-widget-avatar [radius]="radius" [src]="src"></ideal-widget-avatar>
   <div>
     <strong>{{name}}</strong>
