@@ -30,11 +30,6 @@ export const PagesRoutes: Routes = [
     loadChildren: "app/pages/idea-pages/idea-pages.module#IdeaPagesModule"
   },
   {
-    path: 'auth',
-    component: PagesComponent,
-    loadChildren:"app/pages/auth-pages/auth-pages.module#AuthPagesModule"
-  },
-  {
     path: '**',
     redirectTo: "/home"
   }
