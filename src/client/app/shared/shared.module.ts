@@ -4,15 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NameListService } from './name-list/index';
 import {MaterialModule} from "@angular/material";
+import {WidgetModule} from "./widget/widget.module";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule.forRoot()],
+  imports: [CommonModule, RouterModule, MaterialModule.forRoot(), WidgetModule],
   exports: [MaterialModule,
-    CommonModule, FormsModule, RouterModule]
+    CommonModule, FormsModule, RouterModule, WidgetModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
