@@ -9,5 +9,10 @@ export const AuthPagesRoutes: Routes = [
   {
     path: "",
     component: AuthPagesComponent
+  },
+  {
+    path: "register",
+    component: AuthPagesComponent,
+    loadChildren: "app/auth-pages/register-page/register-page.module#RegisterPageModule"
   }
 ]

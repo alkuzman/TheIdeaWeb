@@ -1,5 +1,8 @@
 <md-card>
-  <ideal-widget-named-avatar name="Aleksandar Kuzmanoski" description="aleksandarkuzmanoski11@gmail.com" [alignment]="namedAvatarAlignment">
+  <ideal-user-named-avatar
+    [user]="user"
+    [alignment]="namedAvatarAlignment">
 
-  </ideal-widget-named-avatar>
+  </ideal-user-named-avatar>
+  <router-outlet></router-outlet>
 </md-card>
