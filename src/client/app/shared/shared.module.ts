@@ -12,8 +12,7 @@ import {WidgetModule} from "./widget/widget.module";
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule.forRoot(), WidgetModule],
-  exports: [MaterialModule,
-    CommonModule, FormsModule, RouterModule, WidgetModule]
+  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

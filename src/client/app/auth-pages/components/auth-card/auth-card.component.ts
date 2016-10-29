@@ -11,4 +11,5 @@ import {Alignment} from "../../../shared/widget/components/named-avatar/enum-ali
 })
 export class AuthCardComponent {
   namedAvatarAlignment: Alignment = Alignment.center;
+  firstName: string = "";
 }
