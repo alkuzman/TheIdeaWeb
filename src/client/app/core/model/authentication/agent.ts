@@ -7,4 +7,6 @@ import {BaseEntityImpl} from "../base-entity-impl";
 export class Agent extends BaseEntityImpl {
   public email: string;
   public telephone: string;
+  public profilePicture: string;
+  public coverPicture: string;
 }
