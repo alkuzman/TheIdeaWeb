@@ -1,0 +1,4 @@
+<form *ngIf="active" (ngSubmit)="registerForm.form.valid && save()" #registerForm="ngForm">
+  <ideal-register-fields [(ngModel)]="user"></ideal-register-fields>
+  <button tyle="submit" md-raised-button>{{submitButtonText}}</button>
+</form>

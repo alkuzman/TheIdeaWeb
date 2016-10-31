@@ -19,7 +19,8 @@ export class UserNamedAvatarComponent implements OnInit {
       this.user = new User();
       this.user.firstName = "Guest";
       this.user.lastName = "Guest";
-      this.user.email = "guest@ideal.com"
+      this.user.email = "guest@ideal.com";
+      this.user.profilePicture = "/assets/images/default-user.png";
     }
   }
 }
