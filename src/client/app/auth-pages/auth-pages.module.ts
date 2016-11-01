@@ -8,9 +8,10 @@ import {AuthPagesRoutingModule} from "./auth-pages-routing.module";
 import {AuthPagesComponent} from "./components/auth-pages.component";
 import {AuthCardComponent} from "./components/auth-card/auth-card.component";
 import {UserModule} from "../core/user/user.module";
+import {LoginPageComponent} from "./login-page/components/login-page.component";
 
 @NgModule({
   imports: [SharedModule.forRoot(), AuthPagesRoutingModule, UserModule],
-  declarations: [AuthPagesComponent, AuthCardComponent]
+  declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent]
 })
 export class AuthPagesModule {}

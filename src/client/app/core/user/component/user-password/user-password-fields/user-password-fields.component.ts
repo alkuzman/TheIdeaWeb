@@ -1,17 +1,16 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
-import {UserObjectService} from "../../../user-object.service";
 import {User} from "../../../../model/authentication/user";
+import {UserObjectService} from "../../../user-object.service";
 /**
- * Created by Viki on 10/31/2016.
+ * Created by Viki on 11/1/2016.
  */
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-user-email-fields",
-  templateUrl: "user-email-fields.component.html"
+  selector: "ideal-user-password-fields",
+  templateUrl: "user-password-fields.component.html"
 })
-export class UserEmailFieldsComponent implements OnInit {
-
+export class UserPasswordFieldsComponent implements OnInit {
   constructor(private userObjectService: UserObjectService) {
   }
 

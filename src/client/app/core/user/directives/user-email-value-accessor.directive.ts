@@ -10,7 +10,7 @@ const noop = () => {
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => UserValueAccessorDirective),
+  useExisting: forwardRef(() => UserEmailValueAccessorDirective),
   multi: true
 };
 
@@ -19,7 +19,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   host: {'(userChange)': 'onChange($event)'},
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class UserValueAccessorDirective implements ControlValueAccessor {
+export class UserEmailValueAccessorDirective implements ControlValueAccessor {
   //Placeholders for the callbacks which are later providesd
   //by the Control Value Accessor
   private onTouched: () => void = noop;

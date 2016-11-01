@@ -9,6 +9,7 @@ import {User} from "../model/authentication/user";
 @Injectable()
 export class UserService {
   private usersUrl: string = "/api/users";
+  private loginUrl: string = "/api/doLogin";
 
   constructor(private http: Http) {
 
@@ -42,6 +43,16 @@ export class UserService {
     let url = this.usersUrl;
     let params = new URLSearchParams();
     params.set('email', email); // the user's search value*/
+    return this.http.get(url, {search: params})
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  loginUser(user: User) {
+    let url = this.loginUrl;
+    let params = new URLSearchParams();
+    params.set('username', user.email);
+    params.set('password', user.password);
     return this.http.get(url, {search: params})
       .map(this.extractData)
       .catch(this.handleError)

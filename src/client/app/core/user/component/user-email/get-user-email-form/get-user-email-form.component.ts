@@ -1,7 +1,6 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
-import {Router} from "@angular/router";
 import {Response} from "@angular/http";
 /**
  * Created by Viki on 11/1/2016.
@@ -13,9 +12,11 @@ import {Response} from "@angular/http";
   templateUrl: "get-user-email-form.component.html"
 })
 export class GetUserEmailFormComponent {
-  @Input("user") user: User = new User();
+  user: User = new User();
+  @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
+  @Output("userNotFound") userNotFound: EventEmitter<Response> = new EventEmitter<Response>();
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService) {
 
   }
 
@@ -26,12 +27,10 @@ export class GetUserEmailFormComponent {
   }
 
   onUserReady(user: User) {
-    this.router.navigate(["/auth/login"]);
+    this.userReady.emit(user);
   }
 
   private onError(error: Response) {
-    if (error.status == 404) {
-      this.router.navigate(["/auth/register"]);
-    }
+    this.userNotFound.emit(error);
   }
 }

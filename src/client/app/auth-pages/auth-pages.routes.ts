@@ -1,5 +1,6 @@
 import {Routes} from "@angular/router";
 import {AuthPagesComponent} from "./components/auth-pages.component";
+import {LoginPageRoutes} from "./login-page/login-page-routes";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -15,5 +16,10 @@ export const AuthPagesRoutes: Routes = [
     path: "register",
     component: AuthPagesComponent,
     loadChildren: "app/auth-pages/register-page/register-page.module#RegisterPageModule"
+  },
+  {
+    path: "login",
+    component: AuthPagesComponent,
+    children: [...LoginPageRoutes]
   }
 ]
