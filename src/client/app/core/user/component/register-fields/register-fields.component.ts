@@ -1,6 +1,7 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {User} from "../../../model/authentication/user";
 import {UserObjectService} from "../../user-object.service";
+import {UserHolder} from "../../user-holder";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -9,22 +10,22 @@ import {UserObjectService} from "../../user-object.service";
   selector: "ideal-register-fields",
   templateUrl: "register-fields.component.html"
 })
-export class RegisterFieldsComponent implements OnInit {
-  user: User;
+export class RegisterFieldsComponent extends UserHolder implements OnInit {
   confirmPassword: string = "";
-  @Output("userChange") userChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(private userObjectService: UserObjectService) {
-
+    super();
   }
 
   ngOnInit(): void {
-    this.user = new User();
-    this.userObjectService.user = this.user;
+    if (this.user == null) {
+      this.user = new User();
+      this.onChange();
+    }
   }
 
   onChange() {
     this.userObjectService.user = this.user;
-    this.userChange.emit(this.user);
+    super.onChange();
   }
 }

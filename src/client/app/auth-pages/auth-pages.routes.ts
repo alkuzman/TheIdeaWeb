@@ -8,7 +8,8 @@ import {AuthPagesComponent} from "./components/auth-pages.component";
 export const AuthPagesRoutes: Routes = [
   {
     path: "",
-    component: AuthPagesComponent
+    component: AuthPagesComponent,
+    loadChildren: "app/auth-pages/auth-page/auth-page.module#AuthPageModule"
   },
   {
     path: "register",

@@ -1,0 +1,7 @@
+<form (ngSubmit)="userEmailForm.form.valid && continue()" #userEmailForm="ngForm">
+  <ideal-user-email-fields name="userEmailFields" [(ngModel)]="user"></ideal-user-email-fields>
+  <button class="full-width" md-raised-button color="primary" type="submit">
+    {{buttonText}}
+  </button>
+  {{user.email}}
+</form>

@@ -21,6 +21,6 @@ export class AuthCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userObjectService.userChanged.subscribe(user => this.user = user);
+    this.userObjectService.userChanged.subscribe((user: User) => this.user = user);
   }
 }

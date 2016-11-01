@@ -39,3 +39,7 @@ li {
   font-weight: 400;
   margin-top: 4px;
 }
+
+.full-width {
+  width: 100%;
+}

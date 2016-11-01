@@ -9,7 +9,7 @@ import {User} from "../../../model/authentication/user";
   templateUrl: "register-form.component.html"
 })
 export class RegisterFormComponent {
-  @Input("user") user;
+  @Input("user") user: User;
   @Input("submitButtonText") submitButtonText: string = "Register";
   @Output("userCreated") userCreated: EventEmitter<User> = new EventEmitter<User>();
 

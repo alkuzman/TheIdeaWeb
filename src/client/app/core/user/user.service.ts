@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
+import {Http, Response, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
 /**
@@ -25,7 +25,7 @@ export class UserService {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
+    return Observable.throw(error);
   }
 
   getUserById(id: number): Observable<User> {
@@ -33,6 +33,16 @@ export class UserService {
     /*let params = new URLSearchParams();
      params.set('id', id.toString()); // the user's search value*/
     return this.http.get(url)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  getUserByEmail(email: string) {
+    console.log("get user by email called");
+    let url = this.usersUrl;
+    let params = new URLSearchParams();
+    params.set('email', email); // the user's search value*/
+    return this.http.get(url, {search: params})
       .map(this.extractData)
       .catch(this.handleError)
   }
