@@ -11,6 +11,10 @@ export const routes: Routes = [
     redirectTo: "/home"
   },
   {
+    path: 'auth',
+    loadChildren:"app/auth-pages/auth-pages.module#AuthPagesModule"
+  },
+  {
     path: "",
     loadChildren: "app/pages/pages.module#PagesModule"
   }

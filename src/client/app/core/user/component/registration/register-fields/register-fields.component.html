@@ -1,0 +1,13 @@
+<ideal-user-named-avatar [(ngModel)]="value" [type]="userAvatarType" (ngModelChange)="notify()"></ideal-user-named-avatar>
+<div>
+  <md-input class="full-width" name="firstName" placeholder="First Name" [(ngModel)]="value.firstName" (ngModelChange)="notify()" required></md-input>
+</div>
+<div>
+  <md-input class="full-width" name="lastName" placeholder="Last Name" [(ngModel)]="value.lastName" (ngModelChange)="notify()" required></md-input>
+</div>
+<div>
+  <md-input class="full-width" type="password" name="password" placeholder="Password" [(ngModel)]="value.password" (ngModelChange)="notify()" required></md-input>
+</div>
+<div>
+  <md-input class="full-width" type="password" name="confirmPassword" placeholder="Confirm Password" [(ngModel)]="confirmPassword" (ngModelChange)="notify()" required></md-input>
+</div>
