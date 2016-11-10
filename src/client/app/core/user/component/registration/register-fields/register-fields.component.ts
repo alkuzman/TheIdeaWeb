@@ -18,18 +18,10 @@ export class RegisterFieldsComponent extends AbstractValueAccessor<User> impleme
   confirmPassword: string = "";
   userAvatarType: AvatarType = AvatarType.CHOOSER;
 
-  constructor(private userObjectService: UserObjectService) {
-    super();
+  constructor() {
+    super(new User());
   }
 
   ngOnInit(): void {
-    if (this.value == null) {
-      this.value = new User();
-    }
-  }
-
-  notify() {
-    super.notify();
-    this.userObjectService.user = this.value;
   }
 }

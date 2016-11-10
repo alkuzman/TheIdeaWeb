@@ -2,6 +2,7 @@ import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {UserObjectService} from "../../../user-object.service";
 import {User} from "../../../../model/authentication/user";
 import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstract-value-accessor";
+import {UserNamedAvatarComponent} from "../../user-named-avatar/user-named-avatar.component";
 /**
  * Created by Viki on 10/31/2016.
  */
@@ -14,20 +15,11 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstrac
 })
 export class UserEmailFieldsComponent extends AbstractValueAccessor<User> implements OnInit {
 
-  constructor(private userObjectService: UserObjectService) {
-    super();
+  constructor() {
+    super(new User());
   }
 
 
   ngOnInit(): void {
-    if (this.value == null) {
-      this.value = new User();
-    }
-  }
-
-  notify(): void {
-    super.notify();
-    this.userObjectService.user = this.value;
-    
   }
 }

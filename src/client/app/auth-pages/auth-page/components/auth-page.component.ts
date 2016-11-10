@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, HostBinding, style, state, animate, transition, trigger} from "@angular/core";
 import {User} from "../../../core/model/authentication/user";
 import {Router, ActivatedRoute} from "@angular/router";
 import {Response} from "@angular/http";

@@ -33,7 +33,6 @@ export class GetUserEmailFormComponent implements OnInit {
   }
 
   onUserReady(user: User) {
-    console.log(user);
     this.user = user;
     this.userReady.emit(user);
     this.notify();

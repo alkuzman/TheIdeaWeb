@@ -10,7 +10,6 @@ export class UserObjectService {
   userChanged: EventEmitter<User> = new EventEmitter<User>();
 
   set user(value: User) {
-    console.log(value);
     this._user = value;
     this.notify();
   }

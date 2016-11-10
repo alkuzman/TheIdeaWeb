@@ -13,18 +13,11 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstrac
   providers: [MakeProvider(UserPasswordFieldsComponent)]
 })
 export class UserPasswordFieldsComponent extends AbstractValueAccessor<User> implements OnInit {
-  constructor(private userObjectService: UserObjectService) {
-    super();
+  constructor() {
+    super(new User());
   }
 
   ngOnInit(): void {
-    if (this.value == null) {
-      this.value = new User();
-    }
-  }
 
-  notify() {
-    super.notify();
-    this.userObjectService.user = this.value;
   }
 }

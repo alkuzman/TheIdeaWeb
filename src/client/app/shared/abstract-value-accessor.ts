@@ -14,6 +14,8 @@ export abstract class AbstractValueAccessor<T> implements ControlValueAccessor {
 
   constructor(value?: T) {
     this.defaultValue = value;
+    this._value = value;
+    
   }
 
   set value(v: T) {
