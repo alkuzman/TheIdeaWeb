@@ -1,5 +1,5 @@
 import {Component, Input, ViewContainerRef} from "@angular/core";
-import {AbstractValueAccessor, MakeProvider} from "../../../../../abstract-value-accessor";
+import {AbstractValueAccessor, MakeProvider} from "../../../../abstract-value-accessor";
 import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
 import {UploadImageDialogComponent} from "../../files/upload-image-dialog/upload-image-dialog.component";
 /**

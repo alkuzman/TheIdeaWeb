@@ -5,7 +5,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {User} from "../../../model/authentication/user";
 import {Alignment} from "../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
 import {AvatarType} from "../../../../shared/widget/components/avatars/named-avatar/enum-avatar-type";
-import {AbstractValueAccessor, MakeProvider} from "../../../../abstract-value-accessor";
+import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-value-accessor";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-named-avatar",

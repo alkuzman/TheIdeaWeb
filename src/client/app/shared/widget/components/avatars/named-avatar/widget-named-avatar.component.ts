@@ -1,7 +1,7 @@
 import {Input, Component} from "@angular/core";
 import {Alignment} from "./enum-alignment";
 import {AvatarType} from "./enum-avatar-type";
-import {AbstractValueAccessor, MakeProvider} from "../../../../../abstract-value-accessor";
+import {AbstractValueAccessor, MakeProvider} from "../../../../abstract-value-accessor";
 /**
  * Created by Viki on 10/29/2016.
  */
