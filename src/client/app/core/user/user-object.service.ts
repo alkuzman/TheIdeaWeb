@@ -3,19 +3,23 @@
  */
 import {Injectable, EventEmitter} from "@angular/core";
 import {User} from "../model/authentication/user";
+import {Subject} from "rxjs";
 @Injectable()
 export class UserObjectService {
   private _user: User;
   userChanged: EventEmitter<User> = new EventEmitter<User>();
 
+  set user(value: User) {
+    console.log(value);
+    this._user = value;
+    this.notify();
+  }
+
   get user(): User {
     return this._user;
   }
 
-  set user(value: User) {
-    this._user = value;
+  notify(): void {
     this.userChanged.emit(this.user);
   }
-
-
 }

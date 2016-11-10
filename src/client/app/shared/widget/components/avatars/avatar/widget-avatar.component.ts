@@ -11,5 +11,5 @@ import {Component, Input} from "@angular/core";
 })
 export class WidgetAvatarComponent {
   @Input("radius") radius: number = 50;
-  @Input("src") src: string = "assets/images/default-user.png";
+  @Input("src") src: string;
 }

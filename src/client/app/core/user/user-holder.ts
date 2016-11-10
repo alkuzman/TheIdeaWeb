@@ -3,8 +3,6 @@ import {Output, EventEmitter, Injectable} from "@angular/core";
 /**
  * Created by Viki on 10/31/2016.
  */
-
-@Injectable()
 export class UserHolder {
 
   constructor() {
@@ -16,6 +14,5 @@ export class UserHolder {
 
   onChange() {
     this.userChange.emit(this.user);
-    console.log("Viki");
   }
 }

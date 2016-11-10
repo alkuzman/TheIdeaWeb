@@ -1,8 +1,10 @@
 <ideal-widget-named-avatar
-  [src]="user.profilePicture"
-  [name]="user.firstName + ' ' + user.lastName"
-  [description]="user.email"
+  [(ngModel)]="value.profilePicture"
+  (ngModelChange)="notify()"
+  [name]="value | idealUserName"
+  [description]="value?.email"
   [alignment]="alignment"
-  [radius]="profilePictureRadius">
+  [radius]="profilePictureRadius"
+  [type]="type">
 
 </ideal-widget-named-avatar>

@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {UserObjectService} from "../../core/user/user-object.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -7,6 +8,10 @@ import {Component} from "@angular/core";
   selector: "ideal-register-page",
   templateUrl: "register-page.component.html"
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit{
+
+
+  ngOnInit(): void {
+  }
 
 }

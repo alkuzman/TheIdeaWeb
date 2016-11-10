@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Alignment} from "../../../shared/widget/components/named-avatar/enum-alignment";
+import {Alignment} from "../../../shared/widget/components/avatars/named-avatar/enum-alignment";
 import {User} from "../../../core/model/authentication/user";
 import {UserObjectService} from "../../../core/user/user-object.service";
 /**
@@ -15,12 +15,8 @@ export class AuthCardComponent implements OnInit {
   namedAvatarAlignment: Alignment = Alignment.center;
   user: User;
 
-  constructor(private userObjectService: UserObjectService)
-  {
-
-  }
 
   ngOnInit(): void {
-    this.userObjectService.userChanged.subscribe((user: User) => this.user = user);
+
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 /**
  * Created by Viki on 10/31/2016.
@@ -11,7 +11,7 @@ import {User} from "../../../../model/authentication/user";
 })
 export class UserEmailFormComponent {
   @Input("buttonText") buttonText: string = "Continue";
-  @Input("user") user: User;
+  @Input("user") user: User = new User();
   @Output("emailEntered") emailEntered: EventEmitter<User> = new EventEmitter<User>();
 
   continue(): void {

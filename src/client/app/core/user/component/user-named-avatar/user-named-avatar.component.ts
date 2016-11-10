@@ -3,24 +3,26 @@
  */
 import {Component, Input, OnInit} from "@angular/core";
 import {User} from "../../../model/authentication/user";
-import {Alignment} from "../../../../shared/widget/components/named-avatar/enum-alignment";
+import {Alignment} from "../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
+import {AvatarType} from "../../../../shared/widget/components/avatars/named-avatar/enum-avatar-type";
+import {AbstractValueAccessor, MakeProvider} from "../../../../abstract-value-accessor";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-named-avatar",
-  templateUrl: "user-named-avatar.component.html"
+  templateUrl: "user-named-avatar.component.html",
+  providers: [MakeProvider(UserNamedAvatarComponent)]
 })
-export class UserNamedAvatarComponent implements OnInit {
+export class UserNamedAvatarComponent extends AbstractValueAccessor<User> implements OnInit {
   @Input("profilePictureRadius") profilePictureRadius: number = 50;
   @Input("alignment") alignment: Alignment = Alignment.center;
-  @Input("user") user: User;
+  @Input("type") type: AvatarType = AvatarType.DISPLAY;
+
+  constructor() {
+    super(new User());
+  }
 
   ngOnInit(): void {
-    if (this.user == null) {
-      this.user = new User();
-      this.user.firstName = "Guest";
-      this.user.lastName = "Guest";
-      this.user.email = "guest@ideal.com";
-      this.user.profilePicture = "/assets/images/default-user.png";
-    }
+    if (this.value == null)
+      this.value = new User();
   }
 }

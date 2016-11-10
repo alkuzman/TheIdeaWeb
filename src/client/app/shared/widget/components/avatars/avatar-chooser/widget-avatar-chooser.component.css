@@ -1,0 +1,43 @@
+.profile-img-container {
+  position: relative;
+  display: inline-block; /* added */
+  overflow: hidden; /* added */
+}
+
+.profile-img-container ideal-widget-avatar {
+  width: 100%;
+}
+
+.profile-img-container:hover ideal-widget-avatar {
+  opacity: 0.5
+}
+
+/* remove if using in grid system */
+
+.profile-img-container:hover {
+  cursor: pointer;
+}
+
+.profile-img-container:hover md-icon {
+  opacity: 1; /* added */
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  right: 0;
+  transform: translateX(-50%) translateY(-50%);
+  bottom: 0;
+  z-index: 500;
+}
+
+/* added */
+.profile-img-container md-icon {
+  display: block;
+  position: absolute;
+  top: -100%;
+  opacity: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  color: inherit;
+}

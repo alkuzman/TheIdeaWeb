@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {UserObjectService} from "../../../user-object.service";
 import {User} from "../../../../model/authentication/user";
+import {AbstractValueAccessor, MakeProvider} from "../../../../../abstract-value-accessor";
 /**
  * Created by Viki on 10/31/2016.
  */
@@ -8,25 +9,24 @@ import {User} from "../../../../model/authentication/user";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-email-fields",
-  templateUrl: "user-email-fields.component.html"
+  templateUrl: "user-email-fields.component.html",
+  providers: [MakeProvider(UserEmailFieldsComponent)]
 })
-export class UserEmailFieldsComponent implements OnInit {
+export class UserEmailFieldsComponent extends AbstractValueAccessor<User> implements OnInit {
 
   constructor(private userObjectService: UserObjectService) {
+    super();
   }
 
-  user: User;
-  @Output("userChange") userChange: EventEmitter<User> = new EventEmitter<User>();
 
   ngOnInit(): void {
-    if (this.user == null) {
-      this.user = new User();
-      this.onChange();
+    if (this.value == null) {
+      this.value = new User();
     }
   }
 
-  onChange() {
-    this.userObjectService.user = this.user;
-    this.userChange.emit(this.user);
+  notify(): void {
+    super.notify();
+    this.userObjectService.user = this.value;
   }
 }

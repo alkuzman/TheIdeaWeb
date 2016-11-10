@@ -1,21 +1,21 @@
 import {Routes} from "@angular/router";
 import {AuthPagesComponent} from "./components/auth-pages.component";
+import {RegisterPageRoutes} from "./register-page/register-page.routes";
 import {LoginPageRoutes} from "./login-page/login-page-routes";
+import {AuthPageRoutes} from "./auth-page/auth-page.routes";
 /**
  * Created by Viki on 10/28/2016.
  */
-
-
 export const AuthPagesRoutes: Routes = [
   {
     path: "",
     component: AuthPagesComponent,
-    loadChildren: "app/auth-pages/auth-page/auth-page.module#AuthPageModule"
+    children: [...AuthPageRoutes]
   },
   {
     path: "register",
     component: AuthPagesComponent,
-    loadChildren: "app/auth-pages/register-page/register-page.module#RegisterPageModule"
+    children: [...RegisterPageRoutes]
   },
   {
     path: "login",

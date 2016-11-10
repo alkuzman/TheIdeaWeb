@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response, URLSearchParams} from "@angular/http";
+import {Http, Response, Headers, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
 /**
@@ -38,6 +38,15 @@ export class UserService {
       .catch(this.handleError)
   }
 
+  addUser(user: User): Promise<User> {
+    let body = JSON.stringify(user);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post(this.usersUrl, body, {headers: headers})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
   getUserByEmail(email: string) {
     console.log("get user by email called");
     let url = this.usersUrl;
@@ -49,12 +58,16 @@ export class UserService {
   }
 
   loginUser(user: User) {
+    var body = 'username=' + user.email + '&password=' + user.password;
     let url = this.loginUrl;
-    let params = new URLSearchParams();
-    params.set('username', user.email);
-    params.set('password', user.password);
-    return this.http.get(url, {search: params})
-      .map(this.extractData)
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    return this.http.post(url, body, {headers: headers})
+      .map(this.extractLoginData)
       .catch(this.handleError)
+  }
+
+  private extractLoginData(res: Response) {
+    return res;
   }
 }

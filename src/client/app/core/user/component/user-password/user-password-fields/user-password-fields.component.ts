@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserObjectService} from "../../../user-object.service";
+import {AbstractValueAccessor, MakeProvider} from "../../../../../abstract-value-accessor";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -8,24 +9,22 @@ import {UserObjectService} from "../../../user-object.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-password-fields",
-  templateUrl: "user-password-fields.component.html"
+  templateUrl: "user-password-fields.component.html",
+  providers: [MakeProvider(UserPasswordFieldsComponent)]
 })
-export class UserPasswordFieldsComponent implements OnInit {
+export class UserPasswordFieldsComponent extends AbstractValueAccessor<User> implements OnInit {
   constructor(private userObjectService: UserObjectService) {
+    super();
   }
 
-  user: User;
-  @Output("userChange") userChange: EventEmitter<User> = new EventEmitter<User>();
-
   ngOnInit(): void {
-    if (this.user == null) {
-      this.user = new User();
-      this.onChange();
+    if (this.value == null) {
+      this.value = new User();
     }
   }
 
-  onChange() {
-    this.userObjectService.user = this.user;
-    this.userChange.emit(this.user);
+  notify() {
+    super.notify();
+    this.userObjectService.user = this.value;
   }
 }
