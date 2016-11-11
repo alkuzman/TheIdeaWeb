@@ -13,6 +13,7 @@ import {Response} from "@angular/http";
   templateUrl: "check-user-password-form.component.html"
 })
 export class CheckUserPasswordFormComponent implements OnInit {
+  @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
   @Output("passwordCorrect") passwordCorrect: EventEmitter<User> = new EventEmitter<User>();
   @Output("passwordIncorrect") passwordIncorrect: EventEmitter<void> = new EventEmitter<void>();
 
@@ -22,9 +23,12 @@ export class CheckUserPasswordFormComponent implements OnInit {
   user: User;
 
   ngOnInit(): void {
-    if (this.userObjectService.user == null)
-      this.userObjectService.user = new User();
-    this.user = this.userObjectService.user;
+    if (this.userObjectService.user != null) {
+      this.user = this.userObjectService.user;
+    }
+    else {
+      this.usernameNotChecked.emit();
+    }
   }
 
   checkUserPassword(user: User) {

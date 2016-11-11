@@ -1,7 +1,6 @@
-import {Component, HostBinding, style, state, animate, transition, trigger} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {User} from "../../../core/model/authentication/user";
-import {Router, ActivatedRoute} from "@angular/router";
-import {Response} from "@angular/http";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 /**
  * Created by Viki on 10/29/2016.
  */
@@ -11,18 +10,29 @@ import {Response} from "@angular/http";
   selector: "ideal-auth-page",
   templateUrl: "auth-page.component.html"
 })
-export class AuthPageComponent {
+export class AuthPageComponent implements OnInit {
+  private email: string;
 
   constructor(private router: Router, private route: ActivatedRoute) {
   }
 
-  continueLogin(user: User) {
-    this.router.navigate(["./login"], { relativeTo: this.route });
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.email = params['email'];
+    });
   }
 
-  continueRegister(response: Response) {
-    if (response.status == 404) {
-      this.router.navigate(["./register"], { relativeTo: this.route })
-    }
+  continueLogin(user: User) {
+    if (this.email == null)
+      this.email = user.email;
+    let queryParams = {"email": this.email};
+    this.router.navigate(["./login"], {relativeTo: this.route, queryParams: queryParams});
+  }
+
+  continueRegister(user: User) {
+    if (this.email == null)
+      this.email = user.email;
+    let queryParams = {"email": this.email};
+    this.router.navigate(["./register"], {relativeTo: this.route, queryParams: queryParams});
   }
 }

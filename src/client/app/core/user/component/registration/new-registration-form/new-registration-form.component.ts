@@ -14,6 +14,7 @@ import {Response} from "@angular/http";
 export class NewRegistrationFormComponent implements OnInit {
 
   private user: User;
+  @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
   @Output("registrationSuccessful") userReady: EventEmitter<User> = new EventEmitter<User>();
   @Output("registrationUnsuccessful") registrationUnsuccessful: EventEmitter<void> = new EventEmitter<void>();
 
@@ -22,9 +23,12 @@ export class NewRegistrationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.userObjectService.user == null)
-      this.userObjectService.user = new User();
-    this.user = this.userObjectService.user;
+    if (this.userObjectService.user != null) {
+      this.user = this.userObjectService.user;
+    }
+    else {
+      this.usernameNotChecked.emit();
+    }
   }
 
   save(user: User): void {
@@ -35,7 +39,7 @@ export class NewRegistrationFormComponent implements OnInit {
     );
   }
 
-  onUserReady(user : User): void {
+  onUserReady(user: User): void {
     this.user = user;
     this.notify();
   }

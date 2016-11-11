@@ -1,5 +1,7 @@
 import {Component, OnInit, style, animate, state, transition, trigger, HostBinding} from "@angular/core";
 import {UserObjectService} from "../../core/user/user-object.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {User} from "../../core/model/authentication/user";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -32,6 +34,11 @@ import {UserObjectService} from "../../core/user/user-object.service";
   ]
 })
 export class RegisterPageComponent implements OnInit{
+  private email: string;
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
+
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true;
   }
@@ -41,6 +48,22 @@ export class RegisterPageComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.email = params['email'];
+    });
   }
 
+  authenticate(): void {
+    let queryParams = {};
+    if (this.email != null)
+      queryParams = {"email": this.email};
+    this.router.navigate(["auth"], {queryParams: queryParams});
+  }
+
+  login(user: User): void {
+    if (this.email == null)
+      this.email = user.email;
+    let queryParams = {"email": this.email};
+    this.router.navigate(["auth"], {queryParams: queryParams});
+  }
 }

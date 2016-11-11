@@ -35,6 +35,8 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
   ]
 })
 export class LoginPageComponent {
+  private email: string;
+
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true;
   }
@@ -58,5 +60,12 @@ export class LoginPageComponent {
     console.log("Wrong password");
     let config = new MdSnackBarConfig(this.viewContainerRef);
     this.snackBar.open('You have entered wrong password!', 'Try Again', config);
+  }
+
+  authenticate(): void {
+    let queryParams = {};
+    if (this.email != null)
+      queryParams = {"email": this.email};
+    this.router.navigate(["auth"], {queryParams: queryParams});
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, OnInit} from "@angular/core";
+import {Component, EventEmitter, Output, OnInit, Input} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
 import {Response} from "@angular/http";
@@ -13,9 +13,10 @@ import {UserObjectService} from "../../../user-object.service";
   templateUrl: "get-user-email-form.component.html"
 })
 export class GetUserEmailFormComponent implements OnInit {
+  @Input("email") email: string;
   user: User = new User();
   @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
-  @Output("userNotFound") userNotFound: EventEmitter<Response> = new EventEmitter<Response>();
+  @Output("userNotFound") userNotFound: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(private userService: UserService, private userObjectService: UserObjectService) {
 
@@ -23,6 +24,10 @@ export class GetUserEmailFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = new User();
+    if (this.email != null) {
+      this.user.email = this.email;
+      this.findUserByEmail(this.user);
+    }
     this.notify();
   }
 
@@ -39,7 +44,7 @@ export class GetUserEmailFormComponent implements OnInit {
   }
 
   private onError(error: Response) {
-    this.userNotFound.emit(error);
+    this.userNotFound.emit(this.user);
     this.notify();
   }
 
