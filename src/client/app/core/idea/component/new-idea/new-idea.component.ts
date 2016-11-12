@@ -35,7 +35,7 @@ export class NewIdeaComponent {
 
   ideaCreated() {
     this.idea = new Idea();
-    var config = new MdSnackBarConfig(this.viewContainerRef);
+    var config = new MdSnackBarConfig();
     this.snackBar.open('Idea creation successful', 'OK', config);
   }
 }

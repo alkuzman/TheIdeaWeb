@@ -58,7 +58,7 @@ export class LoginPageComponent {
 
   onWrongPassword() {
     console.log("Wrong password");
-    let config = new MdSnackBarConfig(this.viewContainerRef);
+    let config = new MdSnackBarConfig();
     this.snackBar.open('You have entered wrong password!', 'Try Again', config);
   }
 
