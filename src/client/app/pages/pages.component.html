@@ -17,6 +17,7 @@
       <a md-list-item [routerLink]="[ '/ideas/new' ]" routerLinkActive="activeLink">&nbsp;&nbsp;&nbsp; New Idea</a>
       <a md-list-item [routerLink]="[ '/auth/register' ]" routerLinkActive="activeLink">Register</a>
       <a md-list-item [routerLink]="[ '/auth' ]" routerLinkActive="activeLink">Login</a>
+      <a md-list-item (click)="logout()">Logout</a>
     </md-nav-list>
   </md-sidenav>
   <md-toolbar color="primary">

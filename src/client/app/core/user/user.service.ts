@@ -9,10 +9,12 @@ import {User} from "../model/authentication/user";
 @Injectable()
 export class UserService {
   private usersUrl: string = "/api/users";
-  private loginUrl: string = "/api/doLogin";
+  private loginUrl: string = "/api/auth/login";
+
+  private loggedIn: boolean = false;
 
   constructor(private http: Http) {
-
+    this.loggedIn = !!localStorage.getItem("auth_token");
   }
 
   private extractData(res: Response) {
@@ -58,16 +60,30 @@ export class UserService {
   }
 
   loginUser(user: User) {
-    var body = 'username=' + user.email + '&password=' + user.password;
+    var body = {username: user.email, password: user.password};
     let url = this.loginUrl;
     var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Requested-With', 'XMLHttpRequest');
     return this.http.post(url, body, {headers: headers})
       .map(this.extractLoginData)
       .catch(this.handleError)
   }
 
   private extractLoginData(res: Response) {
-    return res;
+    let body = res.json();
+    localStorage.setItem("auth_token", body.token);
+    this.loggedIn = true;
+    console.log(body);
+    return body || {};
+  }
+
+  public logout() {
+    localStorage.removeItem("auth_token");
+    this.loggedIn = false;
+  }
+
+  public isLoggedIn() {
+    return this.loggedIn;
   }
 }

@@ -30,23 +30,30 @@ export class IdeaService {
     return Observable.throw(errMsg);
   }
 
+  getHeaders(): Headers {
+    let headers = new Headers();
+    let authToken = localStorage.getItem("auth_token");
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Authorization', 'Bearer ' + authToken);
+    return headers;
+  }
+
   getIdeas(): Observable<Idea[]> {
-    return this.http.get(this.ideasUrl).map(this.extractData).catch(this.handleError);
+    return this.http.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
   }
 
   getIdea(id: number): Observable<Idea> {
     let url = this.ideasUrl + "/" + id;
     /*let params = new URLSearchParams();
      params.set('id', id.toString()); // the user's search value*/
-    return this.http.get(url)
+    return this.http.get(url, {headers: this.getHeaders()})
       .map(this.extractData)
       .catch(this.handleError)
   }
 
   addIdea(idea: Idea): Promise<Idea> {
     let body = JSON.stringify(idea);
-    let headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.ideasUrl, body, {headers: headers})
+    return this.http.post(this.ideasUrl, body, {headers: this.getHeaders()})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
