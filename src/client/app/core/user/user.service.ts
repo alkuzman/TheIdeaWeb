@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Response, Headers, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
+import {Credentials} from "./helper/Credentials";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -11,10 +12,7 @@ export class UserService {
   private usersUrl: string = "/api/users";
   private loginUrl: string = "/api/auth/login";
 
-  private loggedIn: boolean = false;
-
   constructor(private http: Http) {
-    this.loggedIn = !!localStorage.getItem("auth_token");
   }
 
   private extractData(res: Response) {
@@ -59,8 +57,12 @@ export class UserService {
       .catch(this.handleError)
   }
 
-  loginUser(user: User) {
-    var body = {username: user.email, password: user.password};
+  loginUser(credentials: Credentials) {
+    var body = {
+      username: credentials.user.email,
+      password: credentials.user.password,
+      rememberMe: credentials.rememberMe
+    };
     let url = this.loginUrl;
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -73,17 +75,16 @@ export class UserService {
   private extractLoginData(res: Response) {
     let body = res.json();
     localStorage.setItem("auth_token", body.token);
-    this.loggedIn = true;
     console.log(body);
+
     return body || {};
   }
 
   public logout() {
     localStorage.removeItem("auth_token");
-    this.loggedIn = false;
   }
 
   public isLoggedIn() {
-    return this.loggedIn;
+    return !!localStorage.getItem("auth_token");
   }
 }

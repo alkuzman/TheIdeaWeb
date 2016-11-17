@@ -4,15 +4,16 @@
 import {Injectable} from "@angular/core";
 import {Logger} from "../../logger.service";
 import {Idea} from "../model/ideas/idea";
-import {Http, Response, Headers} from "@angular/http";
+import {Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
+import {JwtHttpService} from "../../shared/http-wrapers/jwt-http.service";
 
 
 @Injectable()
 export class IdeaService {
   private ideasUrl = "/api/ideas";
 
-  constructor(private logger: Logger, private http: Http) {
+  constructor(private logger: Logger, private jwtHttp: JwtHttpService) {
 
   }
 
@@ -39,21 +40,21 @@ export class IdeaService {
   }
 
   getIdeas(): Observable<Idea[]> {
-    return this.http.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
+    return this.jwtHttp.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
   }
 
   getIdea(id: number): Observable<Idea> {
     let url = this.ideasUrl + "/" + id;
     /*let params = new URLSearchParams();
      params.set('id', id.toString()); // the user's search value*/
-    return this.http.get(url, {headers: this.getHeaders()})
+    return this.jwtHttp.get(url, {headers: this.getHeaders()})
       .map(this.extractData)
       .catch(this.handleError)
   }
 
   addIdea(idea: Idea): Promise<Idea> {
     let body = JSON.stringify(idea);
-    return this.http.post(this.ideasUrl, body, {headers: this.getHeaders()})
+    return this.jwtHttp.post(this.ideasUrl, body, {headers: this.getHeaders()})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

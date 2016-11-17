@@ -6,9 +6,10 @@ import {AppComponent} from "./app.component";
 import {SharedModule} from "./shared/shared.module";
 import {Logger} from "./logger.service";
 import {AppRoutingModule} from "./app-routing.module";
+import {GuardsModule} from "./guards/guards.module";
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, SharedModule.forRoot()],
+  imports: [BrowserModule, HttpModule, AppRoutingModule, SharedModule.forRoot(), GuardsModule],
   declarations: [AppComponent],
   providers: [Logger,
     {
