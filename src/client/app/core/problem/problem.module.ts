@@ -13,12 +13,14 @@ import {ProblemListComponent} from "./component/problem-list/problem-list.compon
 import {ProblemCardComponent} from "./component/problem-card/problem-card.component";
 import {ProblemFieldsComponent} from "./component/problem-fields/problem-fields.component";
 import {ProblemValueAccessorDirective} from "./directives/problem-value-accessor.directive";
+import {ProblemDetailsComponent} from "./component/problem-details/problem-details/problem-details.component";
+import {LoadProblemDetailsComponent} from "./component/problem-details/load-problem-details/load-problem-details.component";
 
 @NgModule({
   imports: [SharedModule.forRoot(), HttpModule, JsonpModule, TextEditorModule],
-  declarations: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent],
+  declarations: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent],
   providers: [ProblemService],
-  exports: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent],
+  exports: [ProblemFieldsComponent, ProblemValueAccessorDirective, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent],
 })
 export class ProblemModule {
 

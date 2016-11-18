@@ -54,6 +54,7 @@ gulp.task('build.prod', (done: any) =>
               'build.bundles.app',
               'minify.bundles',
               'build.index.prod',
+              'scss.task',
               done));
 
 // --------------
