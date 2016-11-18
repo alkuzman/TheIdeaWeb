@@ -3,6 +3,7 @@ import {Http, Response, Headers, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
 import {Credentials} from "./helper/Credentials";
+import {JwtAuthorizationService} from "../../shared/security/jwt/jwt-authorization.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -12,7 +13,7 @@ export class UserService {
   private usersUrl: string = "/api/users";
   private loginUrl: string = "/api/auth/login";
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private jwtAuthorizationService: JwtAuthorizationService) {
   }
 
   private extractData(res: Response) {
@@ -58,26 +59,7 @@ export class UserService {
   }
 
   loginUser(credentials: Credentials) {
-    var body = {
-      username: credentials.user.email,
-      password: credentials.user.password,
-      rememberMe: credentials.rememberMe
-    };
-    let url = this.loginUrl;
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('X-Requested-With', 'XMLHttpRequest');
-    return this.http.post(url, body, {headers: headers})
-      .map(this.extractLoginData)
-      .catch(this.handleError)
-  }
-
-  private extractLoginData(res: Response) {
-    let body = res.json();
-    localStorage.setItem("auth_token", body.token);
-    console.log(body);
-
-    return body || {};
+    return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe);
   }
 
   public logout() {

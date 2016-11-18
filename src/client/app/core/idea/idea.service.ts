@@ -6,7 +6,7 @@ import {Logger} from "../../logger.service";
 import {Idea} from "../model/ideas/idea";
 import {Response, Headers, Http} from "@angular/http";
 import {Observable} from "rxjs";
-import {JwtHttpService} from "../../shared/http-wrapers/jwt-http.service";
+import {JwtHttpService} from "../../shared/security/jwt/jwt-http.service";
 
 
 @Injectable()
@@ -33,9 +33,7 @@ export class IdeaService {
 
   getHeaders(): Headers {
     let headers = new Headers();
-    let authToken = localStorage.getItem("auth_token");
     headers.append('Content-Type', 'application/json');
-    headers.append('X-Authorization', 'Bearer ' + authToken);
     return headers;
   }
 

@@ -7,17 +7,16 @@ import {MaterialModule} from "@angular/material";
 import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
 import {LoggedInGuard} from "../guards/logged-in.guard";
-import {HttpWraperModule} from "./http-wrapers/http-wrapers.module";
+import {SecurityModule} from "./security/security.module";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule.forRoot(), WidgetModule, PipesModule, HttpWraperModule],
+  imports: [CommonModule, RouterModule, MaterialModule.forRoot(), WidgetModule, PipesModule, SecurityModule],
   providers: [LoggedInGuard],
-
-  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule, HttpWraperModule]
+  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule, SecurityModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
