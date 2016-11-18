@@ -1,10 +1,10 @@
 /**
  * Created by AKuzmanoski on 11/10/2016.
  */
-import {Injectable} from "@angular/core";
+import {Injectable, Inject} from "@angular/core";
 import {Logger} from "../../logger.service";
 import {Idea} from "../model/ideas/idea";
-import {Response, Headers} from "@angular/http";
+import {Response, Headers, Http} from "@angular/http";
 import {Observable} from "rxjs";
 import {JwtHttpService} from "../../shared/http-wrapers/jwt-http.service";
 
@@ -13,7 +13,7 @@ import {JwtHttpService} from "../../shared/http-wrapers/jwt-http.service";
 export class IdeaService {
   private ideasUrl = "/api/ideas";
 
-  constructor(private logger: Logger, private jwtHttp: JwtHttpService) {
+  constructor(private logger: Logger, @Inject(JwtHttpService) private http: Http) {
 
   }
 
@@ -40,21 +40,21 @@ export class IdeaService {
   }
 
   getIdeas(): Observable<Idea[]> {
-    return this.jwtHttp.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
+    return this.http.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
   }
 
   getIdea(id: number): Observable<Idea> {
     let url = this.ideasUrl + "/" + id;
     /*let params = new URLSearchParams();
      params.set('id', id.toString()); // the user's search value*/
-    return this.jwtHttp.get(url, {headers: this.getHeaders()})
+    return this.http.get(url, {headers: this.getHeaders()})
       .map(this.extractData)
       .catch(this.handleError)
   }
 
   addIdea(idea: Idea): Promise<Idea> {
     let body = JSON.stringify(idea);
-    return this.jwtHttp.post(this.ideasUrl, body, {headers: this.getHeaders()})
+    return this.http.post(this.ideasUrl, body, {headers: this.getHeaders()})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

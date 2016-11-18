@@ -16,6 +16,7 @@ import {HttpWraperModule} from "./http-wrapers/http-wrapers.module";
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule.forRoot(), WidgetModule, PipesModule, HttpWraperModule],
   providers: [LoggedInGuard],
+
   exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule, HttpWraperModule]
 })
 export class SharedModule {

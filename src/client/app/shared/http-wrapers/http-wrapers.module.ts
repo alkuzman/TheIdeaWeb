@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {HttpModule} from "@angular/http";
+import {HttpModule, XHRBackend, RequestOptions} from "@angular/http";
 import {JwtHttpService} from "./jwt-http.service";
 /**
  * Created by Viki on 11/17/2016.
@@ -8,7 +8,15 @@ import {JwtHttpService} from "./jwt-http.service";
 
 @NgModule({
   imports: [HttpModule],
-  providers: [JwtHttpService]
+  providers: [
+    {
+      provide: JwtHttpService,
+      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {
+        return new JwtHttpService(backend, defaultOptions);
+      },
+      deps: [XHRBackend, RequestOptions]
+    }
+  ]
 })
 export class HttpWraperModule {
 }
