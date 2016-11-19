@@ -14,6 +14,7 @@ export class JwtAuthorizationService {
 
   url: string = "api/auth/login";
   private securityContext: JwtSecurityContext;
+  private me: JwtAuthorizationService = this;
 
   constructor(private http: Http, securityContext: JwtSecurityContext) {
     this.securityContext = securityContext;
@@ -29,25 +30,22 @@ export class JwtAuthorizationService {
     headers.append('Content-Type', 'application/json');
     headers.append('X-Requested-With', 'XMLHttpRequest');
     return this.http.post(this.url, body, {headers: headers})
-      .map(this.extractData)
-      .catch(this.handleError)
+      .map((res: Response) => this.extractData(res))
+      .catch((error: Response) => this.handleError(error));
   }
 
   private extractData(res: Response) {
     let body = res.json();
-    console.log(body);
-    console.log(this.securityContext);
     this.securityContext.accessToken = body.token;
     this.securityContext.refreshToken = body.refreshToken;
     return body || {};
   }
 
-  private handleError(error: any) {
+  private handleError(error: Response) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
+    let errMsg = (error.json().message) ? error.json().message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
     return Observable.throw(error);
   }
 }

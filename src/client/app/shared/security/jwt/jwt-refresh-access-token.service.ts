@@ -9,34 +9,34 @@ import {Observable} from "rxjs";
 @Injectable()
 export class JwtRefreshAccessTokenService {
 
-  url: string = "auth/token";
+  url: string = "api/auth/token";
 
   constructor(private http: Http, private context: JwtSecurityContext) {
   }
 
-  getNewAccessToken(): Observable<any> {
+  getNewAccessToken(): Observable<string> {
     let headers: Headers = new Headers();
+    headers.append('Content-Type', 'application/json');
     headers.append('X-Authorization', 'Bearer ' + this.context.refreshToken);
     return this.http.get(this.url, {headers: headers})
-      .map(this.extractData)
-      .catch(this.handleError)
+      .map((response: Response) => this.extractData(response))
+      .catch((response: Response) => this.handleError(response));
   }
 
   private extractData(res: Response) {
     let body = res.json();
-    console.log(body);
-    this.context.accessToken = body.rawToken;
-    return body || {};
+    this.context.accessToken = body.token;
+    return body.token;
   }
 
-  private handleError(error: any) {
+  private handleError(error: Response) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     if (error.status == 401)
       this.context.clearSecurityContext();
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
+    //let errMsg = (error.json().message) ? error.json().message :
+    //  error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    //console.error(errMsg); // log to console instead
     return Observable.throw(error);
   }
 }
