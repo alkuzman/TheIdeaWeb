@@ -44,7 +44,7 @@ export class GetUserEmailFormComponent implements OnInit {
   }
 
   private onError(error: Response) {
-    this.userNotFound.emit(error);
+    this.userNotFound.emit(this.user);
     this.notify();
   }
 
