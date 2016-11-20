@@ -3,6 +3,7 @@ import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
 import {Response} from "@angular/http";
 import {UserObjectService} from "../../../user-object.service";
+import {Idea} from "../../../../model/ideas/idea";
 /**
  * Created by Viki on 11/1/2016.
  */

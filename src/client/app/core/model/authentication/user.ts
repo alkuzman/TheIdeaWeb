@@ -12,6 +12,10 @@ export class User extends Agent implements Person {
   public role: Role;
   public provider: Provider;
 
+  constructor() {
+    super();
+  }
+
 
   toString(): string {
     return "Email: " + this.email + "\n" +
