@@ -23,6 +23,7 @@ export class GetUserEmailFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = new User();
+    console.log(this.user.type);
     this.notify();
   }
 

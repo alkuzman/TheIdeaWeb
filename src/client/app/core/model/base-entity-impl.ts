@@ -12,6 +12,7 @@ export abstract class BaseEntityImpl extends Object implements BaseEntity{
   constructor() {
     super();
     this.type = this.constructor.name;
+    console.log("TUKA " + this.type);
   }
 
   toString(): string {
