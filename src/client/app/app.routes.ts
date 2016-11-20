@@ -1,8 +1,5 @@
-import { Routes } from '@angular/router';
-
-import {CoreComponent} from "./core/core.component"
-import {PagesRoutes} from "./pages/pages.routes";
-import {PagesComponent} from "./pages/pages.component";
+import {Routes} from "@angular/router";
+import {AuthenticatedGuard} from "./guards/authenticated.guard";
 
 export const routes: Routes = [
   {
@@ -12,7 +9,8 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren:"app/auth-pages/auth-pages.module#AuthPagesModule"
+    loadChildren: "app/auth-pages/auth-pages.module#AuthPagesModule",
+    canActivate: [AuthenticatedGuard]
   },
   {
     path: "",

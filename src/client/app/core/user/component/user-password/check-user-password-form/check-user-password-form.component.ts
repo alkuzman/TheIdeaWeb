@@ -3,6 +3,7 @@ import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
 import {UserObjectService} from "../../../user-object.service";
 import {Response} from "@angular/http";
+import {Credentials} from "../../../helper/Credentials";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -31,9 +32,8 @@ export class CheckUserPasswordFormComponent implements OnInit {
     }
   }
 
-  checkUserPassword(user: User) {
-    this.user = user;
-    this.userService.loginUser(this.user).subscribe((response: Response) => this.onPasswordCorrect(response),
+  checkUserPassword(credentials: Credentials) {
+    this.userService.loginUser(credentials).subscribe((response: Response) => this.onPasswordCorrect(response),
       (error: Response) => this.onPasswordWrong(error));
   }
 

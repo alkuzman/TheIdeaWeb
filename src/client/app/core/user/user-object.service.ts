@@ -19,6 +19,7 @@ export class UserObjectService {
   }
 
   notify(): void {
+    console.log(this.user);
     this.userChanged.emit(this.user);
   }
 }

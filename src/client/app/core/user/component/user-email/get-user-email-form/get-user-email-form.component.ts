@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, OnInit, Input} from "@angular/core";
+import {Component, EventEmitter, Output, Input, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
 import {Response} from "@angular/http";
@@ -44,7 +44,7 @@ export class GetUserEmailFormComponent implements OnInit {
   }
 
   private onError(error: Response) {
-    this.userNotFound.emit(this.user);
+    this.userNotFound.emit(error);
     this.notify();
   }
 

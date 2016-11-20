@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {Http, Response, Headers, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
+import {Credentials} from "./helper/Credentials";
+import {JwtAuthorizationService} from "../../shared/security/jwt/jwt-authorization.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -9,10 +11,9 @@ import {User} from "../model/authentication/user";
 @Injectable()
 export class UserService {
   private usersUrl: string = "/api/users";
-  private loginUrl: string = "/api/doLogin";
+  private loginUrl: string = "/api/auth/login";
 
-  constructor(private http: Http) {
-
+  constructor(private http: Http, private jwtAuthorizationService: JwtAuthorizationService) {
   }
 
   private extractData(res: Response) {
@@ -57,17 +58,15 @@ export class UserService {
       .catch(this.handleError)
   }
 
-  loginUser(user: User) {
-    var body = 'username=' + user.email + '&password=' + user.password;
-    let url = this.loginUrl;
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post(url, body, {headers: headers})
-      .map(this.extractLoginData)
-      .catch(this.handleError)
+  loginUser(credentials: Credentials) {
+    return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe);
   }
 
-  private extractLoginData(res: Response) {
-    return res;
+  public logout() {
+    localStorage.removeItem("auth_token");
+  }
+
+  public isLoggedIn() {
+    return !!localStorage.getItem("auth_token");
   }
 }
