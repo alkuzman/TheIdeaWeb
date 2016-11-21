@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
 import {Credentials} from "./helper/Credentials";
 import {JwtAuthorizationService} from "../../shared/security/jwt/jwt-authorization.service";
+import {JwtSecurityContext} from "../../shared/security/jwt/jwt-security-context.service";
+import {UserObjectService} from "./user-object.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -13,7 +15,7 @@ export class UserService {
   private usersUrl: string = "/api/users";
   private loginUrl: string = "/api/auth/login";
 
-  constructor(private http: Http, private jwtAuthorizationService: JwtAuthorizationService) {
+  constructor(private http: Http, private jwtAuthorizationService: JwtAuthorizationService, private jwtSecurityContext: JwtSecurityContext, private userObjectService: UserObjectService) {
   }
 
   private extractData(res: Response) {
@@ -59,14 +61,22 @@ export class UserService {
   }
 
   loginUser(credentials: Credentials) {
-    return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe);
+    return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe)
+      .map((response:Response) => this.extractLoginData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  private extractLoginData(res: Response) {
+    this.jwtSecurityContext.principal = this.userObjectService.user;
+    let body = res.json();
+    return body || {};
   }
 
   public logout() {
-    localStorage.removeItem("auth_token");
+    this.jwtSecurityContext.clearSecurityContext();
   }
 
   public isLoggedIn() {
-    return !!localStorage.getItem("auth_token");
+    return this.jwtSecurityContext.hasAccessToken();
   }
 }

@@ -1,14 +1,15 @@
 import {Injectable} from "@angular/core";
+import {SecurityContext} from "../security.context.service";
 /**
  * Created by Viki on 11/18/2016.
  */
 
 
 @Injectable()
-export class JwtSecurityContext {
+export class JwtSecurityContext extends SecurityContext {
 
   constructor() {
-
+    super();
   }
 
   get accessToken(): string {
@@ -30,6 +31,7 @@ export class JwtSecurityContext {
   clearSecurityContext() {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_refresh_token");
+    super.clearSecurityContext();
   }
 
   hasAccessToken(): boolean {

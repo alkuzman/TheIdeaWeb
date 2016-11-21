@@ -38,7 +38,7 @@ export class JwtAuthorizationService {
     let body = res.json();
     this.securityContext.accessToken = body.token;
     this.securityContext.refreshToken = body.refreshToken;
-    return body || {};
+    return res;
   }
 
   private handleError(error: Response) {

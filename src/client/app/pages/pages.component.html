@@ -1,19 +1,26 @@
 <md-sidenav-layout style="height: 100vh">
   <md-sidenav mode="over" #sidenav>
     <md-toolbar color="primary">
-      <img width="50" height="50" src="/assets/images/logo.png">
+      <ideal-authenticated-user-named-avatar style="margin-top: 60px" [profilePictureRadius]="25" nameFontSize="10pt" descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
       <md-toolbar-row>
-        Guest Guest
       </md-toolbar-row>
     </md-toolbar>
     <md-nav-list denese>
-      <a md-list-item [routerLink]="[ '/home' ]" routerLinkActive="activeLink">Home</a>
+      <md-list-item [routerLink]="[ '/home' ]" routerLinkActive="activeLink">
+        <md-icon class="icon-middle" md-list-avatar>home</md-icon>
+        <span>Home</span>
+      </md-list-item>
       <!--<a md-list-item [routerLink]="[ '/ideas' ]" routerLinkActive="activeLink">Ideas</a>
       <a md-list-item  [routerLink]="[ '/ideas/new' ]" routerLinkActive="activeLink">> Create Idea</a>-->
-      <a md-list-item [routerLink]="[ '/about' ]" routerLinkActive="activeLink">About</a>
+      <md-list-item [routerLink]="[ '/about' ]" routerLinkActive="activeLink">
+        <span>About</span>
+      </md-list-item>
       <a md-list-item [routerLink]="[ '/problems' ]" routerLinkActive="activeLink">Problems</a>
       <a md-list-item [routerLink]="[ '/problems/new' ]" routerLinkActive="activeLink">&nbsp;&nbsp;&nbsp; New Problem</a>
-      <a md-list-item [routerLink]="[ '/ideas' ]" routerLinkActive="activeLink">Ideas</a>
+      <md-list-item [routerLink]="[ '/ideas' ]" routerLinkActive="activeLink">
+        <md-icon class="icon-middle" md-list-avatar>wb_incandescent</md-icon>
+        <span>ideas</span>
+      </md-list-item>
       <a md-list-item [routerLink]="[ '/ideas/new' ]" routerLinkActive="activeLink">&nbsp;&nbsp;&nbsp; New Idea</a>
       <a md-list-item [routerLink]="[ '/auth/register' ]" routerLinkActive="activeLink">Register</a>
       <a md-list-item [routerLink]="[ '/auth' ]" routerLinkActive="activeLink">Login</a>

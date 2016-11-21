@@ -4,8 +4,8 @@
     <ideal-widget-avatar *ngSwitchCase="displayType" [radius]="radius" [src]="value"></ideal-widget-avatar>
   </div>
   <div>
-    <strong>{{name | idealEmptyString}}</strong>
+    <strong [ngStyle]="{fontSize: nameFontSize}">{{name | idealEmptyString}}</strong>
     <br/>
-    <span>{{description | idealEmptyString}}</span>
+    <span [ngStyle]="{fontSize: descriptionFontSize}">{{description | idealEmptyString}}</span>
   </div>
 </div>
