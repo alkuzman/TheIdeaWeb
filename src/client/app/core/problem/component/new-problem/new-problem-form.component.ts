@@ -1,6 +1,8 @@
 import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {Problem} from "../../../model/ideas/problem";
 import {ProblemService} from "../../problem.service";
+import {JwtSecurityContext} from "../../../../shared/security/jwt/jwt-security-context.service";
+import {User} from "../../../model/authentication/user";
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */
@@ -17,7 +19,7 @@ export class NewProblemFormComponent implements OnInit {
   active = true;
   errorMessage: any;
 
-  constructor(private problemService: ProblemService) {
+  constructor(private problemService: ProblemService, private securityContext: JwtSecurityContext) {
 
   }
 
@@ -27,6 +29,8 @@ export class NewProblemFormComponent implements OnInit {
 
   save(p: Problem): boolean {
     this.problem = p;
+    let questioner: User = this.securityContext.principal;
+    this.problem.questioner = questioner;
     this.problemService.addProblem(this.problem)
       .then(
         problem => this.problemCreated(problem),

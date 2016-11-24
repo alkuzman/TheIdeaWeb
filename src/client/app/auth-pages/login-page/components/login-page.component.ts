@@ -48,8 +48,7 @@ export class LoginPageComponent {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private snackBar: MdSnackBar,
-              private viewContainerRef: ViewContainerRef) {
+              private snackBar: MdSnackBar) {
   }
 
   onUserLoggedIn(): void {

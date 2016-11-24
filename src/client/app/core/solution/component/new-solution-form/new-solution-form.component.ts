@@ -4,6 +4,8 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {Solution} from "../../../model/ideas/solution";
 import {SolutionService} from "../../solution.service";
+import {JwtSecurityContext} from "../../../../shared/security/jwt/jwt-security-context.service";
+import {User} from "../../../model/authentication/user";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-solution-form",
@@ -14,7 +16,7 @@ export class NewSolutionFormComponent implements OnInit {
   solution: Solution;
   errorMessage: any;
 
-  constructor(private solutionService: SolutionService) {
+  constructor(private solutionService: SolutionService, private jwtSecurityContext: JwtSecurityContext) {
 
   }
 
@@ -23,6 +25,9 @@ export class NewSolutionFormComponent implements OnInit {
   }
 
   save(solution: Solution) {
+    let owner: User = this.jwtSecurityContext.principal;
+    solution.idea.owner = owner;
+    solution.idea.problem.questioner = owner;
     this.solutionService.addSolution(solution).then(
       solution => this.onSolutionSaved(solution),
       error => this.errorMessage = error
