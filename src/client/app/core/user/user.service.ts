@@ -58,21 +58,26 @@ export class UserService {
 
   loginUser(credentials: Credentials) {
     return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe)
-      .map((response:Response) => this.extractLoginData(response))
+      .map((response: Response) => this.extractLoginData(response))
       .catch((error: any) => this.handleError(error));
   }
 
   private extractLoginData(res: Response) {
-    this.jwtSecurityContext.principal = this.userObjectService.user;
     let body = res.json();
+    this.jwtSecurityContext.principal = this.userObjectService.user;
+    this.userObjectService.removeUser();
     return body || {};
   }
 
-  public logout() {
+  public logout(): void {
     this.jwtSecurityContext.clearSecurityContext();
   }
 
-  public isLoggedIn() {
-    return this.jwtSecurityContext.hasAccessToken();
+  public isLoggedIn(): boolean {
+    return this.jwtSecurityContext.isAuthenticated();
+  }
+
+  public getAuthenticatedUser(): User {
+    return this.jwtSecurityContext.principal;
   }
 }

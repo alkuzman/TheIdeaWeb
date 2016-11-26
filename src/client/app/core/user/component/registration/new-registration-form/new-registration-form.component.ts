@@ -3,10 +3,11 @@
  */
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {UserService} from "../../../user.service";
-import {UserObjectService} from "../../../user-object.service";
 import {User} from "../../../../model/authentication/user";
 import {Response} from "@angular/http";
 import {FieldError} from "../../../../../shared/helper/field-error";
+import {JwtSecurityContext} from "../../../../../shared/security/jwt/jwt-security-context.service";
+import {UserObjectService} from "../../../user-object.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-registration-form",
@@ -24,10 +25,8 @@ export class NewRegistrationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.userObjectService.user != null) {
-      this.user = this.userObjectService.user;
-    }
-    else {
+    this.user = this.userObjectService.user;
+    if (this.user == null) {
       this.usernameNotChecked.emit();
     }
   }

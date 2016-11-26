@@ -1,6 +1,5 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
-import {UserObjectService} from "../../../user-object.service";
 import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstract-value-accessor";
 /**
  * Created by Viki on 11/1/2016.

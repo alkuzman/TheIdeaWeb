@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {UserObjectService} from "../../core/user/user-object.service";
 /**
  * Created by Viki on 10/28/2016.
  */

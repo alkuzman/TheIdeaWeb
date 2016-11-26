@@ -1,9 +1,10 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
-import {UserObjectService} from "../../../user-object.service";
 import {Response} from "@angular/http";
 import {Credentials} from "../../../helper/Credentials";
+import {JwtSecurityContext} from "../../../../../shared/security/jwt/jwt-security-context.service";
+import {UserObjectService} from "../../../user-object.service";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -24,12 +25,11 @@ export class CheckUserPasswordFormComponent implements OnInit {
   user: User;
 
   ngOnInit(): void {
-    if (this.userObjectService.user != null) {
-      this.user = this.userObjectService.user;
-    }
-    else {
+    this.user = this.userObjectService.user;
+    if (this.user == null) {
       this.usernameNotChecked.emit();
     }
+    this.user.password = "";
   }
 
   checkUserPassword(credentials: Credentials) {
@@ -47,16 +47,10 @@ export class CheckUserPasswordFormComponent implements OnInit {
 
   notifyPasswordCorrect(): void {
     this.passwordCorrect.emit(this.user);
-    this.notify();
   }
 
   notifyPasswordWrong(): void {
     this.passwordIncorrect.emit();
-    this.notify();
-  }
-
-  notify(): void {
-    this.userObjectService.user = this.user;
   }
 }
 
