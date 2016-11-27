@@ -1,8 +1,9 @@
 import {BaseEntity} from "./base-entity";
+import {OnInit} from "@angular/core";
 /**
  * Created by Aleskandar Kuzmanoski on 10/10/2016.
  */
-export abstract class BaseEntityImpl extends Object implements BaseEntity{
+export abstract class BaseEntityImpl implements BaseEntity{
   public id: number;
   public creationDate: Date;
   public lastModified: Date;
@@ -10,7 +11,6 @@ export abstract class BaseEntityImpl extends Object implements BaseEntity{
   public type: string;
 
   constructor() {
-    super();
     this.type = this.constructor.name;
   }
 

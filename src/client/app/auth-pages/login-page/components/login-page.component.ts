@@ -48,8 +48,7 @@ export class LoginPageComponent {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private snackBar: MdSnackBar,
-              private viewContainerRef: ViewContainerRef) {
+              private snackBar: MdSnackBar) {
   }
 
   onUserLoggedIn(): void {
@@ -58,11 +57,11 @@ export class LoginPageComponent {
 
   onWrongPassword() {
     console.log("Wrong password");
-    let config = new MdSnackBarConfig();
-    this.snackBar.open('You have entered wrong password!', 'Try Again', config);
+    this.snackBar.open('You have entered wrong password!', "Try Again");
   }
 
   authenticate(): void {
+    console.log("TUKA");
     let queryParams = {};
     if (this.email != null)
       queryParams = {"email": this.email};

@@ -1,24 +1,21 @@
-/**
- * Created by AKuzmanoski on 29/10/2016.
- */
-import {Injectable, EventEmitter} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {User} from "../model/authentication/user";
-import {Subject} from "rxjs";
+/**
+ * Created by AKuzmanoski on 25/11/2016.
+ */
 @Injectable()
 export class UserObjectService {
   private _user: User;
-  userChanged: EventEmitter<User> = new EventEmitter<User>();
 
-  set user(value: User) {
-    this._user = value;
-    this.notify();
+  public get user(): User {
+    return JSON.parse(localStorage.getItem("user"));
   }
 
-  get user(): User {
-    return this._user;
+  public set user(user: User) {
+      localStorage.setItem("user", JSON.stringify(user));
   }
 
-  notify(): void {
-    this.userChanged.emit(this.user);
+  removeUser(): void {
+     localStorage.removeItem("user");
   }
 }

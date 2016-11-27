@@ -2,6 +2,10 @@ import {Injectable} from "@angular/core";
 import {Http, Response, Headers, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "../model/authentication/user";
+import {Credentials} from "./helper/Credentials";
+import {JwtAuthorizationService} from "../../shared/security/jwt/jwt-authorization.service";
+import {JwtSecurityContext} from "../../shared/security/jwt/jwt-security-context.service";
+import {UserObjectService} from "./user-object.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -9,10 +13,9 @@ import {User} from "../model/authentication/user";
 @Injectable()
 export class UserService {
   private usersUrl: string = "/api/users";
-  private loginUrl: string = "/api/doLogin";
+  private loginUrl: string = "/api/auth/login";
 
-  constructor(private http: Http) {
-
+  constructor(private http: Http, private jwtAuthorizationService: JwtAuthorizationService, private jwtSecurityContext: JwtSecurityContext, private userObjectService: UserObjectService) {
   }
 
   private extractData(res: Response) {
@@ -23,9 +26,6 @@ export class UserService {
   private handleError(error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
     return Observable.throw(error);
   }
 
@@ -43,8 +43,7 @@ export class UserService {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(this.usersUrl, body, {headers: headers})
       .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      .then(this.extractData);
   }
 
   getUserByEmail(email: string) {
@@ -57,17 +56,28 @@ export class UserService {
       .catch(this.handleError)
   }
 
-  loginUser(user: User) {
-    var body = 'username=' + user.email + '&password=' + user.password;
-    let url = this.loginUrl;
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post(url, body, {headers: headers})
-      .map(this.extractLoginData)
-      .catch(this.handleError)
+  loginUser(credentials: Credentials) {
+    return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe)
+      .map((response: Response) => this.extractLoginData(response))
+      .catch((error: any) => this.handleError(error));
   }
 
   private extractLoginData(res: Response) {
-    return res;
+    let body = res.json();
+    this.jwtSecurityContext.principal = this.userObjectService.user;
+    this.userObjectService.removeUser();
+    return body || {};
+  }
+
+  public logout(): void {
+    this.jwtSecurityContext.clearSecurityContext();
+  }
+
+  public isLoggedIn(): boolean {
+    return this.jwtSecurityContext.isAuthenticated();
+  }
+
+  public getAuthenticatedUser(): User {
+    return this.jwtSecurityContext.principal;
   }
 }

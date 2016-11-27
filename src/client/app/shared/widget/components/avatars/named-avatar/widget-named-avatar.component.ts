@@ -19,6 +19,8 @@ export class WidgetNamedAvatarComponent extends AbstractValueAccessor<string> {
   @Input("name") name: string = "Guest";
   @Input("description") description: string = "";
   @Input("type") type: AvatarType = AvatarType.CHOOSER;
+  @Input("nameFontSize") nameFontSize: string = "12pt";
+  @Input("descriptionFontSize") descriptionFontSize: string = "12pt";
   chooserType: AvatarType = AvatarType.CHOOSER;
   displayType: AvatarType = AvatarType.DISPLAY;
 
