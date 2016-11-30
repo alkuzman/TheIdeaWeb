@@ -1,4 +1,6 @@
 import {Component} from "@angular/core";
+import {Organization} from "../../../core/model/authentication/organization";
+import {Router} from "@angular/router";
 /**
  * Created by Viki on 11/21/2016.
  */
@@ -10,4 +12,14 @@ import {Component} from "@angular/core";
   templateUrl: 'new-organization-page.component.html'
 })
 export class NewOrganizationPageComponent {
+
+  constructor(private router: Router) {
+  }
+
+  organizationAdded(organization: Organization) {
+    //this.router.navigateByUrl("");
+  }
+
+  error(error: any) {
+  }
 }

@@ -1,0 +1,6 @@
+<form (ngSubmit)="organizaionForm.form.valid && continue($event)" #organizaionForm="ngForm" style="text-align: center">
+  <ideal-organization-fields name="organizationFileds" [(ngModel)]="organization"></ideal-organization-fields>
+  <button md-raised-button color="primary" type="submit">
+    {{buttonText}}
+  </button>
+</form>

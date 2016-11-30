@@ -9,4 +9,9 @@ export class Agent extends BaseEntityImpl {
   public telephone: string;
   public profilePicture: string;
   public coverPicture: string;
+
+
+  toString(): string {
+    return "Email " + this.email + super.toString();
+  }
 }

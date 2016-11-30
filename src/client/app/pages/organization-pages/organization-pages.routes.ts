@@ -6,11 +6,11 @@ import {OrganizationPagesComponent} from "./organization-pages.component";
 
 
 export const OrganizationPagesRoutes: Routes = [
-  {
+  /*{
     path: '',
     component: OrganizationPagesComponent,
     loadChildren: "app/pages/organization-pages/organizations-page/organizations-page.module#OrganizationsPageModule"
-  },
+   },*/
   {
     path: 'new',
     component: OrganizationPagesComponent,

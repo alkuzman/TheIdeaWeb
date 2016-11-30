@@ -1,0 +1,22 @@
+<ideal-widget-avatar-chooser name="organizationProfilePicture" [(ngModel)]="value.profilePicture"
+                             radius="50"></ideal-widget-avatar-chooser>
+<div class="component">
+  <ideal-widget-labeled-input [label]="nameLabel" description="Place your name here" name="organizationNameL"
+                              inputName="organizationName" [(ngModel)]="value.name"
+                              (ngModelChange)="notify()"></ideal-widget-labeled-input>
+</div>
+<div class="component">
+  <ideal-widget-labeled-input [label]="emailLabel" description="Place your email here" name="organizationEmailL"
+                              inputName="organizationEmail" [(ngModel)]="value.email"
+                              (ngModelChange)="notify()"></ideal-widget-labeled-input>
+</div>
+<div class="component">
+  <label>
+    <strong>{{descriptionLabel}}</strong>
+  </label>&nbsp;&nbsp;
+  <md-textarea id="organizationDescription" name="organizationDescription"
+               placeholder="Place your description here. Be specific" style="flex: auto; width: 20%; height: 50px"
+               [(ngModel)]="value.description" (ngModelChange)="notify()">
+  </md-textarea>
+</div>
+

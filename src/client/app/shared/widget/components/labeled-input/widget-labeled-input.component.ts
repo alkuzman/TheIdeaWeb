@@ -1,4 +1,5 @@
-import {Component, Input, EventEmitter, Output} from "@angular/core";
+import {Component, Input} from "@angular/core";
+import {MakeProvider, AbstractValueAccessor} from "../../../abstract-value-accessor";
 /**
  * Created by Viki on 10/29/2016.
  */
@@ -8,16 +9,11 @@ import {Component, Input, EventEmitter, Output} from "@angular/core";
   moduleId: module.id,
   selector: "ideal-widget-labeled-input",
   templateUrl: "widget-labeled-input.component.html",
-  styleUrls: ["widget-labeled-input.component.css"]
+  styleUrls: ["widget-labeled-input.component.css"],
+  providers: [MakeProvider(WidgetLabeledInput)]
 })
-export class WidgetLabeledInput {
+export class WidgetLabeledInput extends AbstractValueAccessor<string> {
   @Input("label") label: string = "";
   @Input("description") description: string = "";
   @Input("inputName") name: string = "value";
-  @Output("change") change: EventEmitter<string> = new EventEmitter<string>();
-  value: string = "";
-
-  onChange(): void {
-    this.change.emit(this.value);
-  }
 }
