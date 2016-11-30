@@ -12,7 +12,6 @@ import { NameListService } from '../../shared/index';
 })
 
 export class HomeComponent implements OnInit {
-
   newName: string = '';
   errorMessage: string;
   names: any[] = [];

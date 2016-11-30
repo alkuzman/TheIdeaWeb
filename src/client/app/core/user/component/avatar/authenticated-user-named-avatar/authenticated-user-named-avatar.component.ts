@@ -22,12 +22,13 @@ export class AuthenticatedUserNamedAvatarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.securityContext.principal;
-    if (this.user == null) {
+    if (!this.securityContext.isAuthenticated()) {
       this.user = new User();
       this.user.firstName = "Guest";
       this.user.name = "Guest";
       this.user.email = "guest@ideal-hub.com";
+    } else {
+      this.user = this.securityContext.principal;
     }
   }
 }

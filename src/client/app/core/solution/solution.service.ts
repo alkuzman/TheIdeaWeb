@@ -1,16 +1,17 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {Injectable} from "@angular/core";
+import {Injectable, Inject} from "@angular/core";
 import {Response, Headers, Http} from "@angular/http";
 import {Observable} from "rxjs";
 import {Solution} from "../model/ideas/solution";
+import {JwtHttpService} from "../../shared/security/jwt/jwt-http.service";
 
 @Injectable()
 export class SolutionService {
   private solutionsUrl = "/api/solutions";
 
-  constructor(private http: Http) {
+  constructor(private http: Http, @Inject(JwtHttpService) private jwtHttp: Http) {
 
   }
 
@@ -31,7 +32,7 @@ export class SolutionService {
   addSolution(solution: Solution): Promise<Solution> {
     let body = JSON.stringify(solution);
     let headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.solutionsUrl, body, {headers: headers})
+    return this.jwtHttp.post(this.solutionsUrl, body, {headers: headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

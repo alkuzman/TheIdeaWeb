@@ -26,9 +26,6 @@ export class UserService {
   private handleError(error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
     return Observable.throw(error);
   }
 
@@ -46,8 +43,7 @@ export class UserService {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(this.usersUrl, body, {headers: headers})
       .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
+      .then(this.extractData);
   }
 
   getUserByEmail(email: string) {
@@ -62,21 +58,26 @@ export class UserService {
 
   loginUser(credentials: Credentials) {
     return this.jwtAuthorizationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe)
-      .map((response:Response) => this.extractLoginData(response))
+      .map((response: Response) => this.extractLoginData(response))
       .catch((error: any) => this.handleError(error));
   }
 
   private extractLoginData(res: Response) {
-    this.jwtSecurityContext.principal = this.userObjectService.user;
     let body = res.json();
+    this.jwtSecurityContext.principal = this.userObjectService.user;
+    this.userObjectService.removeUser();
     return body || {};
   }
 
-  public logout() {
+  public logout(): void {
     this.jwtSecurityContext.clearSecurityContext();
   }
 
-  public isLoggedIn() {
-    return this.jwtSecurityContext.hasAccessToken();
+  public isLoggedIn(): boolean {
+    return this.jwtSecurityContext.isAuthenticated();
+  }
+
+  public getAuthenticatedUser(): User {
+    return this.jwtSecurityContext.principal;
   }
 }

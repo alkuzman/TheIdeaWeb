@@ -6,7 +6,6 @@ import {SharedModule} from "../../shared/shared.module";
 import {UserNamedAvatarComponent} from "./component/avatar/user-named-avatar/user-named-avatar.component";
 import {UserService} from "./user.service";
 import {LoadUserNamedAvatarComponent} from "./component/avatar/load-user-named-avatar/load-user-named-avatar.component";
-import {UserObjectService} from "./user-object.service";
 import {RegisterFieldsComponent} from "./component/registration/register-fields/register-fields.component";
 import {RegisterFormComponent} from "./component/registration/register-form/register-form.component";
 import {UserEmailFieldsComponent} from "./component/user-email/user-email-fields/user-email-fields.component";
@@ -20,12 +19,12 @@ import {AuthenticatedUserNamedAvatarComponent} from "./component/avatar/authenti
 import {UserProfilePicturePipe} from "./pipes/user-profile-picture.pipe";
 import {UserNamePipe} from "./pipes/user-name.pipe";
 import className = webdriver.By.className;
+import {UserObjectService} from "./user-object.service";
 @NgModule({
   imports: [SharedModule],
   declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent],
   exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent],
-  providers: [UserService, UserObjectService]
-
+  providers: [UserObjectService, UserService]
 })
 export class UserModule {
 

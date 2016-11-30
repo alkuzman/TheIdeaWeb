@@ -2,8 +2,8 @@ import {Component, EventEmitter, Output, Input, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {UserService} from "../../../user.service";
 import {Response} from "@angular/http";
+import {JwtSecurityContext} from "../../../../../shared/security/jwt/jwt-security-context.service";
 import {UserObjectService} from "../../../user-object.service";
-import {Idea} from "../../../../model/ideas/idea";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -40,13 +40,13 @@ export class GetUserEmailFormComponent implements OnInit {
 
   onUserReady(user: User) {
     this.user = user;
-    this.userReady.emit(user);
     this.notify();
+    this.userReady.emit(user);
   }
 
   private onError(error: Response) {
-    this.userNotFound.emit(this.user);
     this.notify();
+    this.userNotFound.emit(this.user);
   }
 
   notify(): void {

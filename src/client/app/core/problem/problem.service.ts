@@ -1,19 +1,20 @@
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */
-import {Injectable} from "@angular/core";
+import {Injectable, Inject} from "@angular/core";
 import {Logger} from "../../logger.service";
 import {Idea} from "../model/ideas/idea";
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {Problem} from "../model/ideas/problem";
+import {JwtHttpService} from "../../shared/security/jwt/jwt-http.service";
 
 
 @Injectable()
 export class ProblemService {
   private ideasUrl = "/api/problems";
 
-  constructor(private logger: Logger, private http: Http) {
+  constructor(private logger: Logger, private http: Http, @Inject(JwtHttpService) private jwtHttp: Http) {
 
   }
 
@@ -47,7 +48,7 @@ export class ProblemService {
   addProblem(problem: Problem): Promise<Problem> {
     let body = JSON.stringify(problem);
     let headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.ideasUrl, body, {headers: headers})
+    return this.jwtHttp.post(this.ideasUrl, body, {headers: headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

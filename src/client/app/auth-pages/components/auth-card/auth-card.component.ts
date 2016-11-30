@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {Alignment} from "../../../shared/widget/components/avatars/named-avatar/enum-alignment";
 import {User} from "../../../core/model/authentication/user";
-import {UserObjectService} from "../../../core/user/user-object.service";
 /**
  * Created by Viki on 10/28/2016.
  */
