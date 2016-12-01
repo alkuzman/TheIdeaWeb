@@ -4,9 +4,12 @@
 import {Injectable, Inject} from "@angular/core";
 import {Logger} from "../../logger.service";
 import {Idea} from "../model/ideas/idea";
-import {Response, Headers, Http} from "@angular/http";
+import {Response, Headers, Http, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {JwtHttpService} from "../../shared/security/jwt/jwt-http.service";
+import {IdeasFilterProperties} from "./params/ideas-filter.properties";
+import {Properties} from "../../shared/utils/properties";
+import {PropertiesToUrlSearchParams} from "../../shared/utils/properties-to-url-search-params";
 
 
 @Injectable()
@@ -37,8 +40,9 @@ export class IdeaService {
     return headers;
   }
 
-  getIdeas(): Observable<Idea[]> {
-    return this.http.get(this.ideasUrl, {headers: this.getHeaders()}).map(this.extractData).catch(this.handleError);
+  getIdeas(filterProperties: IdeasFilterProperties): Observable<Idea[]> {
+    let params = PropertiesToUrlSearchParams.transform(filterProperties);
+    return this.http.get(this.ideasUrl, {headers: this.getHeaders(), search: params}).map(this.extractData).catch(this.handleError);
   }
 
   getIdea(id: number): Observable<Idea> {

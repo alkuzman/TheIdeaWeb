@@ -11,6 +11,8 @@ import {Solution} from "../../../model/ideas/solution";
 export class SolutionFormComponent implements OnInit {
   @Input("submitText") submitText = "Submit";
   @Input("solution") solution: Solution;
+  @Input("showIdeaFields") showIdeaFields: boolean = true;
+  @Input("showProblemFields") showProblemFields: boolean = true;
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
   active = true;
 

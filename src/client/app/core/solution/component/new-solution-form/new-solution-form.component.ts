@@ -1,11 +1,13 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {Solution} from "../../../model/ideas/solution";
 import {SolutionService} from "../../solution.service";
 import {JwtSecurityContext} from "../../../../shared/security/jwt/jwt-security-context.service";
 import {User} from "../../../model/authentication/user";
+import {Problem} from "../../../model/ideas/problem";
+import {Idea} from "../../../model/ideas/idea";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-solution-form",
@@ -13,6 +15,10 @@ import {User} from "../../../model/authentication/user";
 })
 export class NewSolutionFormComponent implements OnInit {
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
+  @Input("showIdeaFields") showIdeaFields: boolean = true;
+  @Input("showProblemFields") showProblemFields: boolean = true;
+  @Input("idea") idea: Idea;
+  @Input("problem") problem: Problem;
   solution: Solution;
   errorMessage: any;
 
@@ -22,6 +28,11 @@ export class NewSolutionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.solution = new Solution();
+    if (this.idea != null)
+      this.solution.idea = this.idea;
+    else this.solution.idea = new Idea();
+    if (this.problem != null)
+      this.solution.idea.problem = this.problem;
   }
 
   save(solution: Solution) {

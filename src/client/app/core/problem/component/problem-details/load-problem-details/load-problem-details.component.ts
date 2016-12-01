@@ -11,7 +11,6 @@ import {Response} from "@angular/http";
   templateUrl: "load-problem-details.component.html"
 })
 export class LoadProblemDetailsComponent implements OnInit {
-
   @Input("problemId") problemId: number;
   private problem: Problem;
 

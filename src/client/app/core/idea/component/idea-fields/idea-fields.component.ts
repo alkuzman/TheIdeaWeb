@@ -15,6 +15,7 @@ export class IdeaFieldsComponent implements OnInit {
   @Input("problemTitleLabel") problemTitleLabel = "Problem Title";
   @Input("problemBodyLabel") problemBodyLabel = "Problem Body";
   @Input("problemTagsLabel") problemTagsLabel = "Problem Tags";
+  @Input("showProblemFields") showProblemFields: boolean = true;
   @Output("ideaChange") ideaChange: EventEmitter<Idea>;
   private idea: Idea;
 

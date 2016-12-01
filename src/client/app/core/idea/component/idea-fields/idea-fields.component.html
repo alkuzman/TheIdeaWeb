@@ -1,4 +1,4 @@
-<ideal-problem-fields [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel" [tagsLabel]="problemTagsLabel" name="ideaProblem" [(ngModel)]="idea.problem" (ngModelChange)="onChange()"></ideal-problem-fields>
+<ideal-problem-fields *ngIf="showProblemFields" [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel" [tagsLabel]="problemTagsLabel" name="ideaProblem" [(ngModel)]="idea.problem" (ngModelChange)="onChange()"></ideal-problem-fields>
 <hr/>
 <label><strong>{{titleLabel}}</strong></label>&nbsp;
 <md-input name="ideaTitle" [(ngModel)]="idea.title" (ngModelChange)="onChange()" placeholder="Idea Title"></md-input><br/>
