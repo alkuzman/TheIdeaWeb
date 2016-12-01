@@ -32,16 +32,16 @@ export class NewOrganizationFormComponent implements OnInit {
   }
 
   onOrganizationAdded(organization: Organization): void {
-    let settings = new MdSnackBarConfig(this.viewContainerRef);
-    let simpleSnackBarRef = this.snackBar.open("Organization Added", "Close", settings);
-    setTimeout(simpleSnackBarRef.dismiss(), 1000);
+    let settings = new MdSnackBarConfig();
+    let simpleSnackBarRef = this.snackBar.open("Organization Added", null, settings);
+    setTimeout(simpleSnackBarRef.dismiss.bind(simpleSnackBarRef), 3000);
     this.organizationAdded.emit(organization);
   }
 
   onError(error: any): void {
-    let settings = new MdSnackBarConfig(this.viewContainerRef);
+    let settings = new MdSnackBarConfig();
     let simpleSnackBarRef = this.snackBar.open("Something went wrong. Try Again", null, settings);
-    setTimeout(simpleSnackBarRef.dismiss(), 1000);
+    setTimeout(simpleSnackBarRef.dismiss.bind(simpleSnackBarRef), 3000);
     this.error.emit(error);
   }
 }
