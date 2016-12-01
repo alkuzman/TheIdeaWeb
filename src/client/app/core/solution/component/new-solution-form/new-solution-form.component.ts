@@ -17,8 +17,34 @@ export class NewSolutionFormComponent implements OnInit {
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
   @Input("showIdeaFields") showIdeaFields: boolean = true;
   @Input("showProblemFields") showProblemFields: boolean = true;
-  @Input("idea") idea: Idea;
-  @Input("problem") problem: Problem;
+  _problem: Problem;
+  _idea: Idea;
+  get idea(): Idea {
+    return this._idea;
+  }
+
+  get problem(): Problem {
+    return this._problem
+  }
+
+  @Input("idea") set idea(idea: Idea) {
+    this._idea = idea;
+    if (this.solution != null) {
+      if (idea == null) {
+        this.solution.idea = new Idea();
+        this.solution.idea.problem = this.problem;
+      } else this.solution.idea = idea;
+    }
+  }
+
+  @Input("problem") set problem(problem: Problem) {
+    this._problem = problem;
+    if (this.solution != null) {
+      if (this.idea == null)
+        this.solution.idea = new Idea();
+      this.solution.idea.problem = this.problem;
+    }
+  }
   solution: Solution;
   errorMessage: any;
 
@@ -28,11 +54,10 @@ export class NewSolutionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.solution = new Solution();
-    if (this.idea != null)
-      this.solution.idea = this.idea;
-    else this.solution.idea = new Idea();
-    if (this.problem != null)
-      this.solution.idea.problem = this.problem;
+    this.solution.idea = this.idea;
+    if (this.solution.idea == null)
+      this.solution.idea = new Idea();
+    this.solution.idea.problem = this.problem;
   }
 
   save(solution: Solution) {

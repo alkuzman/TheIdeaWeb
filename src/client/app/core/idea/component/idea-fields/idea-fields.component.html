@@ -2,5 +2,6 @@
 <hr/>
 <label><strong>{{titleLabel}}</strong></label>&nbsp;
 <md-input name="ideaTitle" [(ngModel)]="idea.title" (ngModelChange)="onChange()" placeholder="Idea Title"></md-input><br/>
-<label><strong>{{sneakPeakLabel}}:</strong></label> Describe the idea and give a hint to potential buyer<br />
-<textarea class="fullWidth marginBottom" name="ideaSnackPeak" [(ngModel)]="idea.snackPeak" (ngModelChange)="onChange()"></textarea>
+<label><strong>{{sneakPeakLabel}}:</strong></label><br/>
+<md-textarea placeholder="Describe the idea and give a hint to potential buyer" class="fullWidth marginBottom"
+             name="ideaSnackPeak" [(ngModel)]="idea.snackPeak" (ngModelChange)="onChange()"></md-textarea>
