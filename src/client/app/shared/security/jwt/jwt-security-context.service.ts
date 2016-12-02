@@ -17,7 +17,6 @@ export class JwtSecurityContext extends SecurityContext {
 */
   constructor() {
     super();
-    console.log("TUKA");
     /*this.accessTokenObservable.subscribe((object: any) => this.isAuthenticatedObserver.next(true));*/
   }
 

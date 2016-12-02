@@ -16,6 +16,8 @@ export class SolutionFieldsComponent {
   @Input("problemTagsLabel") problemTagsLabel:string = "Problem Tags";
   @Input("ideaSnackPeakLabel") ideaSnackPeakLabel:string = "Snack Peak";
   @Input("tagsLabel") tagsLabel = "Solution Tags Label";
+  @Input("showIdeaFields") showIdeaFields: boolean = true;
+  @Input("showProblemFields") showProblemFields: boolean = true;
   @Output("solutionChange") solutionChange: EventEmitter<Solution>;
   private solution: Solution;
 

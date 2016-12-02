@@ -14,4 +14,5 @@ export class Problem extends BaseEntityImpl {
       "title: " + this.title + "\n" +
       "text: " + this.text + "\n";
   }
+
 }

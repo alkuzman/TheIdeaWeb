@@ -1,7 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import {Problem} from "../../../model/ideas/problem";
-import {ProblemService} from "../../problem.service";
-import {ValueAccessorDirective} from "../../../text-editor/directives/value-accessor.directive";
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */

@@ -1,7 +1,7 @@
 import {Component, ViewContainerRef, animate, style, transition, state, trigger, HostBinding} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Response} from "@angular/http";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig, AriaLivePoliteness} from "@angular/material";
 
 /**
  * Created by Viki on 11/1/2016.
@@ -57,6 +57,7 @@ export class LoginPageComponent {
 
   onWrongPassword() {
     console.log("Wrong password");
+    let config: MdSnackBarConfig = new MdSnackBarConfig();
     this.snackBar.open('You have entered wrong password!', "Try Again");
   }
 

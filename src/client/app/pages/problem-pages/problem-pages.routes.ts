@@ -17,5 +17,10 @@ export const ProblemPagesRoutes: Routes = [
     component: ProblemPagesComponent,
     canActivate: [LoggedInGuard],
     loadChildren: "app/pages/problem-pages/new-problem-page/new-problem-page.module#NewProblemPageModule"
+  },
+  {
+    path: ':id',
+    component: ProblemPagesComponent,
+    loadChildren: "app/pages/problem-pages/problem-details-page/problem-details-page.module#ProblemDetailsPageModule"
   }
 ];

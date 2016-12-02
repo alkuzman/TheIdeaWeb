@@ -1,5 +1,5 @@
 <form *ngIf="active" (ngSubmit)="solutionForm.form.valid && save()" #solutionForm="ngForm">
-  <ideal-solution-fields name="solution" [(ngModel)]="solution"></ideal-solution-fields>
+  <ideal-solution-fields name="solution" [showIdeaFields]="showIdeaFields" [showProblemFields]="showProblemFields" [(ngModel)]="solution"></ideal-solution-fields>
   <div style="text-align: right">
     <button type="button" md-button (click)="clearForm()">Clear</button>
     <button type="submit" md-raised-button color="accent">{{submitText}}</button>
