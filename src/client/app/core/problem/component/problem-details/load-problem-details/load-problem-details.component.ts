@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {ProblemService} from "../../../problem.service";
 import {Problem} from "../../../../model/ideas/problem";
 import {Response} from "@angular/http";
@@ -12,6 +12,8 @@ import {Response} from "@angular/http";
 })
 export class LoadProblemDetailsComponent implements OnInit {
   @Input("problemId") problemId: number;
+  @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
+  @Output("problemNotFound") problemNotFound: EventEmitter<void> = new EventEmitter<void>();
   private problem: Problem;
 
   constructor(private problemService: ProblemService) {
@@ -26,9 +28,12 @@ export class LoadProblemDetailsComponent implements OnInit {
 
   onProblemReady(problem: Problem): void {
     this.problem = problem;
+    this.problemReady.emit(this.problem);
+
   }
 
   onError(error: Response): void {
-
+    if (error.status == 404)
+      this.problemNotFound.emit();
   }
 }

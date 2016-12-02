@@ -1,3 +1,8 @@
-<ideal-problem-details [problem]="problem"></ideal-problem-details>
-<ideal-ideas [problemId]="problemId"></ideal-ideas>
-<ideal-new-solution-form [showProblemFields]="false" [problem]="problem"></ideal-new-solution-form>
+<div class="margin">
+  <ideal-load-problem-details [problemId]="problemId"
+                              (problemReady)="onProblemReady($event)"></ideal-load-problem-details>
+  <h3>{{ideaList?.length}} Ideas</h3>
+  <ideal-ideas [problemId]="problemId" (ideaListReady)="onIdeaListReady($event)"></ideal-ideas>
+  <h3>Your Idea</h3>
+  <ideal-new-solution-form [showProblemFields]="false" [problem]="problem"></ideal-new-solution-form>
+</div>

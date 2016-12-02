@@ -9,13 +9,15 @@ import {FormsModule} from "@angular/forms";
 import {PipesModule} from "../pipes/pipes.module";
 import {AvatarChooserComponent} from "./components/avatars/avatar-chooser/widget-avatar-chooser.component";
 import {UploadImageDialogComponent} from "./components/files/upload-image-dialog/upload-image-dialog.component";
+import {TextEditorToolbarComponent} from "./components/text-editor/toolbar/text-editor-toolbar.component";
+import {TextEditorComponent} from "../../../../../dist/dev/app/core/text-editor/component/text-editor.component";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule],
   entryComponents: [UploadImageDialogComponent]
 })
