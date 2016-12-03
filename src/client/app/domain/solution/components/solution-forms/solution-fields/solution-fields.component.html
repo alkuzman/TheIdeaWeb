@@ -1,0 +1,2 @@
+<ideal-idea-fields *ngIf="showIdeaFields" [showProblemFields]="showProblemFields" name="solutionIdea" [titleLabel]="ideaTitleLabel" [sneakPeakLabel]="ideaSnackPeakLabel" [problemTitleLabel]="problemTitleLabel" [problemBodyLabel]="problemBodyLabel" [problemTagsLabel]="problemTagsLabel" [(ngModel)]="value.idea" (ngModelChange)="notify()"></ideal-idea-fields>
+<ideal-text-editor name="solutionBody" [title]="bodyLabel" [(ngModel)]="value.text" (ngModelChange)="notify()"></ideal-text-editor>

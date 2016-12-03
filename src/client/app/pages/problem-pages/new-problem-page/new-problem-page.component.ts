@@ -3,7 +3,7 @@
  */
 import {Component} from "@angular/core";
 import {Logger} from "../../../logger.service";
-import {Problem} from "../../../core/model/ideas/problem";
+import {Problem} from "../../../domain/model/ideas/problem";
 
 @Component({
   moduleId: module.id,
@@ -13,6 +13,7 @@ import {Problem} from "../../../core/model/ideas/problem";
 })
 export class NewProblemPageComponent {
   submitText = "Save";
+
 
   constructor(private logger: Logger) {
 

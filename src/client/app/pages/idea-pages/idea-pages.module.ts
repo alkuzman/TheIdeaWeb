@@ -5,9 +5,8 @@ import {NgModule} from "@angular/core";
 import {IdeaPagesComponent} from "./idea-pages.component";
 import {SharedModule} from "../../shared/shared.module";
 import {IdeaPagesRoutingModule} from "./idea-pages-routing.module";
-import {GuardsModule} from "../../guards/guards.module";
 @NgModule({
-  imports: [SharedModule.forRoot(), IdeaPagesRoutingModule, GuardsModule],
+  imports: [SharedModule, IdeaPagesRoutingModule],
   declarations: [IdeaPagesComponent],
   exports: [IdeaPagesComponent]
 })

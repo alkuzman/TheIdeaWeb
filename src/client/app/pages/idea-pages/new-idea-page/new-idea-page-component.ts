@@ -2,9 +2,9 @@
  * Created by AKuzmanoski on 25/10/2016.
  */
 import {Component, OnInit} from "@angular/core";
-import {Solution} from "../../../core/model/ideas/solution";
-import {Problem} from "../../../core/model/ideas/problem";
-import {Idea} from "../../../core/model/ideas/idea";
+import {Solution} from "../../../domain/model/ideas/solution";
+import {Problem} from "../../../domain/model/ideas/problem";
+import {Idea} from "../../../domain/model/ideas/idea";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-idea-page",

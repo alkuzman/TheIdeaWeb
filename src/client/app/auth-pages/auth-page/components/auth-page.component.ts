@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {User} from "../../../core/model/authentication/user";
+import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 /**
  * Created by Viki on 10/29/2016.

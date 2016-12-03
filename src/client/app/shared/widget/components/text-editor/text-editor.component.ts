@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 19/10/2016.
  */
 import {Component, Input} from "@angular/core";
-import {AbstractValueAccessor, MakeProvider} from "../../../../../../../dist/dev/app/shared/abstract-value-accessor";
+import {MakeProvider, AbstractValueAccessor} from "../../../abstract-value-accessor";
 
 @Component({
   moduleId: module.id,

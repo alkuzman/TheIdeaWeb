@@ -4,7 +4,7 @@
 import {NgModule} from "@angular/core";
 import {NewProblemPageComponent} from "./new-problem-page.component";
 import {SharedModule} from "../../../shared/shared.module";
-import {ProblemModule} from "../../../core/problem/problem.module";
+import {ProblemModule} from "../../../domain/problem/problem.module";
 import {NewProblemPageRoutingModule} from "./new-problem-page-routing.module";
 @NgModule({
   imports: [SharedModule.forRoot(), ProblemModule, NewProblemPageRoutingModule],

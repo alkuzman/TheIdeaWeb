@@ -3,7 +3,7 @@
  */
 import {NgModule} from "@angular/core";
 import {SharedModule} from "../../../shared/shared.module";
-import {IdeaModule} from "../../../core/idea/idea.module";
+import {IdeaModule} from "../../../domain/idea/idea.module";
 import {IdeasPageComponent} from "./ideas-page.component";
 import {IdeasPageRoutingModule} from "./ideas-page-routing.module";
 @NgModule({

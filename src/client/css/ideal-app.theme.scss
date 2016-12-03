@@ -18,7 +18,7 @@ $ideal-app-warn:    md-palette($md-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-app-warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
+// Include theme styles for core and each components used in your app.
+// Alternatively, you can import and @include the theme mixins for each components
 // that you are using.
 @include angular-material-theme($ideal-app-theme);
