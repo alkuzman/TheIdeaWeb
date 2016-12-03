@@ -6,12 +6,13 @@ import {Response, Headers, Http} from "@angular/http";
 import {Observable} from "rxjs";
 import {Solution} from "../model/ideas/solution";
 import {JwtHttpService} from "../../core/authentication/jwt/jwt-http.service";
+import {AuthHttp} from "angular2-jwt";
 
 @Injectable()
 export class SolutionService {
   private solutionsUrl = "/api/solutions";
 
-  constructor(private http: Http, @Inject(JwtHttpService) private jwtHttp: Http) {
+  constructor(private http: Http, private authHttp: AuthHttp) {
 
   }
 
@@ -32,7 +33,7 @@ export class SolutionService {
   addSolution(solution: Solution): Promise<Solution> {
     let body = JSON.stringify(solution);
     let headers = new Headers({'Content-Type': 'application/json'});
-    return this.jwtHttp.post(this.solutionsUrl, body, {headers: headers})
+    return this.authHttp.post(this.solutionsUrl, body, {headers: headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

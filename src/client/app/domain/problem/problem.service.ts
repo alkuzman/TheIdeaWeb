@@ -15,7 +15,7 @@ import {AuthHttp} from "angular2-jwt";
 export class ProblemService {
   private ideasUrl = "/api/problems";
 
-  constructor(private logger: Logger, private http: Http, @Inject(JwtHttpService) private jwtHttp: Http, private authHttp: AuthHttp) {
+  constructor(private logger: Logger, private http: Http, private authHttp: AuthHttp) {
 
   }
 

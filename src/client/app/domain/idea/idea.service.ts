@@ -10,13 +10,14 @@ import {JwtHttpService} from "../../core/authentication/jwt/jwt-http.service";
 import {IdeasFilterProperties} from "./params/ideas-filter.properties";
 import {Properties} from "../../shared/utils/properties";
 import {PropertiesToUrlSearchParams} from "../../shared/utils/properties-to-url-search-params";
+import {AuthHttp} from "angular2-jwt";
 
 
 @Injectable()
 export class IdeaService {
   private ideasUrl = "/api/ideas";
 
-  constructor(private logger: Logger, @Inject(JwtHttpService) private http: Http) {
+  constructor(private logger: Logger, private http: Http, private authHttp: AuthHttp) {
 
   }
 
@@ -57,7 +58,7 @@ export class IdeaService {
 
   addIdea(idea: Idea): Promise<Idea> {
     let body = JSON.stringify(idea);
-    return this.http.post(this.ideasUrl, body, {headers: this.getHeaders()})
+    return this.authHttp.post(this.ideasUrl, body, {headers: this.getHeaders()})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
