@@ -1,0 +1,14 @@
+<ideal-problem-fields *ngIf="showProblemFields" [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
+                      [tagsLabel]="problemTagsLabel" name="ideaProblem" [(ngModel)]="value.problem"
+                      (ngModelChange)="notify()"></ideal-problem-fields>
+<div *ngIf="showProblemFields" style="height: 40px;"></div>
+
+<div style="display: flex;">
+  <md-input style="flex: 50;" name="ideaTitle" [(ngModel)]="value.title" (ngModelChange)="notify()"
+            [placeholder]="titleLabel"></md-input>
+  <span style="flex: 5;"></span>
+  <md-input style="flex: 45;" id="ideaTags" name="ideaTags" [placeholder]='ideaTagsLabel'>
+  </md-input>
+</div>
+<md-textarea [placeholder]="sneakPeakLabel" class="fullWidth marginBottom"
+             name="ideaSnackPeak" [(ngModel)]="value.snackPeak" (ngModelChange)="notify()"></md-textarea>

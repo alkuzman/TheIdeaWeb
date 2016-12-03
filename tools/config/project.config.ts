@@ -1,7 +1,6 @@
 import { join } from 'path';
 
 import { SeedConfig } from './seed.config';
-
 const proxy = require('proxy-middleware');
 
 /**
@@ -11,37 +10,34 @@ const proxy = require('proxy-middleware');
 export class ProjectConfig extends SeedConfig {
 
   PROJECT_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'project');
-  APP_ICON = 'assets/images/logo.png';
 
   constructor() {
     super();
+    // add reverse proxy here
     this.PLUGIN_CONFIGS['browser-sync'] = {
-      middleware: [
-        proxy({
-          protocol: 'http:',
-          hostname: 'localhost',
-          port: 8080,
-          pathname: '',
-          route: '/api'
-        }),
-        require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})
-      ],
       port: this.PORT,
       startPath: this.APP_BASE,
-      open: true, //argv['b'] ? false : true,
-      injectChanges: false,
       server: {
         baseDir: `${this.DIST_DIR}/empty/`,
+        middleware: [
+          proxy({
+            protocol: 'http:',
+            hostname: 'localhost',
+            port: 8080,
+            pathname: '/',
+            route: '/api'
+          }),
+          require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})
+        ],
         routes: {
-          [`${this.APP_BASE}${this.APP_SRC}`]: this.APP_SRC,
           [`${this.APP_BASE}${this.APP_DEST}`]: this.APP_DEST,
           [`${this.APP_BASE}node_modules`]: 'node_modules',
-          [`${this.APP_BASE.replace(/\/$/, '')}`]: this.APP_DEST
+          [`${this.APP_BASE.replace(/\/$/,'')}`]: this.APP_DEST
         }
       }
     };
 
-    this.APP_TITLE = 'iDeal Hub';
+    // this.APP_TITLE = 'Put name of your app here';
 
     /* Enable typeless compiler runs (faster) between typed compiler runs. */
     // this.TYPED_COMPILE_INTERVAL = 5;
@@ -49,6 +45,13 @@ export class ProjectConfig extends SeedConfig {
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
+
+      /* Select a pre-built Material theme */
+      /*{src: '@angular/material/core/theming/prebuilt/indigo-pink.css', inject: true},*/
+
+      /* HammerJS is required if the app uses certain Material components (eg: md-slider and md-slide-toggle) */
+      //{src: 'hammerjs/hammer.min.js', inject: 'libs'},
+
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
     ];
@@ -62,6 +65,34 @@ export class ProjectConfig extends SeedConfig {
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
+
+    // add Material configuration to SystemJS.
+    this.addPackageBundles({
+      name:'@angular/material',
+      path:'node_modules/@angular/material/material.umd.js',
+      packageMeta:{
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
+    });
+
+    this.addPackageBundles({
+      name:'rxjs',
+      path:'node_modules/rxjs/Rx.js',
+      packageMeta:{
+        main: 'Rx.js',
+        defaultExtension: 'js'
+      }
+    });
+
+    this.addPackageBundles({
+      name:'angular2-jwt',
+      path:'node_modules/angular2-jwt/angular2-jwt.js',
+      packageMeta:{
+        main: 'angular2-jwt.js',
+        defaultExtension: 'js'
+      }
+    })
   }
 
 }

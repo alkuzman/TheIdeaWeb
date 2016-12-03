@@ -1,6 +1,6 @@
 import {Routes} from "@angular/router";
 import {IdeaPagesComponent} from "./idea-pages.component";
-import {LoggedInGuard} from "../../guards/logged-in.guard";
+import {LoggedInGuard} from "../../core/guards/logged-in.guard";
 /**
  * Created by AKuzmanoski on 25/10/2016.
  */

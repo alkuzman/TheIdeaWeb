@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 24/10/2016.
  */
 import {Component} from "@angular/core";
-import {Problem} from "../../../core/model/ideas/problem";
+import {Problem} from "../../../domain/model/ideas/problem";
 import {Router, ActivatedRoute} from "@angular/router";
 @Component({
   moduleId: module.id,

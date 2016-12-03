@@ -3,9 +3,9 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
-import {Problem} from "../../../core/model/ideas/problem";
-import {ProblemService} from "../../../core/problem/problem.service";
-import {Idea} from "../../../core/model/ideas/idea";
+import {Problem} from "../../../domain/model/ideas/problem";
+import {ProblemService} from "../../../domain/problem/problem.service";
+import {Idea} from "../../../domain/model/ideas/idea";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-details-page",
@@ -16,7 +16,7 @@ export class ProblemDetailsPageComponent implements OnInit{
   problem: Problem;
   ideaList: Idea[];
 
-  constructor(private route: ActivatedRoute, private problemService: ProblemService) {
+  constructor(private route: ActivatedRoute) {
 
   }
 

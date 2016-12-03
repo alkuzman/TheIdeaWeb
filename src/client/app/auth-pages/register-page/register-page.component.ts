@@ -1,8 +1,8 @@
 import {Component, OnInit, style, animate, state, transition, trigger, HostBinding} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {User} from "../../core/model/authentication/user";
+import {User} from "../../domain/model/authentication/user";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {FieldError} from "../../shared/helper/field-error";
+import {FieldError} from "../../core/helper/field-error";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */

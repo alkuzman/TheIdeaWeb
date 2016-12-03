@@ -7,9 +7,9 @@ import {NgModule} from "@angular/core";
 import {PagesComponent} from "./pages.component";
 import {SharedModule} from "../shared/shared.module";
 import {PagesRoutingModule} from "./pages-routing.module";
-import {UserModule} from "../core/user/user.module";
+import {UserModule} from "../domain/user/user.module";
 @NgModule({
-  imports: [SharedModule.forRoot(), PagesRoutingModule, UserModule],
+  imports: [SharedModule, PagesRoutingModule, UserModule],
   declarations: [PagesComponent],
   exports: [PagesComponent],
   providers: []
