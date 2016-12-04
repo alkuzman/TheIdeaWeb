@@ -4,9 +4,12 @@
 import {Idea} from "../../../model/ideas/idea";
 import {IdeaService} from "../../idea.service";
 import {ActivatedRoute, Router, Params} from "@angular/router";
-import { Component, OnInit, HostBinding,
+import {
+  Component, OnInit, HostBinding,
   trigger, transition, animate,
-  style, state } from '@angular/core';
+  style, state, Input
+} from '@angular/core';
+import {Alignment} from "../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
 
 @Component({
   moduleId: module.id,
@@ -37,7 +40,7 @@ import { Component, OnInit, HostBinding,
     ])
   ]
 })
-export class IdeaComponent implements OnInit {
+export class IdeaDetailsComponent {
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true;
   }
@@ -50,22 +53,14 @@ export class IdeaComponent implements OnInit {
     return 'absolute';
   }
 
-  idea: Idea;
+  private ownerAvatarAlignment: Alignment = Alignment.left;
+
+  @Input() idea: Idea;
   errorMessage: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private ideaService: IdeaService) {
 
-  }
-
-  ngOnInit(): void {
-    this.idea = new Idea();
-    this.route.params.subscribe((params: Params) => {
-      let id = + params['id']; // (+) converts string 'id' to a number
-      this.ideaService.getIdea(id).subscribe(
-        idea => this.idea = idea,
-        error => this.errorMessage = <any>error);
-    });
   }
 }

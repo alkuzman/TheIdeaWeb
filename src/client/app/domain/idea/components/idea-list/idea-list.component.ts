@@ -17,6 +17,7 @@ import {IdeaService} from "../../idea.service";
 export class IdeasComponent implements OnInit {
   @Input("problemId") problemId: number;
   @Output("ideaListReady") ideaListReady: EventEmitter<Idea[]> = new EventEmitter<Idea[]>();
+  @Output() ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   ideas: Idea[];
   errorMessage: any;
 
@@ -34,5 +35,9 @@ export class IdeasComponent implements OnInit {
   onIdeaListReady(ideaList: Idea[]) {
     this.ideas = ideaList;
     this.ideaListReady.emit(this.ideas);
+  }
+
+  onIdeaSelected(idea: Idea) {
+    this.ideaSelected.emit(idea);
   }
 }

@@ -1,2 +1,2 @@
-<ideal-idea-card *ngFor="let idea of ideas" [idea]="idea">
+<ideal-idea-card *ngFor="let idea of ideas" [idea]="idea" (click)="onIdeaSelected(idea)">
 </ideal-idea-card>

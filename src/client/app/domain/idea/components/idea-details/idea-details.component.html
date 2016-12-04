@@ -1,8 +1,6 @@
-<h1>{{idea.title}}</h1>
+<ideal-problem-details [problem]="idea?.problem"></ideal-problem-details>
+<h1>{{idea?.title}}</h1>
 <div>
-  {{idea?.problem?.text}}
+  {{idea?.snackPeak}}
 </div>
-<div>
-  {{idea?.solution}}
-</div>
-{{idea.type}}
+<ideal-user-named-avatar [alignment]="ownerAvatarAlignment" [(ngModel)]="idea.owner"></ideal-user-named-avatar>
