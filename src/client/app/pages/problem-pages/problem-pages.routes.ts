@@ -10,18 +10,22 @@ export const ProblemPagesRoutes: Routes = [
   {
     path: '',
     component: ProblemPagesComponent,
-    loadChildren: "app/pages/problem-pages/problems-page/problems-page.module#ProblemsPageModule",
-    data: {preload: true}
-  },
-  {
-    path: 'new',
-    component: ProblemPagesComponent,
-    canActivate: [LoggedInGuard],
-    loadChildren: "app/pages/problem-pages/new-problem-page/new-problem-page.module#NewProblemPageModule"
-  },
-  {
-    path: ':id',
-    component: ProblemPagesComponent,
-    loadChildren: "app/pages/problem-pages/problem-details-page/problem-details-page.module#ProblemDetailsPageModule"
+    children: [
+      {
+        path: '',
+        loadChildren: "app/pages/problem-pages/problems-page/problems-page.module#ProblemsPageModule",
+        data: {preload: true}
+      },
+      {
+        path: 'new',
+        canActivate: [LoggedInGuard],
+        loadChildren: "app/pages/problem-pages/new-problem-page/new-problem-page.module#NewProblemPageModule"
+      },
+      {
+        path: ':id',
+        loadChildren: "app/pages/problem-pages/problem-details-page/problem-details-page.module#ProblemDetailsPageModule"
+      }
+
+    ]
   }
 ];

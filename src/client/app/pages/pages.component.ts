@@ -16,6 +16,7 @@ export class PagesComponent implements OnInit{
   searchState: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {
+    console.log("PagesComponent")
   }
 
   ngOnInit(): void {

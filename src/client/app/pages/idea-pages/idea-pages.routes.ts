@@ -8,17 +8,23 @@ export const IdeaPagesRoutes: Routes = [
   {
     path: "",
     component: IdeaPagesComponent,
-    loadChildren: "app/pages/idea-pages/ideas-page/ideas-page.module#IdeasPageModule"
-  },
-  {
-    path: "new",
-    component: IdeaPagesComponent,
-    canActivate: [LoggedInGuard],
-    loadChildren: "app/pages/idea-pages/new-idea-page/new-idea-page.module#NewIdeaPageModule"
-  },
-  {
-    path: ":id",
-    component: IdeaPagesComponent,
-    loadChildren: "app/pages/idea-pages/idea-details-page/idea-details-page.module#IdeaDetailsPageModule"
+    children: [
+      {
+        path: "",
+        component: IdeaPagesComponent,
+        loadChildren: "app/pages/idea-pages/ideas-page/ideas-page.module#IdeasPageModule"
+      },
+      {
+        path: "new",
+        component: IdeaPagesComponent,
+        canActivate: [LoggedInGuard],
+        loadChildren: "app/pages/idea-pages/new-idea-page/new-idea-page.module#NewIdeaPageModule"
+      },
+      {
+        path: ":id",
+        component: IdeaPagesComponent,
+        loadChildren: "app/pages/idea-pages/idea-details-page/idea-details-page.module#IdeaDetailsPageModule"
+      }
+    ]
   }
 ]

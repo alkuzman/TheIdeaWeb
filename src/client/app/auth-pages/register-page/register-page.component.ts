@@ -1,8 +1,9 @@
-import {Component, OnInit, style, animate, state, transition, trigger, HostBinding} from "@angular/core";
+import {Component, OnInit, HostBinding} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
+import {routerAnimations} from "../../core/helper/standard-route-animations";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -11,41 +12,29 @@ import {FieldError} from "../../core/helper/field-error";
   selector: "ideal-register-page",
   templateUrl: "register-page.component.html",
   animations: [
-    trigger('routeAnimation', [
-      state('*',
-        style({
-          opacity: 1,
-          transform: 'translateX(0)'
-        })
-      ),
-      transition('void => *', [
-        style({
-          opacity: 0,
-          transform: 'translateX(-100%)'
-        }),
-        animate('0.2s ease-in')
-      ]),
-      transition('* => void', [
-        animate('0.5s ease-out', style({
-          opacity: 0,
-          transform: 'translateY(100%)'
-        }))
-      ])
-    ])
+    routerAnimations('routeAnimation')
   ]
 })
 export class RegisterPageComponent implements OnInit {
+  @HostBinding("@routeAnimation") routeAnimation() {
+    return true;
+  }
+  @HostBinding("style.display") get display() {
+    return "block";
+  }
+
+  @HostBinding("style.position") get position() {
+    return "fixed";
+  }
+
+
+  @HostBinding("style.width") get width() {
+    return "50%";
+  }
+
   private email: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
-  }
-
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true;
-  }
-
-  @HostBinding('style.display') get display() {
-    return 'block';
   }
 
   ngOnInit(): void {

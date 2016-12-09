@@ -8,18 +8,22 @@ import {AuthPageRoutes} from "./auth-page/auth-page.routes";
  */
 export const AuthPagesRoutes: Routes = [
   {
+
     path: "",
     component: AuthPagesComponent,
-    children: [...AuthPageRoutes]
-  },
-  {
-    path: "register",
-    component: AuthPagesComponent,
-    children: [...RegisterPageRoutes]
-  },
-  {
-    path: "login",
-    component: AuthPagesComponent,
-    children: [...LoginPageRoutes]
+    children: [
+      {
+        path: "",
+        children: [...AuthPageRoutes]
+      },
+      {
+        path: "register",
+        children: [...RegisterPageRoutes]
+      },
+      {
+        path: "login",
+        children: [...LoginPageRoutes]
+      }
+    ]
   }
 ]

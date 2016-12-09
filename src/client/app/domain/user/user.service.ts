@@ -32,7 +32,7 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     let url = this.usersUrl + "/" + id;
     /*let params = new URLSearchParams();
-     params.set('id', id.toString()); // the user's search value*/
+     params.set('id', id.toString()); // the user-pages's search value*/
     return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError)
@@ -47,10 +47,10 @@ export class UserService {
   }
 
   getUserByEmail(email: string) {
-    console.log("get user by email called");
+    console.log("get user-pages by email called");
     let url = this.usersUrl;
     let params = new URLSearchParams();
-    params.set('email', email); // the user's search value*/
+    params.set('email', email); // the user-pages's search value*/
     return this.http.get(url, {search: params})
       .map(this.extractData)
       .catch(this.handleError)

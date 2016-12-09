@@ -1,2 +1,4 @@
-<ideal-get-user-email-form [email]="email" (userReady)="continueLogin($event)"
-                           (userNotFound)="continueRegister($event)"></ideal-get-user-email-form>
+<md-card>
+  <ideal-get-user-email-form [email]="email" (userReady)="continueLogin($event)"
+                             (userNotFound)="continueRegister($event)"></ideal-get-user-email-form>
+</md-card>

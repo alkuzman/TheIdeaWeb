@@ -11,13 +11,14 @@ import {AvatarChooserComponent} from "./components/avatars/avatar-chooser/widget
 import {UploadImageDialogComponent} from "./components/files/upload-image-dialog/upload-image-dialog.component";
 import {TextEditorToolbarComponent} from "./components/text-editor/toolbar/text-editor-toolbar.component";
 import {TextEditorComponent} from "./components/text-editor/text-editor.component";
+import {SmoothImageWidget} from "./components/images/smooth-image.widget";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule],
   entryComponents: [UploadImageDialogComponent]
 })

@@ -9,7 +9,7 @@ import {User} from "../../model/authentication/user";
 })
 export class UserProfilePicturePipe implements PipeTransform {
   transform(user: User, args: any): any {
-    return user.profilePicture || user.profilePicture == "" ? user.profilePicture : "/assets/images/default-user.png";
+    return user.profilePicture || user.profilePicture == "" ? user.profilePicture : "/assets/images/default-user-pages.png";
   }
 
 }

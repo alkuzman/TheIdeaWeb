@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, trigger, state, style, transition, group, animate, OnInit} from "@angular/core";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -7,7 +7,39 @@ import {Component} from "@angular/core";
   moduleId: module.id,
   selector: "ideal-auth-pages",
   templateUrl: "auth-pages.component.html",
-  styleUrls: ["auth-pages.component.css"]
+  styleUrls: ["auth-pages.component.css"],
+  animations: [
+    trigger('routeAnimation', [
+      state('*',
+        style({
+          opacity: 1,
+          transform: 'translateX(0)'
+        })
+      ),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(-100%)'
+        }),
+        animate('150ms 100ms ease-out')
+      ]),
+      transition(':leave', [
+        animate('130ms ease-in', style({
+          opacity: 0,
+          transform: 'translateY(100%)',
+        }))
+      ])
+    ])
+  ]
 })
-export class AuthPagesComponent {
+export class AuthPagesComponent implements OnInit{
+  cardState = "active";
+
+  constructor() {
+    console.log("AuthPagesComponent")
+  }
+
+  ngOnInit() {
+    this.cardState = "active";
+  }
 }

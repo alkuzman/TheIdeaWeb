@@ -2,6 +2,7 @@ import {Component, ViewContainerRef, animate, style, transition, state, trigger,
 import {ActivatedRoute, Router} from "@angular/router";
 import {Response} from "@angular/http";
 import {MdSnackBar, MdSnackBarConfig, AriaLivePoliteness} from "@angular/material";
+import {routerAnimations} from "../../../core/helper/standard-route-animations";
 
 /**
  * Created by Viki on 11/1/2016.
@@ -11,39 +12,27 @@ import {MdSnackBar, MdSnackBarConfig, AriaLivePoliteness} from "@angular/materia
   selector: "ideal-login-page",
   templateUrl: "login-page.component.html",
   animations: [
-    trigger('routeAnimation', [
-      state('*',
-        style({
-          opacity: 1,
-          transform: 'translateX(0)'
-        })
-      ),
-      transition('void => *', [
-        style({
-          opacity: 0,
-          transform: 'translateX(-100%)'
-        }),
-        animate('0.2s ease-in')
-      ]),
-      transition('* => void', [
-        animate('0.5s ease-out', style({
-          opacity: 0,
-          transform: 'translateY(100%)'
-        }))
-      ])
-    ])
+    routerAnimations('routeAnimation')
   ]
 })
 export class LoginPageComponent {
-  private email: string;
-
-  @HostBinding('@routeAnimation') get routeAnimation() {
+  @HostBinding("@routeAnimation") routeAnimation() {
     return true;
   }
-
-  @HostBinding('style.display') get display() {
-    return 'block';
+  @HostBinding("style.display") get display() {
+    return "block";
   }
+
+  @HostBinding("style.position") get position() {
+    return "fixed";
+  }
+
+
+  @HostBinding("style.width") get width() {
+    return "50%";
+  }
+
+  private email: string;
 
 
   constructor(private router: Router,

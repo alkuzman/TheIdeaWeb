@@ -46,7 +46,8 @@
     "build.bundles",
     "build.bundles.app.exp",
     "minify.bundles",
-    "build.index.prod"
+    "build.index.prod",
+    "scss.task"
   ],
 
   "build.test": [

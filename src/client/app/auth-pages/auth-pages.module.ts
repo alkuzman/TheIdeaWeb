@@ -13,7 +13,7 @@ import {LoginPageComponent} from "./login-page/components/login-page.component";
 import {AuthPageComponent} from "./auth-page/components/auth-page.component";
 
 @NgModule({
-  imports: [SharedModule.forRoot(), AuthPagesRoutingModule, UserModule],
+  imports: [SharedModule, AuthPagesRoutingModule, UserModule],
   declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent, RegisterPageComponent, AuthPageComponent]
 })
 export class AuthPagesModule {}

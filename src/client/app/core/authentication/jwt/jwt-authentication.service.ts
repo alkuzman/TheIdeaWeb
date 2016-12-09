@@ -64,7 +64,7 @@ export class JwtAuthenticationService {
   }
 
   private scheduleRefresh() {
-    // Don't schedule if user is not authenticated
+    // Don't schedule if user-pages is not authenticated
     if (!this.isAuthenticated())
       return;
     console.log("REFRESH SCHEDULED");
