@@ -1,17 +1,10 @@
-import { Routes } from '@angular/router';
-
-import {CoreComponent} from "./core/core.component"
-import {PagesRoutes} from "./pages/pages.routes";
-import {PagesComponent} from "./pages/pages.component";
+import {Routes} from "@angular/router";
+import {AuthenticatedGuard} from "./core/guards/authenticated.guard";
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: "full",
-    redirectTo: "/home"
-  },
-  {
-    path: "",
-    loadChildren: "app/pages/pages.module#PagesModule"
+    path: 'auth',
+    loadChildren: "app/auth-pages/auth-pages.module#AuthPagesModule",
+    canActivate: [AuthenticatedGuard]
   }
 ];

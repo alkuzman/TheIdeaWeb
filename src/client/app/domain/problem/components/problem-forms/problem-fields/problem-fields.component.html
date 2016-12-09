@@ -1,0 +1,12 @@
+<div style="display: flex;">
+  <md-input id="problemTitle" name="problemTitle" [placeholder]="titleLabel" style="flex: 50"
+            [(ngModel)]="value.title" (ngModelChange)="notify()" required>
+  </md-input>
+  <span style="flex: 5;"></span>
+  <md-input style="flex: 45;" id="problemTags" name="problemTags" [placeholder]='tagsLabel'>
+  </md-input>
+</div>
+<div>
+  <ideal-text-editor id="problemBody" [title]="bodyLabel" [(ngModel)]="value.text" name="problemBody"
+                     (ngModelChange)="notify()"></ideal-text-editor>
+</div>

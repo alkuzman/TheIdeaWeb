@@ -6,13 +6,10 @@
 import {NgModule} from "@angular/core";
 import {PagesComponent} from "./pages.component";
 import {SharedModule} from "../shared/shared.module";
-import {HomeModule} from "./home/home.module";
-import {AboutModule} from "./about/about.module";
-import {ProblemPagesModule} from "./problem-pages/problem-pages.module";
-import {IdeaPagesModule} from "./idea-pages/idea-pages.module";
 import {PagesRoutingModule} from "./pages-routing.module";
+import {UserModule} from "../domain/user/user.module";
 @NgModule({
-  imports: [SharedModule.forRoot(), IdeaPagesModule, ProblemPagesModule, HomeModule, AboutModule, PagesRoutingModule],
+  imports: [SharedModule, PagesRoutingModule, UserModule],
   declarations: [PagesComponent],
   exports: [PagesComponent],
   providers: []

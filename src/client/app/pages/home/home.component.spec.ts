@@ -14,16 +14,16 @@ import { MockBackend } from '@angular/http/testing';
 
 import { NameListService } from '../../shared/index';
 import { HomeModule } from './home.module';
-import { MaterialModule } from '../../shared/material.module';
+import {SharedModule} from "../../../../../dist/tmp/app/shared/shared.module";
 
 
 export function main() {
-  describe('Home component', () => {
+  describe('Home components', () => {
     // setting module for testing
     // Disable old forms
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [FormsModule, RouterModule, HttpModule, HomeModule, MaterialModule.forRoot()],
+        imports: [HomeModule, SharedModule.forRoot()],
         declarations: [TestComponent],
         providers: [
           NameListService,
