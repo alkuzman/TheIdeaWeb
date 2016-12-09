@@ -4,8 +4,6 @@ import {addQueryToTokenMap} from "@angular/compiler/src/view_compiler/compile_qu
  * Created by AKuzmanoski on 06/12/2016.
  */
 
-
-
 export function routerAnimations(name: string) {
   return trigger(name, [
     state('*',
