@@ -1,36 +1,23 @@
 <md-sidenav-layout style="margin: 0px !important; padding: 0px !important; height: 100vh">
   <md-sidenav mode="over" #sidenav>
     <md-toolbar color="primary">
-      <ideal-authenticated-user-named-avatar style="margin-top: 60px" [profilePictureRadius]="25" nameFontSize="10pt" descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
+      <ideal-authenticated-user-named-avatar style="margin-top: 60px" [profilePictureRadius]="25" nameFontSize="10pt"
+                                             descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
       <md-toolbar-row>
       </md-toolbar-row>
     </md-toolbar>
     <md-nav-list denese>
-      <md-list-item [routerLink]="[ '/home' ]" routerLinkActive="activeLink">
-        <md-icon class="icon-middle" md-list-avatar>home</md-icon>
-        <span>Home</span>
+      <md-list-item *ngFor="let navigationItem of navigationItems" (click)="sidenav.toggle()" [routerLink]="navigationItem.url" routerLinkActive="md-accent">
+        <md-icon class="icon-middle" md-list-avatar>{{navigationItem.icon}}</md-icon>
+        <span>{{navigationItem.title}}</span>
       </md-list-item>
-      <!--<a md-list-item [routerLink]="[ '/idea-list' ]" routerLinkActive="activeLink">Ideas</a>
-      <a md-list-item  [routerLink]="[ '/idea-list/new' ]" routerLinkActive="activeLink">> Create Idea</a>-->
-      <md-list-item [routerLink]="[ '/about' ]" routerLinkActive="activeLink">
-        <span>About</span>
-      </md-list-item>
-      <a md-list-item [routerLink]="[ '/problems' ]" routerLinkActive="activeLink">Problems</a>
-      <a md-list-item [routerLink]="[ '/problems/new' ]" routerLinkActive="activeLink">&nbsp;&nbsp;&nbsp; New Problem</a>
-      <md-list-item [routerLink]="[ '/ideas' ]" routerLinkActive="activeLink">
-        <md-icon class="icon-middle" md-list-avatar>wb_incandescent</md-icon>
-        <span>ideas</span>
-      </md-list-item>
-      <a md-list-item [routerLink]="[ '/ideas/new' ]" routerLinkActive="activeLink">&nbsp;&nbsp;&nbsp; New Idea</a>
-      <a md-list-item [routerLink]="[ '/auth/register' ]" routerLinkActive="activeLink">Register</a>
-      <a md-list-item [routerLink]="[ '/auth' ]" routerLinkActive="activeLink">Login</a>
-      <a md-list-item (click)="logout()">Logout</a>
     </md-nav-list>
   </md-sidenav>
   <md-toolbar color="primary">
     <button md-icon-button (click)="sidenav.toggle()">
       <md-icon class="sd-toolbar-icon">menu</md-icon>
     </button>
+    &nbsp;iDeal-Hub
     <span class="flex"></span>
     <button md-icon-button (click)="openSearch()">
       <md-icon class="sd-toolbar-icon">search</md-icon>

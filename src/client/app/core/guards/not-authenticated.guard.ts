@@ -1,3 +1,6 @@
+/**
+ * Created by Viki on 11/17/2016.
+ */
 import {CanActivate, Router} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
@@ -6,7 +9,7 @@ import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication
  */
 
 @Injectable()
-export class LoggedInGuard implements CanActivate {
+export class NotAuthenticatedGuard implements CanActivate {
 
   constructor(private authenticationService: JwtAuthenticationService, private router: Router) {
 
@@ -14,10 +17,10 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate() {
     if (this.authenticationService.isAuthenticated()) {
-      return true;
-    } else {
-      this.router.navigate(["auth"]);
+      this.router.navigate(["home"]);
       return false;
+    } else {
+      return true;
     }
   }
 

@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Find Idea",
+    "url": "/ideas",
+    "description": "Search and query ideas for sale ",
+    "image": {
+      "src": "https://static.codeable.io/assets/uploads/2015/06/find_idea.png",
+      "rowSpan": 1,
+      "colSpan": 2
+    }
+  },
+  {
+    "title": "Tell us what is your problem",
+    "description": "Submit your problem, and ask others to give you ideas",
+    "url": "/problems/new",
+    "image": {
+      "src": "https://www.yutongo.com/assets/webflow/lp_howitworks_03a.png",
+      "rowSpan": 1,
+      "colSpan": 2
+    }
+  },
+  {
+    "title": "Sell your idea",
+    "description": "Share idea on our system, and wait for customers",
+    "url": "/ideas/new",
+    "image": {
+      "src": "http://www.startupbiz.com/wp-content/uploads/2016/05/13193905_m-e1463940573921.jpg",
+      "rowSpan": 1,
+      "colSpan": 2
+    }
+  },
+  {
+    "title": "Help your idea to grow",
+    "description": "Find incubators for your idea",
+    "url": "",
+    "image": {
+      "src": "http://nebula.wsimg.com/obj/OUFFNERGNzgyMkVCREUzNDVFNDA6YmY3ZTYyNTExMjhjYTJhNGZhMDUwY2U2N2ZkMWJkYmI6Ojo6OjA=",
+      "rowSpan": 2,
+      "colSpan": 1
+    }
+  },
+  {
+    "title": "Manage your ideas",
+    "description": "Save your ideas, find new ones, and make them available to you",
+    "url": "",
+    "image": {
+      "src": "http://killerinnovations.com/wp-content/uploads/2012/03/HiRes.jpg",
+      "rowSpan": 1,
+      "colSpan": 1
+    }
+  },
+  {
+    "title": "Find problems and try to solve them",
+    "descriptions": "If you don't have any ideas, then maybe you can provide solutions.",
+    "url": "/problems",
+    "image": {
+      "src": "http://cdn4.beinggeeks.com/wp-content/uploads/2012/10/Find-Ideas-for-Business-Start-Ups.jpg",
+      "rowSpan": 1,
+      "colSpan": 2
+    }
+  }
+]

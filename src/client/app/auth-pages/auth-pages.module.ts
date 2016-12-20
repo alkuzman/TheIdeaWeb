@@ -11,9 +11,10 @@ import {UserModule} from "../domain/user/user.module";
 import {RegisterPageComponent} from "./register-page/register-page.component";
 import {LoginPageComponent} from "./login-page/components/login-page.component";
 import {AuthPageComponent} from "./auth-page/components/auth-page.component";
+import {LogoutPageComponent} from "./logout-page/logout-page.component";
 
 @NgModule({
   imports: [SharedModule, AuthPagesRoutingModule, UserModule],
-  declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent, RegisterPageComponent, AuthPageComponent]
+  declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent, RegisterPageComponent, AuthPageComponent, LogoutPageComponent]
 })
 export class AuthPagesModule {}

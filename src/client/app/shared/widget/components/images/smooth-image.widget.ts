@@ -2,8 +2,18 @@
  * Created by AKuzmanoski on 06/12/2016.
  */
 import {
-  Component, ChangeDetectorRef, Input, trigger, state, style, transition, animate,
-  HostBinding, HostListener
+  Component,
+  ChangeDetectorRef,
+  Input,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  HostBinding,
+  HostListener,
+  group,
+  keyframes
 } from "@angular/core";
 @Component({
   moduleId: module.id,
@@ -16,27 +26,63 @@ import {
       state("*", style({
         opacity: 1
       })),
-      state("loading", style({
-        opacity: 0.2
+      state("active", style({
+        opacity: 1
       })),
+      state("loading", style({
+        opacity: 0
+      })),
+      transition("* => active", [
+        style({
+          opacity: 0,
+          filter: "saturate(20%) brightness(125%)"
+        }),
+        group([
+          animate("1s cubic-bezier(0.7,0,0.6,1)", style({
+            opacity: 1
+          })),
+          animate("2s cubic-bezier(0.7,0,0.6,1)", keyframes([
+            style({filter: "saturate(20%) brightness(125%)", offset: 0}),
+            style({filter: "saturate(84.8%) brightness(100%)", offset: 0.75}),
+            style({filter: "saturate(100%) brightness(100%)", offset: 1})
+          ]))
+        ])
+      ]),
       transition("* => loading", [
         style({
           opacity: 1,
+          filter: "saturate(100%) brightness(100%)"
         }),
-        animate("150ms ease", style({
-          opacity: 0.2
-        }))
+        group([
+          animate("250ms 250ms cubic-bezier(0.7,0,0.6,1)", style({
+            opacity: 0
+          })),
+          animate("500ms cubic-bezier(0.7,0,0.6,1)", keyframes([
+            style({filter: "saturate(100%) brightness(100%)", offset: 0}),
+            style({filter: "saturate(35.2%) brightness(125%)", offset: 0.75}),
+            style({filter: "saturate(20%) brightness(125%)", offset: 1})
+          ]))
+        ])
       ]),
       transition("loading => *", [
         style({
-          opacity: 0.2,
+          opacity: 0,
+          filter: "saturate(20%) brightness(125%)"
         }),
-        animate("200ms ease", style({
-          opacity: 1
-        }))
+        group([
+          animate("1s cubic-bezier(0.7,0,0.6,1)", style({
+            opacity: 1
+          })),
+          animate("2s cubic-bezier(0.7,0,0.6,1)", keyframes([
+            style({filter: "saturate(20%) brightness(125%)", offset: 0}),
+            style({filter: "saturate(84.8%) brightness(100%)", offset: 0.75}),
+            style({filter: "saturate(100%) brightness(100%)", offset: 1})
+          ]))
+        ])
       ])
     ])
   ],
+
   styleUrls: ["smooth-image.widget.css"]
 })
 export class SmoothImageWidget {
@@ -82,8 +128,13 @@ export class SmoothImageWidget {
   }
 
   @Input("idealSrc") set nextImage(image: string) {
-    this.status = 'loading';
-    this._nextImage = image;
+    this._nextImage = image
+    if (this.activeImage != null) {
+      this.status = 'loading';
+    }
+    else {
+      //this.loadingStageReady();
+    }
   }
 
   get activeImage() {
@@ -99,21 +150,21 @@ export class SmoothImageWidget {
   }
 
   loadingStageReady() {
-    console.log("HERE");
-    downloadImage(this.nextImage, () => {
+    this.downloadImage(this.nextImage, () => {
       this.activeImage = this.nextImage;
       this._nextImage = null;
-      this.status = null;
+      this.status = "active";
       this.ref.detectChanges();
     })
   }
-}
 
-function downloadImage(url: string, fn: Function) {
-  var img = new Image();
-  img.onload = () => {
-    setTimeout(fn, 150);
-
+  downloadImage(url: string, fn: Function) {
+    var img = new Image();
+    img.onload = () => {
+      if (this.status == "loading")
+        setTimeout(fn, 500);
+      else fn();
+    }
+    img.src = url;
   }
-  img.src = url;
 }

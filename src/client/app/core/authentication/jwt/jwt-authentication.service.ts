@@ -7,6 +7,7 @@ import {JwtSecurityContext} from "./jwt-security-context.service";
 import {Observable, Scheduler} from "rxjs";
 import {AuthHttp, JwtHelper} from "angular2-jwt";
 import {JwtRefreshAccessTokenService} from "./jwt-refresh-access-token.service";
+import {Router} from "@angular/router";
 /**
  * Created by Viki on 11/18/2016.
  */
@@ -19,7 +20,7 @@ export class JwtAuthenticationService {
   private me: JwtAuthenticationService = this;
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: Http, private authHttp: AuthHttp, securityContext: JwtSecurityContext, private refreshAccessTokenService: JwtRefreshAccessTokenService) {
+  constructor(private http: Http, private authHttp: AuthHttp, securityContext: JwtSecurityContext, private refreshAccessTokenService: JwtRefreshAccessTokenService, private router: Router) {
     this.securityContext = securityContext;
     this.scheduleRefresh();
   }
@@ -83,7 +84,11 @@ export class JwtAuthenticationService {
     let queueRefresh = Scheduler.queue;
 
     queueRefresh.schedule(() => {
-      this.refreshAccessTokenService.getNewAccessToken().subscribe((token: string) => this.scheduleRefresh(), (erro: any) => this.signOut()); // some function that deals with refreshing the token
+      this.refreshAccessTokenService.getNewAccessToken().subscribe((token: string) => this.scheduleRefresh(), (error: Response) => this.refreshTokenExpired(error)); // some function that deals with refreshing the token
     }, delay);
+  }
+
+  refreshTokenExpired(response: Response) {
+    this.router.navigate(["/auth/logout"]);
   }
 }

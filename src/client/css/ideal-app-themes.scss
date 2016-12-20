@@ -1,0 +1,7 @@
+@import "../app/pages/pages.component";
+/**
+ * Created by AKuzmanoski on 15/12/2016.
+ */
+@mixin ideal-app-theme($theme) {
+  @include navigation_drawer_theme($theme);
+}

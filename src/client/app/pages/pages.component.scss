@@ -1,0 +1,39 @@
+@import '~@angular/material/core/theming/theming';
+@mixin navigation_drawer_theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .md-primary {
+    color: md-color($primary);
+  }
+  .md-accent {
+    color: md-color($accent);
+  }
+  .md-warn {
+    color: md-color($warn);
+  }
+}
+
+.activeLink {
+  font-weight: bold;
+}
+
+.flex {
+  flex: 1 1 auto;
+}
+
+
+md-sidenav {
+  width: 250px;
+}
+
+.icon-middle {
+  margin-top: 10px;
+}
+
+.icon-20 {
+  font-size: 20px;
+}
