@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-context.service";
 import {NavigationService} from "../core/navigation/navigation.service";
 import {NavigationItem} from "../core/navigation/navigation-item";
+import {Title} from "@angular/platform-browser";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',

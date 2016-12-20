@@ -40,6 +40,7 @@ export class AuthPagesComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log("here");
     this.cardState = "active";
   }
 }
