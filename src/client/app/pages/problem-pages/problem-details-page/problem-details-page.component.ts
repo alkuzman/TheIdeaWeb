@@ -4,7 +4,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Problem} from "../../../domain/model/ideas/problem";
-import {ProblemService} from "../../../domain/problem/problem.service";
 import {Idea} from "../../../domain/model/ideas/idea";
 @Component({
   moduleId: module.id,

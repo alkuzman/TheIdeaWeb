@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {ThemingService} from "../../core/theming/theming.service";
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */
@@ -7,8 +8,12 @@ import {Component} from "@angular/core";
   selector: 'ideal-problem-pages',
   template: `<router-outlet></router-outlet>`
 })
-export class ProblemPagesComponent {
-  constructor() {
-    console.log("ProblemPagesComponent")
+export class ProblemPagesComponent implements OnInit{
+  constructor(private themingService: ThemingService) {
+
+  }
+
+  ngOnInit() {
+    this.themingService.currentTheme = "problem-theme";
   }
 }

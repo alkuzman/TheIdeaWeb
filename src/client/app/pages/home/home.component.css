@@ -3,6 +3,17 @@
   padding: 0 16px;
 }
 
+.margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.fit-image {
+  width: 100%;
+  height: auto;
+}
+
 .space-around {
   margin: 10px;
 }

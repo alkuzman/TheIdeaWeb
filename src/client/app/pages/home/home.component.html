@@ -1,4 +1,12 @@
-<button class="space-around" color="accent" md-raised-button type="button" [routerLink]="[ '/ideas/new' ]">Create New Idea</button> <br/>
-<button class="space-around" md-raised-button type="button" [routerLink]="[ '/ideas' ]">Find Idea</button> <br />
-<button class="space-around" md-raised-button type="button" [routerLink]="[ '/problems/new' ]">Ask for Solution</button> <br />
-<button class="space-around" md-raised-button type="button" [routerLink]="[ '/problems' ]">Find Problem</button> <br />
+<md-grid-list class="margin" cols="4" rowWeight="200px">
+  <md-grid-tile *ngFor="let category of categories" [rowspan]="category.image.rowSpan" [colspan]="category.image.colSpan">
+    <ideal-smoot-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smoot-image-widget>
+    <md-grid-tile-footer>
+      <h3 md-line>{{category.title}}</h3>
+      <span md-line>{{category.description}}</span>
+      <button [routerLink]="category.url" md-icon-button>
+        <md-icon>forward</md-icon>
+      </button>
+    </md-grid-tile-footer>
+  </md-grid-tile>
+</md-grid-list>

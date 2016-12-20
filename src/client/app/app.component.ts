@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import { Config } from './shared/index';
+import {ThemingService} from "./core/theming/theming.service";
+import {Theme} from "./core/theming/theme";
 
 /**
  * This class represents the main application components. Within the @Routes annotation is the configuration of the
@@ -13,9 +15,17 @@ import { Config } from './shared/index';
     './app.component.css'
   ]
 })
+export class AppComponent implements OnInit{
+  @HostBinding("class") themeClass = "default-theme";
 
-export class AppComponent {
-  constructor() {
+  constructor(private themingService: ThemingService) {
     console.log('Environment config', Config);
   }
+
+  ngOnInit() {
+    this.themingService.themeObservable.subscribe((theme: string) => {
+      console.log(theme + " #");
+      this.themeClass = theme;});
+  }
+
 }

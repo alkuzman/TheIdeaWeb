@@ -1,6 +1,6 @@
 import {Routes} from "@angular/router";
 import {IdeaPagesComponent} from "./idea-pages.component";
-import {LoggedInGuard} from "../../core/guards/logged-in.guard";
+import {AuthenticatedGuard} from "../../core/guards/authenticated.guard";
 /**
  * Created by AKuzmanoski on 25/10/2016.
  */
@@ -17,7 +17,7 @@ export const IdeaPagesRoutes: Routes = [
       {
         path: "new",
         component: IdeaPagesComponent,
-        canActivate: [LoggedInGuard],
+        canActivate: [AuthenticatedGuard],
         loadChildren: "app/pages/idea-pages/new-idea-page/new-idea-page.module#NewIdeaPageModule"
       },
       {

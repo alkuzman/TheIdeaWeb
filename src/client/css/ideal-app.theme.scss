@@ -1,4 +1,5 @@
 @import '~@angular/material/core/theming/all-theme';
+@import "ideal-app-themes";
 // Plus imports for other components in your app.
 
 // Include the base styles for Angular Material core. We include this here so that you only
@@ -22,3 +23,26 @@ $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-a
 // Alternatively, you can import and @include the theme mixins for each components
 // that you are using.
 @include angular-material-theme($ideal-app-theme);
+@include ideal-app-theme($ideal-app-theme);
+
+.idea-theme {
+  $ideal-idea-primary: md-palette($md-amber);
+  $ideal-idea-accent: md-palette($md-light-blue);
+  $ideal-idea-warn: md-palette($md-red);
+
+  $ideal-idea-theme: md-light-theme($ideal-idea-primary, $ideal-idea-accent, $ideal-idea-warn);
+
+  @include angular-material-theme($ideal-idea-theme);
+  @include ideal-app-theme($ideal-idea-theme);
+}
+
+.problem-theme {
+  $ideal-problem-primary: md-palette($md-purple, 500, 700, 800);
+  $ideal-problem-accent: md-palette($md-green, A200);
+  $ideal-problem-warn: md-palette($md-red);
+
+  $ideal-problem-theme: md-light-theme($ideal-problem-primary, $ideal-problem-accent, $ideal-problem-warn);
+
+  @include angular-material-theme($ideal-problem-theme);
+  @include ideal-app-theme($ideal-problem-theme);
+}

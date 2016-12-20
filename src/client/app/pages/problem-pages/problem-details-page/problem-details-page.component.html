@@ -4,5 +4,5 @@
   <h3>{{ideaList?.length}} Ideas</h3>
   <ideal-idea-list [problemId]="problemId" (ideaListReady)="onIdeaListReady($event)"></ideal-idea-list>
   <h3>Your Idea</h3>
-  <ideal-solution-form-new [showProblemFields]="false" [problem]="problem"></ideal-solution-form-new>
+  <ideal-solution-form-new *ngIf="problem" [showProblemFields]="false" [problem]="problem"></ideal-solution-form-new>
 </div>

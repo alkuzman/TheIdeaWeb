@@ -1,0 +1,26 @@
+[
+  {
+    "icon": "home",
+    "title": "Home",
+    "subtitle": "Go to the home page",
+    "url": "/home"
+  },
+  {
+    "icon": "lightbulb_outline",
+    "title": "Ideas",
+    "subtitle": "Search for public ideas",
+    "url": "/ideas"
+  },
+  {
+    "icon": "help_outline",
+    "title": "Problems",
+    "subtitle": "",
+    "url": "/problems"
+  },
+  {
+    "icon": "info_outline",
+    "title": "About",
+    "subtitle": "Read all about iDeal-Hub",
+    "url": "/about"
+  }
+]

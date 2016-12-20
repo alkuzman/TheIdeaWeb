@@ -5,6 +5,8 @@ import {Component, OnInit} from "@angular/core";
 import {UserService} from "../domain/user/user.service";
 import {Router} from "@angular/router";
 import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-context.service";
+import {NavigationService} from "../core/navigation/navigation.service";
+import {NavigationItem} from "../core/navigation/navigation-item";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',
@@ -14,12 +16,17 @@ import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-contex
 export class PagesComponent implements OnInit{
   query: string = "";
   searchState: boolean = false;
+  navigationItems: NavigationItem[];
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private navigationService: NavigationService) {
     console.log("PagesComponent")
   }
 
   ngOnInit(): void {
+    this.navigationService.navigationItems
+      .subscribe(
+        (navigationItems: NavigationItem[]) => this.navigationItems = navigationItems,
+        (error: any) => console.log(error));
   }
 
   search(): boolean {
