@@ -8,7 +8,7 @@ import {Logger} from "./logger.service";
 import {AppRoutingModule} from "./app-routing.module";
 import {MaterialModule} from "@angular/material";
 import {CoreModule} from "./core/core.module";
-import {AUTH_PROVIDERS, provideAuth} from "angular2-jwt";
+import {provideAuth} from "angular2-jwt";
 import {PagesModule} from "./pages/pages.module";
 
 @NgModule({
@@ -17,9 +17,7 @@ import {PagesModule} from "./pages/pages.module";
   providers: [provideAuth({
     headerName: "X-Authorization",
     tokenName: "auth_token",
-    globalHeaders: [{'Content-Type':'application/json'}],
-    noJwtError: true,
-    noTokenScheme: true
+    globalHeaders: [{'Content-Type': 'application/json'}]
   }), Logger,
     {
       provide: APP_BASE_HREF,

@@ -6,10 +6,12 @@ import {HomeRoutingModule} from "./home-routing.module";
 import {CategoriesService} from "./categories.service";
 
 @NgModule({
+
   imports: [CommonModule, SharedModule, HomeRoutingModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
   providers: [CategoriesService]
 })
 export class HomeModule {
+
 }

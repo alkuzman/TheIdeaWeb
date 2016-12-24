@@ -3,17 +3,15 @@
  */
 import {Injectable, Inject} from "@angular/core";
 import {Logger} from "../../logger.service";
-import {Idea} from "../model/ideas/idea";
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {Problem} from "../model/ideas/problem";
-import {JwtHttpService} from "../../core/authentication/jwt/jwt-http.service";
 import {AuthHttp} from "angular2-jwt";
 
 
 @Injectable()
 export class ProblemService {
-  private ideasUrl = "/api/problems";
+  private problemsUrl = "/api/problems";
 
   constructor(private logger: Logger, private http: Http, private authHttp: AuthHttp) {
 
@@ -34,11 +32,11 @@ export class ProblemService {
   }
 
   getProblems(): Observable<Problem[]> {
-    return this.http.get(this.ideasUrl).map(this.extractData).catch(this.handleError);
+    return this.http.get(this.problemsUrl).map(this.extractData).catch(this.handleError);
   }
 
   getProblem(id: number): Observable<Problem> {
-    let url = this.ideasUrl + "/" + id;
+    let url = this.problemsUrl + "/" + id;
     /*let params = new URLSearchParams();
      params.set('id', id.toString()); // the user-pages's search value*/
     return this.http.get(url)
@@ -49,7 +47,8 @@ export class ProblemService {
   addProblem(problem: Problem): Promise<Problem> {
     let body = JSON.stringify(problem);
     let headers = new Headers({'Content-Type': 'application/json'});
-    return this.authHttp.post(this.ideasUrl, body, {headers: headers})
+    console.log(body);
+    return this.authHttp.post(this.problemsUrl, body, {headers: headers})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

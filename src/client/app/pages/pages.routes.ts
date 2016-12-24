@@ -33,6 +33,10 @@ export const PagesRoutes: Routes = [
         loadChildren: "app/pages/idea-pages/idea-pages.module#IdeaPagesModule"
       },
       {
+        path: 'users',
+        loadChildren: 'app/pages/user-pages/user-pages.module#UserPagesModule'
+      },
+      {
         path: '**',
         redirectTo: "/home"
       }]

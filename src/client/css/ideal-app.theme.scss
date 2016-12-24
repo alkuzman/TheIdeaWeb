@@ -46,3 +46,14 @@ $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-a
   @include angular-material-theme($ideal-problem-theme);
   @include ideal-app-theme($ideal-problem-theme);
 }
+
+.user-theme {
+  $ideal-user-primary: md-palette($md-green);
+  $ideal-user-accent: md-palette($md-orange);
+  $ideal-user-warn: md-palette($md-red);
+
+  $ideal-user-theme: md-light-theme($ideal-user-primary, $ideal-user-accent, $ideal-user-warn);
+
+  @include angular-material-theme($ideal-user-theme);
+  @include ideal-app-theme($ideal-user-theme);
+}
