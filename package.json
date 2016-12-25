@@ -21,6 +21,7 @@
     "lint": "tslint src/**/*.ts tools/**/*.ts",
     "karma": "karma",
     "karma.start": "karma start",
+    "preinstall": "npm i typings -g",
     "postinstall": "gulp check.versions && gulp build.bundle.rxjs && npm prune && gulp webdriver && gulp print.banner",
     "reinstall": "npm cache clean && npm install",
     "serve.coverage": "gulp serve.coverage --color",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@angular/compiler-cli": "*",
     "@angular/platform-server": "*",
+    "@angular/upgrade": "*",
     "@types/async": "^2.0.32",
     "@types/browser-sync": "^0.0.34",
     "@types/core-js": "^0.9.34",
@@ -126,10 +128,12 @@
     "yargs": "^6.0.0"
   },
   "dependencies": {
+    "*": "^4.1.1",
     "@angular/common": "*",
     "@angular/compiler": "*",
     "@angular/compiler-cli": "*",
     "@angular/core": "*",
+    "@angular/flex-layout": "^2.0.0-beta.1",
     "@angular/forms": "*",
     "@angular/http": "*",
     "@angular/material": "*",
@@ -142,7 +146,7 @@
     "@types/hammerjs": "^2.0.33",
     "@types/node": "^6.0.52",
     "@types/systemjs": "^0.19.33",
-    "angular2-jwt": "^0.1.27",
+    "angular2-jwt": "*",
     "autoprefixer": "^6.5.4",
     "browser-sync": "^2.18.5",
     "codelyzer": "^2.0.0-beta.3",
@@ -153,10 +157,9 @@
     "intl": "^1.2.5",
     "karma-remap-istanbul": "^0.2.2",
     "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-rc.4",
+    "rxjs": "*",
     "systemjs": "0.19.40",
     "ts-node": "^1.7.2",
-    "*": "^4.1.1",
     "zone.js": "0.7.2"
   }
 }
