@@ -85,6 +85,15 @@ export class ProjectConfig extends SeedConfig {
     });
 
     this.addPackageBundles({
+      name:'@angular/flex-layout',
+      path:'node_modules/@angular/flex-layout/bundles/flex-layout.umd.js',
+      packageMeta:{
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
+    })
+
+    this.addPackageBundles({
       name:'angular2-jwt',
       path:'node_modules/angular2-jwt/angular2-jwt.js',
       packageMeta:{

@@ -11,6 +11,7 @@ import {ProblemService} from "../../problem.service";
   styleUrls: ["problem-list.component.css"]
 })
 export class ProblemListComponent implements OnInit{
+  @Input("questionerId") questionerId: number;
   @Input("problems") problems: Problem[];
   @Output("problemSelected") problemSelected: EventEmitter<Problem> = new EventEmitter<Problem>();
   errorMessage: string;
@@ -20,7 +21,9 @@ export class ProblemListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.problemService.getProblems().subscribe(
+    this.problemService.getProblems({
+      questionerId: this.questionerId != null ? this.questionerId.toString() : null
+    }).subscribe(
       problems => this.problems = problems,
       error => this.errorMessage = <any>error);
   }

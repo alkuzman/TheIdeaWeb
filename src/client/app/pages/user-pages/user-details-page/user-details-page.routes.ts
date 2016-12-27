@@ -9,4 +9,4 @@ export const UserDetailsPageRoutes: Routes = [
     path: "",
     component: UserDetailsPageComponent
   }
-]
+];

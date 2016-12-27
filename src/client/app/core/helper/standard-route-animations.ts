@@ -15,10 +15,10 @@ export function routerAnimations(name: string) {
       style({
         transform: 'translateX(-150%)'
       }),
-      animate('150ms 75ms ease-out')
+      animate('150ms ease-out')
     ]),
     transition(':leave', [
-      animate('130ms ease-in', style({
+      animate('150ms ease-out', style({
         transform: 'translateX(150%)',
       }))
     ])

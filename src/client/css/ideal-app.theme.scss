@@ -26,8 +26,8 @@ $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-a
 @include ideal-app-theme($ideal-app-theme);
 
 .idea-theme {
-  $ideal-idea-primary: md-palette($md-amber);
-  $ideal-idea-accent: md-palette($md-light-blue);
+  $ideal-idea-primary: md-palette($md-deep-orange);
+  $ideal-idea-accent: md-palette($md-yellow);
   $ideal-idea-warn: md-palette($md-red);
 
   $ideal-idea-theme: md-light-theme($ideal-idea-primary, $ideal-idea-accent, $ideal-idea-warn);

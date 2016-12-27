@@ -1,4 +1,5 @@
 import {Component, trigger, state, style, transition, group, animate, OnInit} from "@angular/core";
+import {ThemingService} from "../../core/theming/theming.service";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -35,12 +36,12 @@ import {Component, trigger, state, style, transition, group, animate, OnInit} fr
 export class AuthPagesComponent implements OnInit{
   cardState = "active";
 
-  constructor() {
-    console.log("AuthPagesComponent")
+  constructor(private themingService: ThemingService) {
   }
 
   ngOnInit() {
-    console.log("here");
     this.cardState = "active";
+    this.themingService.currentTheme = "default-theme";
   }
+
 }

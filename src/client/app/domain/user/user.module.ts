@@ -22,9 +22,10 @@ import className = webdriver.By.className;
 import {UserObjectService} from "./user-object.service";
 import {UserDetailsComponent} from "./component/user-details/user-details/user-details.component";
 import {UserDetailsLoaderComponent} from "./component/user-details/user-details-loader/user-details-loader.component";
+import {UserCoverPicturePipe} from "./pipes/user-cover-picture.pipe";
 @NgModule({
   imports: [SharedModule],
-  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent],
+  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCoverPicturePipe],
   exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent],
   providers: [UserObjectService, UserService]
 })

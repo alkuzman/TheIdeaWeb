@@ -16,6 +16,7 @@ import {IdeaService} from "../../idea.service";
 })
 export class IdeasComponent implements OnInit {
   @Input("problemId") problemId: number;
+  @Input("ownerId") ownerId: number;
   @Output("ideaListReady") ideaListReady: EventEmitter<Idea[]> = new EventEmitter<Idea[]>();
   @Output() ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   ideas: Idea[];
@@ -26,7 +27,10 @@ export class IdeasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ideaService.getIdeas({problemId: this.problemId != null ? this.problemId.toString() : null})
+    this.ideaService.getIdeas({
+      problemId: this.problemId != null ? this.problemId.toString() : null,
+      ownerId: this.ownerId != null ? this.ownerId.toString() : null
+    })
       .subscribe(
         (ideaList: Idea[]) => this.onIdeaListReady(ideaList),
         error => this.errorMessage = <any>error);

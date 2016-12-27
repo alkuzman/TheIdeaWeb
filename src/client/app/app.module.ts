@@ -10,9 +10,10 @@ import {MaterialModule} from "@angular/material";
 import {CoreModule} from "./core/core.module";
 import {provideAuth} from "angular2-jwt";
 import {PagesModule} from "./pages/pages.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, SharedModule.forRoot(), AppRoutingModule, PagesModule],
+  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), AppRoutingModule, PagesModule],
   declarations: [AppComponent],
   providers: [provideAuth({
     headerName: "X-Authorization",

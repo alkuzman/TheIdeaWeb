@@ -7,6 +7,8 @@ import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {Problem} from "../model/ideas/problem";
 import {AuthHttp} from "angular2-jwt";
+import {ProblemListFilterProperties} from "./params/problem-list-filter.properties";
+import {PropertiesToUrlSearchParams} from "../../shared/utils/properties-to-url-search-params";
 
 
 @Injectable()
@@ -31,8 +33,9 @@ export class ProblemService {
     return Observable.throw(error);
   }
 
-  getProblems(): Observable<Problem[]> {
-    return this.http.get(this.problemsUrl).map(this.extractData).catch(this.handleError);
+  getProblems(properties: ProblemListFilterProperties): Observable<Problem[]> {
+    let params = PropertiesToUrlSearchParams.transform(properties);
+    return this.http.get(this.problemsUrl, {search: params}).map(this.extractData).catch(this.handleError);
   }
 
   getProblem(id: number): Observable<Problem> {

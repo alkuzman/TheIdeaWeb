@@ -5,6 +5,7 @@ import {RouterModule} from "@angular/router";
 import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
 import {MaterialModule} from "@angular/material";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -14,7 +15,7 @@ import {MaterialModule} from "@angular/material";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule]
+  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

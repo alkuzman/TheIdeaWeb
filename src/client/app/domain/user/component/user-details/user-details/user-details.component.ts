@@ -7,7 +7,8 @@ import {User} from "../../../../model/authentication/user";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-details",
-  templateUrl: "user-details.component.html"
+  templateUrl: "user-details.component.html",
+  styleUrls: ["user-details.component.css"]
 })
 export class UserDetailsComponent {
   @Input("user") user : User;
