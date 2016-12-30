@@ -3,7 +3,7 @@
  */
 import { Directive, ElementRef, Renderer } from '@angular/core';
 
-@Directive({ selector: '[highlight]' })
+@Directive({ selector: '[color]'})
 /** Highlight the attached element in gold */
 export class HighlightDirective {
   constructor(renderer: Renderer, el: ElementRef) {

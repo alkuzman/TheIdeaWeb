@@ -19,13 +19,6 @@ export class NewSolutionFormComponent implements OnInit {
   @Input("showProblemFields") showProblemFields: boolean = true;
   _problem: Problem;
   _idea: Idea;
-  get idea(): Idea {
-    return this._idea;
-  }
-
-  get problem(): Problem {
-    return this._problem
-  }
 
   @Input("idea") set idea(idea: Idea) {
     this._idea = idea;
@@ -37,7 +30,8 @@ export class NewSolutionFormComponent implements OnInit {
     }
   }
 
-  @Input("problem") set problem(problem: Problem) {
+  @Input('problem')
+  set problem(problem: Problem) {
     this._problem = problem;
     if (this.solution != null) {
       if (this.idea == null)
@@ -45,6 +39,7 @@ export class NewSolutionFormComponent implements OnInit {
       this.solution.idea.problem = this.problem;
     }
   }
+
   solution: Solution;
   errorMessage: any;
 

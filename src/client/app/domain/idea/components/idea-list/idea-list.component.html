@@ -1,2 +1,11 @@
-<ideal-idea-card *ngFor="let idea of ideas" [idea]="idea" (click)="onIdeaSelected(idea)">
+<ideal-idea-card *ngFor="let idea of ideas" [idea]="idea" (ideaSelected)="onIdeaSelected(idea)"
+                 (ideaOwnerSelected)="onIdeaOwnerSelected(idea.owner)"
+                 (ideaProblemSelected)="onIdeaProblemSelected(idea.problem)"
+                 (announce)="onAnnounce($event)"
+                 (sendTo)="onSendTo($event)"
+                 (share)="onShare($event)"
+                 (edit)="onEdit($event)"
+                 (remove)="onRemove($event)"
+                 (report)="onReport($event)"
+                 (ban)="onBan($event)">
 </ideal-idea-card>

@@ -12,13 +12,14 @@ import {UploadImageDialogComponent} from "./components/files/upload-image-dialog
 import {TextEditorToolbarComponent} from "./components/text-editor/toolbar/text-editor-toolbar.component";
 import {TextEditorComponent} from "./components/text-editor/text-editor.component";
 import {SmoothImageWidget} from "./components/images/smooth-image.widget";
+import {ColorDirective} from "./directives/color.directive";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule],
   entryComponents: [UploadImageDialogComponent]
 })

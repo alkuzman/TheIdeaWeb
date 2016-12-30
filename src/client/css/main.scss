@@ -8,6 +8,10 @@ body {
   padding: 0px !important;
 }
 
+md-card-header, .md-card-header-text {
+  height: auto !important;
+}
+
 /* Box-sizing border-box */
 * {
   box-sizing: border-box;
@@ -45,4 +49,8 @@ li {
 
 .margin {
   margin: 10px;
+}
+
+.icon-20 {
+  font-size: 20px;
 }

@@ -1,6 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
+import {Problem} from "../../../domain/model/ideas/problem";
+import {Idea} from "../../../domain/model/ideas/idea";
+import {Sharable} from "../../../domain/model/sharing/sharable";
 /**
  * Created by AKuzmanoski on 22/12/2016.
  */
@@ -14,7 +17,7 @@ export class UserDetailsPageComponent implements OnInit {
   private userId: number;
   private user: User;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -26,5 +29,42 @@ export class UserDetailsPageComponent implements OnInit {
 
   onUserReady(user: User) {
     this.user = user;
+  }
+
+  goToUserDetails(user: User) {
+    this.router.navigate(["..", "user.id"], {relativeTo: this.route})
+  }
+
+  goToProblemDetails(problem: Problem) {
+    this.router.navigate(["/problems", problem.id])
+  }
+
+  goToIdeaDetails(idea: Idea) {
+    this.router.navigate(["/ideas", idea.id])
+  }
+
+  announce(sharable: Sharable) {
+    console.log("announce");
+    this.router.navigate(["/announcements", "/new"], {queryParams: {sharableId: sharable.id}});
+  }
+
+  sendTo(sharable: Sharable) {
+
+  }
+
+  share(sharable: Sharable) {
+
+  }
+
+  edit(idea: Idea) {
+
+  }
+
+  report(sharable: Sharable) {
+
+  }
+
+  ban(sharable: Sharable) {
+
   }
 }

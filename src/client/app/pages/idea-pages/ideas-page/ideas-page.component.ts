@@ -4,6 +4,8 @@
 import {Component} from "@angular/core";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Router, ActivatedRoute} from "@angular/router";
+import {User} from "../../../domain/model/authentication/user";
+import {Problem} from "../../../domain/model/ideas/problem";
 @Component({
   moduleId: module.id,
   selector: "ideal-ideas-page",
@@ -16,5 +18,14 @@ export class IdeasPageComponent {
 
   goToDetails(idea: Idea) {
     this.router.navigate([idea.id], {relativeTo: this.route})
+  }
+
+  goToUserDetails(user: User) {
+    this.router.navigate(["/users", user.id]);
+  }
+
+  goToProblemDetails(problem: Problem) {
+    console.log("Here");
+    this.router.navigate(["/problems", problem.id]);
   }
 }

@@ -1,7 +1,16 @@
 <ideal-user-details-loader [userId]="userId" (userReady)="onUserReady($event)"></ideal-user-details-loader>
 <md-tab-group>
   <md-tab label="Ideas">
-    <ideal-idea-list [ownerId]="userId"></ideal-idea-list>
+    <ideal-idea-list [ownerId]="userId"
+                     (ideaOwnerSelected)="goToUserDetails($event)"
+                     (ideaProblemSelected)="goToProblemDetails($event)"
+                     (ideaSelected)="goToIdeaDetails($event)"
+                     (announce)="announce($event)"
+                     (sendTo)="sendTo($event)"
+                     (share)="share($event)"
+                     (edit)="edit($event)"
+                     (report)="report($event)"
+                     (ban)="ban($event)"></ideal-idea-list>
   </md-tab>
   <md-tab label="Problems">
     <ideal-problem-list [questionerId]="userId"></ideal-problem-list>

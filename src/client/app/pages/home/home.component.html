@@ -1,4 +1,4 @@
-<md-grid-list cols-xs="1" [cols]="numOfColumns" (window:resize)="onResize($event)">
+<md-grid-list gutterSize="0" [cols]="numOfColumns" (window:resize)="onResize($event)">
   <md-grid-tile *ngFor="let category of categories" [rowspan]="category.image.rowSpan" [colspan]="category.image.colSpan">
     <ideal-smoot-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smoot-image-widget>
     <md-grid-tile-footer>
