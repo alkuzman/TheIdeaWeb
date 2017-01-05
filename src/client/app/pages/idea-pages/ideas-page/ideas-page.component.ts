@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Router, ActivatedRoute} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
@@ -11,9 +11,17 @@ import {Problem} from "../../../domain/model/ideas/problem";
   selector: "ideal-ideas-page",
   templateUrl: "ideas-page.component.html"
 })
-export class IdeasPageComponent {
+export class IdeasPageComponent implements OnInit {
+  private ideas: Idea[];
+
   constructor(private router: Router, private route: ActivatedRoute) {
 
+  }
+
+  ngOnInit() {
+    this.route.data.subscribe((data: {ideas: Idea[]}) => {
+      this.ideas = data.ideas;
+    })
   }
 
   goToDetails(idea: Idea) {

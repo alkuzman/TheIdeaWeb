@@ -11,7 +11,6 @@ import {Alignment} from "../../../shared/widget/components/avatars/named-avatar/
   templateUrl: "idea-details-page.component.html"
 })
 export class IdeaDetailsPageComponent implements OnInit {
-  private ideaId: number;
   private idea: Idea;
 
   constructor(private route: ActivatedRoute) {
@@ -19,8 +18,8 @@ export class IdeaDetailsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.ideaId = params["id"];
+    this.route.data.subscribe((data: {idea: Idea}) => {
+      this.idea = data.idea;
     })
   }
 

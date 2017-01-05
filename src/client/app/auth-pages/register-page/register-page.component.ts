@@ -51,6 +51,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   login(user: User): void {
+    this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
     if (this.email == null)
       this.email = user.email;
     let queryParams = {"email": this.email};
@@ -63,7 +64,6 @@ export class RegisterPageComponent implements OnInit {
       message += "[" + fieldError.field + "] " + fieldError.message + "\n";
     }
     message = message.substring(0, message.length - 1);
-    let config = new MdSnackBarConfig();
-    this.snackBar.open(message, 'Try Again', config);
+    this.snackBar.open(message, 'Try Again', {duration: 3000});
   }
 }

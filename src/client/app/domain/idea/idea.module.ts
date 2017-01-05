@@ -15,12 +15,13 @@ import {IdeaCardComponent} from "./components/idea-card/idea-card.component";
 import {IdeaDetailsLoaderComponent} from "./components/idea-details/idea-details-loader/idea-details-loader.component";
 import {UserModule} from "../user/user.module";
 import {IdeaActionsService} from "./idea-actions.service";
+import {IdeaListLoaderComponenet} from "./components/idea-list/idea-list-loader/idea-list-loader.component";
 
 @NgModule({
   imports: [SharedModule, ProblemModule, UserModule],
-  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent],
+  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
   providers: [IdeaService, Logger, IdeaActionsService],
-  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent],
+  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
 })
 export class IdeaModule {
 

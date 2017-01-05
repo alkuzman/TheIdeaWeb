@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ThemingService} from "../../core/theming/theming.service";
 import {Category} from "./category";
 import {CategoriesService} from "./categories.service";
+import {ActivatedRoute} from "@angular/router";
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -24,14 +25,14 @@ export class HomeComponent implements OnInit {
    *
    * @param {NameListService} nameListService - The injected NameListService.
    */
-  constructor(private themingService: ThemingService, private categoryService: CategoriesService) {}
+  constructor(private themingService: ThemingService, private route: ActivatedRoute) {}
 
   /**
    * Get the names OnInit
    */
   ngOnInit() {
     this.themingService.currentTheme = "default-theme";
-    this.categoryService.categories.subscribe((categories: Category[]) => this.categories = categories);
+    this.route.data.subscribe((data: {categories: Category[]}) => this.categories = data.categories);
     this.changeColumns(window.innerWidth);
   }
 

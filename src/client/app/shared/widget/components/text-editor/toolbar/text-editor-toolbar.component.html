@@ -1,50 +1,64 @@
 <md-toolbar color="primary">
   <span>{{title}}</span>
   <md-toolbar-row>
-    <button type="button" md-icon-button>
-      <md-icon>format_bold</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_italic</md-icon>
-    </button>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" md-icon-button>
-      <md-icon>insert_link</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_quote</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>code</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>insert_photo</md-icon>
-    </button>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" md-icon-button>
-      <md-icon>format_list_numbered</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_list_bulleted</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_align_center</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_align_justify</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_align_left</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>format_align_right</md-icon>
-    </button>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" md-icon-button>
-      <md-icon>undo</md-icon>
-    </button>
-    <button type="button" md-icon-button>
-      <md-icon>redo</md-icon>
-    </button>
+    <md-button-toggle-group multiple #formatGroup="mdButtonToggleGroup">
+      <md-button-toggle value="bold">
+        <md-icon>format_bold</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="italict">
+        <md-icon>format_italic</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="underline">
+        <md-icon>format_underline</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+    &nbsp;&nbsp;&nbsp;
+    <md-button-toggle-group multiple #otherGroup="mdButtonToggleGroup">
+      <md-button-toggle value="link">
+        <md-icon>insert_link</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="quote">
+        <md-icon>format_quote</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="code">
+        <md-icon>code</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="insert_photo">
+        <md-icon>insert_photo</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+    &nbsp;&nbsp;&nbsp;
+    <md-button-toggle-group multiple #listsGroup="mdButtonToggleGroup">
+      <md-button-toggle value="numbered">
+        <md-icon>format_list_numbered</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="bulleted">
+        <md-icon>format_list_bulleted</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+    &nbsp;&nbsp;&nbsp;
+    <md-button-toggle-group #alignmentGroup="mdButtonToggleGroup">
+      <md-button-toggle value="left">
+        <md-icon>format_align_left</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="center">
+        <md-icon>format_align_center</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="right">
+        <md-icon>format_align_right</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="justify">
+        <md-icon>format_align_justify</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+    &nbsp;&nbsp;&nbsp;
+    <md-button-toggle-group multiple #undoGroup="mdButtonToggleGroup">
+      <md-button-toggle value="undo">
+        <md-icon>undo</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="redo">
+        <md-icon>redo</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
   </md-toolbar-row>
 </md-toolbar>

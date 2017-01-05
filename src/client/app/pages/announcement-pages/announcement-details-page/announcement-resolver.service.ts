@@ -7,24 +7,17 @@ import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@ang
 import {Observable} from "rxjs";
 import {AnnouncementService} from "../../../domain/announcement/announcement.service";
 import {Response} from "@angular/http";
+import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
 @Injectable()
 export class AnnouncementResolverService implements Resolve<Announcement> {
-  constructor(private announcementService: AnnouncementService, private router: Router) {
+  constructor(private announcementService: AnnouncementService, private errorHandlingService: ErrorHandlingService) {
 
 
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement>|Promise<Announcement>|Announcement {
     let id = route.params['id'];
-    return this.announcementService.getAnnouncementById(id).toPromise().catch((onrejected?:{reasons: any}) => this.handleError(onrejected));
-  }
-
-  handleError(error: any) {
-    if (error.status == 404) {
-      this.router.navigate(["/errors", "page-not-found"]);
-      return null;
-    }
-    return Observable.throw(error);
+    return this.announcementService.getAnnouncementById(id).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
   }
 
 

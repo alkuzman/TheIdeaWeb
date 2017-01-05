@@ -2,6 +2,7 @@ import {Component, OnInit, trigger, state, style, transition, animate, HostBindi
 import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {routerAnimations} from "../../../core/helper/standard-route-animations";
+import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 /**
  * Created by Viki on 10/29/2016.
  */
@@ -32,7 +33,7 @@ export class AuthPageComponent implements OnInit {
 
   private email: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
   }
 
   ngOnInit(): void {
@@ -49,6 +50,8 @@ export class AuthPageComponent implements OnInit {
   }
 
   continueRegister(user: User) {
+    let config: MdSnackBarConfig;
+    this.snackBar.open("You are not registered, or you have misspelt your username", "Try again", {duration: 3000});
     if (this.email == null)
       this.email = user.email;
     let queryParams = {"email": this.email};

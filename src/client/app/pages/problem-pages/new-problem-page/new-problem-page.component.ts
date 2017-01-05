@@ -4,6 +4,8 @@
 import {Component} from "@angular/core";
 import {Logger} from "../../../logger.service";
 import {Problem} from "../../../domain/model/ideas/problem";
+import {MdSnackBar} from "@angular/material";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -15,11 +17,12 @@ export class NewProblemPageComponent {
   submitText = "Save";
 
 
-  constructor(private logger: Logger) {
+  constructor(private snackBar: MdSnackBar, private router: Router, private route: ActivatedRoute) {
 
   }
 
   problemCreated(problem: Problem) {
-    console.log(problem);
+    this.snackBar.open("Problem successfully created!", undefined, {duration: 2000});
+    this.router.navigate(["/problems", problem.id]);
   }
 }

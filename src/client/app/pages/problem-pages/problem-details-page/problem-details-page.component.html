@@ -1,8 +1,7 @@
 <div class="margin">
-  <ideal-load-problem-details [problemId]="problemId"
-                              (problemReady)="onProblemReady($event)"></ideal-load-problem-details>
+  <ideal-problem-details [problem]="problem"></ideal-problem-details>
   <h3>{{ideaList?.length}} Ideas</h3>
-  <ideal-idea-list [problemId]="problemId" (ideaListReady)="onIdeaListReady($event)"></ideal-idea-list>
+  <ideal-idea-list-loader [problemId]="problem.id" (ideaListReady)="onIdeaListReady($event)"></ideal-idea-list-loader>
   <h3>Your Idea</h3>
-  <ideal-solution-form-new *ngIf="problem" [problem]="problem" [showProblemFields]="false"></ideal-solution-form-new>
+  <ideal-solution-form-new [problem]="problem" [showProblemFields]="false" (solutionReady)="onSolutionReady($event)"></ideal-solution-form-new>
 </div>

@@ -14,7 +14,6 @@ import {Sharable} from "../../../domain/model/sharing/sharable";
   templateUrl: "user-details-page.component.html"
 })
 export class UserDetailsPageComponent implements OnInit {
-  private userId: number;
   private user: User;
 
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -22,17 +21,13 @@ export class UserDetailsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.userId = params["id"];
+    this.route.data.subscribe((data: {user: User}) => {
+      this.user = data.user;
     });
   }
 
-  onUserReady(user: User) {
-    this.user = user;
-  }
-
   goToUserDetails(user: User) {
-    this.router.navigate(["..", "user.id"], {relativeTo: this.route})
+    this.router.navigate(["../", "user.id"], {relativeTo: this.route})
   }
 
   goToProblemDetails(problem: Problem) {

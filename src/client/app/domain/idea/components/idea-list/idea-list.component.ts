@@ -16,10 +16,8 @@ import {Problem} from "../../../model/ideas/problem";
   templateUrl: 'idea-list.component.html',
   styleUrls: ['idea-list.component.css'],
 })
-export class IdeasComponent implements OnInit {
-  @Input("problemId") problemId: number;
-  @Input("ownerId") ownerId: number;
-  @Output("ideaListReady") ideaListReady: EventEmitter<Idea[]> = new EventEmitter<Idea[]>();
+export class IdeasComponent {
+  @Input("ideas") ideas: Idea[];
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ideaOwnerSelected") ideaOwnerSelected: EventEmitter<User> = new EventEmitter<User>();
   @Output("ideaProblemSelected") ideaProblemSelected: EventEmitter<Problem> = new EventEmitter<Problem>();
@@ -30,27 +28,6 @@ export class IdeasComponent implements OnInit {
   @Output("report") report: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("remove") remove: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ban") ban: EventEmitter<Idea> = new EventEmitter<Idea>();
-  ideas: Idea[];
-  errorMessage: any;
-
-  constructor(public ideaService: IdeaService) {
-
-  }
-
-  ngOnInit(): void {
-    this.ideaService.getIdeas({
-      problemId: this.problemId != null ? this.problemId.toString() : null,
-      ownerId: this.ownerId != null ? this.ownerId.toString() : null
-    })
-      .subscribe(
-        (ideaList: Idea[]) => this.onIdeaListReady(ideaList),
-        error => this.errorMessage = <any>error);
-  }
-
-  onIdeaListReady(ideaList: Idea[]) {
-    this.ideas = ideaList;
-    this.ideaListReady.emit(this.ideas);
-  }
 
   onIdeaSelected(idea: Idea) {
     this.ideaSelected.emit(idea);
