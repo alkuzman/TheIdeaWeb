@@ -45,7 +45,7 @@ export class UserDetailsPageComponent implements OnInit {
 
   announce(sharable: Sharable) {
     console.log("announce");
-    this.router.navigate(["/announcements", "/new"], {queryParams: {sharableId: sharable.id}});
+    this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: sharable.id}});
   }
 
   sendTo(sharable: Sharable) {

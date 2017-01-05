@@ -13,7 +13,7 @@ import {PagesModule} from "./pages/pages.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), AppRoutingModule, PagesModule],
+  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), AppRoutingModule],
   declarations: [AppComponent],
   providers: [provideAuth({
     headerName: "X-Authorization",

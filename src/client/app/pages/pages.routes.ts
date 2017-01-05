@@ -37,8 +37,8 @@ export const PagesRoutes: Routes = [
         loadChildren: 'app/pages/user-pages/user-pages.module#UserPagesModule'
       },
       {
-        path: '**',
-        redirectTo: "/home"
+        path: 'announcements',
+        loadChildren: 'app/pages/announcement-pages/announcement-pages.module#AnnouncementPagesModule'
       }]
   }
 ];

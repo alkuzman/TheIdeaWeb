@@ -9,7 +9,7 @@
     </md-toolbar>
     <md-nav-list denese>
       <md-list-item *ngFor="let navigationItem of navigationItems" (click)="sidenav.toggle()"
-                    [routerLink]="navigationItem.url" routerLinkActive="md-accent">
+                    [routerLink]="navigationItem.url" routerLinkActive="md-primary">
         <md-icon class="icon-middle" md-list-avatar>{{navigationItem.icon}}</md-icon>
         <span>{{navigationItem.title}}</span>
       </md-list-item>

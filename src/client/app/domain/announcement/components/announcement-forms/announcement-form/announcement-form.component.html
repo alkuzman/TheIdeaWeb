@@ -1,0 +1,10 @@
+<form (ngSubmit)="ideaForm.form.valid && save()" #ideaForm="ngForm">
+  <div fxLayour="column">
+    <div fxFlex>
+    <ideal-announcement-fields name="announcement" [(ngModel)]="announcement"></ideal-announcement-fields>
+    </div>
+    <div fxFlex>
+      <button style="clear: both" type="submit" md-raised-button color="accent">Announce</button>
+    </div>
+  </div>
+</form>
