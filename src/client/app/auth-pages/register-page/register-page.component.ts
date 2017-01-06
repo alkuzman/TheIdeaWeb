@@ -4,6 +4,7 @@ import {User} from "../../domain/model/authentication/user";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
 import {routerAnimations} from "../../core/helper/standard-route-animations";
+import {AuthProperties} from "../auth.properties";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -33,6 +34,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   private email: string;
+  private returnUrl: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
   }
@@ -40,21 +42,26 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.email = params['email'];
+      this.returnUrl = params["returnUrl"];
     });
   }
 
   authenticate(): void {
-    let queryParams = {};
+    let queryParams: AuthProperties = {};
     if (this.email != null)
-      queryParams = {"email": this.email};
+      queryParams.email = this.email;
+    if (this.returnUrl != null)
+      queryParams.returnUrl = this.returnUrl;
     this.router.navigate(["auth"], {queryParams: queryParams});
   }
 
   login(user: User): void {
     this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
-    if (this.email == null)
-      this.email = user.email;
-    let queryParams = {"email": this.email};
+    let queryParams: AuthProperties = {};
+    if (this.email != null)
+      queryParams.email = this.email;
+    if (this.returnUrl != null)
+      queryParams.returnUrl = this.returnUrl;
     this.router.navigate(["auth"], {queryParams: queryParams});
   }
 

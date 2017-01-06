@@ -10,7 +10,7 @@
     <md-nav-list denese>
       <md-list-item *ngFor="let navigationItem of navigationItems" (click)="sidenav.toggle()"
                     [routerLink]="navigationItem.url" routerLinkActive="md-primary">
-        <md-icon class="icon-middle" md-list-avatar>{{navigationItem.icon}}</md-icon>
+        <md-icon class="icon-middle icon-20" md-list-avatar>{{navigationItem.icon}}</md-icon>
         <span>{{navigationItem.title}}</span>
       </md-list-item>
     </md-nav-list>

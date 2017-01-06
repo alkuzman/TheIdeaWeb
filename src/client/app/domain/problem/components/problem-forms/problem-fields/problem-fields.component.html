@@ -1,12 +1,15 @@
-<div style="display: flex;">
-  <md-input id="problemTitle" name="problemTitle" [placeholder]="titleLabel" style="flex: 50"
-            [(ngModel)]="value.title" (ngModelChange)="notify()" required>
-  </md-input>
-  <span style="flex: 5;"></span>
-  <md-input style="flex: 45;" id="problemTags" name="problemTags" [placeholder]='tagsLabel'>
-  </md-input>
-</div>
-<div>
-  <ideal-text-editor id="problemBody" [title]="bodyLabel" [(ngModel)]="value.text" name="problemBody"
-                     (ngModelChange)="notify()"></ideal-text-editor>
+<div class="flex-container" fxLayout="column">
+  <div class="flex-item" class="flex-container" fxLayout.xs="column" fxLayout="row">
+    <md-input-container class="flex-item" fxFlex="60%" fxFlex.xs="100%">
+      <input md-input id="problemTitle" name="problemTitle" [placeholder]="titleLabel"
+                [(ngModel)]="value.title" (ngModelChange)="notify()" required/>
+    </md-input-container>
+    <md-input-container class="flex-item" fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
+      <input md-input id="problemTags" name="problemTags" [placeholder]='tagsLabel'/>
+    </md-input-container>
+  </div>
+  <div>
+    <ideal-text-editor class="flex-item" fxFlex="100%" id="problemBody" [title]="bodyLabel" [(ngModel)]="value.text" name="problemBody"
+                       (ngModelChange)="notify()"></ideal-text-editor>
+  </div>
 </div>

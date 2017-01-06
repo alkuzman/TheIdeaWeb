@@ -1,7 +1,11 @@
-<form *ngIf="active" (ngSubmit)="problemForm.form.valid && save()" #problemForm="ngForm">
-  <ideal-problem-fields name="problem" [(ngModel)]="problem"></ideal-problem-fields>
-  <div style="text-align: right">
-    <button type="button" md-button (click)="clearForm()">Clear</button>
-    <button type="submit" md-raised-button color="accent">{{submitText}}</button>
-  </div>
-</form>
+<md-card>
+  <md-card-content>
+    <form *ngIf="active" (ngSubmit)="problemForm.form.valid && save()" #problemForm="ngForm">
+      <ideal-problem-fields name="problem" [(ngModel)]="problem"></ideal-problem-fields>
+      <div style="margin-top: 16px" fxLayout="row" fxLayoutAlign="end">
+        <button type="button" md-button (click)="clearForm()">Clear</button>
+        <button type="submit" md-raised-button color="accent">{{submitText}}</button>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>

@@ -25,7 +25,7 @@ export class NewSolutionFormComponent implements OnInit {
     if (this.solution != null) {
       if (idea == null) {
         this.solution.idea = new Idea();
-        this.solution.idea.problem = this.problem;
+        this.solution.idea.problem = this._problem;
       } else this.solution.idea = idea;
     }
   }
@@ -34,9 +34,9 @@ export class NewSolutionFormComponent implements OnInit {
   set problem(problem: Problem) {
     this._problem = problem;
     if (this.solution != null) {
-      if (this.idea == null)
+      if (this._idea == null)
         this.solution.idea = new Idea();
-      this.solution.idea.problem = this.problem;
+      this.solution.idea.problem = this._problem;
     }
   }
 
@@ -49,10 +49,12 @@ export class NewSolutionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.solution = new Solution();
-    this.solution.idea = this.idea;
+    this.solution.idea = this._idea;
     if (this.solution.idea == null)
       this.solution.idea = new Idea();
-    this.solution.idea.problem = this.problem;
+    this.solution.idea.problem = this._problem;
+    if (this.solution.idea.problem == null)
+      this.solution.idea.problem = new Problem();
   }
 
   save(solution: Solution) {

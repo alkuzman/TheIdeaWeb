@@ -32,6 +32,7 @@ export class AuthPageComponent implements OnInit {
   }
 
   private email: string;
+  private returnUrl: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
   }
@@ -39,13 +40,16 @@ export class AuthPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.email = params['email'];
+      this.returnUrl = params['returnUrl'];
     });
   }
 
   continueLogin(user: User) {
     if (this.email == null)
       this.email = user.email;
-    let queryParams = {"email": this.email};
+    if (this.returnUrl == null)
+      this.returnUrl = "/home";
+    let queryParams = {"email": this.email, "returnUrl": this.returnUrl};
     this.router.navigate(["login"], {relativeTo: this.route, queryParams: queryParams});
   }
 
@@ -54,7 +58,9 @@ export class AuthPageComponent implements OnInit {
     this.snackBar.open("You are not registered, or you have misspelt your username", "Try again", {duration: 3000});
     if (this.email == null)
       this.email = user.email;
-    let queryParams = {"email": this.email};
+    if (this.returnUrl == null)
+      this.returnUrl = "/home";
+    let queryParams = {"email": this.email, "returnUrl": this.returnUrl};
     this.router.navigate(["register"], {relativeTo: this.route, queryParams: queryParams});
   }
 }

@@ -32,5 +32,6 @@ export class ProblemDetailsPageComponent implements OnInit{
 
   onSolutionReady(solution: Solution) {
     this.snackBar.open("Idea successfully created!", undefined, {duration: 2000});
+    this.router.navigate(["/ideas", solution.idea.id]);
   }
 }
