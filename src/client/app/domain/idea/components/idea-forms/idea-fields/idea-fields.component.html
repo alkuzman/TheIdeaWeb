@@ -1,14 +1,25 @@
-<ideal-problem-fields *ngIf="showProblemFields" [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
-                      [tagsLabel]="problemTagsLabel" name="ideaProblem" [(ngModel)]="value.problem"
-                      (ngModelChange)="notify()"></ideal-problem-fields>
-<div *ngIf="showProblemFields" style="height: 40px;"></div>
-
-<div style="display: flex;">
-  <md-input style="flex: 50;" name="ideaTitle" [(ngModel)]="value.title" (ngModelChange)="notify()"
-            [placeholder]="titleLabel"></md-input>
-  <span style="flex: 5;"></span>
-  <md-input style="flex: 45;" id="ideaTags" name="ideaTags" [placeholder]='ideaTagsLabel'>
-  </md-input>
+<div fxLayour="column">
+  <div fxFlex="100%" *ngIf="showProblemFields">
+    <h3 color="primary">Problem</h3>
+    <ideal-problem-fields [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
+                          [tagsLabel]="problemTagsLabel" name="ideaProblem" [(ngModel)]="value.problem"
+                          (ngModelChange)="notify()"></ideal-problem-fields>
+    <h3 color="primary">Idea</h3>
+  </div>
+  <div fxFlex="100%" fxLayout="column">
+    <div class="flex-container" fxFlex="100%" fxLayout="row" fxLayout.xs="column">
+      <md-input-container fxFlex="60%" fxFlex.xs="100%">
+        <input type="text" md-input name="ideaTitle" [(ngModel)]="value.title" (ngModelChange)="notify()"
+               [placeholder]="titleLabel"/>
+      </md-input-container>
+      <md-input-container class="flex-item" fxFlex="30%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0" >
+        <input type="text" md-input name="ideaTags" (ngModelChange)="notify()" />
+        <md-placeholder>{{ideaTagsLabel}}</md-placeholder>
+      </md-input-container>
+    </div>
+    <md-input-container fxFlex="100%">
+      <textarea style="resize: none;" md-input md-autosize minRows="4" [placeholder]="sneakPeakLabel" class="fullWidth"
+                   name="ideaSnackPeak" [(ngModel)]="value.snackPeak" (ngModelChange)="notify()"></textarea>
+    </md-input-container>
+  </div>
 </div>
-<md-textarea [placeholder]="sneakPeakLabel" class="fullWidth marginBottom"
-             name="ideaSnackPeak" [(ngModel)]="value.snackPeak" (ngModelChange)="notify()"></md-textarea>

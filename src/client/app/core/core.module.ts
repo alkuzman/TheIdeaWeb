@@ -1,14 +1,15 @@
-import {NgModule, forwardRef} from "@angular/core";
+import {NgModule} from "@angular/core";
 import {SharedModule} from "../shared/shared.module";
 import {JwtAuthenticationService} from "./authentication/jwt/jwt-authentication.service";
 import {JwtHttpService} from "./authentication/jwt/jwt-http.service";
 import {JwtSecurityContext} from "./authentication/jwt/jwt-security-context.service";
 import {JwtRefreshAccessTokenService} from "./authentication/jwt/jwt-refresh-access-token.service";
-import {XHRBackend, Http, RequestOptions} from "@angular/http";
+import {XHRBackend, RequestOptions} from "@angular/http";
 import {NotAuthenticatedGuard} from "./guards/not-authenticated.guard";
 import {AuthenticatedGuard} from "./guards/authenticated.guard";
 import {ThemingService} from "./theming/theming.service";
 import {NavigationService} from "./navigation/navigation.service";
+import {ErrorHandlingService} from "./error-handling/error-handling.service";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {NavigationService} from "./navigation/navigation.service";
       },
       deps: [XHRBackend, RequestOptions, JwtSecurityContext, JwtRefreshAccessTokenService]
     },
-  NotAuthenticatedGuard, AuthenticatedGuard]
+    NotAuthenticatedGuard, AuthenticatedGuard, ErrorHandlingService]
 })
 export class CoreModule {
 }

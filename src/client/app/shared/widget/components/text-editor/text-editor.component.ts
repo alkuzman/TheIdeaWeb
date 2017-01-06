@@ -16,6 +16,10 @@ export class TextEditorComponent extends AbstractValueAccessor<string> {
 
 
   constructor() {
-    super();
+    super("");
+  }
+
+  getNumberOfCharacters(): number {
+    return this.value.length
   }
 }

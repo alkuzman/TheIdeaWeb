@@ -13,12 +13,13 @@ import {ProblemCardComponent} from "./components/problem-card/problem-card.compo
 import {ProblemFieldsComponent} from "./components/problem-forms/problem-fields/problem-fields.component";
 import {ProblemDetailsComponent} from "./components/problem-details/problem-details/problem-details.component";
 import {LoadProblemDetailsComponent} from "./components/problem-details/load-problem-details/load-problem-details.component";
+import {ProblemListLoaderComponent} from "./components/problem-list/problem-list-loader/problem-list-loader.component";
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent],
+  declarations: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
   providers: [ProblemService],
-  exports: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent],
+  exports: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
 })
 export class ProblemModule {
 

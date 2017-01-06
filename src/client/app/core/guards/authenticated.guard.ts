@@ -1,6 +1,7 @@
-import {CanActivate, Router} from "@angular/router";
+import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
+import {MdSnackBar} from "@angular/material";
 /**
  * Created by Viki on 11/17/2016.
  */
@@ -8,17 +9,17 @@ import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {
 
-  constructor(private authenticationService: JwtAuthenticationService, private router: Router) {
+  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MdSnackBar) {
 
   }
 
-  canActivate() {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authenticationService.isAuthenticated()) {
       return true;
     } else {
-      this.router.navigate(["auth"]);
+      this.snackBar.open("Login to see this page", undefined, {duration: 3000});
+      this.router.navigate(["auth"], { queryParams: { returnUrl: state.url }});
       return false;
     }
   }
-
 }

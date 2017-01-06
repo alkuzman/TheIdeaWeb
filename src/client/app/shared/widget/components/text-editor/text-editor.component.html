@@ -1,5 +1,11 @@
-<div>
-  <ideal-text-editor-toolbar [title]="title"></ideal-text-editor-toolbar>
-  <textarea class="ideal-text-editor-body" [(ngModel)]="value" (ngModelChange)="onChange($event)">
-  </textarea>
-</div>
+<md-card class="ideal-text-editor-card">
+  <ideal-text-editor-toolbar></ideal-text-editor-toolbar>
+  <md-card-content>
+    <md-input-container class="ideal-text-editor-body">
+    <textarea md-autosize minRows="4" md-input [placeholder]="title" [(ngModel)]="value"
+              (ngModelChange)="onChange($event)">
+    </textarea>
+      <md-hint align="end">{{getNumberOfCharacters()}}</md-hint>
+    </md-input-container>
+  </md-card-content>
+</md-card>

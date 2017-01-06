@@ -1,8 +1,12 @@
-import {Component, ViewContainerRef, animate, style, transition, state, trigger, HostBinding} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {
+  Component, ViewContainerRef, animate, style, transition, state, trigger, HostBinding,
+  OnInit
+} from "@angular/core";
+import {ActivatedRoute, Router, Params} from "@angular/router";
 import {Response} from "@angular/http";
 import {MdSnackBar, MdSnackBarConfig, AriaLivePoliteness} from "@angular/material";
 import {routerAnimations} from "../../../core/helper/standard-route-animations";
+import {AuthProperties} from "../../auth.properties";
 
 /**
  * Created by Viki on 11/1/2016.
@@ -15,7 +19,7 @@ import {routerAnimations} from "../../../core/helper/standard-route-animations";
     routerAnimations('routeAnimation')
   ]
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit{
   @HostBinding("@routeAnimation") routeAnimation() {
     return true;
   }
@@ -33,6 +37,7 @@ export class LoginPageComponent {
   }
 
   private email: string;
+  private returnUrl: string;
 
 
   constructor(private router: Router,
@@ -40,21 +45,29 @@ export class LoginPageComponent {
               private snackBar: MdSnackBar) {
   }
 
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.email = params['email'];
+      this.returnUrl = params['returnUrl'];
+    });
+  }
+
   onUserLoggedIn(): void {
-    this.router.navigate(["/problems"]);
+    this.snackBar.open("You are logged in", undefined, {duration: 3000});
+    this.router.navigateByUrl(this.returnUrl);
   }
 
   onWrongPassword() {
-    console.log("Wrong password");
-    let config: MdSnackBarConfig = new MdSnackBarConfig();
-    this.snackBar.open('You have entered wrong password!', "Try Again");
+    this.snackBar.open('You have entered wrong password!', "Try again", {duration: 3000});
   }
 
   authenticate(): void {
-    console.log("TUKA");
-    let queryParams = {};
+    let queryParams: AuthProperties = {};
     if (this.email != null)
-      queryParams = {"email": this.email};
+      queryParams.email = this.email;
+    if (this.returnUrl != null)
+      queryParams.returnUrl = this.returnUrl;
     this.router.navigate(["auth"], {queryParams: queryParams});
   }
 }

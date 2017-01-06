@@ -5,6 +5,8 @@ import {Component, OnInit} from "@angular/core";
 import {Solution} from "../../../domain/model/ideas/solution";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Idea} from "../../../domain/model/ideas/idea";
+import {MdSnackBar} from "@angular/material";
+import {Router, ActivatedRoute} from "@angular/router";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-idea-page",
@@ -13,14 +15,15 @@ import {Idea} from "../../../domain/model/ideas/idea";
 export class NewIdeaPageComponent implements OnInit{
   private solution: Solution;
 
-  constructor() {
+  constructor(private snackBar: MdSnackBar, private router: Router, private route: ActivatedRoute) {
     this.solution = new Solution();
   }
 
   ngOnInit(): void {
   }
 
-  p(solution: Solution) {
-    console.log(solution);
+  onSolutionReady(solution: Solution) {
+    this.snackBar.open("Idea successfully created!", undefined, {duration: 2000});
+    this.router.navigate(["/ideas", solution.idea.id]);
   }
 }
