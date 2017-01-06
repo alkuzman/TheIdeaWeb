@@ -9,9 +9,9 @@ import {IdeaService} from "../../../idea.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-idea-list-loader",
-  template: `<ideal-idea-list [ideas]="ideas" (ideaSelected)="onIdeaSelected(idea)"
-                 (ideaOwnerSelected)="onIdeaOwnerSelected(idea.owner)"
-                 (ideaProblemSelected)="onIdeaProblemSelected(idea.problem)"
+  template: `<ideal-idea-list [ideas]="ideas" (ideaSelected)="onIdeaSelected($event)"
+                 (ideaOwnerSelected)="onIdeaOwnerSelected($event)"
+                 (ideaProblemSelected)="onIdeaProblemSelected($event)"
                  (announce)="onAnnounce($event)"
                  (sendTo)="onSendTo($event)"
                  (share)="onShare($event)"
