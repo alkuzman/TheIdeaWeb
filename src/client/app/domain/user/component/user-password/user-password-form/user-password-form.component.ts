@@ -32,6 +32,9 @@ export class UserPasswordFormComponent implements OnInit{
     });
 
     let control = this.formBuilder.control(this.rememberMe);
+    control.valueChanges.subscribe((value: boolean) => {
+      this.rememberMe = value;
+    });
     this.form.addControl("rememberMe", control);
   }
 

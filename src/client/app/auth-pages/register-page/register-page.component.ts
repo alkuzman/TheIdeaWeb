@@ -17,7 +17,7 @@ import {AuthProperties} from "../auth.properties";
   ]
 })
 export class RegisterPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") routeAnimation() {
+  @HostBinding("@routeAnimation") get routeAnimation() {
     return true;
   }
   @HostBinding("style.display") get display() {
@@ -26,6 +26,10 @@ export class RegisterPageComponent implements OnInit {
 
   @HostBinding("style.position") get position() {
     return "absolute";
+  }
+
+  @HostBinding("style.opacity") get opacity() {
+    return 1;
   }
 
 

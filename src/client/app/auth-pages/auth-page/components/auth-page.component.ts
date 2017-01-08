@@ -1,4 +1,4 @@
-import {Component, OnInit, trigger, state, style, transition, animate, HostBinding} from "@angular/core";
+import {Component, OnInit, style, HostBinding} from "@angular/core";
 import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {routerAnimations} from "../../../core/helper/standard-route-animations";
@@ -26,6 +26,11 @@ export class AuthPageComponent implements OnInit {
   @HostBinding("style.position") get position() {
     return "absolute";
   }
+
+  @HostBinding("style.opacity") get opacity() {
+    return 1;
+  }
+
 
   @HostBinding("style.width") get width() {
     return "100%";

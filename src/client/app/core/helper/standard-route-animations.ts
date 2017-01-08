@@ -8,7 +8,8 @@ export function routerAnimations(name: string) {
   return trigger(name, [
     state('*',
       style({
-        transform: 'translateX(0)'
+        transform: 'translateX(0)',
+        opacity: 1
       })
     ),
     transition(':enter', [
@@ -16,7 +17,10 @@ export function routerAnimations(name: string) {
         transform: 'translateX(-125%)',
         opacity: 0
       }),
-      animate('150ms 75ms ease-out')
+      animate('150ms 75ms ease-out', style({
+        transform: 'translateX(0)',
+        opacity: 1
+      }))
     ]),
     transition(':leave', [
       animate('75ms ease-in', style({

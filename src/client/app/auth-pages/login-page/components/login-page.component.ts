@@ -20,7 +20,7 @@ import {AuthProperties} from "../../auth.properties";
   ]
 })
 export class LoginPageComponent implements OnInit{
-  @HostBinding("@routeAnimation") routeAnimation() {
+  @HostBinding("@routeAnimation") get routeAnimation() {
     return true;
   }
   @HostBinding("style.display") get display() {
@@ -31,6 +31,9 @@ export class LoginPageComponent implements OnInit{
     return "absolute";
   }
 
+  @HostBinding("style.opacity") get opacity() {
+    return 1;
+  }
 
   @HostBinding("style.width") get width() {
     return "100%";
