@@ -28,12 +28,12 @@ export class LoginPageComponent implements OnInit{
   }
 
   @HostBinding("style.position") get position() {
-    return "fixed";
+    return "absolute";
   }
 
 
   @HostBinding("style.width") get width() {
-    return "50%";
+    return "100%";
   }
 
   private email: string;

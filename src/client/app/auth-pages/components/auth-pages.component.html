@@ -1,8 +1,10 @@
-<div class="auth-container">
-  <div class="flex-25"></div>
-  <div class="flex-50 middle-vertical">
-    <router-outlet></router-outlet>
+<div fxLayout="column" class="flex-container fill-page" style="border: thin solid black">
+  <div fxFlex fxFlex.xl="200px" fxFlex.lg="150px" fxFlex.md="100px" fxFlex.sm="50px" fxFlex.xs="0px;"></div>
+  <div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlexOffset="0" fxFlex fxFlex.xs="100%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.md="70%" fxFlexOffset.md="15%" fxFlex.lg="60%" fxFlexOffset.lg="20%" fxFlex.xl="40%" fxFlexOffset.xl="30%" style="position: relative">
+      <router-outlet style="position: relative;"></router-outlet>
+    </div>
   </div>
-  <div class="flex-25"></div>
+  <div style="clear: both"></div>
 </div>
 

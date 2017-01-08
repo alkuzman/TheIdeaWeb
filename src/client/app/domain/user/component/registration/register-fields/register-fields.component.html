@@ -1,20 +1,45 @@
 <div style="text-align: center">
-  <ideal-user-named-avatar [(ngModel)]="value" [type]="userAvatarType"
-                           (ngModelChange)="notify()"></ideal-user-named-avatar>
+  <ideal-user-named-avatar name="userProfilePicture" [type]="userAvatarType"
+                           [(ngModel)]="user"></ideal-user-named-avatar>
 </div>
-<div>
-  <md-input class="full-width" name="firstName" placeholder="First Name" [(ngModel)]="value.firstName"
-            (ngModelChange)="notify()" required></md-input>
-</div>
-<div>
-  <md-input class="full-width" name="lastName" placeholder="Last Name" [(ngModel)]="value.lastName"
-            (ngModelChange)="notify()" required></md-input>
-</div>
-<div>
-  <md-input class="full-width" type="password" name="password" placeholder="Password" [(ngModel)]="value.password"
-            (ngModelChange)="notify()" required></md-input>
-</div>
-<div>
-  <md-input class="full-width" type="password" name="confirmPassword" placeholder="Confirm Password"
-            [(ngModel)]="confirmPassword" (ngModelChange)="notify()" required></md-input>
+<div [formGroup]="form">
+  <div>
+    <md-input-container [dividerColor]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
+      <input md-input formControlName="firstName" placeholder="First Name"/>
+      <md-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</md-hint>
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container [dividerColor]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
+      <input type="text" md-input formControlName="lastName" placeholder="Last Name"/>
+      <md-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</md-hint>
+    </md-input-container>
+  </div>
+  <div formGroupName="passwords">
+    <div>
+      <md-input-container [dividerColor]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
+        <input (focus)="showPasswordStrength()" (blur)="hidePasswordStrength()" md-input type="password" formControlName="password"
+               placeholder="Password"
+               md-tooltip="For strong password use at least 1 (big/small/special) character, and 1 number"/>
+        <md-hint align="end" idealColor="warn" *ngIf="formErrors['passwords.password']">
+          {{formErrors['passwords.password']}}
+        </md-hint>
+      </md-input-container>
+    </div>
+    <div *ngIf="passwordStrengthVisible" class="margin-top margin-bottom">
+      <md-progress-bar
+        [md-tooltip]="'Password strength: ' + passwordStrength"
+        [color]="passwordStrengthColor"
+        [value]="passwordStrengthProgress">
+      </md-progress-bar>
+    </div>
+    <div>
+      <md-input-container [dividerColor]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
+        <input md-input type="password" formControlName="confirmPassword"
+               placeholder="Confirm Password" />
+        <md-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</md-hint>
+      </md-input-container>
+    </div>
+  </div>
+
 </div>

@@ -11,6 +11,7 @@ import {CoreModule} from "./core/core.module";
 import {provideAuth} from "angular2-jwt";
 import {PagesModule} from "./pages/pages.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), AppRoutingModule],

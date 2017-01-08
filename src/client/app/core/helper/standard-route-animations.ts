@@ -13,13 +13,15 @@ export function routerAnimations(name: string) {
     ),
     transition(':enter', [
       style({
-        transform: 'translateX(-150%)'
+        transform: 'translateX(-125%)',
+        opacity: 0
       }),
-      animate('150ms ease-out')
+      animate('150ms 75ms ease-out')
     ]),
     transition(':leave', [
-      animate('150ms ease-out', style({
-        transform: 'translateX(150%)',
+      animate('75ms ease-in', style({
+        transform: 'translateX(125%)',
+        opacity: 0
       }))
     ])
   ])

@@ -10,6 +10,7 @@ import {AuthenticatedGuard} from "./guards/authenticated.guard";
 import {ThemingService} from "./theming/theming.service";
 import {NavigationService} from "./navigation/navigation.service";
 import {ErrorHandlingService} from "./error-handling/error-handling.service";
+import {PasswordStrengthService} from "./helper/services/password-strength.service";
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import {ErrorHandlingService} from "./error-handling/error-handling.service";
       },
       deps: [XHRBackend, RequestOptions, JwtSecurityContext, JwtRefreshAccessTokenService]
     },
-    NotAuthenticatedGuard, AuthenticatedGuard, ErrorHandlingService]
+    NotAuthenticatedGuard, AuthenticatedGuard, ErrorHandlingService, PasswordStrengthService]
 })
 export class CoreModule {
 }
