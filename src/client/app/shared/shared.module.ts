@@ -1,6 +1,6 @@
 import {NgModule, ModuleWithProviders} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
@@ -15,7 +15,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [MaterialModule, CommonModule, FormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule]
+  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
