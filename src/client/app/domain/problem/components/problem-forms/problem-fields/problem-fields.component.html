@@ -1,15 +1,14 @@
-<div class="flex-container" fxLayout="column">
-  <div class="flex-item" class="flex-container" fxLayout.xs="column" fxLayout="row">
-    <md-input-container class="flex-item" fxFlex="60%" fxFlex.xs="100%">
-      <input md-input id="problemTitle" name="problemTitle" [placeholder]="titleLabel"
-                [(ngModel)]="value.title" (ngModelChange)="notify()" required/>
+<div [formGroup]="form" fxLayout="column">
+  <div fxLayout.xs="column" fxLayout="row">
+    <md-input-container [dividerColor]="formErrors.title ? 'warn' : 'primary'" fxFlex="60%" fxFlex.xs="100%">
+      <input md-input formControlName="title" [placeholder]="titleLabel"/>
+      <md-hint idealColor="warn" *ngIf="formErrors.title" align="end">{{formErrors.title}}</md-hint>
     </md-input-container>
-    <md-input-container class="flex-item" fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
-      <input md-input id="problemTags" name="problemTags" [placeholder]='tagsLabel'/>
+    <md-input-container fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
+      <input md-input formControlName="tags" [placeholder]='tagsLabel'/>
     </md-input-container>
   </div>
-  <div>
-    <ideal-text-editor class="flex-item" fxFlex="100%" id="problemBody" [title]="bodyLabel" [(ngModel)]="value.text" name="problemBody"
-                       (ngModelChange)="notify()"></ideal-text-editor>
+  <div class="margin-top">
+    <ideal-text-editor fxFlex="100%" [title]="bodyLabel" formControlName="text"></ideal-text-editor>
   </div>
 </div>

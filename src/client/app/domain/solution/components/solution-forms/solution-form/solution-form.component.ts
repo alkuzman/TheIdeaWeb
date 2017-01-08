@@ -3,6 +3,8 @@
  */
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {Solution} from "../../../../model/ideas/solution";
+import {FormGroup, FormBuilder} from "@angular/forms";
+import {MdSnackBar} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form",
@@ -15,15 +17,30 @@ export class SolutionFormComponent implements OnInit {
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
   active = true;
+  private form: FormGroup;
+  private fields: FormGroup;
+  private submitted: boolean = false;
+
+  constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
+
+  }
 
   ngOnInit(): void {
     if (this.solution == null)
       this.solution = new Solution();
+    this.fields = this.fb.group({});
+    this.form = this.fb.group({
+      fields: this.fields
+    });
   }
 
-  save(): boolean {
-    this.solutionReady.emit(this.solution);
-    return true;
+  save(): void {
+    this.submitted = true;
+    if (this.form.valid) {
+      this.solutionReady.emit(this.solution);
+    } else {
+      this.snackBar.open("Cannot create idea. Validation errors", undefined, {duration: 3000});
+    }
   }
 
   clearForm(): void {

@@ -1,1 +1,3 @@
-<ideal-package-fields name="package" [(ngModel)]="value.aPackage"></ideal-package-fields>
+<div [formGroup]="form">
+<ideal-package-fields name="package" [package]="announcement.aPackage" [submitted]="submitted" [form]="packageFields"></ideal-package-fields>
+</div>
