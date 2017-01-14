@@ -10,7 +10,7 @@
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
       <md-input-container [dividerColor]="formErrors.title ? 'warn' : 'primary'" fxFlex="60%" fxFlex.xs="100%">
         <input type="text" md-input formControlName="title"
-               [placeholder]="titleLabel"/>
+               [placeholder]="titleLabel" required/>
         <md-hint idealColor="warn" align="end" *ngIf="formErrors.title">{{formErrors.title}}</md-hint>
       </md-input-container>
       <md-input-container [dividerColor]="formErrors.tags ? 'warn' : 'primary'" fxFlex="30%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
@@ -21,7 +21,7 @@
     </div>
     <md-input-container [dividerColor]="formErrors.snackPeak ? 'warn' : 'primary'" fxFlex="100%">
       <textarea style="resize: none;" md-input md-autosize minRows="4" [placeholder]="sneakPeakLabel" class="fullWidth"
-                formControlName="snackPeak"></textarea>
+                formControlName="snackPeak" required></textarea>
       <md-hint idealColor="warn" align="end" *ngIf="formErrors.snackPeak">{{formErrors.snackPeak}}</md-hint>
     </md-input-container>
   </div>

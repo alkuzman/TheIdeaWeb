@@ -4,7 +4,7 @@
 <div *ngIf="currentForm" [formGroup]="currentForm">
     <md-input-container [dividerColor]="formErrors.email ? 'warn' : 'primary'" class="full-width">
       <input type="text" md-input placeholder="Email" md-tooltip="Email format: username@provider"
-             formControlName="email"/>
+             formControlName="email" required />
       <md-hint align="end" *ngIf="formErrors.email" idealColor="warn">{{formErrors.email}}</md-hint>
     </md-input-container>
 </div>

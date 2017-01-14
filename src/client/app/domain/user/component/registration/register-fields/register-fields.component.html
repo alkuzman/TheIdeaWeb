@@ -5,13 +5,13 @@
 <div [formGroup]="form">
   <div>
     <md-input-container [dividerColor]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
-      <input md-input formControlName="firstName" placeholder="First Name"/>
+      <input md-input formControlName="firstName" placeholder="First Name" required />
       <md-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</md-hint>
     </md-input-container>
   </div>
   <div>
     <md-input-container [dividerColor]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
-      <input type="text" md-input formControlName="lastName" placeholder="Last Name"/>
+      <input type="text" md-input formControlName="lastName" placeholder="Last Name" required />
       <md-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</md-hint>
     </md-input-container>
   </div>
@@ -20,7 +20,7 @@
       <md-input-container [dividerColor]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
         <input (focus)="showPasswordStrength()" (blur)="hidePasswordStrength()" md-input type="password" formControlName="password"
                placeholder="Password"
-               md-tooltip="For strong password use at least 1 (big/small/special) character, and 1 number"/>
+               md-tooltip="For strong password use at least 1 (big/small/special) character, and 1 number" required/>
         <md-hint align="end" idealColor="warn" *ngIf="formErrors['passwords.password']">
           {{formErrors['passwords.password']}}
         </md-hint>
@@ -36,7 +36,7 @@
     <div>
       <md-input-container [dividerColor]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
         <input md-input type="password" formControlName="confirmPassword"
-               placeholder="Confirm Password" />
+               placeholder="Confirm Password" required />
         <md-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</md-hint>
       </md-input-container>
     </div>
