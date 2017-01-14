@@ -10,7 +10,6 @@ import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication
 @Injectable()
 export class NavigationService {
   constructor(private http: Http, private authenticationService: JwtAuthenticationService) {
-
   }
 
   public get navigationItems(): Observable<NavigationItem[]> {

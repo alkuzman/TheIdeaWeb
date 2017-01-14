@@ -9,6 +9,10 @@ export const AnnouncementPagesRoutes: Routes = [
     component: AnnouncementPagesComponent,
     children: [
       {
+        path: "feed",
+        loadChildren: "app/pages/announcement-pages/announcement-feed-page/announcement-feed-page.module#AnnouncementFeedPageModule"
+      },
+      {
         path: "new",
         loadChildren: "app/pages/announcement-pages/new-announcement-page/new-announcement-page.module#NewAnnouncementPageModule"
       },

@@ -32,7 +32,7 @@ export class NewProblemFormComponent implements OnInit {
     let questioner: User = this.securityContext.principal;
     this.problem.questioner = questioner;
     this.problemService.addProblem(this.problem)
-      .then(
+      .subscribe(
         (problem: Problem) => this.problemCreated(problem),
         (error:any) => this.errorMessage = error
       );

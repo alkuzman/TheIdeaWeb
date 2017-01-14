@@ -9,7 +9,6 @@ export abstract class BaseEntityImpl implements BaseEntity{
   public lastModified: Date;
   public name: string;
   public type: string;
-
   constructor() {
     this.type = this.constructor.name;
   }

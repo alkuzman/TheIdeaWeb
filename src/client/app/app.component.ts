@@ -2,6 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import { Config } from './shared/index';
 import {ThemingService} from "./core/theming/theming.service";
 import {Theme} from "./core/theming/theme";
+import {Http} from "@angular/http";
 
 /**
  * This class represents the main application components. Within the @Routes annotation is the configuration of the
@@ -12,7 +13,7 @@ import {Theme} from "./core/theming/theme";
   selector: 'ideal-app',
   templateUrl: 'app.component.html',
   styleUrls: [
-    './app.component.css'
+    'app.component.css'
   ]
 })
 export class AppComponent implements OnInit{

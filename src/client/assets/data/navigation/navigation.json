@@ -6,6 +6,12 @@
     "url": "/home"
   },
   {
+    "icon": "view_stream",
+    "title": "Feed",
+    "subtitle": "Go to announcement feed",
+    "url": "/announcements/feed"
+  },
+  {
     "icon": "lightbulb_outline",
     "title": "Ideas",
     "subtitle": "Search for public ideas",

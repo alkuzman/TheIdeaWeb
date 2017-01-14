@@ -48,7 +48,14 @@ li {
 }
 
 .margin {
-  margin: 10px;
+  margin: 10px !important;
+}
+
+@media only screen and (max-width : 480px) {
+  .margin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 .margin-top {
@@ -69,7 +76,7 @@ li {
 }
 
 .padding {
-  padding: 16px;
+  padding: 16px !important;
 }
 
 .padding-top {

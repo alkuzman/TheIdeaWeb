@@ -9,23 +9,35 @@
     </md-toolbar>
     <md-nav-list denese>
       <md-list-item *ngFor="let navigationItem of navigationItems" (click)="sidenav.toggle()"
-                    [routerLink]="navigationItem.url" routerLinkActive="md-primary">
+                    [routerLink]="navigationItem.url" routerLinkActive="primary">
         <md-icon class="icon-middle icon-20" md-list-avatar>{{navigationItem.icon}}</md-icon>
         <span>{{navigationItem.title}}</span>
       </md-list-item>
     </md-nav-list>
   </md-sidenav>
-  <nav class="md-elevation-z6">
-    <md-toolbar color="primary">
-      <button md-icon-button (click)="sidenav.toggle()">
-        <md-icon class="sd-toolbar-icon">menu</md-icon>
-      </button>
-      &nbsp;iDeal-Hub
-      <span class="flex"></span>
-      <button md-icon-button (click)="openSearch()">
-        <md-icon class="sd-toolbar-icon">search</md-icon>
-      </button>
-    </md-toolbar>
-  </nav>
-  <router-outlet></router-outlet>
+  <div style="height: 100vh !important;" fxLayout="column">
+    <nav>
+      <md-toolbar class="md-elevation-z4" color="primary">
+        <button #sidenavbutton md-icon-button (click)="sidenav.toggle()">
+          <md-icon class="sd-toolbar-icon">menu</md-icon>
+        </button>
+        &nbsp;iDeal-Hub
+        <span class="flex"></span>
+        <button md-icon-button (click)="openSearch()">
+          <md-icon class="sd-toolbar-icon">search</md-icon>
+        </button>
+      </md-toolbar>
+    </nav>
+    <md-progress-bar
+      style="position: relative; z-index: 100;"
+      *ngIf="loadingState"
+      [value]="loadingState?.value"
+      [bufferValue]="loadingState?.bufferValue"
+      color="accent"
+      [mode]="loadingState?.mode">
+    </md-progress-bar>
+    <div fxFlex fxFlexFill style="overflow: scroll">
+    <router-outlet></router-outlet>
+    </div>
+  </div>
 </md-sidenav-layout>

@@ -18,7 +18,6 @@ import {NewRegistrationFormComponent} from "./component/registration/new-registr
 import {AuthenticatedUserNamedAvatarComponent} from "./component/avatar/authenticated-user-named-avatar/authenticated-user-named-avatar.component";
 import {UserProfilePicturePipe} from "./pipes/user-profile-picture.pipe";
 import {UserNamePipe} from "./pipes/user-name.pipe";
-import className = webdriver.By.className;
 import {UserObjectService} from "./user-object.service";
 import {UserDetailsComponent} from "./component/user-details/user-details/user-details.component";
 import {UserDetailsLoaderComponent} from "./component/user-details/user-details-loader/user-details-loader.component";
