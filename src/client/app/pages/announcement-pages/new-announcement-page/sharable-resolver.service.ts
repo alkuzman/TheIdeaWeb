@@ -4,7 +4,7 @@
 import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {SharableService} from "../../../domain/sharable/sharable.service";
+import {SharableService} from "../../../domain/services/sharable/sharable.service";
 import {Sharable} from "../../../domain/model/sharing/sharable";
 import {Response} from "@angular/http";
 import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";

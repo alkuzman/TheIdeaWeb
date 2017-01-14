@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
-import {ProblemService} from "../../../problem.service";
+import {ProblemService} from "../../../../services/problem/problem.service";
 import {Problem} from "../../../../model/ideas/problem";
 import {Response} from "@angular/http";
 /**

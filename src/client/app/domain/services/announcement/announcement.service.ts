@@ -3,10 +3,10 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Announcement} from "../model/sharing/announcement";
+import {Announcement} from "../../model/sharing/announcement";
 import {AuthHttp} from "angular2-jwt";
 import {Response, Headers, Http} from "@angular/http";
-import {LoadingService} from "../../core/loading/loading.service";
+import {LoadingService} from "../../../core/loading/loading.service";
 @Injectable()
 export class AnnouncementService {
   private announcementsUrl: string = "/api/announcements";

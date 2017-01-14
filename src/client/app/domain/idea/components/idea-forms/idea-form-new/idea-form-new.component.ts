@@ -5,7 +5,7 @@ import {Component, ViewContainerRef} from '@angular/core';
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {Logger} from "../../../../../logger.service";
 import {Idea} from "../../../../model/ideas/idea";
-import {IdeaService} from "../../../idea.service";
+import {IdeaService} from "../../../../services/idea/idea.service";
 
 @Component({
   moduleId: module.id,

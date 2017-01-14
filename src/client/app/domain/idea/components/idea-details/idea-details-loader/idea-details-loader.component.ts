@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
 import {Response} from "@angular/http";
-import {IdeaService} from "../../../idea.service";
+import {IdeaService} from "../../../../services/idea/idea.service";
 /**
  * Created by AKuzmanoski on 03/12/2016.
  */

@@ -3,6 +3,7 @@
  */
 import {Routes} from "@angular/router";
 import {PagesComponent} from "./pages.component";
+import {HomeRoutes} from "./home/home.routes";
 
 export const PagesRoutes: Routes = [
   {
@@ -20,13 +21,13 @@ export const PagesRoutes: Routes = [
       },
       {
         path: 'home',
-        loadChildren: "app/pages/home/home.module#HomeModule",
-        data: {preload: true}
+        children: [
+          ...HomeRoutes
+        ]
       },
       {
         path: 'problems',
         loadChildren: "app/pages/problem-pages/problem-pages.module#ProblemPagesModule",
-        data: {preload: true}
       },
       {
         path: 'ideas',

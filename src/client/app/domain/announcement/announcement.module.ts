@@ -3,7 +3,6 @@
  */
 import {NgModule} from "@angular/core";
 import {SharedModule} from "../../shared/shared.module";
-import {AnnouncementService} from "./announcement.service";
 import {SharableModule} from "../sharable/sharable.module";
 import {AnnouncementFieldsComponent} from "./components/announcement-forms/announcement-fields/announcement-fields.component";
 import {AnnouncementFormComponent} from "./components/announcement-forms/announcement-form/announcement-form.component";
@@ -15,7 +14,6 @@ import {AnnouncementCardComponent} from "./components/announcement-card/announce
 @NgModule({
   imports: [SharedModule, SharableModule, PackageModule],
   declarations: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent],
-  providers: [AnnouncementService],
   exports: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent]
 })
 export class AnnouncementModule {

@@ -12,9 +12,10 @@ import {provideAuth} from "angular2-jwt";
 import {PagesModule} from "./pages/pages.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {DomainServicesModule} from "./domain/services/domain-services.module";
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [provideAuth({
     headerName: "X-Authorization",

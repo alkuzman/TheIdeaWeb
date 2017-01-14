@@ -2,12 +2,12 @@
  * Created by AKuzmanoski on 31/10/2016.
  */
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
-import {UserService} from "../../../user.service";
+import {UserService} from "../../../../services/user/user.service";
 import {User} from "../../../../model/authentication/user";
 import {Response} from "@angular/http";
 import {FieldError} from "../../../../../core/helper/field-error";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
-import {UserObjectService} from "../../../user-object.service";
+import {UserObjectService} from "../../../../services/user/user-object.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-registration-form",

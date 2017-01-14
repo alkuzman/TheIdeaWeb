@@ -6,7 +6,7 @@ import {Announcement} from "../../../../model/sharing/announcement";
 import {Sharable} from "../../../../model/sharing/sharable";
 import {Contract} from "../../../../model/ideas/contract";
 import {Package} from "../../../../model/sharing/package";
-import {AnnouncementService} from "../../../announcement.service";
+import {AnnouncementService} from "../../../../services/announcement/announcement.service";
 import {MdSnackBar} from "@angular/material";
 @Component({
   moduleId: module.id,

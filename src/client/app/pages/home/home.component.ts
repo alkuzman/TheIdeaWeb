@@ -16,7 +16,68 @@ import {ActivatedRoute} from "@angular/router";
 
 export class HomeComponent implements OnInit {
   errorMessage: string;
-  categories: Category[];
+  categories: Category[] = [
+    {
+      "title": "New Idea",
+      "description": "Share and try to sell your idea",
+      "url": "/ideas/new",
+      "image": {
+        "src": "/assets/images/new-idea.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    },
+    {
+      "title": "New Problem",
+      "description": "Share your problem, and find solutions",
+      "url": "/problems/new",
+      "image": {
+        "src": "/assets/images/new-problem.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    },
+    {
+      "title": "Ideas",
+      "url": "/ideas",
+      "description": "Find idea",
+      "image": {
+        "src": "/assets/images/find-idea.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    },
+    {
+      "title": "Problems",
+      "description": "Find problem and try to solve that problem",
+      "url": "/problems",
+      "image": {
+        "src": "/assets/images/new-solution.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    },
+    {
+      "title": "Incubation",
+      "description": "Find incubators for your idea",
+      "url": "",
+      "image": {
+        "src": "/assets/images/grow-idea.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    },
+    {
+      "title": "Management",
+      "description": "Save your ideas, find new ones, and make them available to you",
+      "url": "",
+      "image": {
+        "src": "/assets/images/manage-ideas.png",
+        "rowSpan": 1,
+        "colSpan": 1
+      }
+    }
+  ];
   numOfColumns: number = 4;
 
   /**
@@ -32,7 +93,6 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     this.themingService.currentTheme = "default-theme";
-    this.route.data.subscribe((data: {categories: Category[]}) => this.categories = data.categories);
     this.changeColumns(window.innerWidth);
   }
 

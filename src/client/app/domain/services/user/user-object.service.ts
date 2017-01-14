@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {User} from "../model/authentication/user";
+import {User} from "../../model/authentication/user";
 /**
  * Created by AKuzmanoski on 25/11/2016.
  */

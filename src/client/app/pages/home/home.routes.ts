@@ -6,8 +6,5 @@ export const HomeRoutes: Route[] = [
   {
     path: '',
     component: HomeComponent,
-    resolve: {
-      categories: CategoryResolverService
-    }
   }
 ];

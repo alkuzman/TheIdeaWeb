@@ -7,7 +7,7 @@ import {Problem} from "../../../../model/ideas/problem";
 import {Idea} from "../../../../model/ideas/idea";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
 import {User} from "../../../../model/authentication/user";
-import {SolutionService} from "../../../solution.service";
+import {SolutionService} from "../../../../services/solution/solution.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form-new",

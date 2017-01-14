@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Sharable} from "../model/sharing/sharable";
+import {Sharable} from "../../model/sharing/sharable";
 import {Http, Response} from "@angular/http";
 @Injectable()
 export class SharableService {

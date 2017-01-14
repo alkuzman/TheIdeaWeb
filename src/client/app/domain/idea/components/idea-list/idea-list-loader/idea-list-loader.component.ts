@@ -5,7 +5,7 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
 import {User} from "../../../../model/authentication/user";
 import {Problem} from "../../../../model/ideas/problem";
-import {IdeaService} from "../../../idea.service";
+import {IdeaService} from "../../../../services/idea/idea.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-idea-list-loader",

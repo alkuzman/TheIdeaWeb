@@ -1,10 +1,13 @@
 import {Routes} from "@angular/router";
 import {NotAuthenticatedGuard} from "./core/guards/not-authenticated.guard";
+import {PagesRoutes} from "./pages/pages.routes";
 
 export const routes: Routes = [
   {
     path: "",
-    loadChildren: "app/pages/pages.module#PagesModule"
+    children: [
+      ...PagesRoutes
+    ]
   },
   {
     path: 'auth',

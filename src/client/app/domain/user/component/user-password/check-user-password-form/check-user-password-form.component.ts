@@ -1,10 +1,10 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
-import {UserService} from "../../../user.service";
+import {UserService} from "../../../../services/user/user.service";
 import {Response} from "@angular/http";
 import {Credentials} from "../../../helper/Credentials";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
-import {UserObjectService} from "../../../user-object.service";
+import {UserObjectService} from "../../../../services/user/user-object.service";
 /**
  * Created by Viki on 11/1/2016.
  */

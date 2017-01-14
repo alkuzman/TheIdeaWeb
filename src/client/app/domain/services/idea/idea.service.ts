@@ -2,17 +2,17 @@
  * Created by AKuzmanoski on 11/10/2016.
  */
 import {Injectable, Inject} from "@angular/core";
-import {Logger} from "../../logger.service";
-import {Idea} from "../model/ideas/idea";
+import {Logger} from "../../../logger.service";
+import {Idea} from "../../model/ideas/idea";
 import {Response, Headers, Http, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
-import {JwtHttpService} from "../../core/authentication/jwt/jwt-http.service";
-import {IdeasFilterProperties} from "./params/ideas-filter.properties";
-import {Properties} from "../../shared/utils/properties";
-import {PropertiesToUrlSearchParams} from "../../shared/utils/properties-to-url-search-params";
+import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {IdeasFilterProperties} from "../../idea/params/ideas-filter.properties";
+import {Properties} from "../../../shared/utils/properties";
+import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 import {AuthHttp} from "angular2-jwt";
-import {LoadingService} from "../../core/loading/loading.service";
-import {LoadingState} from "../../core/loading/loading-state";
+import {LoadingService} from "../../../core/loading/loading.service";
+import {LoadingState} from "../../../core/loading/loading-state";
 import any = jasmine.any;
 
 

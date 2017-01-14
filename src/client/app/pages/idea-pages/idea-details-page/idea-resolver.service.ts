@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Observable} from "rxjs";
-import {IdeaService} from "../../../domain/idea/idea.service";
+import {IdeaService} from "../../../domain/services/idea/idea.service";
 import {Response} from "@angular/http";
 import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
 /**

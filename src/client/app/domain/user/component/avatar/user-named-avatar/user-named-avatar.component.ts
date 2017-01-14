@@ -6,7 +6,7 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstrac
 import {User} from "../../../../model/authentication/user";
 import {AvatarType} from "../../../../../shared/widget/components/avatars/named-avatar/enum-avatar-type";
 import {Alignment} from "../../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
-import {UserService} from "../../../user.service";
+import {UserService} from "../../../../services/user/user.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-named-avatar",

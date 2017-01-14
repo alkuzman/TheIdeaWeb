@@ -6,13 +6,12 @@ import {SharedModule} from "../../shared/shared.module";
 import {SolutionFieldsComponent} from "./components/solution-forms/solution-fields/solution-fields.component";
 import {IdeaModule} from "../idea/idea.module";
 import {SolutionFormComponent} from "./components/solution-forms/solution-form/solution-form.component";
-import {SolutionService} from "./solution.service";
+import {SolutionService} from "../services/solution/solution.service";
 import {NewSolutionFormComponent} from "./components/solution-forms/solution-form-new/solution-form-new.component";
 @NgModule({
   imports: [SharedModule, IdeaModule],
   declarations: [SolutionFieldsComponent, SolutionFormComponent, NewSolutionFormComponent],
   exports: [SolutionFieldsComponent, SolutionFormComponent, NewSolutionFormComponent],
-  providers: [SolutionService]
 })
 export class SolutionModule {
 

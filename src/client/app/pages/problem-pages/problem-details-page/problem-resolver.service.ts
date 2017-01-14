@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Observable} from "rxjs";
-import {ProblemService} from "../../../domain/problem/problem.service";
+import {ProblemService} from "../../../domain/services/problem/problem.service";
 import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
 @Injectable()
 export class ProblemResolverService implements Resolve<Problem> {

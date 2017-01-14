@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
-import {UserService} from "../../../user.service";
+import {UserService} from "../../../../services/user/user.service";
 /**
  * Created by AKuzmanoski on 22/12/2016.
  */

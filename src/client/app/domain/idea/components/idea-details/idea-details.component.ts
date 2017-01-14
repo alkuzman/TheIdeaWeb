@@ -2,7 +2,7 @@
  * Created by PC on 10/10/2016.
  */
 import {Idea} from "../../../model/ideas/idea";
-import {IdeaService} from "../../idea.service";
+import {IdeaService} from "../../../services/idea/idea.service";
 import {ActivatedRoute, Router, Params} from "@angular/router";
 import {
   Component, OnInit, HostBinding,

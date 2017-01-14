@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {UserService} from "../../domain/user/user.service";
+import {UserService} from "../../domain/services/user/user.service";
 import {User} from "../../domain/model/authentication/user";
 @Component({
   moduleId: module.id,

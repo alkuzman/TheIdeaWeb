@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
 import {Observable} from "rxjs";
-import {UserService} from "../../../domain/user/user.service";
+import {UserService} from "../../../domain/services/user/user.service";
 import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
 @Injectable()
 export class UserResolverService implements Resolve<User> {

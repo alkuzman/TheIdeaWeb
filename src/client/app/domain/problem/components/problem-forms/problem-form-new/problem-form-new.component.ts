@@ -2,7 +2,7 @@ import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {Problem} from "../../../../model/ideas/problem";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
 import {User} from "../../../../model/authentication/user";
-import {ProblemService} from "../../../problem.service";
+import {ProblemService} from "../../../../services/problem/problem.service";
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */

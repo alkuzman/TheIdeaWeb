@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {Observable} from "rxjs";
-import {AnnouncementService} from "../../../domain/announcement/announcement.service";
+import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
 import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
 import {Response} from "@angular/http";
 @Injectable()

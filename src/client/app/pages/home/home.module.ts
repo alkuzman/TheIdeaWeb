@@ -7,7 +7,7 @@ import {CategoriesService} from "./categories.service";
 
 @NgModule({
 
-  imports: [CommonModule, SharedModule, HomeRoutingModule],
+  imports: [CommonModule, SharedModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
   providers: [CategoriesService]

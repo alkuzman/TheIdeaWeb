@@ -6,7 +6,7 @@ import {
   trigger
 } from "@angular/core";
 import {Problem} from "../../../model/ideas/problem";
-import {ProblemService} from "../../problem.service";
+import {ProblemService} from "../../../services/problem/problem.service";
 import {Scheduler} from "rxjs";
 @Component({
   moduleId: module.id,

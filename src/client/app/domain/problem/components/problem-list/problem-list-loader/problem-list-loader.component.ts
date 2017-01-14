@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 05/01/2017.
  */
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {ProblemService} from "../../../problem.service";
+import {ProblemService} from "../../../../services/problem/problem.service";
 import {Problem} from "../../../../model/ideas/problem";
 @Component({
   moduleId: module.id,

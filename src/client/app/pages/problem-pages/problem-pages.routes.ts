@@ -12,7 +12,6 @@ export const ProblemPagesRoutes: Routes = [
       {
         path: '',
         loadChildren: "app/pages/problem-pages/problems-page/problems-page.module#ProblemsPageModule",
-        data: {preload: true}
       },
       {
         path: 'new',

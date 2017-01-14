@@ -9,7 +9,7 @@ import {
   trigger
 } from "@angular/core";
 import {Idea} from "../../../model/ideas/idea";
-import {IdeaService} from "../../idea.service";
+import {IdeaService} from "../../../services/idea/idea.service";
 import {User} from "../../../model/authentication/user";
 import {Problem} from "../../../model/ideas/problem";
 import {Scheduler} from "rxjs";

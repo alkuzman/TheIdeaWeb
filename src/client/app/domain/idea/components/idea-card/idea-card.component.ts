@@ -5,9 +5,9 @@ import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {Idea} from "../../../model/ideas/idea";
 import {User} from "../../../model/authentication/user";
 import {Problem} from "../../../model/ideas/problem";
-import {IdeaActionsService} from "../../idea-actions.service";
+import {IdeaActionsService} from "../../../services/idea/idea-actions.service";
 import {Actions} from "../../../../core/helper/actions/actions";
-import {UserService} from "../../../user/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {Action} from "../../../../core/helper/actions/action";
 @Component({
   moduleId: module.id,
@@ -34,7 +34,7 @@ export class IdeaCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ideaActionsService.getActions(this.idea).subscribe((actions: Actions) => this.actions = actions);
+    this.actions = this.ideaActionsService.getActions(this.idea);
   }
 
   getOwner() {

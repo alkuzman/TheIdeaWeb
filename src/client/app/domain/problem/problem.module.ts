@@ -6,7 +6,7 @@ import {NgModule} from "@angular/core";
 import {SharedModule} from "../../shared/shared.module";
 import {HttpModule, JsonpModule} from "@angular/http";
 import {ProblemFormComponent} from "./components/problem-forms/problem-form/problem-form.component";
-import {ProblemService} from "./problem.service";
+import {ProblemService} from "../services/problem/problem.service";
 import {NewProblemFormComponent} from "./components/problem-forms/problem-form-new/problem-form-new.component";
 import {ProblemListComponent} from "./components/problem-list/problem-list.component";
 import {ProblemCardComponent} from "./components/problem-card/problem-card.component";
@@ -18,7 +18,6 @@ import {ProblemListLoaderComponent} from "./components/problem-list/problem-list
 @NgModule({
   imports: [SharedModule],
   declarations: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
-  providers: [ProblemService],
   exports: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
 })
 export class ProblemModule {

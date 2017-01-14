@@ -2,14 +2,14 @@
  * Created by AKuzmanoski on 17/10/2016.
  */
 import {Injectable, Inject} from "@angular/core";
-import {Logger} from "../../logger.service";
+import {Logger} from "../../../logger.service";
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
-import {Problem} from "../model/ideas/problem";
+import {Problem} from "../../model/ideas/problem";
 import {AuthHttp} from "angular2-jwt";
-import {ProblemListFilterProperties} from "./params/problem-list-filter.properties";
-import {PropertiesToUrlSearchParams} from "../../shared/utils/properties-to-url-search-params";
-import {LoadingService} from "../../core/loading/loading.service";
+import {ProblemListFilterProperties} from "../../problem/params/problem-list-filter.properties";
+import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
+import {LoadingService} from "../../../core/loading/loading.service";
 
 
 @Injectable()
