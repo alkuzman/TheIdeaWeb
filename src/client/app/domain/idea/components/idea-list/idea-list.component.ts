@@ -4,19 +4,48 @@
 /**
  * Created by PC on 10/10/2016.
  */
-import {Component, OnInit, Input, EventEmitter, Output} from "@angular/core";
+import {
+  Component, OnInit, Input, EventEmitter, Output, transition, animate, style, state,
+  trigger
+} from "@angular/core";
 import {Idea} from "../../../model/ideas/idea";
 import {IdeaService} from "../../idea.service";
 import {User} from "../../../model/authentication/user";
 import {Problem} from "../../../model/ideas/problem";
+import {Scheduler} from "rxjs";
 
 @Component({
   moduleId: module.id,
   selector: 'ideal-idea-list',
   templateUrl: 'idea-list.component.html',
   styleUrls: ['idea-list.component.css'],
+  animations: [
+    trigger('loading', [
+      state('init', style({
+        opacity: 0,
+        transform: 'translateY(10px)'
+      })),
+      state('active', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      transition("init => active", [
+
+        animate("160ms ease-out", style({
+          opacity: 1,
+          transform: 'translateY(0)'
+        }))
+      ]),
+      transition("active => init", [
+        animate("150ms ease-in", style({
+          opacity: 0,
+          transform: 'translateY(10px)'
+        }))
+      ])
+    ])
+  ]
 })
-export class IdeasComponent {
+export class IdeasComponent implements OnInit {
   @Input("ideas") ideas: Idea[];
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ideaOwnerSelected") ideaOwnerSelected: EventEmitter<User> = new EventEmitter<User>();
@@ -28,6 +57,22 @@ export class IdeasComponent {
   @Output("report") report: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("remove") remove: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ban") ban: EventEmitter<Idea> = new EventEmitter<Idea>();
+  private status: string[] = [];
+
+  ngOnInit(): void {
+    let queueRefresh = Scheduler.queue;
+    this.ideas.forEach((item, index) => {
+      this.status[index] = "init";
+      let timeout = (index * 40);
+      queueRefresh.schedule(() => {
+        this.changeStatus(index);
+      }, timeout);
+    });
+  }
+
+  changeStatus(index: number) {
+    this.status[index] = "active";
+  }
 
   onIdeaSelected(idea: Idea) {
     this.ideaSelected.emit(idea);

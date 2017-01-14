@@ -5,6 +5,7 @@
     "declaration": false,
     "removeComments": true,
     "noLib": false,
+    "lib": ["es2016", "dom"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
@@ -20,10 +21,8 @@
       "../../node_modules"
     ],
     "types": [
-      "core-js",
-      "express",
-      "jasmine",
       "node",
+      "jasmine",
       "protractor",
       "systemjs",
       "hammerjs"
@@ -34,12 +33,9 @@
     "dist",
     "src"
   ],
-  "compileOnSave": false
-
-  /*"files": ["app/app.module", "app/pages/pages.module", "app/pages/home/home.module"],
-
+  "compileOnSave": false,
   "angularCompilerOptions": {
     "genDir": "ngFactory",
-    "entryModule": "app/app.module"
-  }*/
+    "entryModule": "app.module#AppModule"
+  }
 }

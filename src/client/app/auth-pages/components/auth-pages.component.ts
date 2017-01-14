@@ -1,9 +1,10 @@
 import {Component, trigger, state, style, transition, group, animate, OnInit} from "@angular/core";
 import {ThemingService} from "../../core/theming/theming.service";
+import {LoadingService} from "../../core/loading/loading.service";
+import {LoadingState} from "../../core/loading/loading-state";
 /**
  * Created by Viki on 10/28/2016.
  */
-
 @Component({
   moduleId: module.id,
   selector: "ideal-auth-pages",
@@ -35,11 +36,13 @@ import {ThemingService} from "../../core/theming/theming.service";
 })
 export class AuthPagesComponent implements OnInit{
   cardState = "active";
+  private loadingState: LoadingState;
 
-  constructor(private themingService: ThemingService) {
+  constructor(private themingService: ThemingService, private loadingService: LoadingService) {
   }
 
   ngOnInit() {
+    this.loadingService.loadingStateChange.subscribe((loadingState: LoadingState) => this.loadingState = loadingState);
     this.cardState = "active";
     this.themingService.currentTheme = "default-theme";
   }

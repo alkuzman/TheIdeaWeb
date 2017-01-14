@@ -1,4 +1,12 @@
 <div fxLayout="column" class="flex-container fill-page">
+  <md-progress-bar
+    style="position: relative; z-index: 100;"
+    *ngIf="loadingState"
+    [value]="loadingState?.value"
+    [bufferValue]="loadingState?.bufferValue"
+    color="accent"
+    [mode]="loadingState?.mode">
+  </md-progress-bar>
   <div fxFlex fxFlex.xl="150px" fxFlex.lg="100px" fxFlex.md="100px" fxFlex.sm="50px" fxFlex.xs="50px;"></div>
   <div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlexOffset="0" fxFlex fxFlex.xs="100%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.md="70%" fxFlexOffset.md="15%" fxFlex.lg="60%" fxFlexOffset.lg="20%" fxFlex.xl="40%" fxFlexOffset.xl="30%" style="position: relative">

@@ -61,7 +61,7 @@ export class NewSolutionFormComponent implements OnInit {
     let owner: User = this.jwtSecurityContext.principal;
     solution.idea.owner = owner;
     solution.idea.problem.questioner = owner;
-    this.solutionService.addSolution(solution).then(
+    this.solutionService.addSolution(solution).subscribe(
       (solution: Solution) => this.onSolutionSaved(solution),
       (error: any) => this.errorMessage = error
     );

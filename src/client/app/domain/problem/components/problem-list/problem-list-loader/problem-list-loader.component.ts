@@ -7,7 +7,7 @@ import {Problem} from "../../../../model/ideas/problem";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-list-loader",
-  template: `<ideal-problem-list [problems]="problems" (problemSelected)="onProblemSelected($event)"></ideal-problem-list>`
+  template: `<ideal-problem-list *ngIf="problems" [problems]="problems" (problemSelected)="onProblemSelected($event)"></ideal-problem-list>`
 })
 export class ProblemListLoaderComponent {
   @Input("questionerId") questionerId: number;

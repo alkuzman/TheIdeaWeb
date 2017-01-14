@@ -4,6 +4,8 @@
 import {Component, OnInit} from "@angular/core";
 import {NavigationService} from "../core/navigation/navigation.service";
 import {NavigationItem} from "../core/navigation/navigation-item";
+import {LoadingState} from "../core/loading/loading-state";
+import {LoadingService} from "../core/loading/loading.service";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',
@@ -14,14 +16,21 @@ export class PagesComponent implements OnInit {
   query: string = "";
   searchState: boolean = false;
   navigationItems: NavigationItem[];
+  private loadingState: LoadingState;
 
-  constructor(private navigationService: NavigationService) {
+  constructor(private navigationService: NavigationService, private loadingService: LoadingService) {
   }
 
   ngOnInit(): void {
+    this.loadingService.loadingStateChange.subscribe((loadingState: LoadingState) => {
+      console.log(loadingState);
+      this.loadingState = loadingState
+    });
     this.navigationService.navigationItems
       .subscribe(
-        (navigationItems: NavigationItem[]) => this.navigationItems = navigationItems,
+        (navigationItems: NavigationItem[]) => {
+          this.navigationItems = navigationItems
+        },
         (error: any) => console.log(error));
   }
 
