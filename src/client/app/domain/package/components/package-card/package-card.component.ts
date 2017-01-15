@@ -9,5 +9,5 @@ import {Package} from "../../../model/sharing/package";
   templateUrl: "package-card.component.html"
 })
 export class PackageCardComponent {
-  @Input("package") aPackage: Package;
+  @Input("package") pckg: Package;
 }

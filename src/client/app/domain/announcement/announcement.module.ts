@@ -11,10 +11,11 @@ import {AnnouncementDetailsComponent} from "./components/announcement-details/an
 import {PackageModule} from "../package/package.module";
 import {AnnouncementListComponent} from "./components/announcement-list/announcement-list.component";
 import {AnnouncementCardComponent} from "./components/announcement-card/announcement-card.component";
+import {AnnouncementListLoaderComponent} from "./components/announcement-list/announcement-list-loader.component";
 @NgModule({
   imports: [SharedModule, SharableModule, PackageModule],
-  declarations: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent],
-  exports: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent]
+  declarations: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent, AnnouncementListLoaderComponent],
+  exports: [AnnouncementFieldsComponent, AnnouncementFormComponent, NewAnnouncementFormComponent, AnnouncementDetailsComponent, AnnouncementCardComponent, AnnouncementListComponent, AnnouncementListLoaderComponent]
 })
 export class AnnouncementModule {
 

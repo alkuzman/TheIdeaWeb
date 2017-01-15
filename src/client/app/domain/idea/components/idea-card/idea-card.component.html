@@ -1,21 +1,21 @@
 <md-card>
   <md-card-header>
-    <img (click)="getOwner()" [src]="idea.owner | idealUserProfilePicture" md-card-avatar/>
+    <img (click)="getOwner()" [src]="idea?.owner | idealUserProfilePicture" md-card-avatar/>
     <md-card-title>
       <strong idealColor="accent" (click)="getOwner()">
-        {{idea.owner.firstName}} {{idea.owner.lastName}}
+        {{idea?.owner?.firstName}} {{idea?.owner?.lastName}}
       </strong>
       created idea which solves
       <strong idealColor="accent" (click)="getProblem()">
-        {{idea.problem.title}}
+        {{idea?.problem?.title}}
       </strong>
     </md-card-title>
     <md-card-subtitle>2 hours ago</md-card-subtitle>
   </md-card-header>
   <md-card-content (click)="getDetails()">
     <md-card-title-group>
-      <md-card-title>{{idea.title}}</md-card-title>
-      <md-card-subtitle>{{idea.snackPeak}}</md-card-subtitle>
+      <md-card-title>{{idea?.title}}</md-card-title>
+      <md-card-subtitle>{{idea?.snackPeak}}</md-card-subtitle>
 
     </md-card-title-group>
   </md-card-content>

@@ -40,15 +40,15 @@ export class NewAnnouncementFormComponent implements OnInit{
 
   setup() {
     this.announcement = new Announcement;
-    this.announcement.aPackage = new Package();
-    this.announcement.aPackage.sharable = this._sharable;
-    this.announcement.aPackage.contracts = this._contracts;
+    this.announcement.pckg = new Package();
+    this.announcement.pckg.sharable = this._sharable;
+    this.announcement.pckg.contracts = this._contracts;
   }
 
   update() {
     if (this.announcement) {
-      this.announcement.aPackage.sharable = this._sharable;
-      this.announcement.aPackage.contracts = this._contracts;
+      this.announcement.pckg.sharable = this._sharable;
+      this.announcement.pckg.contracts = this._contracts;
     }
   }
 

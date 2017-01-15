@@ -7,6 +7,8 @@ import {Announcement} from "../../model/sharing/announcement";
 import {AuthHttp} from "angular2-jwt";
 import {Response, Headers, Http} from "@angular/http";
 import {LoadingService} from "../../../core/loading/loading.service";
+import {AnnouncementFilterProperties} from "./announcement-filter-properties";
+import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 @Injectable()
 export class AnnouncementService {
   private announcementsUrl: string = "/api/announcements";
@@ -31,9 +33,12 @@ export class AnnouncementService {
       .catch((error: any) => this.handleError(error));
   }
 
-  getAnnouncementList(): Observable<Announcement[]> {
+  getAnnouncementList(filter?: AnnouncementFilterProperties): Observable<Announcement[]> {
     this.loadingService.load();
-    return this.http.get(this.announcementsUrl, {headers: this.getHeaders()})
+    if (filter == null)
+      filter = {};
+    let params = PropertiesToUrlSearchParams.transform(filter);
+    return this.http.get(this.announcementsUrl, {headers: this.getHeaders(), search: params})
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }

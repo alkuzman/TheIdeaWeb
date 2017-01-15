@@ -1,4 +1,5 @@
 <div class="margin">
+  <button md-raised-button color="primary" (click)="announce()">Announce</button>
   <ideal-problem-details [problem]="problem"></ideal-problem-details>
   <h3>{{ideaList?.length}} Ideas</h3>
   <ideal-idea-list-loader [problemId]="problem.id" (ideaListReady)="onIdeaListReady($event)"></ideal-idea-list-loader>

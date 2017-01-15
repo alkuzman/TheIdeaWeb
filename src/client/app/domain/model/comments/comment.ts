@@ -5,4 +5,5 @@ import {Commentable} from "./commentable";
  */
 export class Comment extends BaseEntityImpl implements Commentable{
   public commentable: Commentable;
+  public text: string;
 }

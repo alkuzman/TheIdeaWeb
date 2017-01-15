@@ -1,5 +1,8 @@
 <ideal-user-details [user]="user"></ideal-user-details>
 <md-tab-group>
+  <md-tab label="Feed">
+    <ideal-announcement-list-loader [ownerId]="user.id"></ideal-announcement-list-loader>
+  </md-tab>
   <md-tab label="Ideas">
     <ideal-idea-list-loader [ownerId]="user.id"
                      (ideaOwnerSelected)="goToUserDetails($event)"

@@ -8,8 +8,9 @@ import {UserDetailsPageComponent} from "./user-details-page.component";
 import {UserDetailsPageRoutingModule} from "./user-details-page-routing.module";
 import {IdeaModule} from "../../../domain/idea/idea.module";
 import {ProblemModule} from "../../../domain/problem/problem.module";
+import {AnnouncementModule} from "../../../domain/announcement/announcement.module";
 @NgModule({
-  imports: [SharedModule, UserModule, IdeaModule, ProblemModule, UserDetailsPageRoutingModule],
+  imports: [SharedModule, UserModule, IdeaModule, ProblemModule, AnnouncementModule, UserDetailsPageRoutingModule],
   declarations: [UserDetailsPageComponent]
 })
 export class UserDetailsPageModule {

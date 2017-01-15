@@ -34,4 +34,8 @@ export class ProblemDetailsPageComponent implements OnInit{
     this.snackBar.open("Idea successfully created!", undefined, {duration: 2000});
     this.router.navigate(["/ideas", solution.idea.id]);
   }
+
+  announce() {
+    this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: this.problem.id}});
+  }
 }
