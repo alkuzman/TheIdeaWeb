@@ -8,6 +8,7 @@ import {FormGroup, FormBuilder, FormControl} from "@angular/forms";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
 import {SolutionFormErrors} from "./solution-form-errors";
 import {SolutionValidationMessages} from "./solution-validation-messages";
+import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-fields",

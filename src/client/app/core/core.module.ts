@@ -12,6 +12,7 @@ import {NavigationService} from "./navigation/navigation.service";
 import {ErrorHandlingService} from "./error-handling/error-handling.service";
 import {PasswordStrengthService} from "./helper/services/password-strength.service";
 import {LoadingService} from "./loading/loading.service";
+import {AnalyzerService} from "./analyzers/analyzer.service";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import {LoadingService} from "./loading/loading.service";
       },
       deps: [XHRBackend, RequestOptions, JwtSecurityContext, JwtRefreshAccessTokenService]
     },
-    NotAuthenticatedGuard, AuthenticatedGuard, LoadingService, ErrorHandlingService, PasswordStrengthService]
+    NotAuthenticatedGuard, AuthenticatedGuard, LoadingService, ErrorHandlingService, PasswordStrengthService, AnalyzerService]
 })
 export class CoreModule {
 }

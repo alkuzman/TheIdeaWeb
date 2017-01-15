@@ -10,6 +10,7 @@ import {
   style, state, Input
 } from '@angular/core';
 import {Alignment} from "../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
+import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
 
 @Component({
   moduleId: module.id,
@@ -40,27 +41,33 @@ import {Alignment} from "../../../../shared/widget/components/avatars/named-avat
     ])
   ]
 })
-export class IdeaDetailsComponent {
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true;
-  }
+export class IdeaDetailsComponent implements OnInit {
 
   @HostBinding('style.display') get display() {
     return 'block';
-  }
-
-  @HostBinding('style.position') get position() {
-    return 'absolute';
   }
 
   private ownerAvatarAlignment: Alignment = Alignment.left;
 
   @Input() idea: Idea;
   errorMessage: any;
+  private docs: any;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private ideaService: IdeaService) {
+  constructor(private analyzerService: AnalyzerService) {
 
+  }
+
+  ngOnInit(): void {
+    this.getWikipediaDocuments();
+  }
+
+  getWikipediaDocuments() {
+    this.analyzerService.getSymilarDocuments(this.idea.title, {limit: "5"}).subscribe((docs: any) => {
+      this.docs = docs;
+    });
+  }
+
+  getWikiName(value: string) {
+    return value.replace(" ", "_");
   }
 }

@@ -38,6 +38,13 @@ export class ProjectConfig extends SeedConfig {
             pathname: '/',
             route: '/api'
           }),
+          proxy({
+            protocol: 'http:',
+            hostname: 'localhost',
+            port: 5000,
+            pathname: '/',
+            route: '/processing'
+          }),
           require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})
         ],
         routes: {

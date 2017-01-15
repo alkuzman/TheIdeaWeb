@@ -14,6 +14,7 @@ import {TextEditorComponent} from "./components/text-editor/text-editor.componen
 import {SmoothImageWidget} from "./components/images/smooth-image.widget";
 import {ColorDirective} from "./directives/color.directive";
 import {PasswordMatcherDirective} from "./directives/password-matcher.directive";
+import {FlexLayoutModule} from "@angular/flex-layout";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -21,7 +22,7 @@ import {PasswordMatcherDirective} from "./directives/password-matcher.directive"
 @NgModule({
   declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective],
   exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective],
-  imports: [MaterialModule, CommonModule, FormsModule, PipesModule],
+  imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule],
   entryComponents: [UploadImageDialogComponent]
 })
 export class WidgetModule {}
