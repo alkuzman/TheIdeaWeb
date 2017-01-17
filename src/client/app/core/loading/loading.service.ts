@@ -22,7 +22,7 @@ export class LoadingService{
   }
 
 
-  public loadingDone() {
+  public loadingDone(): void {
     this.numOfLoadings--;
     if (this.numOfLoadings === 0)
       this.loadingState = undefined;

@@ -15,6 +15,10 @@ export class AnnouncementFeedListResolverService implements Resolve<Announcement
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement[]>|Promise<Announcement[]>|Announcement[] {
-    return this.announcementServcie.getAnnouncementList().toPromise().catch((error: Response) => this.errorHandlingService.handleError(error));
+    let type: string = route.data["type"];
+    let pageSize: number = route.data["pageSize"];
+    if (type != null)
+      return this.announcementServcie.getAnnouncementList({type: type, offset: "0", limit: pageSize.toString()}).toPromise().catch((error: Response) => this.errorHandlingService.handleError(error));
+    return this.announcementServcie.getAnnouncementList({offset: "0", limit: pageSize.toString()}).toPromise().catch((error: Response) => this.errorHandlingService.handleError(error));
   }
 }

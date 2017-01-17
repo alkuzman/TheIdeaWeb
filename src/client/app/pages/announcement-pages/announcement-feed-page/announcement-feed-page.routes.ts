@@ -11,5 +11,25 @@ export const AnnouncementFeedPageRoutes : Routes = [
     resolve: {
       announcementList: AnnouncementFeedListResolverService
     }
+  },
+  {
+    path: "ideas",
+    component: AnnouncementFeedPageComponent,
+    resolve: {
+      announcementList: AnnouncementFeedListResolverService
+    },
+    data: {
+      type: "Idea"
+    }
+  },
+  {
+    path: "problems",
+    component: AnnouncementFeedPageComponent,
+    resolve: {
+      announcementList: AnnouncementFeedListResolverService
+    },
+    data: {
+      type: "Problem"
+    }
   }
 ];

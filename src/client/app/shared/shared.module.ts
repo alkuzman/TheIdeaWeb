@@ -6,6 +6,7 @@ import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
 import {MaterialModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {InfiniteScrollModule} from "angular2-infinite-scroll";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -15,7 +16,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule]
+  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

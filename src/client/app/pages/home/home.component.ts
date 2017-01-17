@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     },
     {
       "title": "Ideas",
-      "url": "/ideas",
+      "url": "/announcements/feed/ideas",
       "description": "Find idea",
       "image": {
         "src": "/assets/images/find-idea.png",
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     {
       "title": "Problems",
       "description": "Find problem and try to solve that problem",
-      "url": "/problems",
+      "url": "/announcements/feed/problems",
       "image": {
         "src": "/assets/images/new-solution.png",
         "rowSpan": 1,

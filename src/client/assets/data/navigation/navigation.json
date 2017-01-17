@@ -15,13 +15,19 @@
     "icon": "lightbulb_outline",
     "title": "Ideas",
     "subtitle": "Search for public ideas",
-    "url": "/ideas"
+    "url": "/announcements/feed/ideas",
+    "params": {
+      "type": "Idea"
+    }
   },
   {
     "icon": "help_outline",
     "title": "Problems",
     "subtitle": "",
-    "url": "/problems"
+    "url": "/announcements/feed/problems",
+    "params": {
+      "type": "Problem"
+    }
   },
   {
     "icon": "info_outline",

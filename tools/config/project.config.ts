@@ -125,6 +125,15 @@ export class ProjectConfig extends SeedConfig {
       }
     });
 
+    this.addPackageBundles({
+      name: 'angular2-infinite-scroll',
+      path: 'node_modules/angular2-infinite-scroll/angular2-infinite-scroll.js',
+      packageMeta: {
+        main: 'angular2-infinite-scroll.js',
+        defaultExtension: 'js'
+      }
+    });
+
     this.ENABLE_SCSS = true;
 
   }

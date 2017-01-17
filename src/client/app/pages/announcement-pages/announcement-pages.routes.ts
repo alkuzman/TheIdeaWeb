@@ -10,7 +10,10 @@ export const AnnouncementPagesRoutes: Routes = [
     children: [
       {
         path: "feed",
-        loadChildren: "app/pages/announcement-pages/announcement-feed-page/announcement-feed-page.module#AnnouncementFeedPageModule"
+        loadChildren: "app/pages/announcement-pages/announcement-feed-page/announcement-feed-page.module#AnnouncementFeedPageModule",
+        data: {
+          pageSize: 10
+        }
       },
       {
         path: "new",

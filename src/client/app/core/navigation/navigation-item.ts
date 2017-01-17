@@ -6,4 +6,5 @@ export interface NavigationItem {
   title: string;
   subtitle: string;
   url: string;
+  params?: any
 }

@@ -36,8 +36,14 @@
       color="accent"
       [mode]="loadingState?.mode">
     </md-progress-bar>
-    <div fxFlex fxFlexFill style="overflow: auto">
-    <router-outlet></router-outlet>
+    <div fxFlex fxFlexFill style="overflow: auto"
+         class="search-results"
+         infinite-scroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="300"
+         (scrolled)="onScroll()"
+         [scrollWindow]="false">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </md-sidenav-layout>
