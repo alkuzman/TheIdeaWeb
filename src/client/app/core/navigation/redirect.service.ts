@@ -11,4 +11,8 @@ export class RedirectService {
   getAnnouncemntDetails(id: number) {
     this.router.navigate(['/announcements', id.toString()]);
   }
+
+  getProblemDetails(id: number) {
+    this.router.navigate(["/problems", id]);
+  }
 }

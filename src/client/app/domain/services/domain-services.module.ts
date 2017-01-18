@@ -7,11 +7,13 @@ import {SharableService} from "./sharable/sharable.service";
 import {SolutionService} from "./solution/solution.service";
 import {UserService} from "./user/user.service";
 import {UserObjectService} from "./user/user-object.service";
+import {ProblemActionsService} from "./problem/problem-actions.service";
 /**
  * Created by AKuzmanoski on 14/01/2017.
  */
 @NgModule({
-  providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, SharableService, SolutionService, UserService, UserObjectService]
+  providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, ProblemActionsService,
+    SharableService, SolutionService, UserService, UserObjectService]
 })
 export class DomainServicesModule {
 

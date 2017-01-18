@@ -1,4 +1,11 @@
 <md-card>
   <md-card-title>{{problem.title}}</md-card-title>
   <md-card-content (click)="getContent()">{{problem.text}}</md-card-content>
+  <md-card-actions>
+    <button md-icon-button *ngFor="let action of actions?.mainActions" (click)="onAction(action)" [idealColor]="action.color"
+            [mdTooltip]="action.title">
+      <md-icon class="icon-20">{{action.icon}}</md-icon>
+    </button>
+
+  </md-card-actions>
 </md-card>

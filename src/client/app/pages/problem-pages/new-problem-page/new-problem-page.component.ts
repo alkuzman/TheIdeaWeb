@@ -6,6 +6,7 @@ import {Logger} from "../../../logger.service";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {MdSnackBar} from "@angular/material";
 import {Router, ActivatedRoute} from "@angular/router";
+import {RedirectService} from "../../../core/navigation/redirect.service";
 
 @Component({
   moduleId: module.id,
@@ -17,12 +18,12 @@ export class NewProblemPageComponent {
   submitText = "Save";
 
 
-  constructor(private snackBar: MdSnackBar, private router: Router, private route: ActivatedRoute) {
+  constructor(private snackBar: MdSnackBar, private redirectService: RedirectService, private route: ActivatedRoute) {
 
   }
 
   problemCreated(problem: Problem) {
     this.snackBar.open("Problem successfully created!", undefined, {duration: 2000});
-    this.router.navigate(["/problems", problem.id]);
+    this.redirectService.getProblemDetails(problem.id);
   }
 }
