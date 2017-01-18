@@ -14,13 +14,14 @@ import {PasswordStrengthService} from "./helper/services/password-strength.servi
 import {LoadingService} from "./loading/loading.service";
 import {AnalyzerService} from "./analyzers/analyzer.service";
 import {ScrollService} from "./scrolling/scroll-service";
+import {RedirectService} from "./navigation/redirect.service";
 
 
 @NgModule({
   imports: [SharedModule],
   declarations: [],
   exports: [],
-  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService, NavigationService,
+  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService, NavigationService, RedirectService,
     {
       provide: JwtHttpService,
       useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, context: JwtSecurityContext, jwtRefreshAccessTokenService: JwtRefreshAccessTokenService) => {

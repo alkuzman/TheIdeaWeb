@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {Package} from "../../../model/sharing/package";
 /**
  * Created by AKuzmanoski on 09/01/2017.
@@ -10,4 +10,9 @@ import {Package} from "../../../model/sharing/package";
 })
 export class PackageCardComponent {
   @Input("package") pckg: Package;
+  @Output("openContent") openContent: EventEmitter<void> = new EventEmitter<void>();
+
+  getContent() {
+    this.openContent.emit();
+  }
 }

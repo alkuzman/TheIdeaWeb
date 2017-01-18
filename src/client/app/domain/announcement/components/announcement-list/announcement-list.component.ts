@@ -1,6 +1,10 @@
-import {Component, Input, trigger, state, style, transition, animate, OnInit} from "@angular/core";
+import {
+  Component, Input, trigger, state, style, transition, animate, OnInit, Output,
+  EventEmitter
+} from "@angular/core";
 import {Announcement} from "../../../model/sharing/announcement";
 import {Scheduler} from "rxjs";
+import {Package} from "../../../model/sharing/package";
 /**
  * Created by AKuzmanoski on 08/01/2017.
  */
@@ -36,6 +40,7 @@ import {Scheduler} from "rxjs";
 })
 export class AnnouncementListComponent implements OnInit {
   @Input("announcementList") announcementList: Announcement[];
+  @Output("openContent") openContent: EventEmitter<Announcement> = new EventEmitter<Announcement>();
   private status: string[] = [];
 
   ngOnInit(): void {
@@ -51,6 +56,10 @@ export class AnnouncementListComponent implements OnInit {
 
   changeStatus(index: number) {
     this.status[index] = "active";
+  }
+
+  getContent(announcement: Announcement) {
+    this.openContent.emit(announcement);
   }
 
 }

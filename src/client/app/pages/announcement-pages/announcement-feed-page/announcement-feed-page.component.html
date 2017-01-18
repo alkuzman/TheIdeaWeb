@@ -1,4 +1,4 @@
 <div>
-  <ideal-announcement-list [announcementList]="announcementList"></ideal-announcement-list>
+  <ideal-announcement-list [announcementList]="announcementList" (openContent)="getContent($event)"></ideal-announcement-list>
 </div>
 <h1 *ngIf="noMoreResults">No more results</h1>

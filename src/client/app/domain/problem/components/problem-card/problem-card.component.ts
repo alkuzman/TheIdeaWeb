@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {Problem} from "../../../model/ideas/problem";
 @Component({
   moduleId: module.id,
@@ -11,4 +11,10 @@ import {Problem} from "../../../model/ideas/problem";
 })
 export class ProblemCardComponent {
   @Input("problem") problem: Problem;
+  @Output("openContent") openContent: EventEmitter<void> = new EventEmitter<void>();
+
+  getContent() {
+    console.log("in Content");
+    this.openContent.emit();
+  }
 }

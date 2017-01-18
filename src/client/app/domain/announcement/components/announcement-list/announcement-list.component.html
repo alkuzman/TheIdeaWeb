@@ -1,5 +1,5 @@
 <div>
   <div class="margin" *ngFor="let announcement of announcementList; let i = index;" [@loading]="status[i]" >
-    <ideal-announcement-card [announcement]="announcement"></ideal-announcement-card>
+    <ideal-announcement-card [announcement]="announcement" (openContent)="getContent($event)"></ideal-announcement-card>
   </div>
 </div>

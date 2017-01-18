@@ -17,6 +17,7 @@ import {Action} from "../../../../core/helper/actions/action";
 })
 export class IdeaCardComponent implements OnInit {
   @Input("idea") idea: Idea;
+  @Output("openContent") openContent: EventEmitter<void> = new EventEmitter<void>();
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ideaOwnerSelected") ideaOwnerSelected: EventEmitter<User> = new EventEmitter<User>();
   @Output("ideaProblemSelected") ideaProblemSelected: EventEmitter<Problem> = new EventEmitter<Problem>();
@@ -47,6 +48,10 @@ export class IdeaCardComponent implements OnInit {
 
   getProblem() {
     this.ideaProblemSelected.emit(this.idea.problem);
+  }
+
+  getContent() {
+    this.openContent.emit();
   }
 
   onUpvote() {

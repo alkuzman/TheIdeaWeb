@@ -1,4 +1,4 @@
-<md-card md-ripple>
+<md-card>
   <md-card-title>{{problem.title}}</md-card-title>
-  <md-card-content>{{problem.text}}</md-card-content>
+  <md-card-content (click)="getContent()">{{problem.text}}</md-card-content>
 </md-card>

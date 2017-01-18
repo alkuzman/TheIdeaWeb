@@ -6,6 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {ScrollService} from "../../../core/scrolling/scroll-service";
 import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
+import {Package} from "../../../domain/model/sharing/package";
+import {RedirectService} from "../../../core/navigation/redirect.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-feed-page",
@@ -18,7 +20,8 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   private type: string;
   private noMoreResults: boolean = false;
 
-  constructor(private route: ActivatedRoute, private scrollService: ScrollService, private announcementService: AnnouncementService) {
+  constructor(private route: ActivatedRoute, private scrollService: ScrollService,
+              private announcementService: AnnouncementService, private redirectService: RedirectService) {
 
   }
 
@@ -46,5 +49,9 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
         if (announcementList.length < this.pageSize)
           this.noMoreResults = true;
       });
+  }
+
+  getContent(announcement: Announcement) {
+    this.redirectService.getAnnouncemntDetails(announcement.id)
   }
 }

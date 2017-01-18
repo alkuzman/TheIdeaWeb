@@ -1,4 +1,4 @@
 <div [ngSwitch]="sharable?.type">
-  <ideal-idea-card *ngSwitchCase="ideaType" [idea]="sharable"></ideal-idea-card>
-  <ideal-problem-card *ngSwitchCase="problemType" [problem]="sharable"></ideal-problem-card>
+  <ideal-idea-card *ngSwitchCase="ideaType" [idea]="sharable" (openContent)="getContent()"></ideal-idea-card>
+  <ideal-problem-card *ngSwitchCase="problemType" [problem]="sharable" (openContent)="getContent()"></ideal-problem-card>
 </div>
