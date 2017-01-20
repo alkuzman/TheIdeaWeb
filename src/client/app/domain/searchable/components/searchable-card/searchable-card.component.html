@@ -1,0 +1,9 @@
+<div [ngSwitch]="searchable?.type">
+  <ideal-announcement-card *ngSwitchCase="'Announcement'" [announcement]="searchable"></ideal-announcement-card>
+  <div *ngSwitchCase="'User'">
+    {{searchable | json}}
+  </div>
+  <div *ngSwitchCase="'Organization'">
+    {{searchable | json}}
+  </div>
+</div>

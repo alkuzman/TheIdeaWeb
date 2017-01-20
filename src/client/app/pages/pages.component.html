@@ -16,17 +16,8 @@
     </md-nav-list>
   </md-sidenav>
   <div style="height: 100vh !important;" fxLayout="column">
-    <nav>
-      <md-toolbar class="md-elevation-z4" color="primary">
-        <button #sidenavbutton md-icon-button (click)="sidenav.toggle()">
-          <md-icon class="sd-toolbar-icon">menu</md-icon>
-        </button>
-        &nbsp;iDeal-Hub
-        <span class="flex"></span>
-        <button md-icon-button (click)="openSearch()">
-          <md-icon class="sd-toolbar-icon">search</md-icon>
-        </button>
-      </md-toolbar>
+    <nav class="md-elevation-z4">
+      <ideal-navbar (sideNavToggle)="sidenav.toggle()" (search)="onSearch($event)"></ideal-navbar>
     </nav>
     <md-progress-bar
       style="position: relative; z-index: 100;"

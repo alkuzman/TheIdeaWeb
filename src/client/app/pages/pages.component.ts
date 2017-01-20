@@ -7,6 +7,7 @@ import {NavigationItem} from "../core/navigation/navigation-item";
 import {LoadingState} from "../core/loading/loading-state";
 import {LoadingService} from "../core/loading/loading.service";
 import {ScrollService} from "../core/scrolling/scroll-service";
+import {RedirectService} from "../core/navigation/redirect.service";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',
@@ -19,12 +20,11 @@ export class PagesComponent implements OnInit, OnDestroy {
   navigationItems: NavigationItem[];
   private loadingState: LoadingState;
 
-  constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService) {
+  constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService) {
   }
 
   ngOnInit(): void {
     this.loadingService.loadingStateChange.subscribe((loadingState: LoadingState) => {
-      console.log(loadingState);
       this.loadingState = loadingState
     });
     this.navigationService.navigationItems
@@ -56,7 +56,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   onScroll(): void {
-    console.log("Ovde");
     this.scrollService.onScroll();
+  }
+
+  onSearch(query: string) {
+    this.redirectService.getAnnouncements({query: query});
   }
 }

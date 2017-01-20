@@ -8,4 +8,5 @@ export interface AnnouncementFilterProperties extends Properties{
   type?: string;
   limit?: string;
   offset?: string;
+  query?: string;
 }

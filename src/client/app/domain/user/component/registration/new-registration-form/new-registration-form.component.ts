@@ -39,7 +39,6 @@ export class NewRegistrationFormComponent implements OnInit {
   }
 
   onUserReady(user: User): void {
-    console.log("Here");
     this.user = user;
     this.notify();
   }

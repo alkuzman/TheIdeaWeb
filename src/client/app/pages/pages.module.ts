@@ -9,9 +9,11 @@ import {SharedModule} from "../shared/shared.module";
 import {PagesRoutingModule} from "./pages-routing.module";
 import {UserModule} from "../domain/user/user.module";
 import {HomeModule} from "./home/home.module";
+import {NavbarComponent} from "./components/navbar.component";
+import {SearchComponent} from "./components/search/search.component";
 @NgModule({
   imports: [SharedModule, UserModule, HomeModule],
-  declarations: [PagesComponent],
+  declarations: [SearchComponent, NavbarComponent, PagesComponent],
   exports: [PagesComponent],
   providers: []
 })

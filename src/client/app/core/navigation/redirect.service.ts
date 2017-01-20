@@ -15,4 +15,8 @@ export class RedirectService {
   getProblemDetails(id: number) {
     this.router.navigate(["/problems", id]);
   }
+
+  getAnnouncements(param: {query: string}) {
+    this.router.navigate(["/announcements", "feed"], {queryParams: param});
+  }
 }

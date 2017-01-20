@@ -99,6 +99,15 @@ export class ProjectConfig extends SeedConfig {
     });
 
     this.addPackageBundles({
+      name: 'hammerjs',
+      path: 'node_modules/nammerjs/hammer.js',
+      packageMeta: {
+        main: 'hammer.js',
+        defaultExtension: 'js'
+      }
+    });
+
+    this.addPackageBundles({
       name: 'rxjs',
       path: 'node_modules/rxjs/Rx.js',
       packageMeta: {

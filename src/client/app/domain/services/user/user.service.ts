@@ -54,7 +54,6 @@ export class UserService {
 
   getUserByEmail(email: string) {
     this.loadingService.load();
-    console.log("get user-pages by email called");
     let url = this.usersUrl;
     let params = new URLSearchParams();
     params.set('email', email); // the user-pages's search value*/

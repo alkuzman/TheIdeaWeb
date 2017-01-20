@@ -26,7 +26,6 @@ export class AnnouncementService {
 
   save(announcement: Announcement): Observable<Announcement> {
     this.loadingService.load();
-    console.log(this.announcementsUrl);
     let body = JSON.stringify(announcement);
     return this.authHttp.post(this.announcementsUrl, body, {headers: this.getHeaders()})
       .map((response: Response) => this.extractData(response))

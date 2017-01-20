@@ -1,0 +1,6 @@
+<div>
+  {{searchableList | json}}
+<div *ngFor="let searchable of searchableList">
+  <ideal-searchable-card [searchable]="searchable"></ideal-searchable-card>
+</div>
+</div>

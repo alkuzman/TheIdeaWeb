@@ -17,7 +17,6 @@ export class AuthenticationUserDetailsPageComponent implements OnInit {
 
   ngOnInit(): void {
     let authenticatedUser: User = this.userService.getAuthenticatedUser();
-    console.log(authenticatedUser.id);
     if (authenticatedUser != null)
       this.router.navigate(["/users", authenticatedUser.id]);
     else

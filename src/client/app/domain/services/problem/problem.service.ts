@@ -58,7 +58,6 @@ export class ProblemService {
     this.loadingService.load();
     let body = JSON.stringify(problem);
     let headers = new Headers({'Content-Type': 'application/json'});
-    console.log(body);
     return this.authHttp.post(this.problemsUrl, body, {headers: headers})
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));

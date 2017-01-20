@@ -7,5 +7,4 @@ export interface BaseEntity {
   lastModified: Date;
   name: string;
   type: string;
-
 }

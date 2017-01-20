@@ -40,6 +40,10 @@ export const PagesRoutes: Routes = [
       {
         path: 'announcements',
         loadChildren: 'app/pages/announcement-pages/announcement-pages.module#AnnouncementPagesModule'
+      },
+      {
+        path: 'search',
+        loadChildren: 'app/pages/search-pages/search-pages.module#SearchPagesModule'
       }]
   }
 ];

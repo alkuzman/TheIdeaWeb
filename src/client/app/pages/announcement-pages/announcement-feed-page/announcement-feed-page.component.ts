@@ -18,6 +18,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   private page: number = 1;
   private pageSize: number;
   private type: string;
+  private query: string;
   private noMoreResults: boolean = false;
 
   constructor(private route: ActivatedRoute, private scrollService: ScrollService,
@@ -31,7 +32,26 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       this.pageSize = data.pageSize;
       this.type = data.type;
     });
+    this.route.queryParams.subscribe((params: {query: string}) => {
+      let isNew = this.query != null;
+      this.query = params.query;
+      if (isNew) {
+        this.loadData();
+      }
+    });
     this.scrollService.scrollEvent.subscribe(() => this.loadMore());
+  }
+
+  loadData(): void {
+    this.page = 0;
+    let offset = this.page * this.pageSize;
+    this.announcementService.getAnnouncementList({type: this.type, query: this.query, offset: offset.toString(), limit: this.pageSize.toString()})
+      .subscribe((announcementList: Announcement[]) => {
+        this.announcementList = announcementList;
+        this.page += 1;
+        if (announcementList.length < this.pageSize)
+          this.noMoreResults = true;
+      });
   }
 
   ngOnDestroy(): void {
@@ -42,7 +62,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
     if (this.noMoreResults)
       return;
     let offset = this.page * this.pageSize;
-    this.announcementService.getAnnouncementList({type: this.type, offset: offset.toString(), limit: this.pageSize.toString()})
+    this.announcementService.getAnnouncementList({type: this.type, query: this.query, offset: offset.toString(), limit: this.pageSize.toString()})
       .subscribe((announcementList: Announcement[]) => {
         this.page += 1;
         this.announcementList = this.announcementList.concat(announcementList);

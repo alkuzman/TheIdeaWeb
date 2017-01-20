@@ -33,7 +33,6 @@ export class IdeasPageComponent implements OnInit {
   }
 
   goToProblemDetails(problem: Problem) {
-    console.log("Here");
     this.router.navigate(["/problems", problem.id]);
   }
 }

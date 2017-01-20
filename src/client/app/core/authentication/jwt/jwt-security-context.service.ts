@@ -41,7 +41,6 @@ export class JwtSecurityContext extends SecurityContext {
   }
 
   clearSecurityContext() {
-    console.log("Clear");
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_refresh_token");
     super.clearSecurityContext();
