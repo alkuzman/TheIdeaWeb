@@ -1,4 +1,19 @@
 <div>
-  <ideal-announcement-list [announcementList]="announcementList" (openContent)="getContent($event)"></ideal-announcement-list>
+  <ideal-announcement-list
+    [announcementList]="announcementList"
+    (openContent)="getContent($event)"
+    (userSelected)="onUserSelected($event)"
+    (ideaSelected)="onIdeaSelected($event)"
+    (problemSelected)="onProblemSelected($event)"
+    (ideaEdit)="onIdeaEdit($event)"
+    (announce)="onAnnounce($event)"
+    (ban)="onBan($event)"
+    (remove)="onRemove($event)"
+    (report)="onReport($event)"
+    (sendTo)="onSendTo($event)"
+    (share)="share($event)"></ideal-announcement-list>
+
 </div>
-<h1 *ngIf="noMoreResults">No more results</h1>
+<div *ngIf="noMoreResults" class="padding" style="text-align: center">
+  <button md-raised-button disabled>No More Results</button>
+</div>

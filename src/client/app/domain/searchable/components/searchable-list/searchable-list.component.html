@@ -1,6 +1,18 @@
 <div>
-  {{searchableList | json}}
-<div *ngFor="let searchable of searchableList">
-  <ideal-searchable-card [searchable]="searchable"></ideal-searchable-card>
-</div>
+  <div *ngFor="let searchable of searchableList" class="margin">
+    <ideal-searchable-card
+      [searchable]="searchable"
+      (announcementSelected)="onAnnouncementSelected($event)"
+      (userSelected)="onUserSelected($event)"
+      (ideaSelected)="onIdeaSelected($event)"
+      (problemSelected)="onProblemSelected($event)"
+      (ideaEdit)="onIdeaEdit($event)"
+      (announce)="onAnnounce($event)"
+      (ban)="onBan($event)"
+      (edit)="onIdeaEdit($event)"
+      (remove)="onRemove($event)"
+      (report)="onReport($event)"
+      (sendTo)="sendTo($event)"
+      (share)="share($event)"></ideal-searchable-card>
+  </div>
 </div>

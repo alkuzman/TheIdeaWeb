@@ -1,4 +1,4 @@
-import {OnInit, EventEmitter, Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {LoadingState} from "./loading-state";
 import {Observable} from "rxjs";
 /**
@@ -25,10 +25,10 @@ export class LoadingService{
   public loadingDone(): void {
     this.numOfLoadings--;
     if (this.numOfLoadings === 0)
-      this.loadingState = undefined;
+      this.loadingState = null;
   }
 
-  public get loadingStateChange(): EventEmitter<LoadingState> {
-    return this._loadingStateChange;
+  public get loadingStateChange(): Observable<LoadingState> {
+    return this._loadingStateChange.asObservable().delay(10);
   }
 }

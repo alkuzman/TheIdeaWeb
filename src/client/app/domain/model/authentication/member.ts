@@ -7,6 +7,9 @@ import {User} from "./user";
  * Created by AKuzmanoski on 17/10/2016.
  */
 export class Member extends BaseEntityImpl implements Person {
+  getUser(): User {
+    return this.user;
+  }
   public organization: Organization;
   public user: User;
   public role: MemberRole;
@@ -25,5 +28,4 @@ export class Member extends BaseEntityImpl implements Person {
   set firstName(value: string) {
     this.user.firstName = value;
   }
-
 }

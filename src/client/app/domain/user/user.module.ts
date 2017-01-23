@@ -4,7 +4,6 @@
 import {NgModule} from "@angular/core";
 import {SharedModule} from "../../shared/shared.module";
 import {UserNamedAvatarComponent} from "./component/avatar/user-named-avatar/user-named-avatar.component";
-import {UserService} from "../services/user/user.service";
 import {LoadUserNamedAvatarComponent} from "./component/avatar/load-user-named-avatar/load-user-named-avatar.component";
 import {RegisterFieldsComponent} from "./component/registration/register-fields/register-fields.component";
 import {RegisterFormComponent} from "./component/registration/register-form/register-form.component";
@@ -18,14 +17,14 @@ import {NewRegistrationFormComponent} from "./component/registration/new-registr
 import {AuthenticatedUserNamedAvatarComponent} from "./component/avatar/authenticated-user-named-avatar/authenticated-user-named-avatar.component";
 import {UserProfilePicturePipe} from "./pipes/user-profile-picture.pipe";
 import {UserNamePipe} from "./pipes/user-name.pipe";
-import {UserObjectService} from "../services/user/user-object.service";
 import {UserDetailsComponent} from "./component/user-details/user-details/user-details.component";
 import {UserDetailsLoaderComponent} from "./component/user-details/user-details-loader/user-details-loader.component";
 import {UserCoverPicturePipe} from "./pipes/user-cover-picture.pipe";
+import {UserCardComponent} from "./component/user-card/user-card.component";
 @NgModule({
   imports: [SharedModule],
-  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCoverPicturePipe],
-  exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent],
+  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCoverPicturePipe, UserCardComponent],
+  exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCardComponent],
 })
 export class UserModule {
 

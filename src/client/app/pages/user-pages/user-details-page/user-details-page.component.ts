@@ -1,9 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Organization} from "../../../domain/model/authentication/organization";
+import {RedirectService} from "../../../core/navigation/redirect.service";
 /**
  * Created by AKuzmanoski on 22/12/2016.
  */
@@ -16,7 +18,7 @@ import {Sharable} from "../../../domain/model/sharing/sharable";
 export class UserDetailsPageComponent implements OnInit {
   private user: User;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private redirectService: RedirectService) {
 
   }
 
@@ -26,20 +28,12 @@ export class UserDetailsPageComponent implements OnInit {
     });
   }
 
-  goToUserDetails(user: User) {
-    this.router.navigate(["../", "user.id"], {relativeTo: this.route})
-  }
-
-  goToProblemDetails(problem: Problem) {
-    this.router.navigate(["/problems", problem.id])
-  }
-
   goToIdeaDetails(idea: Idea) {
-    this.router.navigate(["/ideas", idea.id])
+    this.redirectService.getIdeaDetails(idea.id);
   }
 
   announce(sharable: Sharable) {
-    this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: sharable.id}});
+    this.redirectService.newAnnouncement(sharable);
   }
 
   sendTo(sharable: Sharable) {
@@ -59,6 +53,18 @@ export class UserDetailsPageComponent implements OnInit {
   }
 
   ban(sharable: Sharable) {
+
+  }
+
+  onProblemSelected(problem: Problem) {
+    this.redirectService.getProblemDetails(problem.id);
+  }
+
+  onUserSelected(user: User) {
+    this.redirectService.getUserDetails(user.id);
+  }
+
+  onOrganizationSelected(organization: Organization) {
 
   }
 }

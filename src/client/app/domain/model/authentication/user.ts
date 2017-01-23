@@ -21,4 +21,9 @@ export class User extends Agent implements Person {
     return "Email: " + this.email + "\n" +
     "FirstName: " + this.firstName + "\n" + "LastName: " + this.lastName + "\n" + super.toString();
   }
+
+
+  getUser(): User {
+    return this;
+  }
 }

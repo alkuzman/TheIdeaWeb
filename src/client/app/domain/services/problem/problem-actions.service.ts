@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
 import {Actions} from "../../../core/helper/actions/actions";
-import {Idea} from "../../model/ideas/idea";
 import {UserService} from "../user/user.service";
 import {User} from "../../model/authentication/user";
 import {Role} from "../../model/enumerations/role";
@@ -27,61 +25,68 @@ export class ProblemActionsService {
         "icon": "send",
         "color": "accent",
         "scope": "owner"
+      },
+      {
+        "title": "Upvote",
+        "description": "This idea shows research effort, it is useful, and might be interesting",
+        "icon": "thumb_up",
+        "color": "default",
+        "scope": "user"
+      },
+      {
+        "title": "Downvote",
+        "description": "This idea does not show enough research effort, it is unclear or not useful",
+        "icon": "thumb_down",
+        "color": "default",
+        "scope": "user"
       }
     ],
     "menuActions": [
       {
         "title": "Details",
-        "description": "Open details for this idea",
+        "description": "Open details for this problem",
         "icon": "details",
         "color": "default",
         "scope": "user"
       },
       {
-        "title": "Problem",
-        "description": "See details for problem of this idea",
-        "icon": "help",
-        "color": "default",
-        "scope": "user"
-      },
-      {
-        "title": "Owner",
-        "description": "See details for owner of this idea",
+        "title": "Questioner",
+        "description": "See details for questioner of this problem",
         "icon": "person",
         "color": "default",
         "scope": "user"
       },
       {
         "title": "Share",
-        "description": "Share this idea with other media",
+        "description": "Share this problem with other media",
         "icon": "share",
         "color": "default",
         "scope": "user"
       },
       {
         "title": "Report",
-        "description": "Report this idea for bad content",
+        "description": "Report this problem for bad content",
         "icon": "report_problem",
         "color": "default",
         "scope": "user"
       },
       {
         "title": "Edit",
-        "description": "Edit this idea",
+        "description": "Edit this problem",
         "icon": "edit",
         "color": "default",
         "scope": "owner"
       },
       {
         "title": "Remove",
-        "description": "Remove this idea permanently",
+        "description": "Remove this problem permanently",
         "icon": "delete_forever",
         "color": "warn",
         "scope": "owner"
       },
       {
         "title": "Ban",
-        "description": "Ban this idea for inappropriate content",
+        "description": "Ban this problem for inappropriate content",
         "icon": "block",
         "color": "warn",
         "scope": "administrator"

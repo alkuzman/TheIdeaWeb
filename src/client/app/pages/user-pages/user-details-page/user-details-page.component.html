@@ -5,18 +5,29 @@
   </md-tab>
   <md-tab label="Ideas">
     <ideal-idea-list-loader [ownerId]="user.id"
-                     (ideaOwnerSelected)="goToUserDetails($event)"
-                     (ideaProblemSelected)="goToProblemDetails($event)"
-                     (ideaSelected)="goToIdeaDetails($event)"
-                     (announce)="announce($event)"
-                     (sendTo)="sendTo($event)"
-                     (share)="share($event)"
-                     (edit)="edit($event)"
-                     (report)="report($event)"
-                     (ban)="ban($event)"></ideal-idea-list-loader>
+                            (ideaOwnerSelected)="onUserSelected($event)"
+                            (ideaProblemSelected)="onProblemSelected($event)"
+                            (ideaSelected)="goToIdeaDetails($event)"
+                            (announce)="announce($event)"
+                            (sendTo)="sendTo($event)"
+                            (share)="share($event)"
+                            (edit)="edit($event)"
+                            (report)="report($event)"
+                            (ban)="ban($event)"></ideal-idea-list-loader>
   </md-tab>
   <md-tab label="Problems">
-    <ideal-problem-list-loader [questionerId]="user.id"></ideal-problem-list-loader>
+    <ideal-problem-list-loader [questionerId]="user.id"
+                               (problemSelected)="onProblemSelected($event)"
+                               (questionerOrganizationSelected)="onOrganizationSelected($event)"
+                               (questionerUserSelected)="onUserSelected($event)"
+                               (openContent)="onProblemSelected(problem)"
+                               (share)="onShare($event)"
+                               (report)="onReport($event)"
+                               (ban)="onBan($event)"
+                               (announce)="onAnnounce($event)"
+                               (remove)="onRemove($event)"
+                               (sendTo)="onSendTo($event)"
+                               (edit)="onEdit($event)"></ideal-problem-list-loader>
   </md-tab>
   <md-tab label="Organizations">
 

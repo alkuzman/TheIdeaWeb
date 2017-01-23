@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
 import {Actions} from "../../../core/helper/actions/actions";
 import {Idea} from "../../model/ideas/idea";
 import {UserService} from "../user/user.service";

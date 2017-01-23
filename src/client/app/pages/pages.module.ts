@@ -6,14 +6,14 @@
 import {NgModule} from "@angular/core";
 import {PagesComponent} from "./pages.component";
 import {SharedModule} from "../shared/shared.module";
-import {PagesRoutingModule} from "./pages-routing.module";
 import {UserModule} from "../domain/user/user.module";
 import {HomeModule} from "./home/home.module";
 import {NavbarComponent} from "./components/navbar.component";
 import {SearchComponent} from "./components/search/search.component";
+import {ContentComponent} from "./content.component";
 @NgModule({
   imports: [SharedModule, UserModule, HomeModule],
-  declarations: [SearchComponent, NavbarComponent, PagesComponent],
+  declarations: [SearchComponent, NavbarComponent, ContentComponent, PagesComponent],
   exports: [PagesComponent],
   providers: []
 })

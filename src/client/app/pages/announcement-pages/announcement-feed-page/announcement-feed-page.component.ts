@@ -6,8 +6,11 @@ import {ActivatedRoute} from "@angular/router";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {ScrollService} from "../../../core/scrolling/scroll-service";
 import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
-import {Package} from "../../../domain/model/sharing/package";
 import {RedirectService} from "../../../core/navigation/redirect.service";
+import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Idea} from "../../../domain/model/ideas/idea";
+import {Problem} from "../../../domain/model/ideas/problem";
+import {User} from "../../../domain/model/authentication/user";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-feed-page",
@@ -45,7 +48,12 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   loadData(): void {
     this.page = 0;
     let offset = this.page * this.pageSize;
-    this.announcementService.getAnnouncementList({type: this.type, query: this.query, offset: offset.toString(), limit: this.pageSize.toString()})
+    this.announcementService.getAnnouncementList({
+      type: this.type,
+      query: this.query,
+      offset: offset.toString(),
+      limit: this.pageSize.toString()
+    })
       .subscribe((announcementList: Announcement[]) => {
         this.announcementList = announcementList;
         this.page += 1;
@@ -62,7 +70,12 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
     if (this.noMoreResults)
       return;
     let offset = this.page * this.pageSize;
-    this.announcementService.getAnnouncementList({type: this.type, query: this.query, offset: offset.toString(), limit: this.pageSize.toString()})
+    this.announcementService.getAnnouncementList({
+      type: this.type,
+      query: this.query,
+      offset: offset.toString(),
+      limit: this.pageSize.toString()
+    })
       .subscribe((announcementList: Announcement[]) => {
         this.page += 1;
         this.announcementList = this.announcementList.concat(announcementList);
@@ -71,7 +84,47 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  getContent(announcement: Announcement) {
-    this.redirectService.getAnnouncemntDetails(announcement.id)
+  onAnnouncementSelected(announcement: Announcement): void {
+    this.redirectService.getAnnouncemntDetails(announcement.id);
+  }
+
+  onIdeaSelected(idea: Idea) {
+    this.redirectService.getIdeaDetails(idea.id);
+  }
+
+  onIdeaEdit(idea: Idea) {
+
+  }
+
+  onProblemSelected(problem: Problem) {
+    this.redirectService.getProblemDetails(problem.id);
+  }
+
+  onUserSelected(user: User) {
+    this.redirectService.getUserDetails(user.id);
+  }
+
+  onAnnounce(sharable: Sharable): void {
+    this.redirectService.newAnnouncement(sharable);
+  }
+
+  onBan(sharable: Sharable): void {
+
+  }
+
+  onReport(sharable: Sharable): void {
+  }
+
+  onRemove(sharable: Sharable): void {
+  }
+
+  onShare(sharable: Sharable): void {
+  }
+
+  onSendTo(sharable: Sharable): void {
+  }
+
+  getContent(announcement: Announcement): void {
+    this.redirectService.getAnnouncemntDetails(announcement.id);
   }
 }

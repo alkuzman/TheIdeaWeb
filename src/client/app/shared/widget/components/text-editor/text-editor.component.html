@@ -2,7 +2,7 @@
   <ideal-text-editor-toolbar></ideal-text-editor-toolbar>
   <md-card-content>
     <md-input-container class="ideal-text-editor-body">
-    <textarea (blur)="getTextPopularityCoefficient()" md-autosize minRows="4" md-input [placeholder]="title"
+    <textarea (blur)="processText()" md-autosize minRows="4" md-input [placeholder]="title"
               [(ngModel)]="value"
               (ngModelChange)="onChange($event)">
     </textarea>
@@ -17,6 +17,10 @@
       </div>
       <div fxFlex="50px">
       </div>
+    </div>
+    <div>
+      <span *ngFor="let doc of docs"><a [href]="'https://en.wikipedia.org/wiki/' + getWikiName(doc.title)"
+                                        target="_blank">{{doc.title}}</a>,&nbsp;</span>
     </div>
   </md-card-content>
 </md-card>

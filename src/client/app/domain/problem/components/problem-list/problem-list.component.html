@@ -1,3 +1,15 @@
 <div *ngFor="let problem of problems; let i = index;" [@loading]="status[i]" class="margin">
-  <ideal-problem-card [problem]="problem" (click)="onProblemSelected(problem)"></ideal-problem-card>
+  <ideal-problem-card
+    [problem]="problem"
+    (problemSelected)="onProblemSelected($event)"
+    (questionerOrganizationSelected)="onQuestionerOrganizationSelected($event)"
+    (questionerUserSelected)="onQuestionerUserSelected($event)"
+    (openContent)="onProblemSelected(problem)"
+    (share)="onShare($event)"
+    (report)="onReport($event)"
+    (ban)="onBan($event)"
+    (announce)="onAnnounce($event)"
+    (remove)="onRemove($event)"
+    (sendTo)="onSendTo($event)"
+    (edit)="onEdit($event)"></ideal-problem-card>
 </div>

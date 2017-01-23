@@ -7,8 +7,9 @@ import {SearchableListLoaderComponent} from "./components/searchable-list/search
 import {SearchableListComponent} from "./components/searchable-list/searchable-list.component";
 import {SearchableCardComponent} from "./components/searchable-card/searchable-card.component";
 import {AnnouncementModule} from "../announcement/announcement.module";
+import {UserModule} from "../user/user.module";
 @NgModule({
-  imports: [SharedModule, AnnouncementModule],
+  imports: [SharedModule, AnnouncementModule, UserModule],
   declarations: [SearchableCardComponent, SearchableListComponent, SearchableListLoaderComponent],
   exports: [SearchableCardComponent, SearchableListComponent, SearchableListLoaderComponent]
 })
