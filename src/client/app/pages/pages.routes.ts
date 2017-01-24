@@ -44,6 +44,10 @@ export const PagesRoutes: Routes = [
       {
         path: 'search',
         loadChildren: 'app/pages/search-pages/search-pages.module#SearchPagesModule'
+      },
+      {
+        path: 'notices',
+        loadChildren: 'app/pages/notice-pages/notice-pages.module#NoticePagesModule'
       }]
   }
 ];
