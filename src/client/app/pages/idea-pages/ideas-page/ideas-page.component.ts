@@ -6,6 +6,7 @@ import {Idea} from "../../../domain/model/ideas/idea";
 import {Router, ActivatedRoute} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
 import {Problem} from "../../../domain/model/ideas/problem";
+import {RedirectService} from "../../../core/navigation/redirect.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-ideas-page",
@@ -14,7 +15,7 @@ import {Problem} from "../../../domain/model/ideas/problem";
 export class IdeasPageComponent implements OnInit {
   private ideas: Idea[];
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private redirectService: RedirectService) {
 
   }
 
@@ -25,14 +26,41 @@ export class IdeasPageComponent implements OnInit {
   }
 
   goToDetails(idea: Idea) {
-    this.router.navigate([idea.id], {relativeTo: this.route})
+    this.redirectService.getIdeaDetails(idea.id);
   }
 
   goToUserDetails(user: User) {
-    this.router.navigate(["/users", user.id]);
+    this.redirectService.getUserDetails(user.id)
   }
 
   goToProblemDetails(problem: Problem) {
-    this.router.navigate(["/problems", problem.id]);
+    this.redirectService.getProblemDetails(problem.id);
+  }
+
+  onAnnounce(idea: Idea) {
+    this.redirectService.newAnnouncement(idea);
+  }
+
+  onEdit(idea: Idea) {
+
+  }
+
+  onReport(idea: Idea) {
+
+  }
+
+  onBan(idea: Idea) {
+  }
+
+  onShare(idea: Idea) {
+
+  }
+
+  onSendTo(idea: Idea) {
+    this.redirectService.sendTo(idea);
+  }
+
+  onRemove(idea: Idea) {
+
   }
 }

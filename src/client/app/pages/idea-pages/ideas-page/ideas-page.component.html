@@ -1,1 +1,12 @@
-<ideal-idea-list [ideas]="ideas" (ideaSelected)="goToDetails($event)" (ideaOwnerSelected)="goToUserDetails($event)" (ideaProblemSelected)="goToProblemDetails($event)"></ideal-idea-list>
+<ideal-idea-list
+  [ideas]="ideas"
+  (ideaSelected)="goToDetails($event)"
+  (ideaOwnerSelected)="goToUserDetails($event)"
+  (ideaProblemSelected)="goToProblemDetails($event)"
+  (sendTo)="onSendTo($event)"
+  (remove)="onRemove($event)"
+  (announce)="onAnnounce($event)"
+  (ban)="onBan($event)"
+  (edit)="onEdit($event)"
+  (report)="onReport($event)"
+  (share)="onShare($event)"></ideal-idea-list>

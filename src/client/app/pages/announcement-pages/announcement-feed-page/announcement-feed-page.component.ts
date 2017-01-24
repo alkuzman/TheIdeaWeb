@@ -122,6 +122,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   }
 
   onSendTo(sharable: Sharable): void {
+    this.redirectService.sendTo(sharable);
   }
 
   getContent(announcement: Announcement): void {

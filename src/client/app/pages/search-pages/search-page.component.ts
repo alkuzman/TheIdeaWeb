@@ -69,5 +69,7 @@ export class SearchPageComponent implements OnInit{
   }
 
   onSendTo(sharable: Sharable): void {
+    this.redirectService.sendTo(sharable);
+
   }
 }

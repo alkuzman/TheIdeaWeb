@@ -11,8 +11,8 @@
     (edit)="onIdeaEdit($event)"
     (remove)="onRemove($event)"
     (report)="onReport($event)"
-    (sendTo)="sendTo($event)"
-    (share)="share($event)"></ideal-idea-card>
+    (sendTo)="onSendTo($event)"
+    (share)="onShare($event)"></ideal-idea-card>
   <ideal-problem-card
     *ngSwitchCase="problemType" [problem]="sharable"
     (openContent)="getContent()"

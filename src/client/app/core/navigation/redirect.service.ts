@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Sharable} from "../../domain/model/sharing/sharable";
+import {Organization} from "../../domain/model/authentication/organization";
 /**
  * Created by AKuzmanoski on 18/01/2017.
  */
@@ -35,5 +36,13 @@ export class RedirectService {
 
   newAnnouncement(sharable: Sharable) {
     this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: sharable.id}});
+  }
+
+  sendTo(sharable: Sharable) {
+    console.log("Send To");
+  }
+
+  getOrganizationDetails(organization: Organization) {
+
   }
 }

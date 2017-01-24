@@ -37,7 +37,7 @@ export class UserDetailsPageComponent implements OnInit {
   }
 
   sendTo(sharable: Sharable) {
-
+    this.redirectService.sendTo(sharable);
   }
 
   share(sharable: Sharable) {

@@ -9,8 +9,8 @@
                        (edit)="onIdeaEdit($event)"
                        (remove)="onRemove($event)"
                        (report)="onReport($event)"
-                       (sendTo)="sendTo($event)"
-                       (share)="share($event)"></ideal-searchable-list>
+                       (sendTo)="onSendTo($event)"
+                       (share)="onShare($event)"></ideal-searchable-list>
 <div *ngIf="noMoreResults" class="padding" style="text-align: center">
   <button md-raised-button disabled>No More Results</button>
 </div>

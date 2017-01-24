@@ -1,1 +1,12 @@
-<ideal-problem-list [problems]="problems" (problemSelected)="openProblemDetails($event)"></ideal-problem-list>
+<ideal-problem-list
+  [problems]="problems"
+  (problemSelected)="openProblemDetails($event)"
+  (share)="onShare($event)"
+  (report)="onReport($event)"
+  (edit)="onEdit($event)"
+  (ban)="onBan($event)"
+  (announce)="onAnnounce($event)"
+  (questionerOrganizationSelected)="onOrganizationSelected($event)"
+  (questionerUserSelected)="onUserSelected($event)"
+  (remove)="onRemove($event)"
+  (sendTo)="onSendTo($event)"></ideal-problem-list>

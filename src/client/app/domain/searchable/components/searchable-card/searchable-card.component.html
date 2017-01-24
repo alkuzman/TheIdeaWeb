@@ -12,8 +12,8 @@
     (edit)="onIdeaEdit($event)"
     (remove)="onRemove($event)"
     (report)="onReport($event)"
-    (sendTo)="sendTo($event)"
-    (share)="share($event)"></ideal-announcement-card>
+    (sendTo)="onSendTo($event)"
+    (share)="onShare($event)"></ideal-announcement-card>
   <div *ngSwitchCase="'User'">
     <ideal-user-card
       [user]="searchable"
