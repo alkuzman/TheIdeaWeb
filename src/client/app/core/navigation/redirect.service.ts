@@ -39,7 +39,7 @@ export class RedirectService {
   }
 
   sendTo(sharable: Sharable) {
-    console.log("Send To");
+    this.router.navigate(["/notices", "new"], {queryParams: {sharableId: sharable.id}});
   }
 
   getOrganizationDetails(organization: Organization) {

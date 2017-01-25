@@ -2,12 +2,11 @@
  * Created by AKuzmanoski on 04/01/2017.
  */
 import {Injectable} from "@angular/core";
-import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
+import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
-import {SharableService} from "../../../domain/services/sharable/sharable.service";
-import {Sharable} from "../../../domain/model/sharing/sharable";
-import {Response} from "@angular/http";
-import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
+import {SharableService} from "../domain/services/sharable/sharable.service";
+import {Sharable} from "../domain/model/sharing/sharable";
+import {ErrorHandlingService} from "../core/error-handling/error-handling.service";
 @Injectable()
 export class SharableResolverService implements Resolve<Sharable> {
 

@@ -6,6 +6,12 @@ import {NoticePagesComponent} from "./notice-pages.component";
 export const NoticePagesRoutes: Routes = [
   {
     path: '',
-    component: NoticePagesComponent
+    component: NoticePagesComponent,
+    children: [
+      {
+        path: 'new',
+        loadChildren: 'app/pages/notice-pages/new-notice-page/new-notice-page.module#NewNoticePageModule'
+      }
+    ]
   }
 ];
