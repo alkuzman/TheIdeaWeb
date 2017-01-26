@@ -9,13 +9,14 @@ import {UserService} from "./user/user.service";
 import {UserObjectService} from "./user/user-object.service";
 import {ProblemActionsService} from "./problem/problem-actions.service";
 import {SearchableService} from "./searchable/searchable.searvice";
+import {AgentService} from "./agent/agent.service";
+import {NoticeService} from "./notice/notice.service";
 /**
  * Created by AKuzmanoski on 14/01/2017.
  */
 @NgModule({
   providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, ProblemActionsService,
-    SharableService, SolutionService, UserService, UserObjectService, SearchableService]
+    SharableService, SolutionService, UserService, UserObjectService, SearchableService, AgentService, NoticeService]
 })
 export class DomainServicesModule {
-
 }

@@ -16,6 +16,9 @@ export class User extends Agent implements Person {
     super();
   }
 
+  public get fullName(): string {
+    return this.firstName + " " + this.lastName;
+  }
 
   toString(): string {
     return "Email: " + this.email + "\n" +

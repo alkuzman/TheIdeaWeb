@@ -21,10 +21,11 @@ import {UserDetailsComponent} from "./component/user-details/user-details/user-d
 import {UserDetailsLoaderComponent} from "./component/user-details/user-details-loader/user-details-loader.component";
 import {UserCoverPicturePipe} from "./pipes/user-cover-picture.pipe";
 import {UserCardComponent} from "./component/user-card/user-card.component";
+import {UserListItemComponent} from "./component/user-list-item/user-list-item.component";
 @NgModule({
   imports: [SharedModule],
-  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCoverPicturePipe, UserCardComponent],
-  exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCardComponent],
+  declarations: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCoverPicturePipe, UserCardComponent, UserListItemComponent],
+  exports: [UserNamedAvatarComponent, LoadUserNamedAvatarComponent, RegisterFieldsComponent, RegisterFormComponent, NewRegistrationFormComponent, AuthenticatedUserNamedAvatarComponent, UserProfilePicturePipe, UserNamePipe, RegisterFormComponent, UserEmailFieldsComponent, UserEmailFormComponent, GetUserEmailFormComponent, CheckUserPasswordFormComponent, UserPasswordFormComponent, UserPasswordFieldsComponent, UserDetailsComponent, UserDetailsLoaderComponent, UserCardComponent, UserListItemComponent],
 })
 export class UserModule {
 

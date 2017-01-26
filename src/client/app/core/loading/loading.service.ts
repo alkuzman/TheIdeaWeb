@@ -1,11 +1,12 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {LoadingState} from "./loading-state";
 import {Observable} from "rxjs";
+import {TimerObservable} from "rxjs/observable/TimerObservable";
 /**
  * Created by AKuzmanoski on 14/01/2017.
  */
 @Injectable()
-export class LoadingService{
+export class LoadingService {
   private _loadingState: LoadingState;
   private _loadingStateChange: EventEmitter<LoadingState> = new EventEmitter<LoadingState>();
   private numOfLoadings: number = 0;
@@ -13,7 +14,17 @@ export class LoadingService{
 
   private set loadingState(loadingState: LoadingState) {
     this._loadingState = loadingState;
-    this._loadingStateChange.emit(this._loadingState);
+    if (loadingState == null)
+      this._loadingStateChange.emit(this._loadingState);
+    else {
+      let timer = TimerObservable.create(100, 100);
+      let subscription = timer.subscribe(t => {
+        if (this._loadingState != null) {
+          this._loadingStateChange.emit(this._loadingState);
+          subscription.unsubscribe();
+        }
+      });
+    }
   }
 
   public load(loadingState: LoadingState = this.indefiniteLoading) {

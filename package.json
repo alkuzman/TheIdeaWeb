@@ -134,7 +134,7 @@
     "@angular/flex-layout": "*",
     "@angular/forms": "*",
     "@angular/http": "*",
-    "@angular/material": "*",
+    "@angular/material": "git+https://github.com/angular/material2-builds.git",
     "@angular/platform-browser": "*",
     "@angular/platform-browser-dynamic": "^*",
     "@angular/router": "*",

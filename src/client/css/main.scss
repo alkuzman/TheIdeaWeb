@@ -12,6 +12,16 @@ body {
   flex: 1 1 auto;
 }
 
+.chip-button {
+  margin-top: -8px !important;
+  margin-right: -12px !important;
+  margin-bottom: -8px !important;
+}
+
+.md-autocomplete-panel {
+  max-width: none !important;
+}
+
 md-card-header, .md-card-header-text {
   height: auto !important;
 }

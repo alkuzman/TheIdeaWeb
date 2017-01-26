@@ -5,7 +5,7 @@ import {Component, EventEmitter, Output, Input, OnInit} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
 import {Problem} from "../../../../model/ideas/problem";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {MdSnackBar} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 
 @Component({
   moduleId: module.id,
@@ -40,7 +40,7 @@ export class IdeaFormComponent implements OnInit {
     if (this.form.valid) {
       this.ideaReady.emit(this.idea);
     } else {
-      this.snackBar.open("Cannot create idea. Validation errors", undefined, {duration: 3000});
+      this.snackBar.open("Cannot create idea. Validation errors", undefined, <MdSnackBarConfig>{duration: 3000});
     }
   }
 

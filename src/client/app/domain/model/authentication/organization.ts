@@ -5,4 +5,7 @@ import {Agent} from "./agent";
 
 export class Organization extends Agent {
 
+  public get fullName(): string {
+    return this.name;
+  }
 }
