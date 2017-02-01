@@ -1,0 +1,48 @@
+[
+  {
+    "icon": "home",
+    "title": "Home",
+    "subtitle": "Go to the home page",
+    "url": "/home",
+    "theme": "default-theme",
+    "color": "#03A9F4"
+  },
+  {
+    "icon": "list",
+    "title": "Feed",
+    "subtitle": "Go to announcement feed",
+    "url": "/announcements/feed",
+    "theme": "default-theme",
+    "color": "#03A9F4"
+  },
+  {
+    "icon": "lightbulb_outline",
+    "title": "Ideas",
+    "subtitle": "Search for public ideas",
+    "url": "/announcements/feed/ideas",
+    "params": {
+      "type": "Idea"
+    },
+    "theme": "idea-theme",
+    "color": "#FF5722"
+  },
+  {
+    "icon": "help_outline",
+    "title": "Problems",
+    "subtitle": "",
+    "url": "/announcements/feed/problems",
+    "params": {
+      "type": "Problem"
+    },
+    "theme": "problem-theme",
+    "color": "#9C27B0"
+  },
+  {
+    "icon": "info_outline",
+    "title": "About",
+    "subtitle": "Read all about iDeal-Hub",
+    "url": "/about",
+    "theme": "default-theme",
+    "color": "#03A9F4"
+  }
+]

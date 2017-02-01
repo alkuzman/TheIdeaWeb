@@ -1,0 +1,18 @@
+[
+  {
+    "icon": "notifications_none",
+    "title": "Notifications",
+    "subtitle": "",
+    "url": "/notices",
+    "theme": "notification-theme",
+    "color": "#607D8B"
+  },
+  {
+    "icon": "arrow_back",
+    "title": "Logout",
+    "subtitle": "",
+    "url": "/auth/logout",
+    "theme": "default-theme",
+    "color": "#03A9F4"
+  }
+]

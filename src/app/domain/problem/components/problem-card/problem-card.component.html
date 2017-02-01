@@ -1,0 +1,49 @@
+<md-card>
+  <md-card-header>
+    <img (click)="onQuestionerSelected()" [src]="problem?.questioner | idealUserProfilePicture" md-card-avatar/>
+    <md-card-title>
+      <strong idealColor="accent" (click)="onQuestionerUserSelected()">
+        {{problem?.questioner?.firstName}} {{problem?.questioner?.lastName}}
+      </strong>
+      <div *ngIf="problem?.questioner?.type == 'Member'">
+        from
+        <strong idealColor="accent" (click)="onQuestionerOrganizationSelected()">
+          {{problem?.questioner?.organization.name}}
+        </strong>
+      </div>
+      announced problem
+    </md-card-title>
+    <md-card-subtitle>{{problem?.creationDate | amTimeAgo}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content (click)="getContent()">
+    <md-card-title-group>
+      <md-card-title>{{problem?.title}}</md-card-title>
+      <md-card-subtitle>{{problem?.text | slice:0:180}}</md-card-subtitle>
+    </md-card-title-group>
+  </md-card-content>
+  <md-card-actions>
+    <div fxLayout="row">
+      <div fxFlex="none">
+        <button md-icon-button *ngFor="let action of actions?.mainActions" (click)="onAction(action)"
+                [idealColor]="action.color"
+                [mdTooltip]="action.title">
+          <md-icon class="icon-20">{{action.icon}}</md-icon>
+        </button>
+      </div>
+      <div fxFlex></div>
+      <div fxFlex="none">
+        <button [mdMenuTriggerFor]="appMenu" md-icon-button>
+          <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #appMenu="mdMenu">
+          <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
+                  [idealColor]="action.color"
+                  [mdTooltip]="action.description" mdTooltipPosition="left">
+            <md-icon class="icon-20">{{action.icon}}</md-icon>
+            <span>{{action.title}}</span>
+          </button>
+        </md-menu>
+      </div>
+    </div>
+  </md-card-actions>
+</md-card>

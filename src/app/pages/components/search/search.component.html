@@ -1,0 +1,8 @@
+<form (ngSubmit)="submit()" fxLayout="row" fxLayout="row">
+  <md-input-container fxFlex dividerColor="accent">
+    <input md-input mdInput name="value" [(ngModel)]="value" #search type="text"/>
+  </md-input-container>
+  <button md-icon-button type="button" style="margin-top: 7px" (click)="clear()">
+    <md-icon class="md-toolbar-icon">clear</md-icon>
+  </button>
+</form>

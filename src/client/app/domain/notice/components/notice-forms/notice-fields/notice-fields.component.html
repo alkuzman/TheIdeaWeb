@@ -1,6 +1,0 @@
-<div [formGroup]="form">
-  <ideal-agent-selector (agentAdded)="onRecipientAdded($event)" (agentRemoved)="onRecipientRemoved($event)"
-                        searchPlaceholder="Recipients" style="width: 100%"></ideal-agent-selector>
-  <ideal-package-fields [submitted]="submitted" [package]="notice?.pckg" [form]="packageFields"></ideal-package-fields>
-  {{notice | json}}
-</div>

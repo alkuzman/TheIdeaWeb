@@ -1,0 +1,7 @@
+<label>
+  <strong>{{label}}</strong>
+</label>
+&nbsp;&nbsp;
+<md-input-container>
+  <input md-input mdInput [name]="name" [placeholder]="description" [(ngModel)]="value" (ngModelChange)="onChange()" required/>
+</md-input-container>

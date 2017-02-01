@@ -1,0 +1,10 @@
+[
+  {
+    "icon": "arrow_forward",
+    "title": "Login",
+    "subtitle": "",
+    "url": "/auth",
+    "theme": "default-theme",
+    "color": "#03A9F4"
+  }
+]
