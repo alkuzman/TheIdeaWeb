@@ -4,7 +4,6 @@ import {JwtAuthenticationService} from "./authentication/jwt/jwt-authentication.
 import {JwtHttpService} from "./authentication/jwt/jwt-http.service";
 import {JwtSecurityContext} from "./authentication/jwt/jwt-security-context.service";
 import {JwtRefreshAccessTokenService} from "./authentication/jwt/jwt-refresh-access-token.service";
-import {XHRBackend, RequestOptions} from "@angular/http";
 import {NotAuthenticatedGuard} from "./guards/not-authenticated.guard";
 import {AuthenticatedGuard} from "./guards/authenticated.guard";
 import {ThemingService} from "./theming/theming.service";
@@ -18,15 +17,21 @@ import {RedirectService} from "./navigation/redirect.service";
 import {ConfigService} from "./config/config.service";
 import {STOMPService} from "./socket/stopm.service";
 import {SocketService} from "./socket/socket.service";
-import {AuthHttp} from "angular2-jwt";
+import {KeysGenerationService} from "./security-protocols/keys/keys-generation.service";
+import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
+import {CertificateService} from "./security-protocols/services/certificate.service";
+import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
 
 
 @NgModule({
   imports: [SharedModule],
   declarations: [],
   exports: [],
-  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService, NavigationService, RedirectService,
-    NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService, JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService, SocketService]
+  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
+    NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
+    JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
+    SocketService, KeysGenerationService, CertificateRequestGenerationService, CertificateService,
+    CryptographicOperations]
 })
 export class CoreModule {
 }

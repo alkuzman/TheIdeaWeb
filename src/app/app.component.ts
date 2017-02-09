@@ -1,7 +1,5 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {ThemingService} from "./core/theming/theming.service";
-import {Theme} from "./core/theming/theme";
-import {Http} from "@angular/http";
 
 /**
  * This class represents the main application components. Within the @Routes annotation is the configuration of the

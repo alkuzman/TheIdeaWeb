@@ -9,8 +9,10 @@ import {UserDetailsPageRoutingModule} from "./user-details-page-routing.module";
 import {IdeaModule} from "../../../domain/idea/idea.module";
 import {ProblemModule} from "../../../domain/problem/problem.module";
 import {AnnouncementModule} from "../../../domain/announcement/announcement.module";
+import {SecurityModule} from "../../../domain/security/security.module";
 @NgModule({
-  imports: [SharedModule, UserModule, IdeaModule, ProblemModule, AnnouncementModule, UserDetailsPageRoutingModule],
+  imports: [SharedModule, UserModule, IdeaModule, ProblemModule, AnnouncementModule, SecurityModule,
+    UserDetailsPageRoutingModule],
   declarations: [UserDetailsPageComponent]
 })
 export class UserDetailsPageModule {

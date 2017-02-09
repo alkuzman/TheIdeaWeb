@@ -67,4 +67,5 @@ export class UserDetailsPageComponent implements OnInit {
   onOrganizationSelected(organization: Organization) {
 
   }
+
 }
