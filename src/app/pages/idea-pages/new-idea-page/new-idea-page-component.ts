@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {Solution} from "../../../domain/model/ideas/solution";
-import {MdSnackBar} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {Router, ActivatedRoute} from "@angular/router";
 @Component({
   moduleId: module.id,
@@ -21,7 +21,7 @@ export class NewIdeaPageComponent implements OnInit {
   }
 
   onSolutionReady(solution: Solution) {
-    this.snackBar.open("Idea successfully created!", undefined, {duration: 2000});
+    this.snackBar.open("Idea successfully created!", undefined, <MdSnackBarConfig>{duration: 2000});
     this.router.navigate(["/ideas", solution.idea.id]);
   }
 }

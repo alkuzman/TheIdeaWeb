@@ -22,7 +22,8 @@
   <md-card-actions>
     <div fxLayout="row">
       <div fxFlex="none">
-        <button md-icon-button *ngFor="let action of actions?.mainActions" (click)="onAction(action)"
+        <button md-icon-button mdTooltipPosition="above" *ngFor="let action of actions?.mainActions"
+                (click)="onAction(action)"
                 [idealColor]="action.color"
                 [mdTooltip]="action.title">
           <md-icon class="icon-20">{{action.icon}}</md-icon>

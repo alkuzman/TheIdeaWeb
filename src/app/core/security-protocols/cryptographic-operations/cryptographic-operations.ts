@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {getCrypto, getAlgorithmParameters} from "pkijs/src/common";
+import * as CryptoJS from "crypto-js";
 
 /**
  * Created by Viki on 2/7/2017.
  */
-
 
 @Injectable()
 export class CryptographicOperations {
@@ -37,5 +37,9 @@ export class CryptographicOperations {
 
   public convertStringToUint8(text: string): Uint8Array {
     return new Uint8Array(atob(text).split("").map((character) => character.charCodeAt(0)));
+  }
+
+  public hash(value: string): string {
+    return CryptoJS.SHA256(value);
   }
 }

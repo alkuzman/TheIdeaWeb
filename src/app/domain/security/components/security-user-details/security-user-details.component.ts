@@ -45,7 +45,7 @@ export class SecurityUserDetailsComponent implements OnInit {
       publicKey = keyPair.publicKey;
       privateKey = keyPair.privateKey;
       let sequence: Promise<any> = this.certificateRequestGenerationService
-        .createPKCS10Internal(privateKey, publicKey);
+        .createPKCS10Internal(privateKey, publicKey, this.userService.getAuthenticatedUser());
       sequence
         .then((pkcs10Buffer) => this.certificateRequestGenerationService.parsePEM(pkcs10Buffer),
           error => Promise.reject(`Error parsing PKCS#10 into BER: ${error}`))

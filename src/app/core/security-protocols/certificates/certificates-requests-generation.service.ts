@@ -10,6 +10,9 @@ import * as asn1js from "asn1js";
 import {getCrypto} from "pkijs/src/common";
 import Extension from "pkijs/src/Extension";
 import Attribute from "pkijs/src/Attribute";
+import {User} from "../../../domain/model/authentication/user";
+import {CountryService} from "../../../domain/services/localization/country.service";
+import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
 
 
 @Injectable()
@@ -17,10 +20,10 @@ export class CertificateRequestGenerationService {
   private signAlg: string = "RSA-PSS";
   private hashAlg: string = "sha-256";
 
-  constructor() {
+  constructor(private countryService: CountryService, private cryptographicOperations: CryptographicOperations) {
   }
 
-  public createPKCS10Internal(privateKey: CryptoKey, publicKey: CryptoKey) {
+  public createPKCS10Internal(privateKey: CryptoKey, publicKey: CryptoKey, user: User) {
     //region Initial variables
     let sequence: Promise<any> = Promise.resolve();
 
@@ -36,13 +39,20 @@ export class CertificateRequestGenerationService {
 
     //region Put a static values
     pkcs10.version = 0;
-    pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
-      type: "2.5.4.6",
-      value: new asn1js.PrintableString({value: "RU"})
-    }));
+    //common name
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
       type: "2.5.4.3",
-      value: new asn1js.Utf8String({value: "Simple test (простой тест)"})
+      value: new asn1js.Utf8String({value: this.cryptographicOperations.hash(user.email)})
+    }));
+    //country code
+    pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
+      type: "2.5.4.6",
+      value: new asn1js.PrintableString({value: this.countryService.getMapCountriesToCodes()[user.country]})
+    }));
+    //state or province name
+    pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
+      type: "2.5.4.6",
+      value: new asn1js.PrintableString({value: user.country})
     }));
 
     pkcs10.attributes = [];
