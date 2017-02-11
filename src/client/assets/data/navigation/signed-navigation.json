@@ -1,8 +1,0 @@
-[
-  {
-    "icon": "arrow_back",
-    "title": "Logout",
-    "subtitle": "",
-    "url": "/auth/logout"
-  }
-]
