@@ -4,8 +4,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Sharable} from "../../model/sharing/sharable";
-import {Http, Response} from "@angular/http";
-import {LoadingService} from "../../../core/loading/loading.service";
+import {Response} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 @Injectable()
 export class SharableService {

@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {JwtHttpService} from "../authentication/jwt/jwt-http.service";
 
@@ -20,12 +19,13 @@ export class ConfigService {
   //       to allow retrieval of per-user configs
   //       or from a specific URL.
   /** Constructor */
-  constructor(private _http: JwtHttpService) { }
+  constructor(private _http: JwtHttpService) {
+  }
 
 
   /** Make an http request for a config file, and
-    * return a Promise for its resolution.
-    */
+   * return a Promise for its resolution.
+   */
   public getConfig(path): Observable<any> {
     return this._http.get(path)
       .map(res => res.json());

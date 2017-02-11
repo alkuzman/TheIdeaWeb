@@ -2,11 +2,9 @@
  * Created by AKuzmanoski on 26/10/2016.
  */
 import {Injectable} from "@angular/core";
-import {Response, Headers, Http} from "@angular/http";
+import {Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {Solution} from "../../model/ideas/solution";
-import {AuthHttp} from "angular2-jwt";
-import {LoadingService} from "../../../core/loading/loading.service";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 
 @Injectable()

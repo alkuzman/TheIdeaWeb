@@ -5,12 +5,14 @@
 
   "user": "",
   "pass": "",
-
-  "subscribe": ["/user/topic/notices"],
-  "publish": ["/user/topic/notices"],
+  "subscribe": [
+    "/user/topic/notices"
+  ],
+  "publish": [
+    "/user/topic/notices"
+  ],
 
   "heartbeat_in": 0,
   "heartbeat_out": 20000,
-
   "debug": true
 }

@@ -13,7 +13,7 @@ import {ThemingService} from "./core/theming/theming.service";
     'app.component.css'
   ]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   @HostBinding("class") themeClass = "default-theme";
 
   constructor(private themingService: ThemingService) {
@@ -22,7 +22,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.themingService.themeObservable.subscribe((theme: string) => {
-      this.themeClass = theme;});
+      this.themeClass = theme;
+    });
   }
 
 }

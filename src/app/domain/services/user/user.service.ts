@@ -1,12 +1,11 @@
 import {Injectable} from "@angular/core";
-import {Http, Response, Headers, URLSearchParams} from "@angular/http";
+import {Response, Headers, URLSearchParams} from "@angular/http";
 import {User} from "../../model/authentication/user";
 import {Credentials} from "../../user/helper/Credentials";
 import {JwtAuthenticationService} from "../../../core/authentication/jwt/jwt-authentication.service";
 import {JwtSecurityContext} from "../../../core/authentication/jwt/jwt-security-context.service";
 import {UserObjectService} from "./user-object.service";
 import {Observable} from "rxjs";
-import {LoadingService} from "../../../core/loading/loading.service";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.

@@ -18,7 +18,7 @@ export class AuthenticatedGuard implements CanActivate {
       return true;
     } else {
       this.snackBar.open("Login to see this page", undefined, <MdSnackBarConfig>{duration: 3000});
-      this.router.navigate(["auth"], { queryParams: { returnUrl: state.url }});
+      this.router.navigate(["auth"], {queryParams: {returnUrl: state.url}});
       return false;
     }
   }

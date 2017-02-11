@@ -1,13 +1,9 @@
 /**
  * Created by AKuzmanoski on 19/01/2017.
  */
-import {Component, EventEmitter, Output, ViewChild, OnInit, Input} from "@angular/core";
+import {Component, EventEmitter, Output, OnInit, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {NavbarState} from "./navbar-state";
-import {FormControl} from "@angular/forms";
-import {SocketService} from "../../core/socket/socket.service";
-import {Message} from "stompjs";
-import {Notice} from "../../domain/model/sharing/notice";
 
 @Component({
   moduleId: module.id,
@@ -16,7 +12,7 @@ import {Notice} from "../../domain/model/sharing/notice";
   styleUrls: ["navbar.component.scss"]
 
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   @Output("sideNavToggle") sideNavToggle: EventEmitter<void> = new EventEmitter<void>();
   private defaultState: NavbarState = NavbarState.DEFAULT;
   private searchState: NavbarState = NavbarState.SEARCH;
