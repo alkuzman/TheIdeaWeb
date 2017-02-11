@@ -8,7 +8,7 @@ import {ThemingService} from "../../core/theming/theming.service";
   selector: "ideal-notice-pages",
   template: `<router-outlet></router-outlet>`
 })
-export class NoticePagesComponent implements OnInit {
+export class NoticePagesComponent implements OnInit{
   constructor(private themingService: ThemingService) {
 
   }

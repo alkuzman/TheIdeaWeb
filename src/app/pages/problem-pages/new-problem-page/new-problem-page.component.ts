@@ -2,9 +2,10 @@
  * Created by AKuzmanoski on 19/10/2016.
  */
 import {Component} from "@angular/core";
+import {Logger} from "../../../logger.service";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {RedirectService} from "../../../core/navigation/redirect.service";
 
 @Component({

@@ -13,8 +13,7 @@
         <div>
           <md-icon [ngStyle]="{'color': navigationItem.color}" md-list-avatar>{{navigationItem.icon}}</md-icon>
           <span>{{navigationItem.title}}</span>
-          <span class="numberOfNotifications" [ngStyle]="{'color': navigationItem.color}"
-                *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0">({{numberOfNotifications}})</span>
+          <span class="numberOfNotifications" [ngStyle]="{'color': navigationItem.color}" *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0">({{numberOfNotifications}})</span>
         </div>
       </md-list-item>
     </md-nav-list>

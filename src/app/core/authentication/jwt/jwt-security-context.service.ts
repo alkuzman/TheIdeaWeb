@@ -1,7 +1,7 @@
-import {Injectable, OnInit} from "@angular/core";
+import {Injectable, EventEmitter, OnInit} from "@angular/core";
 import {SecurityContext} from "../security.context.service";
-import {Observable, Subject} from "rxjs";
-import {JwtHelper} from "angular2-jwt";
+import {Observable, Observer, Subject} from "rxjs";
+import {tokenNotExpired, JwtHelper} from "angular2-jwt";
 /**
  * Created by Viki on 11/18/2016.
  */
@@ -67,7 +67,7 @@ export class JwtSecurityContext extends SecurityContext implements OnInit {
 
   isAuthenticated(): boolean {
     let token = this.refreshToken;
-    if (this.isValid(token)) {
+    if(this.isValid(token)) {
       return true;
     } else {
       this.clearSecurityContext();

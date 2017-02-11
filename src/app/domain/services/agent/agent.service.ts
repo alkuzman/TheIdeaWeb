@@ -2,8 +2,9 @@
  * Created by Viki on 1/25/2017.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Response} from "@angular/http";
+import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
+import {LoadingService} from "../../../core/loading/loading.service";
 import {Agent} from "../../model/authentication/agent";
 import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 import {AgentFilterProperties} from "./agent-filter.properties";

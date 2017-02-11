@@ -2,12 +2,15 @@
  * Created by Viki on 1/26/2017.
  */
 import {Injectable} from "@angular/core";
+import {AuthHttp} from "angular2-jwt";
+import {LoadingService} from "../../../core/loading/loading.service";
 import {Observable} from "rxjs";
 import {Notice} from "../../model/sharing/notice";
 import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
-import {Response, Headers} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
 import {StandardFilterProperties} from "../standard-filter.properties";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {isNullOrUndefined} from "util";
 @Injectable()
 export class NoticeService {
   private searchableUrl = "/api/notices";
@@ -33,8 +36,8 @@ export class NoticeService {
   public getNoticeCount(): Observable<number> {
     let url = this.searchableUrl + "/count";
     return this.http.get(url, undefined, true)
-      .map((response: Response) => this.extractData(response))
-      .catch((error: any) => this.handleError(error));
+        .map((response: Response) => this.extractData(response))
+        .catch((error: any) => this.handleError(error));
   }
 
   private extractData(res: Response) {
