@@ -1,0 +1,39 @@
+<ideal-user-details [user]="user"></ideal-user-details>
+<md-tab-group>
+  <md-tab label="Feed">
+    <ideal-announcement-list-loader [ownerId]="user.id"></ideal-announcement-list-loader>
+  </md-tab>
+  <md-tab label="Ideas">
+    <ideal-idea-list-loader [ownerId]="user.id"
+                            (ideaOwnerSelected)="onUserSelected($event)"
+                            (ideaProblemSelected)="onProblemSelected($event)"
+                            (ideaSelected)="goToIdeaDetails($event)"
+                            (announce)="announce($event)"
+                            (sendTo)="sendTo($event)"
+                            (share)="share($event)"
+                            (edit)="edit($event)"
+                            (report)="report($event)"
+                            (ban)="ban($event)"></ideal-idea-list-loader>
+  </md-tab>
+  <md-tab label="Problems">
+    <ideal-problem-list-loader [questionerId]="user.id"
+                               (problemSelected)="onProblemSelected($event)"
+                               (questionerOrganizationSelected)="onOrganizationSelected($event)"
+                               (questionerUserSelected)="onUserSelected($event)"
+                               (openContent)="onProblemSelected(problem)"
+                               (share)="share($event)"
+                               (report)="report($event)"
+                               (ban)="ban($event)"
+                               (announce)="announce($event)"
+                               (remove)="remove($event)"
+                               (sendTo)="sendTo($event)"
+                               (edit)="edit($event)"></ideal-problem-list-loader>
+  </md-tab>
+  <md-tab label="Organizations">
+
+    <h1>Organizations</h1>
+  </md-tab>
+  <md-tab label="Security">
+    <ideal-security-user-details></ideal-security-user-details>
+  </md-tab>
+</md-tab-group>

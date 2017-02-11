@@ -1,0 +1,12 @@
+<form [formGroup]="form" novalidate (ngSubmit)="continue()">
+  <ideal-user-email-fields name="userEmailFields" [user]="user" [form]="fields"
+                           [submitted]="submitted"></ideal-user-email-fields>
+  <div class="padding-top">
+    <button class="full-width" md-raised-button color="primary" type="submit">
+      {{buttonText}}
+    </button>
+  </div>
+  <div class="margin-top" fxLayout="row" fxLayoutAlign="end">
+    <a idealColor="accent" routerLink="help">Help?</a>
+  </div>
+</form>

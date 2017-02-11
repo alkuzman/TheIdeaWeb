@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <div>
+      <ideal-announcement-fields [announcement]="announcement" [form]="fields"
+                                 [submitted]="submitted"></ideal-announcement-fields>
+    </div>
+    <div class="margin-top">
+      <button type="submit" md-raised-button color="accent">Announce</button>
+    </div>
+  </div>
+</form>

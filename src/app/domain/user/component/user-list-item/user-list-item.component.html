@@ -1,0 +1,9 @@
+<div class="padding-top padding-bottom" fxLayout="row">
+  <div class="padding-right">
+    <ideal-widget-avatar [src]="user?.profilePicture | idealAvatarDefaultPicture" [radius]="20"></ideal-widget-avatar>
+  </div>
+  <div fxFlex>
+    <span>{{user?.firstName}} {{user?.lastName}}</span> <br/>
+    <span class="user-list-item-subheader">{{user?.email}}</span>
+  </div>
+</div>

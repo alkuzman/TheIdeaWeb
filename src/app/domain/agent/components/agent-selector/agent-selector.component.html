@@ -1,0 +1,19 @@
+<ideal-agent-search
+  [clearAfterSelect]="true"
+  [searchPlaceholder]="searchPlaceholder"
+  (agentSelected)="onAgentSelected($event)">
+
+</ideal-agent-search>
+<md-chip-list>
+  <div *ngFor="let agent of agents; let i = index" [class]="getClass(agent)">
+    <md-chip
+      color="primary"
+      selected="true"
+      [md-tooltip]="agent.email">
+      {{getName(agent)}}
+      <button type="button" (click)="remove(agent, i)" md-icon-button class="chip-button">
+        <md-icon>clear</md-icon>
+      </button>
+    </md-chip>
+  </div>
+</md-chip-list>

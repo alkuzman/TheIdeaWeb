@@ -1,0 +1,90 @@
+{
+  "mainActions": [
+    {
+      "title": "Announce",
+      "description": "Announce that you have new idea. In this way everybody would have chance to see your idea",
+      "icon": "announcement",
+      "color": "accent",
+      "scope": "owner"
+    },
+    {
+      "title": "Send",
+      "description": "Send this idea to particular client",
+      "icon": "send",
+      "color": "accent",
+      "scope": "owner"
+    },
+    {
+      "title": "Upvote",
+      "description": "This idea shows research effort, it is useful, and might be interesting",
+      "icon": "thumb_up",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Downvote",
+      "description": "This idea does not show enough research effort, it is unclear or not useful",
+      "icon": "thumb_down",
+      "color": "default",
+      "scope": "user"
+    }
+  ],
+  "menuActions": [
+    {
+      "title": "Details",
+      "description": "Open details for this idea",
+      "icon": "details",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Problem",
+      "description": "See details for problem of this idea",
+      "icon": "help",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Owner",
+      "description": "See details for owner of this idea",
+      "icon": "person",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Share",
+      "description": "Share this idea with other media",
+      "icon": "share",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Report",
+      "description": "Report this idea for bad content",
+      "icon": "report_problem",
+      "color": "default",
+      "scope": "user"
+    },
+    {
+      "title": "Edit",
+      "description": "Edit this idea",
+      "icon": "edit",
+      "color": "default",
+      "scope": "owner"
+    },
+    {
+      "title": "Remove",
+      "description": "Remove this idea permanently",
+      "icon": "delete_forever",
+      "color": "warn",
+      "scope": "owner"
+    },
+    {
+      "title": "Ban",
+      "description": "Ban this idea for inappropriate content",
+      "icon": "block",
+      "color": "warn",
+      "scope": "administrator"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+<form [formGroup]="form" style="width: 100%;">
+  <md-input-container style="width: 100%;">
+    <input mdInput md-input autocomplete="off" [placeholder]="searchPlaceholder" [mdAutocomplete]="reactiveAuto"
+           [formControl]="searchField">
+  </md-input-container>
+  <md-autocomplete #reactiveAuto="mdAutocomplete" style="width: 100%; margin: 0px;">
+    <md-option (click)="onOptionSelected(agent)" *ngFor="let agent of agents" [value]="getValue(agent)"
+               style="width: 100%; height: auto !important;;">
+      <div>
+        <ideal-agent-list-item [agent]="agent"></ideal-agent-list-item>
+      </div>
+    </md-option>
+  </md-autocomplete>
+</form>

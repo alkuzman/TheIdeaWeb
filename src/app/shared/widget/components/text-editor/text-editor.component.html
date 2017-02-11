@@ -1,0 +1,26 @@
+<md-card class="ideal-text-editor-card">
+  <ideal-text-editor-toolbar></ideal-text-editor-toolbar>
+  <md-card-content>
+    <md-input-container class="ideal-text-editor-body">
+    <textarea (blur)="processText()" md-autosize minRows="4" md-input mdInput [placeholder]="title"
+              [(ngModel)]="value"
+              (ngModelChange)="onChange($event)">
+    </textarea>
+      <md-hint align="end">{{getNumberOfCharacters()}}</md-hint>
+    </md-input-container>
+    <div fxLayout="row">
+      <div fxFlex>
+        <md-progress-bar md-tooltip="How much this text matches other documents on wikipedia"
+                         [value]="textPopularityCoefficient"
+                         color="primary">
+        </md-progress-bar>
+      </div>
+      <div fxFlex="50px">
+      </div>
+    </div>
+    <div>
+      <span *ngFor="let doc of docs"><a [href]="'https://en.wikipedia.org/wiki/' + getWikiName(doc.title)"
+                                        target="_blank">{{doc.title}}</a>,&nbsp;</span>
+    </div>
+  </md-card-content>
+</md-card>

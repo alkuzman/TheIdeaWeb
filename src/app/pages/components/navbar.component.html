@@ -1,0 +1,25 @@
+<div [ngSwitch]="state">
+  <md-toolbar *ngSwitchCase="defaultState" class="md-elevation-z4" color="primary">
+    <button #sidenavbutton md-icon-button (click)="onSideNavToggle()">
+      <md-icon class="md-toolbar-icon">menu</md-icon>
+    </button>
+    <div *ngIf="numberOfNotifications > 0" class="notification">
+      <div>
+        {{numberOfNotifications}}
+      </div>
+    </div>
+    &nbsp;iDeal-Hub
+    <span class="flex"></span>
+
+    <button md-icon-button (click)="setSearchState()">
+      <md-icon class="md-toolbar-icon">search</md-icon>
+    </button>
+  </md-toolbar>
+  <md-toolbar *ngSwitchCase="searchState" class="md-elevation-z4" color="primary">
+    <button #sidenavbutton md-icon-button (click)="setDefaultState()">
+      <md-icon class="sd-toolbar-icon">arrow_back</md-icon>
+    </button>
+    <ideal-search class="flex" (searchSubmit)="onSearchSubmit($event)">
+    </ideal-search>
+  </md-toolbar>
+</div>

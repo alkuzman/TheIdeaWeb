@@ -1,0 +1,12 @@
+<form (ngSubmit)="certificationRequest()" [formGroup]="form">
+  <md-input-container>
+    <input mdInput type="text" formControlName="countryCode" md-maxlength="2" placeholder="Country Code"/>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="text" formControlName="stateOrProvinceName" placeholder="State or Province"/>
+  </md-input-container>
+  <button type="submit" md-raised-button color="primary" class="margin">
+    Certification Request Generation
+  </button>
+  {{form.value | json}}
+</form>

@@ -1,0 +1,12 @@
+<div [ngClass]="{right: isRight(), left: isLeft(), center: isCenter()}">
+  <div [ngSwitch]="type">
+    <ideal-widget-avatar-chooser *ngSwitchCase="chooserType" [radius]="radius"
+                                 [(ngModel)]="value"></ideal-widget-avatar-chooser>
+    <ideal-widget-avatar *ngSwitchCase="displayType" [radius]="radius" [src]="value"></ideal-widget-avatar>
+  </div>
+  <div>
+    <strong [ngStyle]="{fontSize: nameFontSize}">{{name | idealEmptyString}}</strong>
+    <br/>
+    <span [ngStyle]="{fontSize: descriptionFontSize}">{{description | idealEmptyString}}</span>
+  </div>
+</div>
