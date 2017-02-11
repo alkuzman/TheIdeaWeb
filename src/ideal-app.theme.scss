@@ -6,11 +6,24 @@
 // have to load a single css file for Angular Material in your app.
 @include md-core();
 
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 
+$ideal-app-primary: md-palette($md-light-blue);
+$ideal-app-accent: md-palette($md-yellow);
+
+// The warn palette is optional (defaults to red).
+$ideal-app-warn: md-palette($md-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-app-warn);
+
+// Include theme styles for core and each components used in your app.
+// Alternatively, you can import and @include the theme mixins for each components
+// that you are using.
+@include angular-material-theme($ideal-app-theme);
+@include ideal-app-theme($ideal-app-theme);
 
 .idea-theme {
   $ideal-idea-primary: md-palette($md-deep-orange);
@@ -21,6 +34,17 @@
 
   @include angular-material-theme($ideal-idea-theme);
   @include ideal-app-theme($ideal-idea-theme);
+}
+
+.notice-theme {
+  $ideal-notice-primary: md-palette($md-blue-grey);
+  $ideal-notice-accent: md-palette($md-pink);
+  $ideal-notice-warn: md-palette($md-red);
+
+  $ideal-notice-theme: md-light-theme($ideal-notice-primary, $ideal-notice-accent, $ideal-notice-warn);
+
+  @include angular-material-theme($ideal-notice-theme);
+  @include ideal-app-theme($ideal-notice-theme);
 }
 
 .problem-theme {
@@ -43,24 +67,6 @@
 
   @include angular-material-theme($ideal-user-theme);
   @include ideal-app-theme($ideal-user-theme);
-}
-
-.default-theme {
-  $ideal-app-primary: md-palette($md-light-blue);
-  $ideal-app-accent: md-palette($md-yellow);
-
-  // The warn palette is optional (defaults to red).
-  $ideal-app-warn: md-palette($md-red);
-
-  // Create the theme object (a Sass map containing all of the palettes).
-  $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-app-warn);
-
-  // Include theme styles for core and each components used in your app.
-  // Alternatively, you can import and @include the theme mixins for each components
-  // that you are using.
-  @include angular-material-theme($ideal-app-theme);
-  @include ideal-app-theme($ideal-app-theme);
-
 }
 
 $ideal-white: (
@@ -109,4 +115,15 @@ $ideal-white: (
 
   @include angular-material-theme($ideal-text-editor-tabs-theme);
   @include ideal-app-theme($ideal-text-editor-tabs-theme);
+}
+
+.error-theme {
+  $ideal-error-primary: md-palette($md-red);
+  $ideal-error-accent: md-palette($md-red);
+  $ideal-error-warn: md-palette($md-red);
+
+  $ideal-error-theme: md-light-theme($ideal-error-primary, $ideal-error-accent, $ideal-error-warn);
+
+  @include angular-material-theme($ideal-error-theme);
+  @include ideal-app-theme($ideal-error-theme);
 }

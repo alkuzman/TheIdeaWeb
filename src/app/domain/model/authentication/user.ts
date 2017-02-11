@@ -8,6 +8,7 @@ import {Person} from "./person";
 export class User extends Agent implements Person {
   firstName: string;
   lastName: string;
+  country: string;
   public password: string;
   public role: Role;
   public provider: Provider;

@@ -1,28 +1,41 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {KeysGenerationService} from "../../../../core/security-protocols/keys/keys-generation.service";
 import {CertificateService} from "../../../../core/security-protocols/services/certificate.service";
 import {CertificateRequestGenerationService} from "../../../../core/security-protocols/certificates/certificates-requests-generation.service";
 import {Observable} from "rxjs";
 import {CryptographicOperations} from "../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
+import {SecurityProfile} from "../../../model/security/security-profile";
+import {UserService} from "../../../services/user/user.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+
 /**
  * Created by Viki on 2/6/2017.
  */
 
 var encoding = require("text-encoding");
-var arrayBufferToBuffer = require("arraybuffer-to-buffer");
 
 @Component({
   moduleId: module.id,
   selector: "ideal-security-user-details",
   templateUrl: "security-user-details.component.html"
 })
-export class SecurityUserDetailsComponent {
+export class SecurityUserDetailsComponent implements OnInit {
+
+  private form: FormGroup;
 
   constructor(private keysGenerationService: KeysGenerationService,
               private certificateService: CertificateService,
               private certificateRequestGenerationService: CertificateRequestGenerationService,
-              private cryptographicOperations: CryptographicOperations) {
+              private cryptographicOperations: CryptographicOperations,
+              private userService: UserService, private formBuilder: FormBuilder) {
 
+  }
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      countryCode: "",
+      stateOrProvinceName: ""
+    });
   }
 
   public certificationRequest() {
@@ -43,58 +56,23 @@ export class SecurityUserDetailsComponent {
     })
   }
 
-  private createSecurityProfile(certificate: string, privateKey: CryptoKey, passphrase: string) {
-    let keyarray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase);
-    this.keysGenerationService.importKey(keyarray, 'raw').then((key: CryptoKey) => {
-      this.keysGenerationService.exportKey(privateKey, 'pkcs8').then((rawkey: ArrayBuffer) => {
-        console.log("Private key:");
-        console.log(rawkey);
-        let array = new Uint8Array(rawkey);
-        console.log(array);
-        //let decoded = new encoding.TextDecoder('utf-8').decode(rawkey);
-        //console.log("Decoded private key:")
-        //console.log(decoded);
+  private createSecurityProfile(certificatePEM: string, privateKey: CryptoKey, passphrase: string) {
+    let keyArray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase);
+    this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR').then((symmetricKey: CryptoKey) => {
+      this.keysGenerationService.exportKey(privateKey, 'pkcs8').then((privateRawKey: ArrayBuffer) => {
+        console.log(new Uint8Array(privateRawKey));
         this.cryptographicOperations.encrypt(
-          this.cryptographicOperations.getAlgorithm('AES-CBC', 'SHA-256', 'encrypt').algorithm,
-          key, rawkey).then((ciphertext) => {
-          console.log("Encrypted private key:");
-          let cipherarray = new Uint8Array(ciphertext);
-          console.log(ciphertext);
-          //let decoded = new encoding.TextDecoder('utf-8').decode(ciphertext);
-          //console.log("Decoded encrypted private key:");
-          //console.log(decoded);
-          //let encoded = new encoding.TextEncoder('utf-8').encode(decoded);
-          //console.log("Encoded encrypted private key:")
-          //console.log(encoded);
-          this.cryptographicOperations.decrpt(
-            this.cryptographicOperations.getAlgorithm('AES-CBC', 'SHA-256', 'decrypt').algorithm,
-            key, ciphertext).then((result: ArrayBuffer) => {
-            console.log("Decrypted private key:");
-            console.log(result);
-            let array = new Uint8Array(result);
-            console.log(array);
-            let decoded = new encoding.TextDecoder('utf-8').decode(result);
-            //console.log("PET: " + decoded);
-            this.keysGenerationService.importKey(decoded, 'pkcs8').then((decryptedPrivateKey: CryptoKey) => {
-              console.log(privateKey);
-              console.log(decryptedPrivateKey);
-              if (privateKey === decryptedPrivateKey) {
-                console.log("ISTI SE");
-              }
-            });
-          });
-          //console.log(String.fromCharCode.apply(null, new Uint32Array(ciphertext)));
+          this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA-256', 'encrypt').algorithm,
+          symmetricKey, privateRawKey).then((ciphertext: ArrayBuffer) => {
+          let cipherArray: Uint8Array = new Uint8Array(ciphertext);
+          let encodedCipher: string = this.cryptographicOperations.convertUint8ToString(cipherArray);
+          let securityProfile: SecurityProfile = new SecurityProfile();
+          securityProfile.certificatePEM = certificatePEM;
+          securityProfile.encryptedPrivateKey = encodedCipher;
+          securityProfile.agent = this.userService.getAuthenticatedUser();
+          this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
         });
       });
     });
-  }
-
-  private toBuffer(ab): Buffer {
-    let buf = new Buffer(ab.byteLength);
-    let view = new Uint8Array(ab);
-    for (var i = 0; i < buf.length; ++i) {
-      buf[i] = view[i];
-    }
-    return buf;
   }
 }

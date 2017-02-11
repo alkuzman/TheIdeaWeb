@@ -31,8 +31,8 @@ export class KeysGenerationService {
     return this.crypto.exportKey(format, key);
   }
 
-  public importKey(buffer: Buffer, format: string): PromiseLike<CryptoKey> {
-    let algorithm = this.criptogrphicOperations.getAlgorithm('AES-CBC', this.hashAlg, 'importkey');
+  public importKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKey> {
+    let algorithm = this.criptogrphicOperations.getAlgorithm(algString, this.hashAlg, 'importkey');
     let algInst: any = algorithm.algorithm;
 
     return this.crypto.importKey(format, buffer, algInst, true, algorithm.usages);

@@ -41,5 +41,16 @@
       </md-input-container>
     </div>
   </div>
+  <div [ngClass]="{'error-theme': formErrors.country}">
+    <md-input-container class="full-width">
+      <input type="text" mdInput hidden="true"/>
+      <md-select color="primary" placeholder="Country" formControlName="country" class="full-width" required>
+        <md-option *ngFor="let country of countries" [value]="country">
+          {{country}}
+        </md-option>
+      </md-select>
+      <md-hint align="end" idealColor="warn" *ngIf="formErrors.country">{{formErrors.country}}</md-hint>
+    </md-input-container>
+  </div>
 
 </div>

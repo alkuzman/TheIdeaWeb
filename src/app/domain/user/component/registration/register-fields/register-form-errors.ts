@@ -8,4 +8,5 @@ export interface RegisterFormErrors extends Properties {
   "passwords.password"?: string;
   "passwords.confirmPassword"?: string;
   passwords?: string;
+  country?: string;
 }

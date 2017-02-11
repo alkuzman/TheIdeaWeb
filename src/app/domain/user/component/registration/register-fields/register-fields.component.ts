@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, AfterViewChecked} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
-import {AbstractValueAccessor, MakeProvider} from "../../../../../shared/abstract-value-accessor";
 import {AvatarType} from "../../../../../shared/widget/components/avatars/named-avatar/enum-avatar-type";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
@@ -9,6 +8,7 @@ import {ValidationMessages} from "./register-validation-messages";
 import {IdeaValidators} from "../../../../../core/validators/idea.validators";
 import {PasswordStrength} from "../../../../../core/helper/services/password-strength";
 import {PasswordStrengthService} from "../../../../../core/helper/services/password-strength.service";
+import {CountryService} from "../../../../services/localization/country.service";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -28,13 +28,15 @@ export class RegisterFieldsComponent implements OnInit, AfterViewChecked {
   private passwordStrength: string;
   private passwordStrengthProgress: number;
   private passwordStrengthColor: string;
+  private countries: string[];
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
   }
 
-  constructor(private fb: FormBuilder, private passwordStrengthService: PasswordStrengthService) {
+  constructor(private fb: FormBuilder, private passwordStrengthService: PasswordStrengthService,
+              private countryService: CountryService) {
 
   }
 
@@ -63,10 +65,16 @@ export class RegisterFieldsComponent implements OnInit, AfterViewChecked {
 
     control = this.fb.control("", [Validators.required]);
     passwords.addControl("confirmPassword", control);
-
     this.form.addControl("passwords", passwords);
 
     this.calculatePasswordStrength();
+
+    this.countries = this.countryService.getCountries();
+    control = this.fb.control(this.user.country, [Validators.required]);
+    control.valueChanges.subscribe((value: string) => {
+      this.user.country = value;
+    });
+    this.form.addControl('country', control);
   }
 
 
@@ -132,7 +140,8 @@ export class RegisterFieldsComponent implements OnInit, AfterViewChecked {
     lastName: '',
     "passwords.password": '',
     "passwords.confirmPassword": '',
-    passwords: ''
+    passwords: '',
+    country: ''
   };
 
   validationMessages: ValidationMessages = {
@@ -152,6 +161,9 @@ export class RegisterFieldsComponent implements OnInit, AfterViewChecked {
     },
     passwords: {
       passwordMatcher: 'Confirm Password and Password must match'
+    },
+    country: {
+      required: 'Country is required.'
     }
   };
 }

@@ -14,6 +14,6 @@ export class NoticePagesComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.themingService.currentTheme = "default-theme";
+    this.themingService.currentTheme = "notice-theme";
   }
 }

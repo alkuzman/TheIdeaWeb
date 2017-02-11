@@ -33,7 +33,7 @@
           <md-icon>more_vert</md-icon>
         </button>
         <md-menu #appMenu="mdMenu">
-          <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)" [idealColor]="action.color"
+          <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
                   [mdTooltip]="action.description" mdTooltipPosition="left">
             <md-icon class="icon-20">{{action.icon}}</md-icon>
             <span>{{action.title}}</span>

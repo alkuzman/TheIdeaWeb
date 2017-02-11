@@ -18,7 +18,7 @@ export class CryptographicOperations {
     return this.crypto.encrypt(algorithm, key, data);
   }
 
-  public decrpt(algorithm: Algorithm, key: CryptoKey, data): PromiseLike<ArrayBuffer> {
+  public decrypt(algorithm: Algorithm, key: CryptoKey, data: BufferSource): PromiseLike<ArrayBuffer> {
     return this.crypto.decrypt(algorithm, key, data);
   }
 
@@ -29,5 +29,13 @@ export class CryptographicOperations {
       algorithmInstTemp.hash.name = hashAlg;
     }
     return algorithm;
+  }
+
+  public convertUint8ToString(array: Uint8Array): string {
+    return btoa(String.fromCharCode.apply(null, array));
+  }
+
+  public convertStringToUint8(text: string): Uint8Array {
+    return new Uint8Array(atob(text).split("").map((character) => character.charCodeAt(0)));
   }
 }
