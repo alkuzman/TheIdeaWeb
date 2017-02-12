@@ -8,11 +8,13 @@
 import {NgModule} from "@angular/core";
 import {AuthPagesRoutes} from "./auth-pages.routes";
 import {RouterModule} from "@angular/router";
+import {VerificationResolverService} from "./verify-page/verification-resolver.service";
 
 @NgModule({
   imports: [
     RouterModule.forChild(AuthPagesRoutes)
   ],
+  providers: [VerificationResolverService],
   exports: [
     RouterModule
   ]

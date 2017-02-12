@@ -6,6 +6,7 @@ import {AuthPageRoutes} from "./auth-page/auth-page.routes";
 import {LogoutPageRoutes} from "./logout-page/logout-page.routes";
 import {NotAuthenticatedGuard} from "../core/guards/not-authenticated.guard";
 import {AuthenticatedGuard} from "../core/guards/authenticated.guard";
+import {VerifyPageRoutes} from "./verify-page/verify-page.routes";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -34,6 +35,11 @@ export const AuthPagesRoutes: Routes = [
         path: "logout",
         children: [...LogoutPageRoutes],
         canActivate: [AuthenticatedGuard]
+      },
+      {
+        path: "verify",
+        children: [...VerifyPageRoutes],
+        canActivate: [NotAuthenticatedGuard]
       }
     ]
   }

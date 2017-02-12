@@ -1,12 +1,11 @@
 <form (ngSubmit)="certificationRequest()" [formGroup]="form">
-  <md-input-container>
-    <input mdInput type="text" formControlName="countryCode" md-maxlength="2" placeholder="Country Code"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" formControlName="stateOrProvinceName" placeholder="State or Province"/>
+  <md-slide-toggle class="margin" [checked]="true" (change)="changeStoringPrivateKey($event)">
+    Save private key in database
+  </md-slide-toggle>
+  <md-input-container *ngIf="sliderChecked" class="margin">
+    <input md-input mdInput placeholder="Private key password">
   </md-input-container>
   <button type="submit" md-raised-button color="primary" class="margin">
     Certification Request Generation
   </button>
-  {{form.value | json}}
 </form>

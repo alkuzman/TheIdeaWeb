@@ -1,0 +1,26 @@
+<md-card>
+  <md-card-content>
+    <div [ngSwitch]="certificateGenerated" fxLayout="row" fxLayoutAlign="center">
+      <div *ngSwitchCase="false">
+        <!-- Certificate generation in progress -->
+        <h2>Generating and signing your certificate</h2>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+        </div>
+      </div>
+      <div *ngSwitchCase="true">
+        <form (ngSubmit)="certificationRequest()" [formGroup]="form">
+          <md-slide-toggle class="margin" [checked]="true" (change)="changeStoringPrivateKey($event)">
+            Save private key in database
+          </md-slide-toggle>
+          <md-input-container *ngIf="sliderChecked" class="margin">
+            <input md-input mdInput placeholder="Private key password">
+          </md-input-container>
+          <button type="submit" md-raised-button color="primary" class="margin">
+            Certification Request Generation
+          </button>
+        </form>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

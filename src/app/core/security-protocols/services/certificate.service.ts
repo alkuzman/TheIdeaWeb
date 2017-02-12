@@ -38,7 +38,7 @@ export class CertificateService {
 
   public sign(pemCertificationRequest: string): Observable<string> {
     let url: string = this.certificatesUrl + "/sign";
-    return this.http.post(url, pemCertificationRequest, {headers: this.getHeaders()}, true)
+    return this.http.post(url, pemCertificationRequest, {headers: this.getHeaders()})
       .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));
   }
@@ -52,7 +52,7 @@ export class CertificateService {
 
   public save(securityProfile: SecurityProfile): Observable<SecurityProfile> {
     let url: string = this.certificatesUrl + "/save";
-    return this.http.post(url, JSON.stringify(securityProfile), {headers: this.getHeaders()}, true)
+    return this.http.post(url, JSON.stringify(securityProfile), {headers: this.getHeaders()})
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }

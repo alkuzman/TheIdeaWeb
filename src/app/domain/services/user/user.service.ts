@@ -39,6 +39,13 @@ export class UserService {
       .catch((error: any) => this.handleError(error));
   }
 
+  activateUser(code: string): Observable<User> {
+    let url = this.usersUrl + "/activation?code=" + code;
+    return this.http.get(url)
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
   addUser(user: User): Promise<User> {
     let body = JSON.stringify(user);
     let headers = new Headers({'Content-Type': 'application/json'});

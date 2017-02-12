@@ -6,12 +6,13 @@ import {Person} from "./person";
  * Created by AKuzmanoski on 23/10/2016.
  */
 export class User extends Agent implements Person {
-  firstName: string;
-  lastName: string;
-  country: string;
+  public firstName: string;
+  public lastName: string;
+  public country: string;
   public password: string;
   public role: Role;
   public provider: Provider;
+  public activationCode: string;
 
   constructor() {
     super();
