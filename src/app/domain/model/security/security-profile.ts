@@ -6,6 +6,7 @@ import {Agent} from "../authentication/agent";
 
 
 export class SecurityProfile extends BaseEntityImpl {
+  public certificationRequestPEM: string;
   public certificatePEM: string;
   public encryptedPrivateKey: string;
   public agent: Agent;

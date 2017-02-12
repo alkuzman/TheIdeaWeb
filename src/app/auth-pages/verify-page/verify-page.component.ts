@@ -3,7 +3,6 @@ import {ActivatedRoute} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {KeysGenerationService} from "../../core/security-protocols/keys/keys-generation.service";
 import {CertificateRequestGenerationService} from "../../core/security-protocols/certificates/certificates-requests-generation.service";
-import {Observable} from "rxjs";
 import {CryptographicOperations} from "../../core/security-protocols/cryptographic-operations/cryptographic-operations";
 import {SecurityProfile} from "../../domain/model/security/security-profile";
 import {CertificateService} from "../../domain/services/certificate/certificate.service";
@@ -21,6 +20,7 @@ export class VerifyPageComponent implements OnInit {
   private user: User;
   private privateKey: CryptoKey;
   private pemCertificate: string;
+  private pemCertificationRequest: string;
   private password: string;
 
   private certificateGenerated: boolean = false;
@@ -46,10 +46,10 @@ export class VerifyPageComponent implements OnInit {
   }
 
   public savePrivateKeyAndCertificateInDatabase() {
-    this.securityProfileService.createSecurityProfile(this.pemCertificate, this.privateKey, this.password, this.user)
-      .then((securityProfile: SecurityProfile) => {
+    this.securityProfileService.createSecurityProfile(this.pemCertificationRequest, this.pemCertificate,
+      this.privateKey, this.password, this.user).subscribe((securityProfile: SecurityProfile) => {
         this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
-      })
+    });
   }
 
   private certificationRequest(): void {
@@ -58,19 +58,15 @@ export class VerifyPageComponent implements OnInit {
       publicKey = keyPair.publicKey;
       this.privateKey = keyPair.privateKey;
       let sequence: Promise<any> = this.certificateRequestGenerationService
-        .createPKCS10Internal(this.privateKey, publicKey, this.user);
-      sequence
-        .then((pkcs10Buffer) => this.certificateRequestGenerationService.parsePEM(pkcs10Buffer),
-          error => Promise.reject(`Error parsing PKCS#10 into BER: ${error}`))
-        .then((pemRequest: string) => this.certificateService.sign(pemRequest),
-          error => Promise.reject(`Error parsing PKCS#10 into PEM: ${error}`))
-        .then((observable: Observable<any>) => observable.subscribe((result: string) => {
-          this.pemCertificate = result;
-          setTimeout(() => {
+        .createPKCS10Internal(this.privateKey, publicKey, this.user).then((pkcs10Buffer) => {
+          let pemRequest = this.certificateRequestGenerationService.parsePEM(pkcs10Buffer);
+          this.pemCertificationRequest = pemRequest;
+          this.certificateService.sign(pemRequest).subscribe((result: string) => {
+            console.log(result);
+            this.pemCertificate = result;
             this.certificateGenerated = true;
-          }, 2000);
-
-        }));
+          });
+        }, error => Promise.reject(`Error parsing PKCS#10 into BER: ${error}`));
     });
   }
 

@@ -5,6 +5,7 @@ import {CertificateService} from "../../../domain/services/certificate/certifica
 import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
 import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {User} from "../../../domain/model/authentication/user";
+import {Observable} from "rxjs";
 /**
  * Created by Viki on 2/12/2017.
  */
@@ -38,38 +39,38 @@ export class SecurityProfileService {
     });
   }
 
-  public createSecurityProfile(certificatePEM: string, privateKey: CryptoKey, passphrase: string,
-                               user: User): Promise<SecurityProfile> {
-    let sequence: Promise<any> = Promise.resolve();
+  public createSecurityProfile(certificationRequestPEM: string, certificatePEM: string, privateKey: CryptoKey,
+                               passphrase: string, user: User): Observable<SecurityProfile> {
 
-    //Key generation and import region
-    let keyArray: Buffer = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase, 6530, 32, 'SHA256');
-    let symmetricKey: CryptoKey;
-    sequence = sequence.then(() => this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR'))
-      .then((key: CryptoKey) => {
-        symmetricKey = key;
-      });
+    return Observable.create((observer) => {
+      let keyArray: Buffer = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase, 6530, 32, 'SHA256');
+      let symmetricKey: CryptoKey;
+      let encodedEncryptedPrivateKey: string;
 
-    //Exporting and encrypting private key. Encoding the encrypted private key
-    let encodedEncryptedPrivateKey: string;
-    sequence = sequence.then(() => this.keysGenerationService.exportKey(privateKey, 'pkcs8'))
-      .then((privateRawKey: ArrayBuffer) => {
-        this.cryptographicOperations.encrypt(
-          this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA-256', 'encrypt').algorithm,
-          symmetricKey, privateRawKey)
-      })
-      .then((ciphertext: ArrayBuffer) => {
-        let cipherArray: Uint8Array = new Uint8Array(ciphertext);
-        encodedEncryptedPrivateKey = this.cryptographicOperations.convertUint8ToString(cipherArray)
-      });
-
-    return sequence.then(() => {
-      let securityProfile: SecurityProfile = new SecurityProfile();
-      securityProfile.certificatePEM = certificatePEM;
-      securityProfile.encryptedPrivateKey = encodedEncryptedPrivateKey;
-      securityProfile.agent = user;
-      return securityProfile;
+      this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR')
+        .then((key: CryptoKey) => {
+          symmetricKey = key;
+          this.keysGenerationService.exportKey(privateKey, 'pkcs8')
+            .then((privateRawKey: ArrayBuffer) => {
+              this.cryptographicOperations.encrypt(
+                this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA-256', 'encrypt').algorithm,
+                symmetricKey, privateRawKey)
+                .then((ciphertext: ArrayBuffer) => {
+                  let cipherArray: Uint8Array = new Uint8Array(ciphertext);
+                  encodedEncryptedPrivateKey = this.cryptographicOperations.convertUint8ToString(cipherArray);
+                  let securityProfile: SecurityProfile = new SecurityProfile();
+                  securityProfile.certificationRequestPEM = certificationRequestPEM;
+                  securityProfile.certificatePEM = certificatePEM;
+                  console.log(encodedEncryptedPrivateKey);
+                  securityProfile.encryptedPrivateKey = encodedEncryptedPrivateKey;
+                  securityProfile.agent = user;
+                  observer.next(securityProfile);
+                  observer.complete();
+                })
+            });
+        });
     });
+
   }
 
 }
