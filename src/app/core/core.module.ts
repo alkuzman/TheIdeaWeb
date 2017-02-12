@@ -19,8 +19,8 @@ import {STOMPService} from "./socket/stopm.service";
 import {SocketService} from "./socket/socket.service";
 import {KeysGenerationService} from "./security-protocols/keys/keys-generation.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
-import {CertificateService} from "./security-protocols/services/certificate.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
+import {SecurityProfileService} from "./security-protocols/security-profile/security-profile.service";
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import {CryptographicOperations} from "./security-protocols/cryptographic-operat
   providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
-    SocketService, KeysGenerationService, CertificateRequestGenerationService, CertificateService,
+    SocketService, KeysGenerationService, CertificateRequestGenerationService, SecurityProfileService,
     CryptographicOperations]
 })
 export class CoreModule {

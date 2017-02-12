@@ -9,17 +9,28 @@
         </div>
       </div>
       <div *ngSwitchCase="true">
-        <form (ngSubmit)="certificationRequest()" [formGroup]="form">
-          <md-slide-toggle class="margin" [checked]="true" (change)="changeStoringPrivateKey($event)">
-            Save private key in database
-          </md-slide-toggle>
-          <md-input-container *ngIf="sliderChecked" class="margin">
-            <input md-input mdInput placeholder="Private key password">
-          </md-input-container>
-          <button type="submit" md-raised-button color="primary" class="margin">
-            Certification Request Generation
-          </button>
-        </form>
+        <div [ngSwitch]="passwordEntered">
+          <div *ngSwitchCase="false">
+            <h2>This password is used for encryption of your private key.
+              We do not keep this password in the database. You must not lose this password!!!</h2>
+            <ideal-security-form-encryption-password (passwordReady)="passwordReady($event)">
+            </ideal-security-form-encryption-password>
+          </div>
+          <div *ngSwitchCase="true">
+            <md-tab-group>
+              <md-tab label="Save in Database">
+                <h3>If you click this button we will save your private key encrypted with the password you
+                  entered in our database!!!</h3>
+                <div class="padding-top">
+                  <button class="full-width" color="primary" type="button" md-raised-button
+                          (click)="savePrivateKeyAndCertificateInDatabase()">Save
+                  </button>
+                </div>
+              </md-tab>
+              <md-tab label="Download">Content 2</md-tab>
+            </md-tab-group>
+          </div>
+        </div>
       </div>
     </div>
   </md-card-content>

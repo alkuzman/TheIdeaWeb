@@ -3,10 +3,11 @@ import {ActivatedRoute} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {KeysGenerationService} from "../../core/security-protocols/keys/keys-generation.service";
 import {CertificateRequestGenerationService} from "../../core/security-protocols/certificates/certificates-requests-generation.service";
-import {CertificateService} from "../../core/security-protocols/services/certificate.service";
 import {Observable} from "rxjs";
 import {CryptographicOperations} from "../../core/security-protocols/cryptographic-operations/cryptographic-operations";
 import {SecurityProfile} from "../../domain/model/security/security-profile";
+import {CertificateService} from "../../domain/services/certificate/certificate.service";
+import {SecurityProfileService} from "../../core/security-protocols/security-profile/security-profile.service";
 /**
  * Created by Viki on 2/11/2017.
  */
@@ -20,12 +21,16 @@ export class VerifyPageComponent implements OnInit {
   private user: User;
   private privateKey: CryptoKey;
   private pemCertificate: string;
-  private certificateGenerated = false;
+  private password: string;
+
+  private certificateGenerated: boolean = false;
+  private passwordEntered: boolean = false;
 
   constructor(private route: ActivatedRoute, private keysGenerationService: KeysGenerationService,
               private certificateRequestGenerationService: CertificateRequestGenerationService,
               private certificateService: CertificateService,
-              private cryptographicOperations: CryptographicOperations) {
+              private cryptographicOperations: CryptographicOperations,
+              private securityProfileService: SecurityProfileService) {
   }
 
   ngOnInit(): void {
@@ -33,6 +38,18 @@ export class VerifyPageComponent implements OnInit {
       this.user = data.user;
       this.certificationRequest();
     });
+  }
+
+  public passwordReady(password: string) {
+    this.password = password;
+    this.passwordEntered = true;
+  }
+
+  public savePrivateKeyAndCertificateInDatabase() {
+    this.securityProfileService.createSecurityProfile(this.pemCertificate, this.privateKey, this.password, this.user)
+      .then((securityProfile: SecurityProfile) => {
+        this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
+      })
   }
 
   private certificationRequest(): void {
@@ -54,26 +71,6 @@ export class VerifyPageComponent implements OnInit {
           }, 2000);
 
         }));
-    });
-  }
-
-  private createSecurityProfile(certificatePEM: string, privateKey: CryptoKey, passphrase: string) {
-    let keyArray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase);
-    this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR').then((symmetricKey: CryptoKey) => {
-      this.keysGenerationService.exportKey(privateKey, 'pkcs8').then((privateRawKey: ArrayBuffer) => {
-        console.log(new Uint8Array(privateRawKey));
-        this.cryptographicOperations.encrypt(
-          this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA-256', 'encrypt').algorithm,
-          symmetricKey, privateRawKey).then((ciphertext: ArrayBuffer) => {
-          let cipherArray: Uint8Array = new Uint8Array(ciphertext);
-          let encodedCipher: string = this.cryptographicOperations.convertUint8ToString(cipherArray);
-          let securityProfile: SecurityProfile = new SecurityProfile();
-          securityProfile.certificatePEM = certificatePEM;
-          securityProfile.encryptedPrivateKey = encodedCipher;
-          securityProfile.agent = this.user;
-          this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
-        });
-      });
     });
   }
 

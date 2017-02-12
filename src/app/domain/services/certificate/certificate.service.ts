@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {JwtHttpService} from "../../authentication/jwt/jwt-http.service";
 import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
 import {SecurityProfile} from "../../../domain/model/security/security-profile";
+import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 /**
  * Created by Viki on 2/6/2017.
  */

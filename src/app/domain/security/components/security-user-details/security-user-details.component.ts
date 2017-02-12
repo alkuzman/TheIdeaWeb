@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {KeysGenerationService} from "../../../../core/security-protocols/keys/keys-generation.service";
-import {CertificateService} from "../../../../core/security-protocols/services/certificate.service";
 import {CertificateRequestGenerationService} from "../../../../core/security-protocols/certificates/certificates-requests-generation.service";
 import {Observable} from "rxjs";
 import {CryptographicOperations} from "../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
@@ -8,6 +7,7 @@ import {SecurityProfile} from "../../../model/security/security-profile";
 import {UserService} from "../../../services/user/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MdSlideToggleChange} from "@angular/material";
+import {CertificateService} from "../../../services/certificate/certificate.service";
 
 /**
  * Created by Viki on 2/6/2017.
@@ -59,7 +59,7 @@ export class SecurityUserDetailsComponent implements OnInit {
   }
 
   private createSecurityProfile(certificatePEM: string, privateKey: CryptoKey, passphrase: string) {
-    let keyArray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase);
+    let keyArray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase, 6530, 32, 'SHA256');
     this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR').then((symmetricKey: CryptoKey) => {
       this.keysGenerationService.exportKey(privateKey, 'pkcs8').then((privateRawKey: ArrayBuffer) => {
         console.log(new Uint8Array(privateRawKey));

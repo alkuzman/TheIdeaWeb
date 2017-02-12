@@ -23,8 +23,9 @@ export class KeysGenerationService {
     return this.crypto.generateKey(algInst, true, algorithm.usages);
   }
 
-  public generateSymmetricKeyFromPassword(password: string): Buffer {
-    return pbkdf2.pbkdf2Sync(password, 'iDeal', 6530, 32, 'SHA256');
+  public generateSymmetricKeyFromPassword(password: string, numIterations: number, byteLength: number,
+                                          algorithm: string): Buffer {
+    return pbkdf2.pbkdf2Sync(password, 'iDeal', numIterations, byteLength, algorithm);
   }
 
   public exportKey(key: CryptoKey, format: string): PromiseLike<JsonWebKey|ArrayBuffer> {
