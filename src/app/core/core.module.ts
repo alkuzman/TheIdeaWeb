@@ -17,7 +17,7 @@ import {RedirectService} from "./navigation/redirect.service";
 import {ConfigService} from "./config/config.service";
 import {STOMPService} from "./socket/stopm.service";
 import {SocketService} from "./socket/socket.service";
-import {KeysGenerationService} from "./security-protocols/keys/keys-generation.service";
+import {KeysService} from "./security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
 import {SecurityProfileService} from "./security-protocols/security-profile/security-profile.service";
@@ -30,7 +30,7 @@ import {SecurityProfileService} from "./security-protocols/security-profile/secu
   providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
-    SocketService, KeysGenerationService, CertificateRequestGenerationService, SecurityProfileService,
+    SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileService,
     CryptographicOperations]
 })
 export class CoreModule {

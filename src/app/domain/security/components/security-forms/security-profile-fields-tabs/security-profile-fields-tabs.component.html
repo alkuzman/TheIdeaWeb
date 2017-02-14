@@ -1,0 +1,19 @@
+<md-tab-group class="full-width" dynamicHeight="true">
+  <md-tab label="Certificate">
+    <ideal-security-profile-fields-certificate title="PEM Certificate"
+                                               [value]="certificatePEM">
+
+    </ideal-security-profile-fields-certificate>
+  </md-tab>
+  <md-tab label="Private key">
+    <ideal-security-profile-fields-private-key [encryptedPrivateKey]="privateKeyEncrypted">
+
+    </ideal-security-profile-fields-private-key>
+  </md-tab>
+  <md-tab label="Certification request">
+    <ideal-security-profile-fields-certificate title="PEM Certification request"
+                                               [value]="certificationRequestPEM">
+
+    </ideal-security-profile-fields-certificate>
+  </md-tab>
+</md-tab-group>

@@ -6,7 +6,7 @@ import {AppComponent} from "./app.component";
 import {SharedModule} from "./shared/shared.module";
 import {Logger} from "./logger.service";
 import {AppRoutingModule} from "./app-routing.module";
-import {MaterialModule} from "@angular/material";
+import {MaterialRootModule} from "@angular/material";
 import {CoreModule} from "./core/core.module";
 import {PagesModule} from "./pages/pages.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -22,7 +22,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, MaterialModule.forRoot(), CoreModule, FlexLayoutModule.forRoot(), SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
+  imports: [BrowserModule, HttpModule, MaterialRootModule, CoreModule, FlexLayoutModule, SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [{
     provide: AuthHttp,

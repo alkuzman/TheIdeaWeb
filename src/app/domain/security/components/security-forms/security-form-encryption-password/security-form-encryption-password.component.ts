@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
 /**
  * Created by Viki on 2/12/2017.
@@ -17,6 +17,7 @@ export class SecurityFormEncryptionPasswordComponent implements OnInit {
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
   private password: string;
   private submitted: boolean = false;
+  @Input("buttonText") buttonText: string;
 
   constructor(private fb: FormBuilder) {
   }

@@ -1,9 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {KeysGenerationService} from "../../../../core/security-protocols/keys/keys-generation.service";
+import {KeysService} from "../../../../core/security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "../../../../core/security-protocols/certificates/certificates-requests-generation.service";
-import {Observable} from "rxjs";
 import {CryptographicOperations} from "../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
-import {SecurityProfile} from "../../../model/security/security-profile";
 import {UserService} from "../../../services/user/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MdSlideToggleChange} from "@angular/material";
@@ -25,7 +23,7 @@ export class SecurityUserDetailsComponent implements OnInit {
   private form: FormGroup;
   private sliderChecked: boolean;
 
-  constructor(private keysGenerationService: KeysGenerationService,
+  constructor(private keysGenerationService: KeysService,
               private certificateService: CertificateService,
               private certificateRequestGenerationService: CertificateRequestGenerationService,
               private cryptographicOperations: CryptographicOperations,
@@ -40,6 +38,7 @@ export class SecurityUserDetailsComponent implements OnInit {
     });
   }
 
+  /*
   public certificationRequest() {
     let publicKey: CryptoKey;
     let privateKey: CryptoKey;
@@ -77,7 +76,7 @@ export class SecurityUserDetailsComponent implements OnInit {
       });
     });
   }
-
+   */
   public changeStoringPrivateKey(value: MdSlideToggleChange) {
     this.sliderChecked = value.checked;
   }

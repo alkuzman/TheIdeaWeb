@@ -1,23 +1,25 @@
 @import '~@angular/material/core/theming/all-theme';
+@import "~@angular/material/core/theming/theming";
+@import "~@angular/material/core/theming/palette";
 @import "ideal-app-themes";
 // Plus imports for other components in your app.
 
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
-@include md-core();
+@include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 
-$ideal-app-primary: md-palette($md-light-blue);
-$ideal-app-accent: md-palette($md-yellow);
+$ideal-app-primary: mat-palette($mat-light-blue);
+$ideal-app-accent: mat-palette($mat-yellow);
 
 // The warn palette is optional (defaults to red).
-$ideal-app-warn: md-palette($md-red);
+$ideal-app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-app-warn);
+$ideal-app-theme: mat-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-app-warn);
 
 // Include theme styles for core and each components used in your app.
 // Alternatively, you can import and @include the theme mixins for each components
@@ -26,44 +28,44 @@ $ideal-app-theme: md-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-a
 @include ideal-app-theme($ideal-app-theme);
 
 .idea-theme {
-  $ideal-idea-primary: md-palette($md-deep-orange);
-  $ideal-idea-accent: md-palette($md-yellow);
-  $ideal-idea-warn: md-palette($md-red);
+  $ideal-idea-primary: mat-palette($mat-deep-orange);
+  $ideal-idea-accent: mat-palette($mat-yellow);
+  $ideal-idea-warn: mat-palette($mat-red);
 
-  $ideal-idea-theme: md-light-theme($ideal-idea-primary, $ideal-idea-accent, $ideal-idea-warn);
+  $ideal-idea-theme: mat-light-theme($ideal-idea-primary, $ideal-idea-accent, $ideal-idea-warn);
 
   @include angular-material-theme($ideal-idea-theme);
   @include ideal-app-theme($ideal-idea-theme);
 }
 
 .notice-theme {
-  $ideal-notice-primary: md-palette($md-blue-grey);
-  $ideal-notice-accent: md-palette($md-pink);
-  $ideal-notice-warn: md-palette($md-red);
+  $ideal-notice-primary: mat-palette($mat-blue-grey);
+  $ideal-notice-accent: mat-palette($mat-pink);
+  $ideal-notice-warn: mat-palette($mat-red);
 
-  $ideal-notice-theme: md-light-theme($ideal-notice-primary, $ideal-notice-accent, $ideal-notice-warn);
+  $ideal-notice-theme: mat-light-theme($ideal-notice-primary, $ideal-notice-accent, $ideal-notice-warn);
 
   @include angular-material-theme($ideal-notice-theme);
   @include ideal-app-theme($ideal-notice-theme);
 }
 
 .problem-theme {
-  $ideal-problem-primary: md-palette($md-purple, 500, 700, 800);
-  $ideal-problem-accent: md-palette($md-green, A200);
-  $ideal-problem-warn: md-palette($md-red);
+  $ideal-problem-primary: mat-palette($mat-purple, 500, 700, 800);
+  $ideal-problem-accent: mat-palette($mat-green, A200);
+  $ideal-problem-warn: mat-palette($mat-red);
 
-  $ideal-problem-theme: md-light-theme($ideal-problem-primary, $ideal-problem-accent, $ideal-problem-warn);
+  $ideal-problem-theme: mat-light-theme($ideal-problem-primary, $ideal-problem-accent, $ideal-problem-warn);
 
   @include angular-material-theme($ideal-problem-theme);
   @include ideal-app-theme($ideal-problem-theme);
 }
 
 .user-theme {
-  $ideal-user-primary: md-palette($md-green);
-  $ideal-user-accent: md-palette($md-orange);
-  $ideal-user-warn: md-palette($md-red);
+  $ideal-user-primary: mat-palette($mat-green);
+  $ideal-user-accent: mat-palette($mat-orange);
+  $ideal-user-warn: mat-palette($mat-red);
 
-  $ideal-user-theme: md-light-theme($ideal-user-primary, $ideal-user-accent, $ideal-user-warn);
+  $ideal-user-theme: mat-light-theme($ideal-user-primary, $ideal-user-accent, $ideal-user-warn);
 
   @include angular-material-theme($ideal-user-theme);
   @include ideal-app-theme($ideal-user-theme);
@@ -107,22 +109,22 @@ $ideal-white: (
 );
 
 .text-editor-tabs-theme {
-  $ideal-text-editor-tabs-primary: md-palette($ideal-white);
-  $ideal-text-editor-tabs-accent: md-palette($md-yellow);
-  $ideal-text-editor-tabs-warn: md-palette($md-red);
+  $ideal-text-editor-tabs-primary: mat-palette($ideal-white);
+  $ideal-text-editor-tabs-accent: mat-palette($mat-yellow);
+  $ideal-text-editor-tabs-warn: mat-palette($mat-red);
 
-  $ideal-text-editor-tabs-theme: md-light-theme($ideal-text-editor-tabs-primary, $ideal-text-editor-tabs-accent, $ideal-text-editor-tabs-warn);
+  $ideal-text-editor-tabs-theme: mat-light-theme($ideal-text-editor-tabs-primary, $ideal-text-editor-tabs-accent, $ideal-text-editor-tabs-warn);
 
   @include angular-material-theme($ideal-text-editor-tabs-theme);
   @include ideal-app-theme($ideal-text-editor-tabs-theme);
 }
 
 .error-theme {
-  $ideal-error-primary: md-palette($md-red);
-  $ideal-error-accent: md-palette($md-red);
-  $ideal-error-warn: md-palette($md-red);
+  $ideal-error-primary: mat-palette($mat-red);
+  $ideal-error-accent: mat-palette($mat-red);
+  $ideal-error-warn: mat-palette($mat-red);
 
-  $ideal-error-theme: md-light-theme($ideal-error-primary, $ideal-error-accent, $ideal-error-warn);
+  $ideal-error-theme: mat-light-theme($ideal-error-primary, $ideal-error-accent, $ideal-error-warn);
 
   @include angular-material-theme($ideal-error-theme);
   @include ideal-app-theme($ideal-error-theme);

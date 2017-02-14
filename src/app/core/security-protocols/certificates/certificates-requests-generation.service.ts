@@ -119,10 +119,24 @@ export class CertificateRequestGenerationService {
     }, error => Promise.reject(`Error signing PKCS#10: ${error}`));
   }
 
-  public parsePEM(pkcs10Buffer): string {
+  public parseCertificateRequestPEM(pkcs10Buffer): string {
     let resultString: string = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
     resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs10Buffer)))}`;
     resultString = `${resultString}\r\n-----END CERTIFICATE REQUEST-----\r\n`;
+    return resultString;
+  }
+
+  public parsePrivateKeyPEM(pkcs8Buffer): string {
+    let resultString: string = "-----BEGIN PRIVATE KEY-----\r\n";
+    resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs8Buffer)))}`;
+    resultString = `${resultString}\r\n-----END PRIVATE KEY-----\r\n`;
+    return resultString;
+  }
+
+  public parseEncryptedPrivateKeyPEM(epkeyBuffer): string {
+    let resultString: string = "-----BEGIN ENCRYPTED PRIVATE KEY-----\r\n";
+    resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(epkeyBuffer)))}`;
+    resultString = `${resultString}\r\n-----END ENCRYPTED PRIVATE KEY-----\r\n`;
     return resultString;
   }
 

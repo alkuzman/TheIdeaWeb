@@ -11,13 +11,13 @@
   $foreground: map-get($theme, foreground);
 
   .primary {
-    color: md-color($primary);
+    color: mat-color($primary);
   }
   .accent {
-    color: md-color($accent);
+    color: mat-color($accent);
   }
   .warn {
-    color: md-color($warn);
+    color: mat-color($warn);
   }
 }
 
