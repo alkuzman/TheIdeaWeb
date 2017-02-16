@@ -14,6 +14,7 @@ import {CertificateRequestGenerationService} from "../../../../../../core/securi
 })
 export class SecurityProfileFieldsPrivateKeyComponent {
   @Input("encryptedPrivateKey") encryptedPrivateKey: string;
+  @Input("title") title: string;
   private decryptedPrivateKey: string;
 
   constructor(private cryptographicOperations: CryptographicOperations, private keysService: KeysService,

@@ -4,3 +4,4 @@
 export * from "./member-role"
 export * from "./provider";
 export * from "./role";
+export * from "./certificate-type"

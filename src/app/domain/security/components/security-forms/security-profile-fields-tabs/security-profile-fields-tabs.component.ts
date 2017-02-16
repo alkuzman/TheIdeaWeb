@@ -13,9 +13,12 @@ export class SecurityProfileFieldsTabsComponent implements OnInit {
     //console.log(this.certificationRequestPEM);
   }
 
-  @Input("certificatePEM") certificatePEM: string;
-  @Input("certificationRequestPEM") certificationRequestPEM: string;
-  @Input("privateKeyEncrypted") privateKeyEncrypted: string;
+  @Input("certificateEPEM") certificateEPEM: string;
+  @Input("certificateSPEM") certificateSPEM: string;
+  @Input("certificationRequestEPEM") certificationRequestEPEM: string;
+  @Input("certificationRequestSPEM") certificationRequestSPEM: string;
+  @Input("privateKeyEEncrypted") privateKeyEEncrypted: string;
+  @Input("privateKeySEncrypted") privateKeySEncrypted: string;
 
   constructor() {
 

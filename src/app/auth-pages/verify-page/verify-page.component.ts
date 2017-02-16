@@ -6,6 +6,7 @@ import {CertificateRequestGenerationService} from "../../core/security-protocols
 import {SecurityProfile} from "../../domain/model/security/security-profile";
 import {CertificateService} from "../../domain/services/certificate/certificate.service";
 import {SecurityProfileService} from "../../core/security-protocols/security-profile/security-profile.service";
+import {CertificateType} from "../../domain/model/enumerations/certificate-type";
 /**
  * Created by Viki on 2/11/2017.
  */
@@ -17,13 +18,18 @@ import {SecurityProfileService} from "../../core/security-protocols/security-pro
 })
 export class VerifyPageComponent implements OnInit {
   private user: User;
-  private privateKey: CryptoKey;
-  private privateKeyEncrypted: string;
-  private _pemCertificate: string;
-  private _pemCertificationRequest: string;
+  private privateKeyE: CryptoKey;
+  private privateKeyEEncrypted: string;
+  private _pemCertificateE: string;
+  private _pemCertificationRequestE: string;
+  private privateKeyS: CryptoKey;
+  private privateKeySEncrypted: string;
+  private _pemCertificateS: string;
+  private _pemCertificationRequestS: string;
   private password: string;
 
-  private certificateGenerated: boolean = false;
+  private certificateGeneratedE: boolean = false;
+  private certificateGeneratedS: boolean = false;
   private passwordEntered: boolean = false;
   private saveDecision: boolean = false;
   private savePrivateKey: string = "YES";
@@ -37,7 +43,8 @@ export class VerifyPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data: {user: User}) => {
       this.user = data.user;
-      this.certificationRequest();
+      this.certificationRequestE();
+      this.certificationRequestS();
     });
   }
 
@@ -45,10 +52,14 @@ export class VerifyPageComponent implements OnInit {
     this.password = password;
     this.keysService.generateSymmetricKeyFromPassword(this.password, 6530, 32, 'SHA256')
       .then((symmetricKey: CryptoKey) => {
-        this.keysService.encryptPrivateKeyWithSymmetricKey(this.privateKey, symmetricKey)
+        this.keysService.encryptPrivateKeyWithSymmetricKey(this.privateKeyE, symmetricKey)
           .subscribe((encodedEncryptedPrivateKey: string) => {
-            this.privateKeyEncrypted = encodedEncryptedPrivateKey;
-            this.passwordEntered = true;
+            this.privateKeyEEncrypted = encodedEncryptedPrivateKey;
+            this.keysService.encryptPrivateKeyWithSymmetricKey(this.privateKeyS, symmetricKey)
+              .subscribe((encodedEncryptedPrivateKey: string) => {
+                this.privateKeySEncrypted = encodedEncryptedPrivateKey;
+                this.passwordEntered = true;
+              });
           });
       });
   }
@@ -65,39 +76,70 @@ export class VerifyPageComponent implements OnInit {
   }
 
   private saveSecurityProfile(savePrivateKey: boolean) {
-    let securityProfile;
+    let securityProfileE;
+    let securityProfileS;
     if (savePrivateKey) {
-      securityProfile = this.securityProfileService.createSecurityProfile(this._pemCertificationRequest,
-        this._pemCertificate, this.privateKeyEncrypted, this.password, this.user);
+      securityProfileE = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestE,
+        this._pemCertificateE, this.privateKeyEEncrypted, CertificateType.ENCRYPTION, this.user);
+      securityProfileS = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestS,
+        this._pemCertificateS, this.privateKeySEncrypted, CertificateType.SIGNING, this.user);
     } else {
-      securityProfile = this.securityProfileService.createSecurityProfile(this._pemCertificationRequest,
-        this._pemCertificate, undefined, this.password, this.user);
+      securityProfileE = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestE,
+        this._pemCertificateE, undefined, CertificateType.ENCRYPTION, this.user);
+      securityProfileS = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestS,
+        this._pemCertificateS, undefined, CertificateType.SIGNING, this.user);
     }
-    this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
+    this.certificateService.save(securityProfileE).subscribe((result: SecurityProfile) => console.log(result));
+    this.certificateService.save(securityProfileS).subscribe((result: SecurityProfile) => console.log(result));
   }
 
-  private certificationRequest(): void {
+  private certificationRequestE(): void {
     let publicKey: CryptoKey;
     this.keysService.generatePublicPrivateKeyPair().then((keyPair: CryptoKeyPair) => {
       publicKey = keyPair.publicKey;
-      this.privateKey = keyPair.privateKey;
+      this.privateKeyE = keyPair.privateKey;
       let sequence: Promise<any> = this.certificateRequestGenerationService
-        .createPKCS10Internal(this.privateKey, publicKey, this.user).then((pkcs10Buffer) => {
+        .createPKCS10Internal(this.privateKeyE, publicKey, this.user).then((pkcs10Buffer) => {
           let pemRequest = this.certificateRequestGenerationService.parseCertificateRequestPEM(pkcs10Buffer);
-          this._pemCertificationRequest = pemRequest;
+          this._pemCertificationRequestE = pemRequest;
           this.certificateService.sign(pemRequest).subscribe((result: string) => {
-            this._pemCertificate = result;
-            this.certificateGenerated = true;
+            this._pemCertificateE = result;
+            this.certificateGeneratedE = true;
           });
         }, error => Promise.reject(`Error parsing PKCS#10 into BER: ${error}`));
     });
   }
 
-  get pemCertificate(): string {
-    return this._pemCertificate;
+  private certificationRequestS(): void {
+    let publicKey: CryptoKey;
+    this.keysService.generatePublicPrivateKeyPair().then((keyPair: CryptoKeyPair) => {
+      publicKey = keyPair.publicKey;
+      this.privateKeyS = keyPair.privateKey;
+      let sequence: Promise<any> = this.certificateRequestGenerationService
+        .createPKCS10Internal(this.privateKeyS, publicKey, this.user).then((pkcs10Buffer) => {
+          let pemRequest = this.certificateRequestGenerationService.parseCertificateRequestPEM(pkcs10Buffer);
+          this._pemCertificationRequestS = pemRequest;
+          this.certificateService.sign(pemRequest).subscribe((result: string) => {
+            this._pemCertificateS = result;
+            this.certificateGeneratedS = true;
+          });
+        }, error => Promise.reject(`Error parsing PKCS#10 into BER: ${error}`));
+    });
   }
 
-  get pemCertificationRequest(): string {
-    return this._pemCertificationRequest;
+  get pemCertificateE(): string {
+    return this._pemCertificateE;
+  }
+
+  get pemCertificationRequestE(): string {
+    return this._pemCertificationRequestE;
+  }
+
+  get pemCertificateS(): string {
+    return this._pemCertificateS;
+  }
+
+  get pemCertificationRequestS(): string {
+    return this._pemCertificationRequestS;
   }
 }
