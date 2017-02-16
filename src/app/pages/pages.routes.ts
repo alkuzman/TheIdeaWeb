@@ -38,6 +38,10 @@ export const PagesRoutes: Routes = [
         loadChildren: 'app/pages/user-pages/user-pages.module#UserPagesModule'
       },
       {
+        path: 'organizations',
+        loadChildren: 'app/pages/organization-pages/organization-pages.module#OrganizationPagesModule'
+      },
+      {
         path: 'announcements',
         loadChildren: 'app/pages/announcement-pages/announcement-pages.module#AnnouncementPagesModule'
       },

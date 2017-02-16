@@ -1,0 +1,10 @@
+<md-card style="width: 400px; margin: auto;">
+  <md-card-content>
+    <form [formGroup]="form" *ngIf="active" (ngSubmit)="continue($event)" style="text-align: center">
+      <ideal-organization-fields [organization]="organization" [form]="fields"
+                                 [submitted]="submitted"></ideal-organization-fields>
+      <button type="submit" md-raised-button color="accent">{{buttonText}}</button>
+    </form>
+  </md-card-content>
+</md-card>
+
