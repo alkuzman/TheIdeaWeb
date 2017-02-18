@@ -3,6 +3,7 @@ import {Problem} from "../../../../model/ideas/problem";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
 import {User} from "../../../../model/authentication/user";
 import {ProblemService} from "../../../../services/problem/problem.service";
+import {UserService} from "../../../../services/user/user.service";
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */
@@ -19,7 +20,7 @@ export class NewProblemFormComponent implements OnInit {
   active = true;
   errorMessage: any;
 
-  constructor(private problemService: ProblemService, private securityContext: JwtSecurityContext) {
+  constructor(private problemService: ProblemService, private userService: UserService) {
 
   }
 
@@ -29,7 +30,7 @@ export class NewProblemFormComponent implements OnInit {
 
   save(p: Problem): boolean {
     this.problem = p;
-    let questioner: User = this.securityContext.principal;
+    let questioner: User = this.userService.getAuthenticatedUser();
     this.problem.questioner = questioner;
     this.problemService.addProblem(this.problem)
       .subscribe(

@@ -82,7 +82,8 @@ export class HomeComponent implements OnInit {
    * Creates an instance of the HomeComponent with the injected
    * NameListService.
    *
-   * @param {NameListService} nameListService - The injected NameListService.
+   * @param themingService
+   * @param route
    */
   constructor(private themingService: ThemingService, private route: ActivatedRoute) {
   }

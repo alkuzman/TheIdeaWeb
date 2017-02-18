@@ -29,7 +29,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   private loadingStateSubscription: Subscription;
   private socketSubscription: Subscription;
 
-  constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService, private socketService: SocketService, private securityContext: JwtSecurityContext, private noticeService: NoticeService, private cd: ChangeDetectorRef) {
+  constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService, private socketService: SocketService, private securityContext: JwtSecurityContext, private noticeService: NoticeService) {
   }
 
   ngOnInit(): void {
