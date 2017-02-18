@@ -1,8 +1,4 @@
 import {Injectable} from "@angular/core";
-import {KeysService} from "../keys/keys.service";
-import {CertificateRequestGenerationService} from "../certificates/certificates-requests-generation.service";
-import {CertificateService} from "../../../domain/services/certificate/certificate.service";
-import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
 import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {User} from "../../../domain/model/authentication/user";
 import {CertificateType} from "../../../domain/model/enumerations/certificate-type";
@@ -11,12 +7,9 @@ import {CertificateType} from "../../../domain/model/enumerations/certificate-ty
  */
 
 @Injectable()
-export class SecurityProfileService {
+export class SecurityProfileConstructorService {
 
-  constructor(private keysGenerationService: KeysService,
-              private certificateRequestGenerationService: CertificateRequestGenerationService,
-              private certificateService: CertificateService,
-              private cryptographicOperations: CryptographicOperations) {
+  constructor() {
   }
 
   /*

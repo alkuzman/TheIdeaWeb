@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
+import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 /**
  * Created by Viki on 2/6/2017.
@@ -8,8 +9,8 @@ import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service"
 
 
 @Injectable()
-export class CertificateService {
-  private certificatesUrl: string = "/api/certificates";
+export class SecurityProfileService {
+  private securityprofilesUrl: string = "/api/securityprofiles";
 
   constructor(private http: JwtHttpService) {
 
@@ -35,17 +36,9 @@ export class CertificateService {
     return headers;
   }
 
-  public sign(pemCertificationRequest: string): Observable<string> {
-    let url: string = this.certificatesUrl + "/sign";
-    return this.http.post(url, pemCertificationRequest, {headers: this.getHeaders()})
-      .map((response: Response) => response.text())
-      .catch((error: any) => this.handleError(error));
-  }
-
-  public get() {
-    let url: string = this.certificatesUrl + "/get";
-    console.log(url);
-    this.http.get(url, {headers: this.getHeaders()}).map((response: Response) => this.extractData(response))
+  public save(securityProfile: SecurityProfile): Observable<SecurityProfile> {
+    return this.http.post(this.securityprofilesUrl, JSON.stringify(securityProfile), {headers: this.getHeaders()})
+      .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }
 }

@@ -5,8 +5,9 @@ import {KeysService} from "../../core/security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "../../core/security-protocols/certificates/certificates-requests-generation.service";
 import {SecurityProfile} from "../../domain/model/security/security-profile";
 import {CertificateService} from "../../domain/services/certificate/certificate.service";
-import {SecurityProfileService} from "../../core/security-protocols/security-profile/security-profile.service";
+import {SecurityProfileConstructorService} from "../../core/security-protocols/constructors/security-profile-constructor.service";
 import {CertificateType} from "../../domain/model/enumerations/certificate-type";
+import {SecurityProfileService} from "../../domain/services/security-profile/security-profile.service";
 /**
  * Created by Viki on 2/11/2017.
  */
@@ -31,13 +32,16 @@ export class VerifyPageComponent implements OnInit {
   private certificateGeneratedE: boolean = false;
   private certificateGeneratedS: boolean = false;
   private passwordEntered: boolean = false;
+  private eSaved = false;
+  private sSaved = false;
   private saveDecision: boolean = false;
   private savePrivateKey: string = "YES";
 
   constructor(private route: ActivatedRoute, private keysService: KeysService,
               private certificateRequestGenerationService: CertificateRequestGenerationService,
+              private securityProfileService: SecurityProfileService,
               private certificateService: CertificateService,
-              private securityProfileService: SecurityProfileService) {
+              private securityProfileConstructorService: SecurityProfileConstructorService) {
   }
 
   ngOnInit(): void {
@@ -72,25 +76,30 @@ export class VerifyPageComponent implements OnInit {
       console.log("NO");
       this.saveSecurityProfile(false);
     }
-    this.saveDecision = true;
   }
 
   private saveSecurityProfile(savePrivateKey: boolean) {
     let securityProfileE;
     let securityProfileS;
     if (savePrivateKey) {
-      securityProfileE = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestE,
+      securityProfileE = this.securityProfileConstructorService.createSecurityProfile(this._pemCertificationRequestE,
         this._pemCertificateE, this.privateKeyEEncrypted, CertificateType.ENCRYPTION, this.user);
-      securityProfileS = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestS,
+      securityProfileS = this.securityProfileConstructorService.createSecurityProfile(this._pemCertificationRequestS,
         this._pemCertificateS, this.privateKeySEncrypted, CertificateType.SIGNING, this.user);
     } else {
-      securityProfileE = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestE,
+      securityProfileE = this.securityProfileConstructorService.createSecurityProfile(this._pemCertificationRequestE,
         this._pemCertificateE, undefined, CertificateType.ENCRYPTION, this.user);
-      securityProfileS = this.securityProfileService.createSecurityProfile(this._pemCertificationRequestS,
+      securityProfileS = this.securityProfileConstructorService.createSecurityProfile(this._pemCertificationRequestS,
         this._pemCertificateS, undefined, CertificateType.SIGNING, this.user);
     }
-    this.certificateService.save(securityProfileE).subscribe((result: SecurityProfile) => console.log(result));
-    this.certificateService.save(securityProfileS).subscribe((result: SecurityProfile) => console.log(result));
+    this.securityProfileService.save(securityProfileE).subscribe((result: SecurityProfile) => {
+      this.eSaved = true;
+      this.saveDecision = this.eSaved && this.sSaved;
+    });
+    this.securityProfileService.save(securityProfileS).subscribe((result: SecurityProfile) => {
+      this.sSaved = true;
+      this.saveDecision = this.eSaved && this.sSaved;
+    });
   }
 
   private certificationRequestE(): void {
