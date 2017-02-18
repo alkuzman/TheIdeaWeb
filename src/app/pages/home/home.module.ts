@@ -9,7 +9,6 @@ import {CategoriesService} from "./categories.service";
   imports: [CommonModule, SharedModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
-  providers: [CategoriesService]
 })
 export class HomeModule {
 

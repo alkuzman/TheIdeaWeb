@@ -8,6 +8,7 @@ import {Idea} from "../../../../model/ideas/idea";
 import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
 import {User} from "../../../../model/authentication/user";
 import {SolutionService} from "../../../../services/solution/solution.service";
+import {UserService} from "../../../../services/user/user.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form-new",
@@ -43,7 +44,7 @@ export class NewSolutionFormComponent implements OnInit {
   solution: Solution;
   errorMessage: any;
 
-  constructor(private solutionService: SolutionService, private jwtSecurityContext: JwtSecurityContext) {
+  constructor(private solutionService: SolutionService, private userService: UserService) {
 
   }
 
@@ -58,7 +59,7 @@ export class NewSolutionFormComponent implements OnInit {
   }
 
   save(solution: Solution) {
-    let owner: User = this.jwtSecurityContext.principal;
+    let owner: User = this.userService.getAuthenticatedUser();
     if (solution.idea.owner == null)
       solution.idea.owner = owner;
     if (solution.idea.problem.questioner == null)
