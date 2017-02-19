@@ -7,8 +7,8 @@ import {User} from "../../../model/authentication/user";
 import {Problem} from "../../../model/ideas/problem";
 import {IdeaActionsService} from "../../../services/idea/idea-actions.service";
 import {Actions} from "../../../../core/helper/actions/actions";
-import {UserService} from "../../../services/user/user.service";
 import {Action} from "../../../../core/helper/actions/action";
+import {RedirectService} from "../../../../core/navigation/redirect.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-idea-card",
@@ -30,7 +30,7 @@ export class IdeaCardComponent implements OnInit {
   @Output("ban") ban: EventEmitter<Idea> = new EventEmitter<Idea>();
   private actions: Actions;
 
-  constructor(private ideaActionsService: IdeaActionsService, private userService: UserService) {
+  constructor(private ideaActionsService: IdeaActionsService, private route: RedirectService) {
 
   }
 
@@ -90,6 +90,10 @@ export class IdeaCardComponent implements OnInit {
     this.ban.emit(this.idea);
   }
 
+  onBuy() {
+    this.route.newTransaction(this.idea);
+  }
+
   onAction(action: Action) {
     if (action.title == "Details")
       this.getDetails();
@@ -115,5 +119,7 @@ export class IdeaCardComponent implements OnInit {
       this.onReport();
     else if (action.title == "Ban")
       this.onBan();
+    else if (action.title == "Buy")
+      this.onBuy();
   }
 }

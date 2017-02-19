@@ -52,6 +52,10 @@ export const PagesRoutes: Routes = [
       {
         path: 'notices',
         loadChildren: 'app/pages/notice-pages/notice-pages.module#NoticePagesModule'
+      },
+      {
+        path: 'transactions',
+        loadChildren: 'app/pages/transaction-pages/transaction-pages.module#TransactionPagesModule'
       }]
   }
 ];

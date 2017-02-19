@@ -71,6 +71,17 @@ $ideal-app-theme: mat-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-
   @include ideal-app-theme($ideal-user-theme);
 }
 
+.transaction-theme {
+  $ideal-transaction-primary: mat-palette($mat-deep-purple);
+  $ideal-transaction-accent: mat-palette($mat-deep-orange);
+  $ideal-transaction-warn: mat-palette($mat-red);
+
+  $ideal-transaction-theme: mat-light-theme($ideal-transaction-primary, $ideal-transaction-accent, $ideal-transaction-warn);
+
+  @include angular-material-theme($ideal-transaction-theme);
+  @include ideal-app-theme($ideal-transaction-theme);
+}
+
 $ideal-white: (
   0: #ffffff,
   50: #fafafa,
