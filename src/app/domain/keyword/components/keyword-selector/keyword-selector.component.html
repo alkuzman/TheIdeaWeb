@@ -1,0 +1,13 @@
+<ideal-keyword-search [searchPlaceholder]="searchPlaceholder" [keywords]="suggestedKeywords" [clearAfterSelect]="true" (keywordSelected)="onKeywordSelected($event)" [stopKeywords]="keywords"></ideal-keyword-search>
+<md-chip-list>
+  <div *ngFor="let keyword of keywords; let i = index" class="margin-bottom">
+    <md-chip
+      color="primary"
+      selected="true">
+      {{keyword}}
+      <button type="button" (click)="remove(keyword, i)" md-icon-button class="chip-button">
+        <md-icon>clear</md-icon>
+      </button>
+    </md-chip>
+  </div>
+</md-chip-list>

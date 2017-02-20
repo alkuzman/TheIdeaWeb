@@ -13,9 +13,10 @@ import {ProblemDetailsComponent} from "./components/problem-details/problem-deta
 import {LoadProblemDetailsComponent} from "./components/problem-details/load-problem-details/load-problem-details.component";
 import {ProblemListLoaderComponent} from "./components/problem-list/problem-list-loader/problem-list-loader.component";
 import {UserModule} from "../user/user.module";
+import {KeywordModule} from "../keyword/keyword.module";
 
 @NgModule({
-  imports: [SharedModule, UserModule],
+  imports: [SharedModule, UserModule, KeywordModule],
   declarations: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
   exports: [ProblemFieldsComponent, ProblemFormComponent, NewProblemFormComponent, ProblemListComponent, ProblemCardComponent, ProblemDetailsComponent, LoadProblemDetailsComponent, ProblemListLoaderComponent],
 })

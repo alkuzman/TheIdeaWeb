@@ -6,6 +6,8 @@ import {Idea} from "../../../../model/ideas/idea";
 import {Problem} from "../../../../model/ideas/problem";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 
 @Component({
   moduleId: module.id,
@@ -49,5 +51,8 @@ export class IdeaFormComponent implements OnInit {
     this.idea.problem = new Problem();
     this.active = false;
     setTimeout(() => this.active = true, 0);
+  }
+
+  analyze(): void {
   }
 }

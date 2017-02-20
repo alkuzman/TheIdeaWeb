@@ -1,12 +1,12 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (submit)="onOptionSelected()">
   <md-input-container class="full-width">
     <input mdInput autocomplete="off" [placeholder]="searchPlaceholder" [mdAutocomplete]="reactiveAuto"
            [formControl]="searchField">
   </md-input-container>
   <md-autocomplete #reactiveAuto="mdAutocomplete">
-    <md-option (click)="onOptionSelected(agent)" *ngFor="let agent of agents" [value]="getValue(agent)">
+    <md-option *ngFor="let keyword of keywordResults" [value]="keyword.phrase">
       <div>
-        <ideal-agent-list-item [agent]="agent"></ideal-agent-list-item>
+        {{keyword.phrase}}
       </div>
     </md-option>
   </md-autocomplete>

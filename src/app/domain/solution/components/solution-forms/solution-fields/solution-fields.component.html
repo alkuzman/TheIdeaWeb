@@ -3,8 +3,21 @@
                      [titleLabel]="ideaTitleLabel" [sneakPeakLabel]="ideaSnackPeakLabel"
                      [problemTitleLabel]="problemTitleLabel" [problemBodyLabel]="problemBodyLabel"
                      [problemTagsLabel]="problemTagsLabel" [idea]="solution.idea" [form]="ideaFields"
-                     [submitted]="_submitted"></ideal-idea-fields>
+                     [submitted]="_submitted"
+                     [idleDelay]="idleDelay"
+                     (idle)="onInputIdle($event)"></ideal-idea-fields>
   <div class="margin-top">
-    <ideal-text-editor [title]="bodyLabel" formControlName="text"></ideal-text-editor>
+    <ideal-text-editor [title]="bodyLabel" formControlName="text" idealInputIdle [delay]="idleDelay"
+                       (idle)="onInputIdle($event)"></ideal-text-editor>
   </div>
+  <md-chip-list>
+    <div *ngFor="let keyword of ideaAnalysis?.text?.keywords | slice:0:numberOfTags; let i = index">
+      <md-chip
+        color="primary"
+        [md-tooltip]="keyword.score + ''">
+        {{keyword.phrase}}
+      </md-chip>
+    </div>
+    <button md-button type="button" (click)="showMoreTags()">Show more</button>
+  </md-chip-list>
 </div>

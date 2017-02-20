@@ -5,6 +5,8 @@ import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {Solution} from "../../../../model/ideas/solution";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form",

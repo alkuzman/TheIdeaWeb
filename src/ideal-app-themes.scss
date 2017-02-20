@@ -19,8 +19,41 @@
   .warn {
     color: mat-color($warn);
   }
+
+  .ideal-background-primary {
+    background-color: mat-color($primary);
+  }
+
+  .ideal-background-accent {
+    background-color: mat-color($accent);
+  }
+
+  .ideal-background-warn {
+    background-color: mat-color($warn);
+  }
+}
+
+@mixin text_editor_mixin($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .text-editor-primary {
+    background-color: mat-color($primary, 50);
+    color: white;
+
+  }
+  .text-editor-accent {
+    background-color: mat-color($accent);
+  }
+  .text-editor-warn {
+    background-color: mat-color($warn);
+  }
 }
 
 @mixin ideal-app-theme($theme) {
   @include main_mixin($theme);
+  @include text_editor_mixin($theme);
 }

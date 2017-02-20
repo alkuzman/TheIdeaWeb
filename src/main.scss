@@ -18,8 +18,12 @@ body {
   margin-bottom: -8px !important;
 }
 
-.md-autocomplete-panel {
+.mat-autocomplete-panel {
   max-width: none !important;
+}
+
+.mat-autocomplete-panel md-option {
+  height: auto !important;
 }
 
 md-card-header, .md-card-header-text {

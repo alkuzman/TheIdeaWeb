@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 19/10/2016.
  */
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit, EventEmitter, Output} from "@angular/core";
 import {MakeProvider, AbstractValueAccessor} from "../../../abstract-value-accessor";
 import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
 
@@ -14,23 +14,11 @@ import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
 })
 export class TextEditorComponent extends AbstractValueAccessor<string> implements OnInit {
   @Input("title") title: string = "Body";
-  private textPopularityCoefficient: number = 0.0;
-  private docs: any;
-
+  @Output("blur") blur: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+  @Output("input") input: EventEmitter<Event> = new EventEmitter<Event>();
 
   constructor(private analyzerService: AnalyzerService) {
     super("");
-  }
-
-  processText(): void {
-    this.getTextPopularityCoefficient();
-    this.getWikipediaDocuments();
-  }
-
-  getTextPopularityCoefficient() {
-    this.analyzerService.calculatePopularity(this.value).subscribe((result: number) => {
-      this.textPopularityCoefficient = result * 100;
-    });
   }
 
   ngOnInit(): void {
@@ -41,14 +29,11 @@ export class TextEditorComponent extends AbstractValueAccessor<string> implement
     return this.value.length
   }
 
-  getWikipediaDocuments() {
-    this.analyzerService.getSymilarDocuments(this.value, {limit: "5"}).subscribe((docs: any) => {
-      this.docs = docs;
-    });
+  onBlur(value: FocusEvent): void {
+    this.blur.emit(value);
   }
 
-  getWikiName(value: string) {
-    return value.replace(" ", "_");
+  onInput(value: Event): void {
+    this.input.emit(value);
   }
-
 }

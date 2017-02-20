@@ -1,12 +1,14 @@
 /**
  * Created by AKuzmanoski on 25/10/2016.
  */
-import {Component, OnInit, Input, AfterViewChecked} from "@angular/core";
+import {Component, OnInit, Input, AfterViewChecked, EventEmitter, Output} from "@angular/core";
 import {Problem} from "../../../../model/ideas/problem";
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
 import {ProblemFormErrors} from "./problem-form-errors";
 import {ProblemValidationMessages} from "./problem-validation-messages";
+import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {ProblemAnalysis} from "../../../../model/analyzers/analysis/problem-analysis";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-fields",
@@ -17,19 +19,23 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   @Input("bodyLabel") bodyLabel: string = "Problem Body";
   @Input("tagsLabel") tagsLabel: string = "Tags";
   @Input("form") form: FormGroup;
+  @Input("idleDelay") idleDelay: number = 1500;
+  @Output("idle") idle: EventEmitter<number> = new EventEmitter<number>();
   private currentForm: FormGroup;
   @Input("problem") problem: Problem;
   private _submitted: boolean;
+  private problemAnalysis: ProblemAnalysis;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private analyzerService: AnalyzerService) {
   }
 
   ngOnInit(): void {
+    this.problem.keywords = [];
     let control: FormControl = this.fb.control(this.problem.title, Validators.required);
     control.valueChanges.subscribe((value: string) => {
       this.problem.title = value;
@@ -98,4 +104,12 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
       minlength: 'Body should be at least 100 characters long'
     }
   };
+
+  onIdle(value: number) {
+    this.analyzerService.analyzeProblem(this.problem).subscribe((problemAnalysis: ProblemAnalysis) => {
+      this.problemAnalysis = problemAnalysis;
+      console.log("Problem analysis ready");
+    });
+    this.idle.emit(value);
+  }
 }

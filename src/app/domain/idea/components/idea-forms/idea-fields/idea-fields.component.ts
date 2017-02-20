@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
@@ -22,6 +22,8 @@ export class IdeaFieldsComponent implements OnInit {
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Input("ideaTagsLabel") ideaTagsLabel: string = "Idea Tags";
   @Input("form") form: FormGroup;
+  @Input("idleDelay") idleDelay = 1500;
+  @Output("idle") idle: EventEmitter<number> = new EventEmitter<number>();
   private currentForm: FormGroup;
   private problemFields: FormGroup;
   @Input("idea") idea: Idea;
@@ -111,4 +113,8 @@ export class IdeaFieldsComponent implements OnInit {
       required: 'Tags are required'
     }
   };
+
+  onIdle(idle: number) {
+    this.idle.emit(idle);
+  }
 }

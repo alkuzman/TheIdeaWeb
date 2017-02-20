@@ -8,6 +8,7 @@ export class Problem extends BaseEntityImpl {
   public title: string;
   public text: string;
   public questioner: Person;
+  public keywords: string[];
 
   toString(): string {
     return super.toString() + "\n" +
