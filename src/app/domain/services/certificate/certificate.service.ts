@@ -2,6 +2,9 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {CertificateType} from "../../model/enumerations/certificate-type";
+import {CertificatesFilterProperties} from "./certificates-filter.properties";
+import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 /**
  * Created by Viki on 2/6/2017.
  */
@@ -42,10 +45,12 @@ export class CertificateService {
       .catch((error: any) => this.handleError(error));
   }
 
-  public get() {
-    let url: string = this.certificatesUrl + "/get";
+  public get(filterProperties: CertificatesFilterProperties, type: CertificateType): Observable<string> {
+    let params = PropertiesToUrlSearchParams.transform(filterProperties);
+    let url: string = this.certificatesUrl + "/" + CertificateType[type];
     console.log(url);
-    this.http.get(url, {headers: this.getHeaders()}).map((response: Response) => this.extractData(response))
+    return this.http.get(url, {headers: this.getHeaders(), search: params})
+      .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));
   }
 }

@@ -22,7 +22,7 @@ export class SecurityProfileFieldsPrivateKeyComponent {
   }
 
   public decrypt(password: string) {
-    this.keysService.generateSymmetricKeyFromPassword(password, 6530, 32, 'SHA256')
+    this.keysService.generateSymmetricKeyFromPassword(password)
       .then((symmetricKey: CryptoKey) => {
         this.keysService.decryptPrivateKeyWithSymmetricKeyRawFormat(this.encryptedPrivateKey, symmetricKey)
           .subscribe((privateRawKey: ArrayBuffer) => {

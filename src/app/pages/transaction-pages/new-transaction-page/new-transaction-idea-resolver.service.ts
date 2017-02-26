@@ -10,7 +10,6 @@ import {ErrorHandlingService} from "../../../core/error-handling/error-handling.
 @Injectable()
 export class NewTransactionIdeaResolverService implements Resolve<Idea> {
   constructor(private ideaService: IdeaService, private errorHandlingService: ErrorHandlingService) {
-
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Idea>|Promise<Idea>|Idea {

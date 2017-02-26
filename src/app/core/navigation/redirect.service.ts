@@ -49,7 +49,6 @@ export class RedirectService {
   }
 
   newTransaction(idea: Idea) {
-    console.log("in redirect");
     this.router.navigate(["/transactions", "new"], {queryParams: {ideaId: idea.id}});
   }
 }

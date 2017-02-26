@@ -15,13 +15,14 @@ import {CountryService} from "./localization/country.service";
 import {CertificateService} from "./certificate/certificate.service";
 import {MemberService} from "./member/member.service";
 import {SecurityProfileService} from "./security-profile/security-profile.service";
+import {CurrencyService} from "./currency/currency.service";
 /**
  * Created by AKuzmanoski on 14/01/2017.
  */
 @NgModule({
   providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, ProblemActionsService,
     SharableService, SolutionService, UserService, UserObjectService, SearchableService, AgentService,
-    NoticeService, CountryService, CertificateService, MemberService, SecurityProfileService]
+    NoticeService, CountryService, CertificateService, MemberService, SecurityProfileService, CurrencyService]
 })
 export class DomainServicesModule {
 }

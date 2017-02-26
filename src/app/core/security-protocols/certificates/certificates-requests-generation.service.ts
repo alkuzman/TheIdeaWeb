@@ -13,6 +13,7 @@ import Attribute from "pkijs/src/Attribute";
 import {User} from "../../../domain/model/authentication/user";
 import {CountryService} from "../../../domain/services/localization/country.service";
 import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
+import Certificate from "pkijs/src/Certificate";
 
 
 @Injectable()
@@ -26,6 +27,7 @@ export class CertificateRequestGenerationService {
   public createPKCS10Internal(privateKey: CryptoKey, publicKey: CryptoKey, user: User) {
     //region Initial variables
     let sequence: Promise<any> = Promise.resolve();
+
 
     const pkcs10 = new CertificationRequest();
 
@@ -51,38 +53,13 @@ export class CertificateRequestGenerationService {
     }));
     //state or province name
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
-      type: "2.5.4.6",
+      type: "2.5.4.8",
       value: new asn1js.PrintableString({value: user.country})
     }));
 
+
     pkcs10.attributes = [];
     //endregion
-
-    /*
-     //region Create a new key pair
-     sequence = sequence.then(() =>
-     {
-     let algorithm = getAlgorithmParameters(this.signAlg, "generatekey");
-     let algorithmInstTemp: any = algorithm.algorithm;
-     if ("hash" in algorithm.algorithm) {
-     algorithmInstTemp.hash.name = this.hashAlg;
-     }
-
-     return crypto.generateKey(algorithmInstTemp, true, algorithm.usages);
-     }
-     );
-     //endregion
-
-     //region Store new key in an interim variables
-     sequence = sequence.then((keyPair: CryptoKeyPair) =>
-     {
-     publicKey = keyPair.publicKey;
-     privateKey = keyPair.privateKey;
-     },
-     error => Promise.reject((`Error during key generation: ${error}`))
-     );
-     //endregion
-     */
 
     //region Exporting public key into "subjectPublicKeyInfo" value of PKCS#10
     sequence = sequence.then(() => pkcs10.subjectPublicKeyInfo.importKey(publicKey));
@@ -107,13 +84,30 @@ export class CertificateRequestGenerationService {
       );
     //endregion
 
+    let forSigning: boolean = false;
+    console.log(privateKey.usages);
+    for (let index in privateKey.usages) {
+      console.log(privateKey.usages[index]);
+      if (privateKey.usages[index] == 'sign') {
+        forSigning = true;
+      }
+    }
+
+    console.log(forSigning);
+    console.log("after create3");
+    //if (forSigning) {
+    console.log("In If");
     //region Signing final PKCS#10 request
     sequence = sequence.then(() => pkcs10.sign(privateKey, this.hashAlg), error => Promise.reject(`Error during exporting public key: ${error}`));
     //endregion
+    //}
 
+    console.log("in create4");
     return sequence.then(() => {
+      console.log("in create5");
       let pkcs10Buffer = new ArrayBuffer(0);
       pkcs10Buffer = pkcs10.toSchema().toBER(false);
+      console.log("in create6");
       return pkcs10Buffer;
 
     }, error => Promise.reject(`Error signing PKCS#10: ${error}`));
@@ -157,6 +151,14 @@ export class CertificateRequestGenerationService {
     }
 
     return resultString;
+  }
+
+  public parseCertficiateFromPem(certPEM: string): Certificate {
+    certPEM = certPEM.replace(/(-----(BEGIN|END) CERTIFICATE-----|\n)/g, '');
+    let certBuf: ArrayBuffer = this.cryptographicOperations.convertStringToUint8(certPEM).buffer;
+    let certAsn1 = asn1js.fromBER(certBuf);
+    let certificate: Certificate = new Certificate({schema: certAsn1.result});
+    return certificate;
   }
 
 }

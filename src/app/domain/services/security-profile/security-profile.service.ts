@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
 import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {CertificateType} from "../../model/enumerations/certificate-type";
 /**
  * Created by Viki on 2/6/2017.
  */
@@ -38,6 +39,13 @@ export class SecurityProfileService {
 
   public save(securityProfile: SecurityProfile): Observable<SecurityProfile> {
     return this.http.post(this.securityprofilesUrl, JSON.stringify(securityProfile), {headers: this.getHeaders()})
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  public getAuthenticatedUserSecurityProfile(type: CertificateType): Observable<SecurityProfile> {
+    let url: string = this.securityprofilesUrl + "/" + CertificateType[type];
+    return this.http.get(url, {headers: this.getHeaders()}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }

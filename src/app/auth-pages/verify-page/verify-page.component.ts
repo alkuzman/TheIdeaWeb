@@ -48,13 +48,13 @@ export class VerifyPageComponent implements OnInit {
     this.route.data.subscribe((data: {user: User}) => {
       this.user = data.user;
       this.certificationRequestE();
-      this.certificationRequestS();
+      //this.certificationRequestS();
     });
   }
 
   public passwordReady(password: string) {
     this.password = password;
-    this.keysService.generateSymmetricKeyFromPassword(this.password, 6530, 32, 'SHA256')
+    this.keysService.generateSymmetricKeyFromPassword(this.password)
       .then((symmetricKey: CryptoKey) => {
         this.keysService.encryptPrivateKeyWithSymmetricKey(this.privateKeyE, symmetricKey)
           .subscribe((encodedEncryptedPrivateKey: string) => {
@@ -104,7 +104,8 @@ export class VerifyPageComponent implements OnInit {
 
   private certificationRequestE(): void {
     let publicKey: CryptoKey;
-    this.keysService.generatePublicPrivateKeyPair().then((keyPair: CryptoKeyPair) => {
+    this.keysService.generatePublicPrivateKeyPair(false).then((keyPair: CryptoKeyPair) => {
+      console.log("NE");
       publicKey = keyPair.publicKey;
       this.privateKeyE = keyPair.privateKey;
       let sequence: Promise<any> = this.certificateRequestGenerationService
@@ -121,7 +122,7 @@ export class VerifyPageComponent implements OnInit {
 
   private certificationRequestS(): void {
     let publicKey: CryptoKey;
-    this.keysService.generatePublicPrivateKeyPair().then((keyPair: CryptoKeyPair) => {
+    this.keysService.generatePublicPrivateKeyPair(true).then((keyPair: CryptoKeyPair) => {
       publicKey = keyPair.publicKey;
       this.privateKeyS = keyPair.privateKey;
       let sequence: Promise<any> = this.certificateRequestGenerationService
@@ -129,6 +130,7 @@ export class VerifyPageComponent implements OnInit {
           let pemRequest = this.certificateRequestGenerationService.parseCertificateRequestPEM(pkcs10Buffer);
           this._pemCertificationRequestS = pemRequest;
           this.certificateService.sign(pemRequest).subscribe((result: string) => {
+            console.log("DA!");
             this._pemCertificateS = result;
             this.certificateGeneratedS = true;
           });

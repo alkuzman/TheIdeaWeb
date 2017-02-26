@@ -12,28 +12,6 @@ export class SecurityProfileConstructorService {
   constructor() {
   }
 
-  /*
-  public createSecurityProfile2(certificatePEM: string, privateKey: CryptoKey, passphrase: string, user: User) {
-    let keyArray = this.keysGenerationService.generateSymmetricKeyFromPassword(passphrase, 6530, 32, 'SHA256');
-    this.keysGenerationService.importKey(keyArray, 'raw', 'AES-CTR').then((symmetricKey: CryptoKey) => {
-      this.keysGenerationService.exportKey(privateKey, 'pkcs8').then((privateRawKey: ArrayBuffer) => {
-        console.log(new Uint8Array(privateRawKey));
-        this.cryptographicOperations.encrypt(
-          this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA-256', 'encrypt').algorithm,
-          symmetricKey, privateRawKey).then((ciphertext: ArrayBuffer) => {
-          let cipherArray: Uint8Array = new Uint8Array(ciphertext);
-          let encodedCipher: string = this.cryptographicOperations.convertUint8ToString(cipherArray);
-          let securityProfile: SecurityProfile = new SecurityProfile();
-          securityProfile.certificatePEM = certificatePEM;
-          securityProfile.encryptedPrivateKey = encodedCipher;
-          securityProfile.agent = user;
-          this.certificateService.save(securityProfile).subscribe((result: SecurityProfile) => console.log(result));
-        });
-      });
-    });
-  }
-   */
-
   public createSecurityProfile(certificationRequestPEM: string, certificatePEM: string, privateKeyEncrypted: string,
                                type: CertificateType, user: User,): SecurityProfile {
 
@@ -48,5 +26,4 @@ export class SecurityProfileConstructorService {
     }
     return securityProfile;
   }
-
 }

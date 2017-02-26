@@ -9,8 +9,8 @@ import {NewTransactionIdeaResolverService} from "./new-transaction-idea-resolver
 
 @NgModule({
   imports: [RouterModule.forChild(NewTransactionPageRoutes)],
-  exports: [RouterModule],
-  providers: [NewTransactionIdeaResolverService]
+  providers: [NewTransactionIdeaResolverService],
+  exports: [RouterModule]
 })
 export class NewTransactionPageRoutingModule {
 }

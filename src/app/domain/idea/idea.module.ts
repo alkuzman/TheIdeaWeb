@@ -16,8 +16,10 @@ import {IdeaListLoaderComponenet} from "./components/idea-list/idea-list-loader/
 
 @NgModule({
   imports: [SharedModule, ProblemModule, UserModule],
-  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
-  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent,
+    IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent,
+    IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
 })
 export class IdeaModule {
 
