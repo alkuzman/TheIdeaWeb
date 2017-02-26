@@ -3,6 +3,8 @@ import {Idea} from "../model/ideas/idea";
 import {ProtocolTransaction} from "../model/security/protocol-transaction";
 import {ProtocolTransactionMessageOne} from "../model/security/messages/protocol-transaction-message-one";
 import {ProtocolMessageOneConstructorService} from "../../core/security-protocols/constructors/protocol-messages/protocol-message-one-constructor.service";
+import {MdDialog} from "@angular/material";
+import {SecurityPasswordDialogComponent} from "../security/components/security-password-dialog/security-password-dialog.component";
 /**
  * Created by Viki on 2/19/2017.
  */
@@ -16,7 +18,8 @@ export class ProtocolTransactionComponent implements OnInit {
   @Input("idea") idea: Idea;
   @Input("protocolTransaction") protocolTransaction: ProtocolTransaction;
 
-  constructor(private protocolMessageConstructorService: ProtocolMessageOneConstructorService) {
+  constructor(private protocolMessageConstructorService: ProtocolMessageOneConstructorService,
+              private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -27,7 +30,9 @@ export class ProtocolTransactionComponent implements OnInit {
 
   stepOneReady(data: ProtocolTransactionMessageOne) {
     console.log(data);
-    let password: string = 'viki';
-    this.protocolMessageConstructorService.createProtocolMessageOne(data, this.idea.owner, password);
+    let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+    dialogRef.afterClosed().subscribe((password: string) => {
+      this.protocolMessageConstructorService.createProtocolMessageOne(data, this.idea.owner, password);
+    });
   }
 }

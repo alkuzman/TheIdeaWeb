@@ -16,7 +16,6 @@ export class NewTransactionPageComponent implements OnInit {
   private idea: Idea;
 
   constructor(private route: ActivatedRoute, private certificateService: CertificateService) {
-    console.log("Component created");
   }
 
   ngOnInit() {

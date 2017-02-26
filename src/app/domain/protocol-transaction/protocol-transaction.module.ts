@@ -6,13 +6,14 @@ import {StepOneFieldsComponent} from "./components/steps/step-one/step-one-forms
 import {StepOneFormComponent} from "./components/steps/step-one/step-one-forms/step-one-form/step-one-form.component";
 import {StepOneFormNewComponent} from "./components/steps/step-one/step-one-forms/step-one-form-new/step-one-form-new.component";
 import {CurrencyModule} from "../currency/components/currency.module";
+import {SecurityModule} from "../security/security.module";
 /**
  * Created by Viki on 2/19/2017.
  */
 
 
 @NgModule({
-  imports: [SharedModule, IdeaModule, CurrencyModule],
+  imports: [SharedModule, IdeaModule, CurrencyModule, SecurityModule],
   declarations: [StepOneFieldsComponent, StepOneFormComponent,
     StepOneFormNewComponent, ProtocolTransactionComponent],
   exports: [StepOneFieldsComponent, StepOneFormComponent, StepOneFormNewComponent, ProtocolTransactionComponent]
