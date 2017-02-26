@@ -1,33 +1,29 @@
 <md-tab-group class="full-width" dynamicHeight="true">
-  <md-tab label="Certificate">
-    <ideal-security-profile-fields-certificate title="PEM Encryption Certificate"
-                                               [value]="certificateEPEM">
-
-    </ideal-security-profile-fields-certificate>
-
+  <md-tab label="Signing Data">
     <ideal-security-profile-fields-certificate title="PEM Signing Certificate"
                                                [value]="certificateSPEM">
 
     </ideal-security-profile-fields-certificate>
-  </md-tab>
-  <md-tab label="Private key">
-    <ideal-security-profile-fields-private-key [encryptedPrivateKey]="privateKeyEEncrypted"
-                                               title="Encryption Private Key">
 
-    </ideal-security-profile-fields-private-key>
     <ideal-security-profile-fields-private-key [encryptedPrivateKey]="privateKeySEncrypted"
                                                title="Signing Private Key">
 
     </ideal-security-profile-fields-private-key>
-  </md-tab>
-  <md-tab label="Certification request">
-    <ideal-security-profile-fields-certificate title="PEM Encryption Certification request"
-                                               [value]="certificationRequestEPEM">
 
-    </ideal-security-profile-fields-certificate>
     <ideal-security-profile-fields-certificate title="PEM Signing Certification request"
                                                [value]="certificationRequestSPEM">
 
     </ideal-security-profile-fields-certificate>
+  </md-tab>
+  <md-tab label="Encryption Data">
+    <ideal-security-profile-fields-certificate title="PEM Encryption Public Key"
+                                               [value]="publicKeyEPEM">
+
+    </ideal-security-profile-fields-certificate>
+
+    <ideal-security-profile-fields-private-key [encryptedPrivateKey]="privateKeyEEncrypted"
+                                               title="Encryption Private Key">
+
+    </ideal-security-profile-fields-private-key>
   </md-tab>
 </md-tab-group>

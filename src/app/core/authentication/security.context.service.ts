@@ -5,13 +5,15 @@ import any = jasmine.any;
  */
 export class SecurityContext {
   private principleChanged: Subject<any> = new Subject<any>();
-  private securityProfileEncryptionChanged: Subject<any> = new Subject<any>();
-  private securityProfileSigningChanged: Subject<any> = new Subject<any>();
+  //private securityProfileEncryptionChanged: Subject<any> = new Subject<any>();
+  //private securityProfileSigningChanged: Subject<any> = new Subject<any>();
+  private securityProfileChanged: Subject<any> = new Subject<any>();
 
   constructor() {
     this.principleChanged.next(this.principal);
-    this.securityProfileEncryptionChanged.next(this.securityProfileEncryption);
-    this.securityProfileSigningChanged.next(this.securityProfileSigning);
+    this.securityProfileChanged.next(this.securityProfile);
+    //this.securityProfileEncryptionChanged.next(this.securityProfileEncryption);
+    //this.securityProfileSigningChanged.next(this.securityProfileSigning);
   }
 
   get principal(): any {
@@ -27,6 +29,20 @@ export class SecurityContext {
     return this.principleChanged.asObservable();
   }
 
+  get securityProfile(): any {
+    return JSON.parse(localStorage.getItem("security_profile"));
+  }
+
+  set securityProfile(securityProfile: any) {
+    localStorage.setItem("security_profile", JSON.stringify(securityProfile));
+    this.securityProfileChanged.next(securityProfile);
+  }
+
+  securityProfileObservable(): Observable<any> {
+    return this.securityProfileChanged.asObservable();
+  }
+
+  /*
   get securityProfileEncryption(): any {
     return JSON.parse(localStorage.getItem("security_profile_encryption"));
   }
@@ -52,14 +68,17 @@ export class SecurityContext {
   securityProfileSigningObservable(): Observable<any> {
     return this.securityProfileSigningChanged.asObservable();
   }
+   */
 
   clearSecurityContext(): void {
     localStorage.removeItem("auth_principal");
-    localStorage.removeItem("security_profile_encryption");
-    localStorage.removeItem("security_profile_signing");
+    localStorage.removeItem("security_profile");
+    //localStorage.removeItem("security_profile_encryption");
+    //localStorage.removeItem("security_profile_signing");
     this.principleChanged.next(null);
-    this.securityProfileEncryptionChanged.next(null);
-    this.securityProfileSigningChanged.next(null);
+    this.securityProfileChanged.next(null);
+    //this.securityProfileEncryptionChanged.next(null);
+    //this.securityProfileSigningChanged.next(null);
   }
 
   isAuthenticated(): boolean {

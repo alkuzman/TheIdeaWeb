@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
-import {CertificateType} from "../../model/enumerations/certificate-type";
 import {CertificatesFilterProperties} from "./certificates-filter.properties";
 import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 /**
@@ -45,10 +44,18 @@ export class CertificateService {
       .catch((error: any) => this.handleError(error));
   }
 
-  public get(filterProperties: CertificatesFilterProperties, type: CertificateType): Observable<string> {
+  public get(filterProperties: CertificatesFilterProperties): Observable<string> {
     let params = PropertiesToUrlSearchParams.transform(filterProperties);
-    let url: string = this.certificatesUrl + "/" + CertificateType[type];
-    console.log(url);
+    //let url: string = this.certificatesUrl + "/" + CertificateType[type];
+    let url = this.certificatesUrl;
+    return this.http.get(url, {headers: this.getHeaders(), search: params})
+      .map((response: Response) => response.text())
+      .catch((error: any) => this.handleError(error));
+  }
+
+  public getPublicKey(filterProperties: CertificatesFilterProperties): Observable<string> {
+    let params = PropertiesToUrlSearchParams.transform(filterProperties);
+    let url = this.certificatesUrl + "/publickey";
     return this.http.get(url, {headers: this.getHeaders(), search: params})
       .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));

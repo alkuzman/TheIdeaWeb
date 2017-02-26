@@ -44,7 +44,8 @@ export class SecurityProfileService {
   }
 
   public getAuthenticatedUserSecurityProfile(type: CertificateType): Observable<SecurityProfile> {
-    let url: string = this.securityprofilesUrl + "/" + CertificateType[type];
+    //let url: string = this.securityprofilesUrl + "/" + CertificateType[type];
+    let url: string = this.securityprofilesUrl;
     return this.http.get(url, {headers: this.getHeaders()}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));

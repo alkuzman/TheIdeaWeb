@@ -73,8 +73,9 @@ export class UserService {
 
   private extractLoginData(res: Response) {
     let body = res.json();
-    this.jwtSecurityContext.securityProfileEncryption = body.securityProfileEncryption;
-    this.jwtSecurityContext.securityProfileSigning = body.securityProfileSigning;
+    //this.jwtSecurityContext.securityProfileEncryption = body.securityProfileEncryption;
+    //this.jwtSecurityContext.securityProfileSigning = body.securityProfileSigning;
+    this.jwtSecurityContext.securityProfile = body.securityProfile;
     this.jwtSecurityContext.principal = this.userObjectService.user;
     this.userObjectService.removeUser();
     return body || {};

@@ -25,12 +25,10 @@ export class KeysService {
       algorithm = this.cryptographicOperations
         .getAlgorithm(this.helper.ASYMMETRIC_SIGNING_ALG, this.helper.HASH_ALG, "generatekey");
       algInst = algorithm.algorithm;
-      console.log(algorithm.usages);
     } else {
       algorithm = this.cryptographicOperations
         .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "generatekey");
       algInst = algorithm.algorithm;
-      console.log(algorithm.usages);
     }
 
     return this.crypto.generateKey(algInst, true, algorithm.usages);
@@ -51,10 +49,10 @@ export class KeysService {
   }
 
   public generateSymmetricKeyFromPassword(password: string): PromiseLike<CryptoKey> {
-    return this.generateSymmetricKeyFromPasswordAndAdditionalParameters(password, 6530, 32, this.helper.HASH_ALG);
+    return this.generateSymmetricKeyFromPasswordAndAdditionalParameters(password, 6530, 32, 'SHA256');
   }
 
-  public exportKey(key: CryptoKey, format: string): PromiseLike<JsonWebKey|ArrayBuffer> {
+  public exportKey(key: CryptoKey, format: "raw" | "pkcs8" | "spki" | string): PromiseLike<JsonWebKey|ArrayBuffer> {
     return this.crypto.exportKey(format, key);
   }
 

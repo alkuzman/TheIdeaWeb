@@ -23,6 +23,7 @@ import {CryptographicOperations} from "./security-protocols/cryptographic-operat
 import {SecurityProfileConstructorService} from "./security-protocols/constructors/security-profile-constructor.service";
 import {ProtocolMessageOneConstructorService} from "./security-protocols/constructors/protocol-messages/protocol-message-one-constructor.service";
 import {HelperService} from "./security-protocols/helper.service";
+import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import {HelperService} from "./security-protocols/helper.service";
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessageOneConstructorService,
-    HelperService]
+    HelperService, ParserPemService]
 })
 export class CoreModule {
 }
