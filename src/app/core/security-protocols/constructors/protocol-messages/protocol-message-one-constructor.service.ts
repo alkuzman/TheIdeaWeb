@@ -111,10 +111,12 @@ export class ProtocolMessageOneConstructorService implements OnInit {
                                   .then((dataEncryptedBuf: ArrayBuffer) => {
                                     let dataEncrypted: string = this.cryptographicOperations
                                       .convertUint8ToString(new Uint8Array(dataEncryptedBuf));
+                                    let hashedDataEncrypted: string = this.cryptographicOperations.hash(dataEncrypted);
                                     let message = {
                                       'signature': signedHashedInitData,
                                       'object': initDataEncryption,
-                                      'data': dataEncrypted
+                                      'data': dataEncrypted,
+                                      'hashed-data': hashedDataEncrypted
                                     };
                                     let jsonMessage: string = JSON.stringify(message);
                                     console.log(jsonMessage);
