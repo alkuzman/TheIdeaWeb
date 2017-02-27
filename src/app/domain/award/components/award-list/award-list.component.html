@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="space-around">
+  <ideal-award-item [namesAsTooltips]="namesAsTooltips" [disabled]="disabled" [iconSize]="iconSize"
+                    [maxWidth]="maxWidth" *ngFor="let award of awards" [award]="award"
+                    (selected)="onAwardSelected(award)">
+  </ideal-award-item>
+  <ideal-award-item [namesAsTooltips] *ngIf="!awards.length" [disabled]="disabled" [iconSize]="iconSize"
+                    [maxWidth]="maxWidth" [award]="noAwards"></ideal-award-item>
+</div>

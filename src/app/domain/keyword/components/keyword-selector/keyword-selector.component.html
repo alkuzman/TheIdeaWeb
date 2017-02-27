@@ -1,6 +1,6 @@
-<ideal-keyword-search [searchPlaceholder]="searchPlaceholder" [keywords]="suggestedKeywords" [clearAfterSelect]="true" (keywordSelected)="onKeywordSelected($event)" [stopKeywords]="keywords"></ideal-keyword-search>
+<ideal-keyword-search [searchPlaceholder]="searchPlaceholder" [keywords]="suggestedKeywords" [clearAfterSelect]="true" (keywordSelected)="onKeywordSelected($event)" [stopKeywords]="value"></ideal-keyword-search>
 <md-chip-list>
-  <div *ngFor="let keyword of keywords; let i = index" class="margin-bottom">
+  <div *ngFor="let keyword of value; let i = index" class="margin-bottom">
     <md-chip
       color="primary"
       selected="true">

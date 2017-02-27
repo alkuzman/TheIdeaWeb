@@ -9,6 +9,8 @@ import {SolutionFormErrors} from "./solution-form-errors";
 import {SolutionValidationMessages} from "./solution-validation-messages";
 import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {SolutionQuality} from "../../../../model/analyzers/analysis/solution-quality";
+import {SolutionQualityStatus} from "../../../../model/analyzers/analysis/solution-quality-status";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-fields",
@@ -107,6 +109,7 @@ export class SolutionFieldsComponent {
   analyze() {
     this.analyzerService.analyzeIdea(this.solution).subscribe((ideaAnalysis: IdeaAnalysis) => {
       this.ideaAnalysis = ideaAnalysis;
+      console.log(ideaAnalysis);
       this.numberOfTags = 5;
     });
   }

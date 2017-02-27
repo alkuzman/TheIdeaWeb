@@ -10,6 +10,7 @@ export class Idea extends BaseEntityImpl {
   public snackPeak: string;
   public title: string;
   public owner: User;
+  public keywords: string[];
 
 
   toString(): string {

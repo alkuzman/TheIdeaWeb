@@ -35,7 +35,6 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.problem.keywords = [];
     let control: FormControl = this.fb.control(this.problem.title, Validators.required);
     control.valueChanges.subscribe((value: string) => {
       this.problem.title = value;
@@ -48,12 +47,11 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
     });
     this.form.addControl("text", control);
 
-    control = this.fb.control("");
-    control.valueChanges.subscribe((value: string) => {
-      // Tags not implemented yet
-      // TODO update tags here
+    control = this.fb.control(this.problem.keywords);
+    control.valueChanges.subscribe((value: string[]) => {
+      this.problem.keywords = value;
     });
-    this.form.addControl("tags", control);
+    this.form.addControl("keywords", control);
   }
 
   ngAfterViewChecked() {

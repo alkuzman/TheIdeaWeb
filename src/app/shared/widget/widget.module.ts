@@ -16,13 +16,14 @@ import {ColorDirective} from "./directives/color.directive";
 import {PasswordMatcherDirective} from "./directives/password-matcher.directive";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {IdealInputIdle} from "./directives/input-idle.directive";
+import {EmailValidatorDirective} from "./directives/email.validator.directive";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule],
   entryComponents: [UploadImageDialogComponent]
 })

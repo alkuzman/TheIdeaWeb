@@ -1,11 +1,11 @@
 <div [formGroup]="form" fxLayour="column">
   <div fxFlex="100%" *ngIf="showProblemFields">
-    <h3 color="primary">Problem</h3>
+    <h3 class="ideal-headline" idealColor="primary">Problem</h3>
     <ideal-problem-fields [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
                           [tagsLabel]="problemTagsLabel" name="ideaProblem" [form]="problemFields"
                           [problem]="idea.problem" [submitted]="_submitted"
-    [idleDelay]="idleDelay"></ideal-problem-fields>
-    <h3 color="primary">Idea</h3>
+                          [idleDelay]="idleDelay"></ideal-problem-fields>
+    <h3 class="ideal-headline" idealColor="primary">Idea</h3>
   </div>
   <div fxFlex="100%" fxLayout="column">
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
@@ -14,17 +14,17 @@
                [placeholder]="titleLabel" idealInputIdle [delay]="idleDelay" (idle)="onIdle($event)" required/>
         <md-hint idealColor="warn" align="end" *ngIf="formErrors.title">{{formErrors.title}}</md-hint>
       </md-input-container>
-      <md-input-container [dividerColor]="formErrors.tags ? 'warn' : 'primary'" fxFlex="30%" fxFlex.xs="100%"
-                          fxFlexOffset="5%" fxFlexOffset.xs="0">
-        <input type="text" md-input mdInput name="ideaTags"/>
-        <md-placeholder>{{ideaTagsLabel}}</md-placeholder>
-        <md-hint idealColor="warn" align="end" *ngIf="formErrors.tags">{{formErrors.tags}}</md-hint>
-      </md-input-container>
+      <div fxFlex="35%" fxFlex.xs="100%"
+           fxFlexOffset="5%" fxFlexOffset.xs="0">
+        <ideal-keyword-selector formControlName="keywords" [suggestedKeywords]="ideaAnalysis?.keywords"
+                                searchPlaceholder="Idea keywords"></ideal-keyword-selector>
+      </div>
     </div>
     <md-input-container [dividerColor]="formErrors.snackPeak ? 'warn' : 'primary'" fxFlex="100%">
       <textarea style="resize: none;" md-input mdInput md-autosize minRows="4" [placeholder]="sneakPeakLabel"
                 class="fullWidth"
-                formControlName="snackPeak" required idealInputIdle [delay]="idleDelay" (idle)="onIdle($event)"></textarea>
+                formControlName="snackPeak" required idealInputIdle [delay]="idleDelay"
+                (idle)="onIdle($event)"></textarea>
       <md-hint idealColor="warn" align="end" *ngIf="formErrors.snackPeak">{{formErrors.snackPeak}}</md-hint>
     </md-input-container>
   </div>

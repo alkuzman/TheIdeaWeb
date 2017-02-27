@@ -128,3 +128,25 @@ $ideal-white: (
   @include angular-material-theme($ideal-error-theme);
   @include ideal-app-theme($ideal-error-theme);
 }
+
+.success-theme {
+  $ideal-primary: mat-palette($mat-green);
+  $ideal-accent: mat-palette($mat-green);
+  $ideal-warn: mat-palette($mat-red);
+
+  $ideal-theme: mat-light-theme($ideal-primary, $ideal-accent, $ideal-warn);
+
+  @include angular-material-theme($ideal-theme);
+  @include ideal-app-theme($ideal-theme);
+}
+
+.warning-theme {
+  $ideal-primary: mat-palette($mat-yellow);
+  $ideal-accent: mat-palette($mat-yellow);
+  $ideal-warn: mat-palette($mat-red);
+
+  $ideal-theme: mat-light-theme($ideal-primary, $ideal-accent, $ideal-warn);
+
+  @include angular-material-theme($ideal-theme);
+  @include ideal-app-theme($ideal-theme);
+}

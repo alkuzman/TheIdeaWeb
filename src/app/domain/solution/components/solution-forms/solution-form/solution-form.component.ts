@@ -7,6 +7,8 @@ import {FormGroup, FormBuilder} from "@angular/forms";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
 import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
+import {Problem} from "../../../../model/ideas/problem";
+import {Idea} from "../../../../model/ideas/idea";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form",
@@ -46,7 +48,13 @@ export class SolutionFormComponent implements OnInit {
   }
 
   clearForm(): void {
+    let problem = this.solution.idea.problem;
+    if (problem.id == null)
+      problem = new Problem();
+    let idea = new Idea();
+    idea.problem = problem;
     this.solution = new Solution();
+    this.solution.idea = idea;
     this.active = false;
     setTimeout(() => this.active = true, 0);
   }

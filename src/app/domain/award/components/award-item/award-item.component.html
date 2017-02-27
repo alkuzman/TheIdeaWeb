@@ -1,0 +1,14 @@
+<div [style.max-width]="maxWidth + 'px'">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <button type="button" md-tooltip="{{award | idealClean:!namesAsTooltips}}" [style.width]="_buttonSize + 'px'"
+            [style.height]="_buttonSize + 'px'"
+            [style.line-height]="_buttonSize + 'px'"
+            md-icon-button color="primary" [disabled]="disabled" (click)="clicked()">
+      <md-icon [style.width]="_iconSize + 'px'" [style.height]="_iconSize + 'px'"
+               [svgIcon]="award.icon"></md-icon>
+    </button>
+  </div>
+  <div *ngIf="!namesAsTooltips" fxLayout="row" fxLayoutAlign="center">
+    <span style="text-align: center;" class="ideal-caption">{{award}}</span>
+  </div>
+</div>

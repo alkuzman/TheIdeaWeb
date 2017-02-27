@@ -21,6 +21,7 @@ import {KeysService} from "./security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
 import {SecurityProfileService} from "./security-protocols/security-profile/security-profile.service";
+import {IconRegistryService} from "./icon-registry/icon-registry.service";
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import {SecurityProfileService} from "./security-protocols/security-profile/secu
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileService,
-    CryptographicOperations]
+    CryptographicOperations, IconRegistryService]
 })
 export class CoreModule {
 }

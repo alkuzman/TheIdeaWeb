@@ -8,15 +8,21 @@
       </md-toolbar-row>
     </md-toolbar>
     <md-nav-list denese>
-      <md-list-item *ngFor="let navigationItem of navigationItems" (click)="sidenav.toggle()"
-                    [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
-        <div>
-          <md-icon [ngStyle]="{'color': navigationItem.color}" md-list-avatar>{{navigationItem.icon}}</md-icon>
-          <span>{{navigationItem.title}}</span>
-          <span class="numberOfNotifications" [ngStyle]="{'color': navigationItem.color}"
-                *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0">({{numberOfNotifications}})</span>
-        </div>
-      </md-list-item>
+      <div *ngFor="let navigationItemGroup of navigation">
+        <md-divider *ngIf="navigationItemGroup.divider"></md-divider>
+        <h3 md-subheader>{{navigationItemGroup.name}}</h3>
+        <md-list-item *ngFor="let navigationItem of navigationItemGroup.items" (click)="sidenav.toggle()"
+                      [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
+          <md-icon class="icon-middle" [ngStyle]="{'color': navigationItem.color}" md-list-avatar>
+            {{navigationItem.icon}}
+          </md-icon>
+          <h4 md-line>
+            {{navigationItem.title}}
+            <span class="numberOfNotifications" [ngStyle]="{'color': navigationItem.color}"
+                  *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0">({{numberOfNotifications}})</span>
+          </h4>
+        </md-list-item>
+      </div>
     </md-nav-list>
   </md-sidenav>
   <div style="height: 100vh !important;" fxLayout="column">
