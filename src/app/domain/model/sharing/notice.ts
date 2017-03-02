@@ -5,4 +5,9 @@ import {Recipient} from "./recipient";
  */
 export abstract class Notice extends BaseEntityImpl {
   public recipients: Recipient[];
+
+  constructor() {
+    super();
+    this.recipients = [];
+  }
 }

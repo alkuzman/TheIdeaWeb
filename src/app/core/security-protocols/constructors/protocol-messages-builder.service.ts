@@ -1,22 +1,29 @@
 import {Injectable, OnInit} from "@angular/core";
-import {ProtocolTransactionMessageOne} from "../../../../domain/model/security/messages/protocol-transaction-message-one";
-import {SecurityProfile} from "../../../../domain/model/security/security-profile";
-import {JwtSecurityContext} from "../../../authentication/jwt/jwt-security-context.service";
-import {KeysService} from "../../keys/keys.service";
-import {CryptographicOperations} from "../../cryptographic-operations/cryptographic-operations";
-import {UserService} from "../../../../domain/services/user/user.service";
-import {CertificateService} from "../../../../domain/services/certificate/certificate.service";
-import {Agent} from "../../../../domain/model/authentication/agent";
-import {HelperService} from "../../helper.service";
+import {ProtocolTransactionMessageOne} from "../../../domain/model/security/messages/protocol-transaction-message-one";
+import {SecurityProfile} from "../../../domain/model/security/security-profile";
+import {JwtSecurityContext} from "../../authentication/jwt/jwt-security-context.service";
+import {KeysService} from "../keys/keys.service";
+import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
+import {UserService} from "../../../domain/services/user/user.service";
+import {CertificateService} from "../../../domain/services/certificate/certificate.service";
+import {Agent} from "../../../domain/model/authentication/agent";
+import {HelperService} from "../helper.service";
 import {Observable} from "rxjs";
-import {ParserPemService} from "../../parsers/parser-pem.service";
+import {ParserPemService} from "../parsers/parser-pem.service";
+import {ProtocolTransaction} from "../../../domain/model/security/protocol-transaction";
+import {ProtocolTransactionStep} from "../../../domain/model/security/protocol-transaction-step";
+import {ProtocolTransactionMessageNumber} from "../../../domain/model/enumerations/protocol-transaction-message-number";
+import {NewProtocolTransactionNotice} from "../../../domain/model/security/new-protocol-transaction-notice";
+import {NoticeService} from "../../../domain/services/notice/notice.service";
+import {Recipient} from "../../../domain/model/sharing/recipient";
+import {Notice} from "../../../domain/model/sharing/notice";
 /**
  * Created by Viki on 2/21/2017.
  */
 
 
 @Injectable()
-export class ProtocolMessageOneConstructorService implements OnInit {
+export class ProtocolMessagesBuilderService {
 
   //private securityProfileEncryption: SecurityProfile;
   //private securityProfileSigning: SecurityProfile;
@@ -25,7 +32,7 @@ export class ProtocolMessageOneConstructorService implements OnInit {
   constructor(private securityContext: JwtSecurityContext, private certificateService: CertificateService,
               private keysService: KeysService, private cryptographicOperations: CryptographicOperations,
               private userService: UserService, private helper: HelperService,
-              private pemParser: ParserPemService) {
+              private pemParser: ParserPemService, private noticeService: NoticeService) {
 
     //this.initializeSecurityProfiles();
     this.initializeSecurityProfile();
@@ -53,13 +60,26 @@ export class ProtocolMessageOneConstructorService implements OnInit {
   }
    */
 
-  ngOnInit(): void {
-    //this.getAuthenticatedUserSecurityProfile();
-    console.log("on init");
-    //this.initializeSecurityProfiles();
+  private sendMessage(protocolTransaction: ProtocolTransaction, message: string,
+                                          stepNumber: ProtocolTransactionMessageNumber, otherParty: Agent) {
+    //Adding the message in the Protocol transaction
+    let step: ProtocolTransactionStep = new ProtocolTransactionStep();
+    step.stepMessage = message;
+    step.stepNumber = stepNumber;
+    protocolTransaction.messages.push(step);
+
+    //Creating notice for the protocol transaction
+    let notice: NewProtocolTransactionNotice = new NewProtocolTransactionNotice();
+    notice.protocolTransaction = protocolTransaction;
+    let recipient: Recipient = new Recipient();
+    recipient.agent = otherParty;
+    notice.recipients.push(recipient);
+    this.noticeService.addNotice(notice).subscribe((notice: Notice) => {
+      console.log("SENT");
+    });
   }
 
-  public createProtocolMessageOne(messageOne: ProtocolTransactionMessageOne, owner: Agent, password: string) {
+  public buildProtocolMessageOne(messageOne: ProtocolTransactionMessageOne, owner: Agent, password: string) {
     this.certificateService.getPublicKey({email: owner.email})
       .subscribe((pemPublicKeyEncryption: string) => {
 
@@ -120,6 +140,9 @@ export class ProtocolMessageOneConstructorService implements OnInit {
                                     };
                                     let jsonMessage: string = JSON.stringify(message);
                                     console.log(jsonMessage);
+                                    let protocolTransaction: ProtocolTransaction = new ProtocolTransaction();
+                                    this.sendMessage(protocolTransaction, jsonMessage,
+                                      ProtocolTransactionMessageNumber.MONE, owner);
                                   });
                               });
                           });
@@ -133,7 +156,6 @@ export class ProtocolMessageOneConstructorService implements OnInit {
 
   private extractPrivateKey(encryptedKey: string, password: string, algorithm: string): Observable<CryptoKey> {
     return Observable.create((observer) => {
-      console.log("TUKAAAAAAAAAAAAAAA");
       this.keysService.generateSymmetricKeyFromPassword(password)
         .then((symmetricKey: CryptoKey) => {
           this.keysService.decryptPrivateKeyWithSymmetricKey(encryptedKey, symmetricKey, algorithm)

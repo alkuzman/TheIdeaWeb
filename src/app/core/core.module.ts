@@ -21,7 +21,7 @@ import {KeysService} from "./security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
 import {SecurityProfileConstructorService} from "./security-protocols/constructors/security-profile-constructor.service";
-import {ProtocolMessageOneConstructorService} from "./security-protocols/constructors/protocol-messages/protocol-message-one-constructor.service";
+import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/protocol-messages-builder.service";
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
 
@@ -34,7 +34,7 @@ import {ParserPemService} from "./security-protocols/parsers/parser-pem.service"
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
-    CryptographicOperations, SecurityProfileConstructorService, ProtocolMessageOneConstructorService,
+    CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
     HelperService, ParserPemService]
 })
 export class CoreModule {

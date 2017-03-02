@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {Idea} from "../model/ideas/idea";
 import {ProtocolTransaction} from "../model/security/protocol-transaction";
 import {ProtocolTransactionMessageOne} from "../model/security/messages/protocol-transaction-message-one";
-import {ProtocolMessageOneConstructorService} from "../../core/security-protocols/constructors/protocol-messages/protocol-message-one-constructor.service";
+import {ProtocolMessagesBuilderService} from "../../core/security-protocols/constructors/protocol-messages-builder.service";
 import {MdDialog} from "@angular/material";
 import {SecurityPasswordDialogComponent} from "../security/components/security-password-dialog/security-password-dialog.component";
 /**
@@ -18,7 +18,7 @@ export class ProtocolTransactionComponent implements OnInit {
   @Input("idea") idea: Idea;
   @Input("protocolTransaction") protocolTransaction: ProtocolTransaction;
 
-  constructor(private protocolMessageConstructorService: ProtocolMessageOneConstructorService,
+  constructor(private protocolMessageConstructorService: ProtocolMessagesBuilderService,
               private dialog: MdDialog) {
   }
 
@@ -32,7 +32,7 @@ export class ProtocolTransactionComponent implements OnInit {
     console.log(data);
     let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
     dialogRef.afterClosed().subscribe((password: string) => {
-      this.protocolMessageConstructorService.createProtocolMessageOne(data, this.idea.owner, password);
+      this.protocolMessageConstructorService.buildProtocolMessageOne(data, this.idea.owner, password);
     });
   }
 }
