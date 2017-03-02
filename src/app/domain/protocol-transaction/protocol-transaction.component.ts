@@ -16,7 +16,7 @@ import {SecurityPasswordDialogComponent} from "../security/components/security-p
 })
 export class ProtocolTransactionComponent implements OnInit {
   @Input("idea") idea: Idea;
-  @Input("protocolTransaction") protocolTransaction: ProtocolTransaction;
+  @Input("buyingTransaction") protocolTransaction: ProtocolTransaction;
 
   constructor(private protocolMessageConstructorService: ProtocolMessagesBuilderService,
               private dialog: MdDialog) {
@@ -32,7 +32,7 @@ export class ProtocolTransactionComponent implements OnInit {
     console.log(data);
     let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
     dialogRef.afterClosed().subscribe((password: string) => {
-      this.protocolMessageConstructorService.buildProtocolMessageOne(data, this.idea.owner, password);
+      this.protocolMessageConstructorService.buildProtocolMessageOne(data, this.idea, password);
     });
   }
 }

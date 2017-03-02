@@ -9,10 +9,17 @@ import {NoticeFieldsComponent} from "./components/notice-forms/notice-fields/not
 import {NoticeSubmitLabelPipe} from "./pipes/notice-submit-label.pipe";
 import {PackageModule} from "../package/package.module";
 import {AgentModule} from "../agent/agent.module";
+import {NoticeListComponent} from "./components/notice-list/notice-list.component";
+import {NoticeListLoaderComponent} from "./components/notice-list/notice-list-loader/notice-list-loader.component";
+import {NoticeCardComponent} from "./components/notice-card/notice-card.component";
+import {BuyingTransactionNoticeCardComponent} from "./components/notice-card/buying-transaction-notice-card/buying-transaction-notice-card.component";
+import {UserModule} from "../user/user.module";
 @NgModule({
-  imports: [SharedModule, PackageModule, AgentModule],
-  declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent],
-  exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent]
+  imports: [SharedModule, PackageModule, AgentModule, UserModule],
+  declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
+    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent],
+  exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
+    NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent]
 })
 export class NoticeModule {
 

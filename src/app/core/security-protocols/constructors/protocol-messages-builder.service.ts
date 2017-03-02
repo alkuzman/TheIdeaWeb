@@ -13,10 +13,12 @@ import {ParserPemService} from "../parsers/parser-pem.service";
 import {ProtocolTransaction} from "../../../domain/model/security/protocol-transaction";
 import {ProtocolTransactionStep} from "../../../domain/model/security/protocol-transaction-step";
 import {ProtocolTransactionMessageNumber} from "../../../domain/model/enumerations/protocol-transaction-message-number";
-import {NewProtocolTransactionNotice} from "../../../domain/model/security/new-protocol-transaction-notice";
+import {BuyingTransactionNotice} from "../../../domain/model/security/buying-transaction-notice";
 import {NoticeService} from "../../../domain/services/notice/notice.service";
 import {Recipient} from "../../../domain/model/sharing/recipient";
 import {Notice} from "../../../domain/model/sharing/notice";
+import {BuyingTransaction} from "../../../domain/model/security/buying-transaction";
+import {Idea} from "../../../domain/model/ideas/idea";
 /**
  * Created by Viki on 2/21/2017.
  */
@@ -60,17 +62,17 @@ export class ProtocolMessagesBuilderService {
   }
    */
 
-  private sendMessage(protocolTransaction: ProtocolTransaction, message: string,
+  private sendMessage(buyingTransaction: BuyingTransaction, message: string,
                                           stepNumber: ProtocolTransactionMessageNumber, otherParty: Agent) {
     //Adding the message in the Protocol transaction
     let step: ProtocolTransactionStep = new ProtocolTransactionStep();
     step.stepMessage = message;
     step.stepNumber = stepNumber;
-    protocolTransaction.messages.push(step);
+    buyingTransaction.messages.push(step);
 
     //Creating notice for the protocol transaction
-    let notice: NewProtocolTransactionNotice = new NewProtocolTransactionNotice();
-    notice.protocolTransaction = protocolTransaction;
+    let notice: BuyingTransactionNotice = new BuyingTransactionNotice();
+    notice.buyingTransaction = buyingTransaction;
     let recipient: Recipient = new Recipient();
     recipient.agent = otherParty;
     notice.recipients.push(recipient);
@@ -79,8 +81,8 @@ export class ProtocolMessagesBuilderService {
     });
   }
 
-  public buildProtocolMessageOne(messageOne: ProtocolTransactionMessageOne, owner: Agent, password: string) {
-    this.certificateService.getPublicKey({email: owner.email})
+  public buildProtocolMessageOne(messageOne: ProtocolTransactionMessageOne, idea: Idea, password: string) {
+    this.certificateService.getPublicKey({email: idea.owner.email})
       .subscribe((pemPublicKeyEncryption: string) => {
 
         this.pemParser.parsePublicKeyFromPem(pemPublicKeyEncryption)
@@ -140,9 +142,10 @@ export class ProtocolMessagesBuilderService {
                                     };
                                     let jsonMessage: string = JSON.stringify(message);
                                     console.log(jsonMessage);
-                                    let protocolTransaction: ProtocolTransaction = new ProtocolTransaction();
-                                    this.sendMessage(protocolTransaction, jsonMessage,
-                                      ProtocolTransactionMessageNumber.MONE, owner);
+                                    let buyingTransaction: BuyingTransaction = new BuyingTransaction();
+                                    buyingTransaction.idea = idea;
+                                    this.sendMessage(buyingTransaction, jsonMessage,
+                                      ProtocolTransactionMessageNumber.MONE, idea.owner);
                                   });
                               });
                           });

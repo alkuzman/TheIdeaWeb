@@ -4,10 +4,10 @@ import {Recipient} from "./recipient";
  * Created by AKuzmanoski on 23/10/2016.
  */
 export abstract class Notice extends BaseEntityImpl {
-  public recipients: Recipient[];
+    public recipients: Recipient[];
 
-  constructor() {
-    super();
-    this.recipients = [];
-  }
+    constructor() {
+        super();
+        this.recipients = [];
+    }
 }
