@@ -37,6 +37,7 @@
     "intl": "^1.2.5",
     "node": "0.0.0",
     "node-rsa": "^0.4.2",
+    "nonce": "^1.0.4",
     "pbkdf2": "^3.0.9",
     "pkijs": "^2.0.48",
     "reflect-metadata": "^0.1.8",

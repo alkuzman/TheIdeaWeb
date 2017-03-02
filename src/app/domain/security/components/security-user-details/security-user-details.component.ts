@@ -1,11 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {KeysService} from "../../../../core/security-protocols/keys/keys.service";
-import {CertificateRequestGenerationService} from "../../../../core/security-protocols/certificates/certificates-requests-generation.service";
-import {CryptographicOperations} from "../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
-import {UserService} from "../../../services/user/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MdSlideToggleChange} from "@angular/material";
-import {CertificateService} from "../../../services/certificate/certificate.service";
 
 /**
  * Created by Viki on 2/6/2017.
@@ -23,11 +18,7 @@ export class SecurityUserDetailsComponent implements OnInit {
   private form: FormGroup;
   private sliderChecked: boolean;
 
-  constructor(private keysGenerationService: KeysService,
-              private certificateService: CertificateService,
-              private certificateRequestGenerationService: CertificateRequestGenerationService,
-              private cryptographicOperations: CryptographicOperations,
-              private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     this.sliderChecked = true;
   }
 

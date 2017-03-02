@@ -1,6 +1,6 @@
 <md-card>
   <md-card-content>
-    <div [ngSwitch]="certificateGeneratedE && certificateGeneratedS" fxLayout="row" fxLayoutAlign="center">
+    <div [ngSwitch]="encryptedKeyPairGenerated && certificateGeneratedS" fxLayout="row" fxLayoutAlign="center">
       <div *ngSwitchCase="false">
         <!-- Certificate generation in progress -->
         <h2>Generating and signing your certificate</h2>
@@ -36,12 +36,11 @@
                 </div>
               </div>
               <div class="full-width" *ngSwitchCase="true">
-                <ideal-security-profile-fields-tabs [certificateEPEM]="pemCertificateE"
-                                                    [certificateSPEM]="pemCertificateS"
-                                                    [certificationRequestEPEM]="pemCertificationRequestE"
+                <ideal-security-profile-fields-tabs [certificateSPEM]="pemCertificateS"
                                                     [certificationRequestSPEM]="pemCertificationRequestS"
+                                                    [privateKeySEncrypted]="privateKeySEncrypted"
                                                     [privateKeyEEncrypted]="privateKeyEEncrypted"
-                                                    [privateKeySEncrypted]="privateKeySEncrypted">
+                                                    [publicKeyEPEM]="pemPublicKeyE">
 
                 </ideal-security-profile-fields-tabs>
               </div>

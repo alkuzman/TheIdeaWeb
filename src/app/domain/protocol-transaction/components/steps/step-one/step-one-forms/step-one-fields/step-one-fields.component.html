@@ -1,0 +1,9 @@
+<div [formGroup]="form">
+  <div fxLayout="row">
+    <md-input-container [dividerColor]="formErrors.bidPrice ? 'warn' : 'primary'" fxFlex="80%">
+      <input mdInput formControlName="bidPrice" placeholder="Bidding Price" required/>
+      <mat-hint idealColor="warn" *ngIf="formErrors.bidPrice" align="end">{{formErrors.bidPrice}}</mat-hint>
+    </md-input-container>
+    <ideal-currency-select formControlName="bidCurrency" placeholder="Currency" fxFlex="20%"></ideal-currency-select>
+  </div>
+</div>

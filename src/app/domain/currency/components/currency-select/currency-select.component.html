@@ -1,0 +1,5 @@
+<md-select [placeholder]="placeholder" [(ngModel)]="value">
+  <md-option *ngFor="let currency of currencies" [value]="currency" selected>
+    {{currency.value}}
+  </md-option>
+</md-select>

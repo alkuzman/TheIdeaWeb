@@ -120,4 +120,5 @@ export class IdeasComponent implements OnInit {
   onBan(idea: Idea) {
     this.ban.emit(idea);
   }
+
 }

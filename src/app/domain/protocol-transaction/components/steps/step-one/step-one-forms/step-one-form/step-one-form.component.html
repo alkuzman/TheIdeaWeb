@@ -1,0 +1,10 @@
+<md-card>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="ready()">
+      <ideal-step-one-fields [form]="fields" [submitted]="submitted" [stepData]="stepData"></ideal-step-one-fields>
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button type="submit" md-raised-button color="accent">Enter</button>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>

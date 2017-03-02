@@ -1,0 +1,10 @@
+<div>
+  <md-tab-group>
+    <md-tab label="Idea Details">
+      <ideal-idea-details [idea]="idea"></ideal-idea-details>
+    </md-tab>
+    <md-tab label="Buying Procedure">
+      <ideal-step-one-form-new (dataReady)="stepOneReady($event)"></ideal-step-one-form-new>
+    </md-tab>
+  </md-tab-group>
+</div>

@@ -27,6 +27,13 @@ export class IdeaActionsService {
         "scope": "owner"
       },
       {
+        "title": "Buy",
+        "description": "Buy this idea",
+        "icon": "shop",
+        "color": "accent",
+        "scope": "notOwner"
+      },
+      {
         "title": "Upvote",
         "description": "This idea shows research effort, it is useful, and might be interesting",
         "icon": "thumb_up",
@@ -123,6 +130,9 @@ export class IdeaActionsService {
     };
     for (let action of actions.mainActions) {
       if (action.scope == "user")
+        newActions.mainActions.push(action);
+      else if (action.scope == "notOwner" && (this.authenticatedUser == null ||
+        this.authenticatedUser.id != idea.owner.id))
         newActions.mainActions.push(action);
       else if (this.authenticatedUser == null)
         continue;

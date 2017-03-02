@@ -6,6 +6,7 @@ import {SecurityFormEncryptionPasswordComponent} from "./components/security-for
 import {SecurityProfileFieldsTabsComponent} from "./components/security-forms/security-profile-fields-tabs/security-profile-fields-tabs.component";
 import {SecurityProfileFieldsPemComponent} from "./components/security-forms/security-profile-fields/security-profile-fields-pem/security-profile-fields-pem.component";
 import {SecurityProfileFieldsPrivateKeyComponent} from "./components/security-forms/security-profile-fields/security-profile-fields-private-key/security-profile-fields-private-key.component";
+import {SecurityPasswordDialogComponent} from "./components/security-password-dialog/security-password-dialog.component";
 /**
  * Created by Viki on 2/6/2017.
  */
@@ -15,10 +16,13 @@ import {SecurityProfileFieldsPrivateKeyComponent} from "./components/security-fo
   imports: [SharedModule],
   declarations: [SecurityUserDetailsComponent, SecurityFieldsEncryptionPasswordComponent,
     SecurityFormEncryptionPasswordComponent, SecurityProfileFieldsTabsComponent,
-    SecurityProfileFieldsPemComponent, SecurityProfileFieldsPrivateKeyComponent],
+    SecurityProfileFieldsPemComponent, SecurityProfileFieldsPrivateKeyComponent,
+    SecurityPasswordDialogComponent],
   exports: [SecurityUserDetailsComponent, SecurityFieldsEncryptionPasswordComponent,
     SecurityFormEncryptionPasswordComponent, SecurityProfileFieldsTabsComponent,
-    SecurityProfileFieldsPemComponent, SecurityProfileFieldsPrivateKeyComponent]
+    SecurityProfileFieldsPemComponent, SecurityProfileFieldsPrivateKeyComponent,
+    SecurityPasswordDialogComponent],
+  entryComponents: [SecurityPasswordDialogComponent]
 })
 export class SecurityModule {
 

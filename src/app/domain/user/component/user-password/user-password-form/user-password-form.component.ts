@@ -2,7 +2,7 @@ import {Component, Input, EventEmitter, Output, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {Credentials} from "../../../helper/Credentials";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {MdSnackBar} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -45,7 +45,8 @@ export class UserPasswordFormComponent implements OnInit {
       this.passwordEntered.emit(credentials);
     }
     else {
-      this.snackBar.open("You cannot authenticate with invalid field values", undefined, {duration: 3000});
+      this.snackBar.open("You cannot authenticate with invalid field values", undefined,
+        <MdSnackBarConfig>{duration: 3000});
     }
   }
 }
