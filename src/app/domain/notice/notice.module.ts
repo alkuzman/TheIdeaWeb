@@ -14,12 +14,15 @@ import {NoticeListLoaderComponent} from "./components/notice-list/notice-list-lo
 import {NoticeCardComponent} from "./components/notice-card/notice-card.component";
 import {BuyingTransactionNoticeCardComponent} from "./components/notice-card/buying-transaction-notice-card/buying-transaction-notice-card.component";
 import {UserModule} from "../user/user.module";
+import {BuyingTransactionNoticeMessageNumberPipe} from "./pipes/buying-transaction-notice-message-number.pipe";
 @NgModule({
   imports: [SharedModule, PackageModule, AgentModule, UserModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
-    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent],
+    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent,
+    BuyingTransactionNoticeMessageNumberPipe],
   exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
-    NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent]
+    NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent,
+    BuyingTransactionNoticeMessageNumberPipe]
 })
 export class NoticeModule {
 

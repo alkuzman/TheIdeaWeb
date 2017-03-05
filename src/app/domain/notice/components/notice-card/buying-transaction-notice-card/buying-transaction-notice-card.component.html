@@ -6,8 +6,8 @@
                 {{notice?.buyingTransaction?.idea?.owner?.firstName}} {{notice?.buyingTransaction?.idea?.owner?.lastName}}
             </strong>
             sent you notice for
-            <strong idealColor="accent" (click)="getProblem()">
-                {{idea?.title}}
+            <strong idealColor="accent" (click)="getIdea()">
+                {{notice?.buyingTransaction?.idea?.title}}
             </strong>
         </md-card-title>
         <md-card-subtitle>{{notice?.creationDate | amTimeAgo}}</md-card-subtitle>
@@ -15,7 +15,7 @@
     <md-card-content (click)="getContent()">
         <md-card-title-group>
             <md-card-title>{{notice?.buyingTransaction?.idea?.title}}</md-card-title>
-            <md-card-subtitle>{{notice?.buyingTransaction?.idea?.snackPeak}}</md-card-subtitle>
+            <md-card-subtitle>{{notice?.buyingTransaction?.currentStep | buyingTransactionNoticeMessageNumber}}</md-card-subtitle>
         </md-card-title-group>
     </md-card-content>
     <!--

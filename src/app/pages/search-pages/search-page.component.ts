@@ -32,7 +32,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   onAnnouncementSelected(announcement: Announcement): void {
-    this.redirectService.getAnnouncemntDetails(announcement.id);
+    this.redirectService.getAnnouncementDetails(announcement.id);
   }
 
   onIdeaSelected(idea: Idea) {

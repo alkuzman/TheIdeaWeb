@@ -19,9 +19,6 @@ export class NoticeListLoaderComponent implements OnInit {
   ngOnInit() {
     this.noticeService.getAnnouncementList().subscribe((notices: Notice[]) => {
       this.noticeList = notices;
-      for (let notice of notices) {
-        console.log(notice.type);
-      }
     });
   }
 }

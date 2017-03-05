@@ -73,6 +73,7 @@ export class ProtocolMessagesBuilderService {
     //Creating notice for the protocol transaction
     let notice: BuyingTransactionNotice = new BuyingTransactionNotice();
     notice.buyingTransaction = buyingTransaction;
+    notice.originator = this.userService.getAuthenticatedUser();
     let recipient: Recipient = new Recipient();
     recipient.agent = otherParty;
     notice.recipients.push(recipient);
@@ -144,6 +145,8 @@ export class ProtocolMessagesBuilderService {
                                     console.log(jsonMessage);
                                     let buyingTransaction: BuyingTransaction = new BuyingTransaction();
                                     buyingTransaction.idea = idea;
+                                    buyingTransaction.members.push(idea.owner);
+                                    buyingTransaction.members.push(this.userService.getAuthenticatedUser());
                                     this.sendMessage(buyingTransaction, jsonMessage,
                                       ProtocolTransactionMessageNumber.MONE, idea.owner);
                                   });
