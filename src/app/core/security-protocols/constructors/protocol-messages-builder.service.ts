@@ -1,5 +1,4 @@
 import {Injectable, OnInit} from "@angular/core";
-import {ProtocolTransactionMessageOne} from "../../../domain/model/security/messages/protocol-transaction-message-one";
 import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {JwtSecurityContext} from "../../authentication/jwt/jwt-security-context.service";
 import {KeysService} from "../keys/keys.service";
@@ -19,6 +18,8 @@ import {Recipient} from "../../../domain/model/sharing/recipient";
 import {Notice} from "../../../domain/model/sharing/notice";
 import {BuyingTransaction} from "../../../domain/model/security/buying-transaction";
 import {Idea} from "../../../domain/model/ideas/idea";
+import {Price} from "../../../domain/model/helpers/price";
+import {PriceRequestPhaseData} from "../../../domain/model/security/data/price-request-phase-data";
 /**
  * Created by Viki on 2/21/2017.
  */
@@ -82,7 +83,7 @@ export class ProtocolMessagesBuilderService {
     });
   }
 
-  public buildProtocolMessageOne(messageOne: ProtocolTransactionMessageOne, idea: Idea, password: string) {
+  public buildProtocolMessageOne(userData: PriceRequestPhaseData, idea: Idea, password: string) {
     this.certificateService.getPublicKey({email: idea.owner.email})
       .subscribe((pemPublicKeyEncryption: string) => {
 
@@ -124,7 +125,7 @@ export class ProtocolMessagesBuilderService {
                                   .convertUint8ToString(new Uint8Array(signedHashedInitDataBuf));
                                 console.log(signedHashedInitData);
                                 let data = {
-                                  'bid': messageOne.biddingPrice
+                                  'bid': userData.price
                                 };
                                 let jsonData: string = JSON.stringify(data);
                                 this.cryptographicOperations.encrypt(
@@ -139,7 +140,7 @@ export class ProtocolMessagesBuilderService {
                                       'signature': signedHashedInitData,
                                       'object': initDataEncryption,
                                       'data': dataEncrypted,
-                                      'hashed-data': hashedDataEncrypted
+                                      'hashedData': hashedDataEncrypted
                                     };
                                     let jsonMessage: string = JSON.stringify(message);
                                     console.log(jsonMessage);

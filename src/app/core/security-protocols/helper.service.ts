@@ -15,14 +15,6 @@ export class HelperService {
   private buyingProtocolTransactionMessages: {} = {};
 
   constructor() {
-    console.log("Helper Service constructor");
-    this.initializeBuyingProtocolTransactionMessages();
-    console.log("After Initialization");
-  }
-
-  private initializeBuyingProtocolTransactionMessages() {
-    this.buyingProtocolTransactionMessages[ProtocolTransactionMessageNumber.MONE] = "You have buying request for";
-    this.buyingProtocolTransactionMessages[ProtocolTransactionMessageNumber.MTWO] = "Idea price";
   }
 
   public equal(buf1, buf2) {

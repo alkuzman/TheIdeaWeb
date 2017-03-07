@@ -1,5 +1,4 @@
 import {ProtocolTransactionMessageNumber} from "../enumerations/protocol-transaction-message-number";
-import {ProtocolTransactionMessageOne} from "./messages/protocol-transaction-message-one";
 import {ProtocolTransactionStep} from "./protocol-transaction-step";
 import {BaseEntityImpl} from "../base-entity-impl";
 import {Agent} from "../authentication/agent";

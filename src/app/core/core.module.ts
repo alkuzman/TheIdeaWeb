@@ -24,6 +24,7 @@ import {SecurityProfileConstructorService} from "./security-protocols/constructo
 import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/protocol-messages-builder.service";
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
+import {ProtocolMessagesReconstructionService} from "./security-protocols/constructors/protocol-messages-reconstruction.service";
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import {ParserPemService} from "./security-protocols/parsers/parser-pem.service"
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    HelperService, ParserPemService]
+    ProtocolMessagesReconstructionService, HelperService, ParserPemService]
 })
 export class CoreModule {
 }
