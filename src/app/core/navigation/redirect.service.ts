@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Sharable} from "../../domain/model/sharing/sharable";
 import {Organization} from "../../domain/model/authentication/organization";
+import {Idea} from "../../domain/model/ideas/idea";
 /**
  * Created by AKuzmanoski on 18/01/2017.
  */
@@ -45,5 +46,9 @@ export class RedirectService {
 
   getOrganizationDetails(organization: Organization) {
 
+  }
+
+  newTransaction(idea: Idea) {
+    this.router.navigate(["/transactions", "new"], {queryParams: {ideaId: idea.id}});
   }
 }

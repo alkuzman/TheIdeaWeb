@@ -14,13 +14,16 @@ import {NoticeService} from "./notice/notice.service";
 import {CountryService} from "./localization/country.service";
 import {CertificateService} from "./certificate/certificate.service";
 import {AwardService} from "./award/award.service";
+import {MemberService} from "./member/member.service";
+import {SecurityProfileService} from "./security-profile/security-profile.service";
+import {CurrencyService} from "./currency/currency.service";
 /**
  * Created by AKuzmanoski on 14/01/2017.
  */
 @NgModule({
   providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, ProblemActionsService,
     SharableService, SolutionService, UserService, UserObjectService, SearchableService, AgentService,
-    NoticeService, CountryService, CertificateService, AwardService]
+    NoticeService, CountryService, CertificateService, MemberService, SecurityProfileService, CurrencyService, AwardService]
 })
 export class DomainServicesModule {
 }

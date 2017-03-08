@@ -9,9 +9,13 @@ export const NoticePagesRoutes: Routes = [
     component: NoticePagesComponent,
     children: [
       {
+        path: '',
+        loadChildren: 'app/pages/notice-pages/notice-feed-page/notice-feed-page.module#NoticeFeedPageModule'
+      },
+      {
         path: 'new',
         loadChildren: 'app/pages/notice-pages/new-notice-page/new-notice-page.module#NewNoticePageModule'
-      }
+      },
     ]
   }
 ];

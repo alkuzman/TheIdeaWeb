@@ -1,7 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {CryptographicOperations} from "../../../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
 import {KeysService} from "../../../../../../core/security-protocols/keys/keys.service";
-import {CertificateRequestGenerationService} from "../../../../../../core/security-protocols/certificates/certificates-requests-generation.service";
+import {ParserPemService} from "../../../../../../core/security-protocols/parsers/parser-pem.service";
 /**
  * Created by Viki on 2/12/2017.
  */
@@ -17,16 +16,16 @@ export class SecurityProfileFieldsPrivateKeyComponent {
   @Input("title") title: string;
   private decryptedPrivateKey: string;
 
-  constructor(private cryptographicOperations: CryptographicOperations, private keysService: KeysService,
-              private certificatesRequestsGenerationService: CertificateRequestGenerationService) {
+  constructor(private keysService: KeysService,
+              private pemParser: ParserPemService) {
   }
 
   public decrypt(password: string) {
-    this.keysService.generateSymmetricKeyFromPassword(password, 6530, 32, 'SHA256')
+    this.keysService.generateSymmetricKeyFromPassword(password)
       .then((symmetricKey: CryptoKey) => {
         this.keysService.decryptPrivateKeyWithSymmetricKeyRawFormat(this.encryptedPrivateKey, symmetricKey)
           .subscribe((privateRawKey: ArrayBuffer) => {
-            this.decryptedPrivateKey = this.certificatesRequestsGenerationService.parsePrivateKeyPEM(privateRawKey);
+            this.decryptedPrivateKey = this.pemParser.parsePrivateKeyPEM(privateRawKey);
           });
       });
   }

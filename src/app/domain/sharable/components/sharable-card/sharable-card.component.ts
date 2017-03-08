@@ -7,7 +7,6 @@ import {Problem} from "../../../model/ideas/problem";
 import {Idea} from "../../../model/ideas/idea";
 import {User} from "../../../model/authentication/user";
 @Component({
-  moduleId: module.id,
   selector: "ideal-sharable-card",
   templateUrl: "sharable-card.component.html"
 })

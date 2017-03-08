@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Response, Headers} from "@angular/http";
-import {SecurityProfile} from "../../../domain/model/security/security-profile";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {CertificatesFilterProperties} from "./certificates-filter.properties";
+import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 /**
  * Created by Viki on 2/6/2017.
  */
@@ -43,17 +44,20 @@ export class CertificateService {
       .catch((error: any) => this.handleError(error));
   }
 
-  public get() {
-    let url: string = this.certificatesUrl + "/get";
-    console.log(url);
-    this.http.get(url, {headers: this.getHeaders()}).map((response: Response) => this.extractData(response))
+  public get(filterProperties: CertificatesFilterProperties): Observable<string> {
+    let params = PropertiesToUrlSearchParams.transform(filterProperties);
+    //let url: string = this.certificatesUrl + "/" + CertificateType[type];
+    let url = this.certificatesUrl;
+    return this.http.get(url, {headers: this.getHeaders(), search: params})
+      .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));
   }
 
-  public save(securityProfile: SecurityProfile): Observable<SecurityProfile> {
-    let url: string = this.certificatesUrl + "/save";
-    return this.http.post(url, JSON.stringify(securityProfile), {headers: this.getHeaders()})
-      .map((response: Response) => this.extractData(response))
+  public getPublicKey(filterProperties: CertificatesFilterProperties): Observable<string> {
+    let params = PropertiesToUrlSearchParams.transform(filterProperties);
+    let url = this.certificatesUrl + "/publickey";
+    return this.http.get(url, {headers: this.getHeaders(), search: params})
+      .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));
   }
 }

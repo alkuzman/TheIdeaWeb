@@ -8,9 +8,10 @@ import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-u
 import {Response, Headers} from "@angular/http";
 import {StandardFilterProperties} from "../standard-filter.properties";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
+import {NoticeFilterProperties} from "./notice-filter-properties";
 @Injectable()
 export class NoticeService {
-  private searchableUrl = "/api/notices";
+  private noticesUrl = "/api/notices";
 
   constructor(private http: JwtHttpService) {
 
@@ -18,21 +19,30 @@ export class NoticeService {
 
   public searchNotices(filter: StandardFilterProperties): Observable<Notice[]> {
     let params = PropertiesToUrlSearchParams.transform(filter);
-    return this.http.get(this.searchableUrl, {headers: this.getHeaders(), search: params}, true)
+    return this.http.get(this.noticesUrl, {headers: this.getHeaders(), search: params}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }
 
   public addNotice(notice: Notice): Observable<Notice> {
     let body = JSON.stringify(notice);
-    return this.http.post(this.searchableUrl, body, {headers: this.getHeaders()}, true)
+    return this.http.post(this.noticesUrl, body, {headers: this.getHeaders()}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }
 
   public getNoticeCount(): Observable<number> {
-    let url = this.searchableUrl + "/count";
+    let url = this.noticesUrl + "/count";
     return this.http.get(url, undefined, true)
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  getAnnouncementList(filter?: NoticeFilterProperties): Observable<Notice[]> {
+    if (filter == null)
+      filter = {};
+    let params = PropertiesToUrlSearchParams.transform(filter);
+    return this.http.get(this.noticesUrl, {headers: this.getHeaders(), search: params}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
   }

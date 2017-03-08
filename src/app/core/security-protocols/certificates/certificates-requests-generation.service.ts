@@ -5,7 +5,6 @@
 import {Injectable} from "@angular/core";
 import CertificationRequest from "pkijs/src/CertificationRequest";
 import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
-import {arrayBufferToString, toBase64} from "pvutils";
 import * as asn1js from "asn1js";
 import {getCrypto} from "pkijs/src/common";
 import Extension from "pkijs/src/Extension";
@@ -26,6 +25,7 @@ export class CertificateRequestGenerationService {
   public createPKCS10Internal(privateKey: CryptoKey, publicKey: CryptoKey, user: User) {
     //region Initial variables
     let sequence: Promise<any> = Promise.resolve();
+
 
     const pkcs10 = new CertificationRequest();
 
@@ -51,38 +51,13 @@ export class CertificateRequestGenerationService {
     }));
     //state or province name
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
-      type: "2.5.4.6",
+      type: "2.5.4.8",
       value: new asn1js.PrintableString({value: user.country})
     }));
 
+
     pkcs10.attributes = [];
     //endregion
-
-    /*
-     //region Create a new key pair
-     sequence = sequence.then(() =>
-     {
-     let algorithm = getAlgorithmParameters(this.signAlg, "generatekey");
-     let algorithmInstTemp: any = algorithm.algorithm;
-     if ("hash" in algorithm.algorithm) {
-     algorithmInstTemp.hash.name = this.hashAlg;
-     }
-
-     return crypto.generateKey(algorithmInstTemp, true, algorithm.usages);
-     }
-     );
-     //endregion
-
-     //region Store new key in an interim variables
-     sequence = sequence.then((keyPair: CryptoKeyPair) =>
-     {
-     publicKey = keyPair.publicKey;
-     privateKey = keyPair.privateKey;
-     },
-     error => Promise.reject((`Error during key generation: ${error}`))
-     );
-     //endregion
-     */
 
     //region Exporting public key into "subjectPublicKeyInfo" value of PKCS#10
     sequence = sequence.then(() => pkcs10.subjectPublicKeyInfo.importKey(publicKey));
@@ -117,46 +92,6 @@ export class CertificateRequestGenerationService {
       return pkcs10Buffer;
 
     }, error => Promise.reject(`Error signing PKCS#10: ${error}`));
-  }
-
-  public parseCertificateRequestPEM(pkcs10Buffer): string {
-    let resultString: string = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
-    resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs10Buffer)))}`;
-    resultString = `${resultString}\r\n-----END CERTIFICATE REQUEST-----\r\n`;
-    return resultString;
-  }
-
-  public parsePrivateKeyPEM(pkcs8Buffer): string {
-    let resultString: string = "-----BEGIN PRIVATE KEY-----\r\n";
-    resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs8Buffer)))}`;
-    resultString = `${resultString}\r\n-----END PRIVATE KEY-----\r\n`;
-    return resultString;
-  }
-
-  public parseEncryptedPrivateKeyPEM(epkeyBuffer): string {
-    let resultString: string = "-----BEGIN ENCRYPTED PRIVATE KEY-----\r\n";
-    resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(epkeyBuffer)))}`;
-    resultString = `${resultString}\r\n-----END ENCRYPTED PRIVATE KEY-----\r\n`;
-    return resultString;
-  }
-
-  private formatPEM(pemString): string {
-    /// <summary>Format string in order to have each line with length equal to 63</summary>
-    /// <param name="pemString" type="String">String to format</param>
-
-    const stringLength = pemString.length;
-    let resultString = "";
-
-    for (let i = 0, count = 0; i < stringLength; i++, count++) {
-      if (count > 63) {
-        resultString = `${resultString}\r\n`;
-        count = 0;
-      }
-
-      resultString = `${resultString}${pemString[i]}`;
-    }
-
-    return resultString;
   }
 
 }

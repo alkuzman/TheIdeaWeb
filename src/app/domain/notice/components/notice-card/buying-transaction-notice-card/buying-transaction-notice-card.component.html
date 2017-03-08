@@ -1,0 +1,48 @@
+<md-card>
+    <md-card-header>
+        <img md-card-avatar (click)="getSender()" [src]="notice?.buyingTransaction?.idea?.owner | idealUserProfilePicture" />
+        <md-card-title>
+            <strong idealColor="accent" (click)="getSender()">
+                {{notice?.buyingTransaction?.idea?.owner?.firstName}} {{notice?.buyingTransaction?.idea?.owner?.lastName}}
+            </strong>
+            sent you notice for
+            <strong idealColor="accent" (click)="getProblem()">
+                {{idea?.title}}
+            </strong>
+        </md-card-title>
+        <md-card-subtitle>{{notice?.creationDate | amTimeAgo}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content (click)="getContent()">
+        <md-card-title-group>
+            <md-card-title>{{notice?.buyingTransaction?.idea?.title}}</md-card-title>
+            <md-card-subtitle>{{notice?.buyingTransaction?.idea?.snackPeak}}</md-card-subtitle>
+        </md-card-title-group>
+    </md-card-content>
+    <!--
+    <md-card-actions>
+        <div fxLayout="row">
+            <div fxFlex="none">
+                <button md-icon-button mdTooltipPosition="above" *ngFor="let action of actions?.mainActions"
+                        (click)="onAction(action)"
+                        [idealColor]="action.color"
+                        [mdTooltip]="action.title">
+                    <md-icon class="icon-20">{{action.icon}}</md-icon>
+                </button>
+            </div>
+            <div fxFlex></div>
+            <div fxFlex="none">
+                <button [mdMenuTriggerFor]="appMenu" md-icon-button>
+                    <md-icon>more_vert</md-icon>
+                </button>
+                <md-menu #appMenu="mdMenu">
+                    <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
+                            [mdTooltip]="action.description" mdTooltipPosition="left">
+                        <md-icon class="icon-20">{{action.icon}}</md-icon>
+                        <span>{{action.title}}</span>
+                    </button>
+                </md-menu>
+            </div>
+        </div>
+    </md-card-actions>
+    -->
+</md-card>
