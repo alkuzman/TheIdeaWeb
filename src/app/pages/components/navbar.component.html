@@ -1,13 +1,11 @@
 <div [ngSwitch]="state">
   <md-toolbar *ngSwitchCase="defaultState" class="md-elevation-z4" color="primary">
     <button #sidenavbutton md-icon-button (click)="onSideNavToggle()">
+      <label ideal-circle-label color="accent" [text]="numberOfNotifications" *ngIf="numberOfNotifications > 0"
+             ideal-badge position="bottom-right">
+      </label>
       <md-icon class="md-toolbar-icon">menu</md-icon>
     </button>
-    <div *ngIf="numberOfNotifications > 0" class="notification ideal-background-accent">
-      <div>
-        {{numberOfNotifications}}
-      </div>
-    </div>
     &nbsp;iDeal-Hub
     <span class="flex"></span>
 

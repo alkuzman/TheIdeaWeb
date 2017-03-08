@@ -13,7 +13,19 @@ export class IconRegistryService {
     );
     iconRegistry.addSvgIcon(
       'problem_coverage_award',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/award-for-problem-coverage.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/problem-coverage-award.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'innovativeness_award',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/innovativeness-award.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'snack_peak_award',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/snack-peak-award.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'award',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/award.svg')
     );
   }
 }

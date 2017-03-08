@@ -6,7 +6,7 @@
   <md-autocomplete #reactiveAuto="mdAutocomplete">
     <md-option *ngFor="let keyword of keywordResults" [value]="keyword.phrase">
       <div>
-        <strong>{{keyword.phrase}}</strong> {{keyword.score}}
+        {{keyword.phrase}}
       </div>
     </md-option>
   </md-autocomplete>

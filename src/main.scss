@@ -8,6 +8,14 @@ body {
   padding: 0px !important;
 }
 
+.icon-middle {
+  transform: translateY(5px);
+}
+
+md-sidenav {
+  width: 280px !important;
+}
+
 .flex {
   flex: 1 1 auto;
 }
@@ -31,9 +39,6 @@ md-card-header, .mat-card-header-text {
 }
 
 /* Box-sizing border-box */
-* {
-  box-sizing: border-box;
-}
 
 /* Set up a default font and some padding to provide breathing room */
 body {
@@ -41,24 +46,6 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-p {
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 20px;
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
-ul {
-  margin: 10px 0 0;
-  padding: 0 0 0 20px;
-}
-
-li {
-  font-weight: 400;
-  margin-top: 4px;
 }
 
 .full-width {
@@ -204,4 +191,45 @@ li {
   font-size: 13px;
   line-height: 20px;
   font-weight: normal;
+}
+
+.ideal-badge {
+  position: absolute !important;
+  z-index: 1000 !important;
+}
+
+.ideal-badge-left {
+  top: 0; left: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-right {
+  top: 0; right: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-top{
+  top: 0; left: 0; right: 0;
+  margin: auto;
+}
+
+.ideal-badge-bottom {
+  right: 0; left: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-top-left {
+  top: 0; left: 0;
+}
+
+.ideal-badge-top-right {
+  top: 0; right: 0;
+}
+
+.ideal-badge-bottom-left {
+  bottom: 0; left: 0;
+}
+
+.ideal-badge-bottom-right {
+  bottom: 0; right: 0;
 }

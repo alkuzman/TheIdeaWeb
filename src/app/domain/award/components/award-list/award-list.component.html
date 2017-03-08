@@ -1,8 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="space-around">
-  <ideal-award-item [namesAsTooltips]="namesAsTooltips" [disabled]="disabled" [iconSize]="iconSize"
+  <ideal-award-item [namesAsTooltips]="namesAsTooltips" [iconSize]="iconSize"
                     [maxWidth]="maxWidth" *ngFor="let award of awards" [award]="award"
                     (selected)="onAwardSelected(award)">
   </ideal-award-item>
-  <ideal-award-item [namesAsTooltips] *ngIf="!awards.length" [disabled]="disabled" [iconSize]="iconSize"
-                    [maxWidth]="maxWidth" [award]="noAwards"></ideal-award-item>
+  <div *ngIf="!awards || !awards.length" [style.max-width]="maxWidth + 'px'">
+    <div fxLayout="row" fxLayoutAlign="center">
+        <md-icon [style.opacity]="0.26" [style.width]="iconSize + 'px'" [style.height]="iconSize + 'px'"
+                 [svgIcon]="noAwardsIcon"></md-icon>
+    </div>
+    <div *ngIf="!namesAsTooltips" fxLayout="row" fxLayoutAlign="center">
+      <span style="text-align: center;" class="ideal-caption">{{noAwardsName}}</span>
+    </div>
+  </div>
 </div>

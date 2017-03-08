@@ -2,28 +2,26 @@
  * Created by AKuzmanoski on 26/02/2017.
  */
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {Award} from "../../../model/ideas/award";
+import {Award} from "../../../model/awards/award";
+import {Badge} from "../../../model/awards/badges/badge";
 @Component({
   moduleId: module.id,
   selector: "ideal-award-list",
   templateUrl: "award-list.component.html"
 })
 export class AwardListComponent {
-  @Input("awards") awards: Award[];
+  @Input("awards") awards: Award<Badge<any, any>>[];
   @Input("iconSize") iconSize: number = 44;
-  @Input("maxSize") maxWidth: number = 88;
-  @Input("disabled") disabled: boolean = false;
+  @Input("maxWidth") maxWidth: number = 88;
   @Input("namesAsTooltips") namesAsTooltips: boolean = false;
-  private noAwards: Award;
-  @Output("awardSelected") awardSelected: EventEmitter<Award> = new EventEmitter<Award>();
+  @Output("awardSelected") awardSelected: EventEmitter<Award<Badge<any, any>>> = new EventEmitter<Award<Badge<any, any>>>();
+  private noAwardsIcon: string = "award";
+  private noAwardsName: string = "No awards found";
 
   constructor() {
-    this.noAwards = new Award();
-    this.noAwards.icon = "problem_coverage_award";
-    this.noAwards.name = "You have no awards";
   }
 
-  onAwardSelected(award: Award): void {
+  onAwardSelected(award: Award<Badge<any, any>>): void {
     this.awardSelected.emit(award);
   }
 }

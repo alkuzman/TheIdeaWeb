@@ -4,33 +4,35 @@
 import {Component, Input} from "@angular/core";
 import {SolutionQuality} from "../../../model/analyzers/analysis/solution-quality";
 import {SolutionQualityStatus} from "../../../model/analyzers/analysis/solution-quality-status";
-import {MdDialog} from "@angular/material";
+import {MdDialog, MdDialogConfig} from "@angular/material";
 import {SolutionQualityDialog} from "./solution-quality-dialog/solution-quality-dialog.component";
-import {Award} from "../../../model/ideas/award";
+import {Award} from "../../../model/awards/award";
+import {AwardService} from "../../../services/award/award.service";
+import {Badge} from "../../../model/awards/badges/badge";
+
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-quality",
   templateUrl: "solution-quality.component.html"
 })
 export class SolutionQualityComponent {
-  @Input("label") label: string = "Quality of your solution is ";
-  @Input("beforeProcessingMessage") beforeProcessingMessage: string = "Quality of your solution will be calculated\nright after you type something";
-  @Input("solutionQuality") solutionQuality: SolutionQuality;
-  private awards: Award[] = [];
+  private _solutionQuality: SolutionQuality;
+  private awards: Award<Badge<any, any>>[];
 
-  constructor(public dialog: MdDialog) {
-    let award = new Award();
-    award.name = "Problem coverage";
-    award.icon = "problem_coverage_award";
-    this.awards.push(award);
-    award = new Award();
-    award.name = "Innovativeness";
-    award.icon = "problem_coverage_award";
-    this.awards.push(award);
-    award = new Award();
-    award.name = "Snack peak quality";
-    award.icon = "problem_coverage_award";
-    this.awards.push(award);
+  @Input("solutionQuality") set solutionQuality(solutionQuality: SolutionQuality) {
+    this._solutionQuality = solutionQuality;
+    this.updateAwards();
+  }
+
+  updateAwards(): void {
+    this.awards = [];
+    this.awardService.generateAwards(this._solutionQuality).subscribe((awards: Award<Badge<any, any>>[]) => {
+      this.awards = awards;
+    })
+  }
+
+  constructor(public dialog: MdDialog, private awardService: AwardService) {
+
   }
 
   public getQualityStatusName(qualityStatus: SolutionQualityStatus): string {
@@ -40,24 +42,16 @@ export class SolutionQualityComponent {
   }
 
   openDetails(): void {
-    let dialogRef = this.dialog.open(SolutionQualityDialog, {data: {solutionQuality: this.solutionQuality}});
-  }
-
-  isGood(): boolean {
-    if (!this.solutionQuality)
-      return false;
-    return this.solutionQuality.status == SolutionQualityStatus.GOOD;
-  }
-
-  isFair(): boolean {
-    if (!this.solutionQuality)
-      return false;
-    return this.solutionQuality.status == SolutionQualityStatus.FAIR;
-  }
-
-  isPure(): boolean {
-    if (!this.solutionQuality)
-      return false;
-    return this.solutionQuality.status == SolutionQualityStatus.POOR;
+    let dialogRef = this.dialog.open(SolutionQualityDialog, <MdDialogConfig>{
+      disableClose: false,
+      width: '',
+      height: '',
+      position: {
+        top: '',
+        bottom: '',
+        left: '',
+        right: ''
+      }, data: {solutionQuality: this._solutionQuality}
+    });
   }
 }

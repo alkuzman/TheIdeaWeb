@@ -73,7 +73,7 @@
         "icon": "feedback",
         "title": "Feedback",
         "subtitle": "Send as feedback",
-        "url": "/about",
+        "url": "/feedback",
         "theme": "default-theme",
         "color": "#03A9F4",
         "scope": "any"
@@ -82,7 +82,7 @@
         "icon": "help",
         "title": "Help",
         "subtitle": "Frequently asked questions",
-        "url": "/about",
+        "url": "/help",
         "theme": "default-theme",
         "color": "#03A9F4",
         "scope": "any"

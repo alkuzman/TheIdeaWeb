@@ -11,15 +11,17 @@
       <div *ngFor="let navigationItemGroup of navigation">
         <md-divider *ngIf="navigationItemGroup.divider"></md-divider>
         <h3 md-subheader>{{navigationItemGroup.name}}</h3>
-        <md-list-item *ngFor="let navigationItem of navigationItemGroup.items" (click)="sidenav.toggle()"
+        <md-list-item *ngFor="let navigationItem of navigationItemGroup.items"
+                      (click)="sidenav.toggle()"
                       [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
           <md-icon class="icon-middle" [ngStyle]="{'color': navigationItem.color}" md-list-avatar>
             {{navigationItem.icon}}
           </md-icon>
-          <h4 md-line>
+          <h4 style="position: relative" md-line>
             {{navigationItem.title}}
-            <span class="numberOfNotifications" [ngStyle]="{'color': navigationItem.color}"
-                  *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0">({{numberOfNotifications}})</span>
+            <label ideal-raised-label *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0"
+                   color="primary"
+                   [text]="numberOfNotifications + ' New'" ideal-badge position="right"></label>
           </h4>
         </md-list-item>
       </div>

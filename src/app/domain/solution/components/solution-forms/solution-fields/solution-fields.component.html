@@ -12,10 +12,10 @@
                        (idle)="onInputIdle($event)"></ideal-text-editor>
   </div>
   <div class="padding-top">
-    <span class="ideal-subheading">Solution Quality <md-icon>show_chart</md-icon></span>
+    <span class="ideal-subheading">Solution Quality <md-icon class="icon-middle">timeline</md-icon></span>
     <div>
-      <ideal-solution-quality [solutionQuality]="ideaAnalysis?.solutionQuality" beforeProcessingMessage="Type something to run the analysis"></ideal-solution-quality>
+      <ideal-solution-quality [solutionQuality]="ideaAnalysis?.solutionQuality"></ideal-solution-quality>
     </div>
-    <div style="text-align: end" class="ideal-caption">Results will be private unless you want to share them with potential buyers</div>
+    <div style="text-align: end" class="ideal-caption">Awards will be private unless you want to share them with potential buyers. <a routerLink="/awards" idealColor="accent" target="_blank">More details</a></div>
   </div>
 </div>

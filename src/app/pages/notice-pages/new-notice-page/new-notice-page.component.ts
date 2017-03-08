@@ -25,6 +25,6 @@ export class NewNoticePageComponent implements OnInit {
   }
 
   onNoticeReady(notice: Notice) {
-    this.snackBar.open("Notice with id: " + notice.id, undefined, <MdSnackBarConfig>{duration: 3000});
+    this.snackBar.open("Notification sent", undefined, <MdSnackBarConfig>{duration: 3000});
   }
 }

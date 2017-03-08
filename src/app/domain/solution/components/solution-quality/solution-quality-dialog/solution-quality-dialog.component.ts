@@ -1,8 +1,8 @@
 /**
  * Created by AKuzmanoski on 24/02/2017.
  */
-import {Component} from "@angular/core";
-import {MdDialogRef} from "@angular/material";
+import {Component, Inject} from "@angular/core";
+import {MdDialogRef, MD_DIALOG_DATA} from "@angular/material";
 import {SolutionQuality} from "../../../../model/analyzers/analysis/solution-quality";
 @Component({
   moduleId: module.id,
@@ -12,7 +12,8 @@ import {SolutionQuality} from "../../../../model/analyzers/analysis/solution-qua
 export class SolutionQualityDialog {
   private solutionQuality: SolutionQuality;
 
-  constructor(public dialogRef: MdDialogRef<SolutionQualityDialog>) {
-    this.solutionQuality = <SolutionQuality>dialogRef.config.data.solutionQuality;
+  constructor(public dialogRef: MdDialogRef<SolutionQualityDialog>, @Inject(MD_DIALOG_DATA) data: any) {
+    console.log(data);
+    this.solutionQuality = <SolutionQuality>data.solutionQuality;
   }
 }
