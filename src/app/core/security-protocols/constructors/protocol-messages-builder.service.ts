@@ -105,7 +105,7 @@ export class ProtocolMessagesBuilderService {
                     this.cryptographicOperations.encrypt(
                       this.cryptographicOperations.getAlgorithm('RSA-OAEP', 'SHA256', 'encrypt').algorithm,
                       ownerPublicKeyEncryption,
-                      this.cryptographicOperations.convertStringToBuffer(jsonObj))
+                      this.cryptographicOperations.convertStringToUint8(jsonObj).buffer)
                       .then((initDataEncryptionBuf: ArrayBuffer) => {
                         console.log("encrypt passed");
                         let initDataEncryption: string = this.cryptographicOperations
@@ -113,7 +113,7 @@ export class ProtocolMessagesBuilderService {
                         console.log(initDataEncryption);
                         let hashInitData: string = this.cryptographicOperations.hash(jsonObj);
                         console.log(hashInitData);
-                        this.extractPrivateKey(this.securityProfile.encryptedPrivateKey, password,
+                        this.keysService.extractPrivateKey(this.securityProfile.encryptedPrivateKey, password,
                           this.helper.ASYMMETRIC_SIGNING_ALG)
                           .subscribe((privateSigningKey: CryptoKey) => {
                             console.log("private signing key");
@@ -159,18 +159,5 @@ export class ProtocolMessagesBuilderService {
           });
 
       });
-  }
-
-  private extractPrivateKey(encryptedKey: string, password: string, algorithm: string): Observable<CryptoKey> {
-    return Observable.create((observer) => {
-      this.keysService.generateSymmetricKeyFromPassword(password)
-        .then((symmetricKey: CryptoKey) => {
-          this.keysService.decryptPrivateKeyWithSymmetricKey(encryptedKey, symmetricKey, algorithm)
-            .subscribe((privateKey: CryptoKey) => {
-              observer.next(privateKey);
-            });
-        });
-
-    });
   }
 }

@@ -30,6 +30,10 @@ export class CryptographicOperations {
     return this.crypto.sign(algorithm, key, data);
   }
 
+  public verify(algorithm: string, key: CryptoKey, signature: BufferSource, data: BufferSource): PromiseLike<boolean> {
+    return this.crypto.verify(algorithm, key, signature, data);
+  }
+
   public getAlgorithm(alg: string, hashAlg: string, operation: string) {
     let algorithm = getAlgorithmParameters(alg, operation);
     let algorithmInstTemp: any = algorithm.algorithm;
@@ -47,8 +51,12 @@ export class CryptographicOperations {
     return new Uint8Array(atob(text).split("").map((character) => character.charCodeAt(0)));
   }
 
-  public convertStringToBuffer(text: string) {
+  public convertStringToBuffer(text: string): Buffer {
     return Buffer.from(text);
+  }
+
+  public convertBufferToString(buffer: Buffer): string {
+    return buffer.toString();
   }
 
   public hash(value: string): string {
