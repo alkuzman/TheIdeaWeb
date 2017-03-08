@@ -6,7 +6,6 @@ export abstract class BaseEntityImpl implements BaseEntity {
   public id: number;
   public creationDate: Date;
   public lastModified: Date;
-  public name: string;
   public type: string;
 
   constructor() {
@@ -17,7 +16,6 @@ export abstract class BaseEntityImpl implements BaseEntity {
     return "id: " + this.id + "\n" +
       "creationDate: " + this.creationDate + "\n" +
       "lastModified: " + this.lastModified + "\n" +
-      "name: " + this.name + "\n" +
       "type: " + this.type;
   }
 }

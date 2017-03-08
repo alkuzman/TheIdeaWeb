@@ -6,7 +6,7 @@
       <md-hint idealColor="warn" *ngIf="formErrors.title" align="end">{{formErrors.title}}</md-hint>
     </md-input-container>
     <div fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
-      <ideal-keyword-selector class="full-width" [keywords]="problem.keywords" [suggestedKeywords]="problemAnalysis?.text?.keywords" searchPlaceholder="Problem keywords"></ideal-keyword-selector>
+      <ideal-keyword-selector class="full-width" formControlName="keywords" [suggestedKeywords]="problemAnalysis?.keywords" searchPlaceholder="Problem keywords"></ideal-keyword-selector>
     </div>
   </div>
   <div class="margin-top">

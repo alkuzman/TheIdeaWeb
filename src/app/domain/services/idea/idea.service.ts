@@ -8,7 +8,6 @@ import {Observable} from "rxjs";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 import {IdeasFilterProperties} from "../../idea/params/ideas-filter.properties";
 import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
-import any = jasmine.any;
 
 
 @Injectable()

@@ -2,22 +2,20 @@
   <ideal-idea-fields *ngIf="showIdeaFields" [showProblemFields]="showProblemFields" name="solutionIdea"
                      [titleLabel]="ideaTitleLabel" [sneakPeakLabel]="ideaSnackPeakLabel"
                      [problemTitleLabel]="problemTitleLabel" [problemBodyLabel]="problemBodyLabel"
-                     [problemTagsLabel]="problemTagsLabel" [idea]="solution.idea" [form]="ideaFields"
+                     [problemTagsLabel]="problemTagsLabel" [idea]="solution?.idea" [form]="ideaFields"
                      [submitted]="_submitted"
                      [idleDelay]="idleDelay"
+                     [ideaAnalysis]="ideaAnalysis"
                      (idle)="onInputIdle($event)"></ideal-idea-fields>
   <div class="margin-top">
     <ideal-text-editor [title]="bodyLabel" formControlName="text" idealInputIdle [delay]="idleDelay"
                        (idle)="onInputIdle($event)"></ideal-text-editor>
   </div>
-  <md-chip-list>
-    <div *ngFor="let keyword of ideaAnalysis?.text?.keywords | slice:0:numberOfTags; let i = index">
-      <md-chip
-        color="primary"
-        [md-tooltip]="keyword.score + ''">
-        {{keyword.phrase}}
-      </md-chip>
+  <div class="padding-top">
+    <span class="ideal-subheading">Solution Quality <md-icon class="icon-middle">timeline</md-icon></span>
+    <div>
+      <ideal-solution-quality [solutionQuality]="ideaAnalysis?.solutionQuality"></ideal-solution-quality>
     </div>
-    <button md-button type="button" (click)="showMoreTags()">Show more</button>
-  </md-chip-list>
+    <div style="text-align: end" class="ideal-caption">Awards will be private unless you want to share them with potential buyers. <a routerLink="/awards" idealColor="accent" target="_blank">More details</a></div>
+  </div>
 </div>

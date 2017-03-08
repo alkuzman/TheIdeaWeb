@@ -1,48 +1,110 @@
 [
   {
-    "icon": "home",
-    "title": "Home",
-    "subtitle": "Go to the home page",
-    "url": "/home",
-    "theme": "default-theme",
-    "color": "#03A9F4"
+    "name": "Application",
+    "divider": false,
+    "items": [
+      {
+        "icon": "home",
+        "title": "Home",
+        "subtitle": "Go to the home page",
+        "url": "/home",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "any"
+      },
+      {
+        "icon": "view_list",
+        "title": "Feed",
+        "subtitle": "Go to announcement feed",
+        "url": "/announcements/feed",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "any"
+      },
+      {
+        "icon": "lightbulb_outline",
+        "title": "Ideas",
+        "subtitle": "Search for public ideas",
+        "url": "/announcements/feed/ideas",
+        "params": {
+          "type": "Idea"
+        },
+        "theme": "idea-theme",
+        "color": "#FF5722",
+        "scope": "any"
+      },
+      {
+        "icon": "priority_high",
+        "title": "Problems",
+        "subtitle": "",
+        "url": "/announcements/feed/problems",
+        "params": {
+          "type": "Problem"
+        },
+        "theme": "problem-theme",
+        "color": "#9C27B0",
+        "scope": "any"
+      },
+      {
+        "icon": "notifications",
+        "title": "Notifications",
+        "subtitle": "",
+        "url": "/notices",
+        "theme": "notification-theme",
+        "color": "#607D8B",
+        "scope": "authenticated"
+      }
+    ]
   },
   {
-    "icon": "list",
-    "title": "Feed",
-    "subtitle": "Go to announcement feed",
-    "url": "/announcements/feed",
-    "theme": "default-theme",
-    "color": "#03A9F4"
-  },
-  {
-    "icon": "lightbulb_outline",
-    "title": "Ideas",
-    "subtitle": "Search for public ideas",
-    "url": "/announcements/feed/ideas",
-    "params": {
-      "type": "Idea"
-    },
-    "theme": "idea-theme",
-    "color": "#FF5722"
-  },
-  {
-    "icon": "help_outline",
-    "title": "Problems",
-    "subtitle": "",
-    "url": "/announcements/feed/problems",
-    "params": {
-      "type": "Problem"
-    },
-    "theme": "problem-theme",
-    "color": "#9C27B0"
-  },
-  {
-    "icon": "info_outline",
-    "title": "About",
-    "subtitle": "Read all about iDeal-Hub",
-    "url": "/about",
-    "theme": "default-theme",
-    "color": "#03A9F4"
+    "name": "Other",
+    "divider": true,
+    "items": [
+      {
+        "icon": "info",
+        "title": "About",
+        "subtitle": "Read all about iDeal-Hub",
+        "url": "/about",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "any"
+      },
+      {
+        "icon": "feedback",
+        "title": "Feedback",
+        "subtitle": "Send as feedback",
+        "url": "/feedback",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "any"
+      },
+      {
+        "icon": "help",
+        "title": "Help",
+        "subtitle": "Frequently asked questions",
+        "url": "/help",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "any"
+      },
+      {
+        "icon": "arrow_forward",
+        "title": "Login",
+        "subtitle": "",
+        "url": "/auth",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "not-authenticated"
+      },
+      {
+        "icon": "arrow_back",
+        "title": "Logout",
+        "subtitle": "",
+        "url": "/auth/logout",
+        "theme": "default-theme",
+        "color": "#03A9F4",
+        "scope": "authenticated"
+      }
+    ]
   }
 ]

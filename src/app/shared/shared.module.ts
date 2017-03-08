@@ -22,7 +22,6 @@ import {MomentModule} from "angular2-moment";
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
-
       ngModule: SharedModule,
       providers: []
     };

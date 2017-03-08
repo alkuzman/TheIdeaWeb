@@ -13,6 +13,9 @@ import {Notice} from "../domain/model/sharing/notice";
 import {NoticeService} from "../domain/services/notice/notice.service";
 import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-context.service";
 import {Subscription} from "rxjs";
+import {NavigationItemGroup} from "../core/navigation/navigation-item-group";
+import {MdIconRegistry} from "@angular/material";
+import {DomSanitizer} from "@angular/platform-browser";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',
@@ -22,7 +25,7 @@ import {Subscription} from "rxjs";
 export class PagesComponent implements OnInit, OnDestroy {
   query: string = "";
   searchState: boolean = false;
-  navigationItems: NavigationItem[];
+  navigation: NavigationItemGroup[];
   private loadingState: LoadingState; //Subject<LoadingState> = new BehaviorSubject(null);
   private numberOfNotifications: number = 0;
   private accessTokenSubscription: Subscription;
@@ -30,6 +33,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   private socketSubscription: Subscription;
 
   constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService, private socketService: SocketService, private securityContext: JwtSecurityContext, private noticeService: NoticeService) {
+
   }
 
   ngOnInit(): void {
@@ -39,10 +43,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   getNavigation() {
-    this.navigationService.navigationItems
+    this.navigationService.navigation
       .subscribe(
-        (navigationItems: NavigationItem[]) => {
-          this.navigationItems = navigationItems;
+        (navigation: NavigationItemGroup[]) => {
+          this.navigation = navigation;
         },
         (error: any) => console.log(error));
   }

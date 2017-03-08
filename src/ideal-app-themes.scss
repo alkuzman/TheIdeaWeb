@@ -2,6 +2,7 @@
  * Created by AKuzmanoski on 15/12/2016.
  */
 @import '~@angular/material/core/theming/theming';
+@import "app/shared/widget/components/label/label-theme";
 
 @mixin main_mixin($theme) {
   $primary: map-get($theme, primary);
@@ -43,7 +44,6 @@
   .text-editor-primary {
     background-color: mat-color($primary, 50);
     color: white;
-
   }
   .text-editor-accent {
     background-color: mat-color($accent);
@@ -56,4 +56,5 @@
 @mixin ideal-app-theme($theme) {
   @include main_mixin($theme);
   @include text_editor_mixin($theme);
+  @include ideal_label_theme($theme);
 }

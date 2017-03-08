@@ -7,6 +7,7 @@ import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
 import {IdeaFormErrors} from "./idea-form-errors";
 import {IdeaValidationMessages} from "./idea-validation-messages";
+import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 @Component({
   moduleId: module.id,
   selector: "ideal-idea-fields",
@@ -27,6 +28,7 @@ export class IdeaFieldsComponent implements OnInit {
   private currentForm: FormGroup;
   private problemFields: FormGroup;
   @Input("idea") idea: Idea;
+  @Input("ideaAnalysis") ideaAnalysis: IdeaAnalysis;
   private _submitted: boolean = false;
 
   @Input("submitted") set submitted(submitted: boolean) {
@@ -50,12 +52,11 @@ export class IdeaFieldsComponent implements OnInit {
     });
     this.form.addControl("snackPeak", control);
 
-    control = this.fb.control("");
-    control.valueChanges.subscribe((value: string) => {
-      // Tags not implemented yet
-      // TODO update tags here
+    control = this.fb.control(this.idea.keywords);
+    control.valueChanges.subscribe((value: string[]) => {
+      this.idea.keywords = value;
     });
-    this.form.addControl("tags", control);
+    this.form.addControl("keywords", control);
 
     this.problemFields = this.fb.group({});
     this.form.addControl("problemFields", this.problemFields);

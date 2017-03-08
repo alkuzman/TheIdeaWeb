@@ -5,6 +5,5 @@ export interface BaseEntity {
   id: number;
   creationDate: Date;
   lastModified: Date;
-  name: string;
   type: string;
 }
