@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit} from "@angular/core";
+import {Component, Output, EventEmitter, OnInit, Input} from "@angular/core";
 import {PriceRequestPhaseData} from "../../../../../model/security/data/price-request-phase-data";
 /**
  * Created by Viki on 2/20/2017.
@@ -13,10 +13,11 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
 export class PriceRequestPhaseFormNewComponent implements OnInit {
   @Output("dataReady") dataReady: EventEmitter<PriceRequestPhaseData> =
     new EventEmitter<PriceRequestPhaseData>();
-  private stepData: PriceRequestPhaseData;
+  private data: PriceRequestPhaseData;
+  @Input("previousData") previousData: PriceRequestPhaseData;
 
   ngOnInit(): void {
-    this.stepData = {};
+    this.data = {};
   }
 
   onDataReady(data: PriceRequestPhaseData) {

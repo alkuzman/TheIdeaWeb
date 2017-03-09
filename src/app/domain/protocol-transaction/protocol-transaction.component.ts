@@ -9,46 +9,68 @@ import {Idea} from "../model/ideas/idea";
 import {ProtocolTransactionMessageNumber} from "../model/enumerations/protocol-transaction-message-number";
 import {ProtocolMessagesReconstructionService} from "../../core/security-protocols/constructors/protocol-messages-reconstruction.service";
 import {ProtocolTransactionStep} from "../model/security/protocol-transaction-step";
+import {UserService} from "../services/user/user.service";
 /**
  * Created by Viki on 2/19/2017.
  */
 
 @Component({
-  moduleId: module.id,
-  selector: "ideal-protocol-transaction",
-  templateUrl: "protocol-transaction.component.html"
+    moduleId: module.id,
+    selector: "ideal-protocol-transaction",
+    templateUrl: "protocol-transaction.component.html"
 })
 export class ProtocolTransactionComponent implements OnInit {
-  @Input("transaction")transaction: BuyingTransaction;
+    @Input("transaction") transaction: BuyingTransaction;
+    private priceRequestPhaseData: PriceRequestPhaseData;
 
-  constructor(private protocolMessageBuilderService: ProtocolMessagesBuilderService,
-              private protocolMessageReconstructionService: ProtocolMessagesReconstructionService,
-              private dialog: MdDialog) {
-  }
-
-  ngOnInit() {
-    if (this.transaction == null) {
-      this.transaction = new BuyingTransaction();
-      this.transaction.idea = new Idea();
+    constructor(private protocolMessageBuilderService: ProtocolMessagesBuilderService,
+                private protocolMessageReconstructionService: ProtocolMessagesReconstructionService,
+                private dialog: MdDialog, private userService: UserService) {
     }
-    this.processTransaction();
-  }
 
-  processTransaction() {
-    for (let step of this.transaction.messages) {
-      switch (ProtocolTransactionMessageNumber[ProtocolTransactionMessageNumber[step.stepNumber]]) {
-        case ProtocolTransactionMessageNumber[ProtocolTransactionMessageNumber.MONE]: {
-          this.protocolMessageReconstructionService.constructProtocolMessageOne(step.stepMessage);
+    ngOnInit() {
+        if (this.transaction == null) {
+            this.transaction = new BuyingTransaction();
+            this.transaction.idea = new Idea();
         }
-      }
+        this.priceRequestPhaseData = {};
+        this.processTransaction();
     }
-  }
 
-  ready(data: PriceRequestPhaseData) {
-    console.log(data);
-    let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
-    dialogRef.afterClosed().subscribe((password: string) => {
-      this.protocolMessageBuilderService.buildProtocolMessageOne(data, this.transaction.idea, password);
-    });
-  }
+    processTransaction() {
+        for (let step of this.transaction.messages) {
+            if (step.creator.email == this.userService.getAuthenticatedUser().email) {
+                continue;
+            }
+            switch (ProtocolTransactionMessageNumber[ProtocolTransactionMessageNumber[step.stepNumber]]) {
+                case ProtocolTransactionMessageNumber[ProtocolTransactionMessageNumber.MONE]: {
+                    this.protocolMessageReconstructionService.constructProtocolMessageOne(step.stepMessage)
+                        .subscribe((data: PriceRequestPhaseData) => {
+                            this.priceRequestPhaseData = data;
+                        });
+                }
+                case ProtocolTransactionMessageNumber[ProtocolTransactionMessageNumber.MONE]: {
+                    this.protocolMessageReconstructionService.constructProtocolMessageTwo(step.stepMessage)
+                        .subscribe((data: PriceRequestPhaseData) => {
+                            this.priceRequestPhaseData = data;
+                        });
+                }
+            }
+        }
+    }
+
+    ready(data: PriceRequestPhaseData) {
+        let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+        dialogRef.afterClosed().subscribe((password: string) => {
+            switch (this.transaction.currentStep) {
+                case ProtocolTransactionMessageNumber.MONE: {
+                    this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.transaction);
+                    break;
+                }
+                case ProtocolTransactionMessageNumber.MTWO: {
+                    this.protocolMessageBuilderService.buildProtocolMessageTwo(data, this.priceRequestPhaseData, this.transaction);
+                }
+            }
+        });
+    }
 }

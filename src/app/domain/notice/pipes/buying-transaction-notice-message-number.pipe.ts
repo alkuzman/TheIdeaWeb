@@ -17,13 +17,13 @@ export class BuyingTransactionNoticeMessageNumberPipe implements PipeTransform {
 
   private messages = {
     'MONE': 'You have been sent buying request',
-    'MTWO': 'The owner has responded on your buying request',
-    'MTHREE': 'The buyer accepted your offer',
-    'MFOUR': 'The owner sent you the encrypted idea',
-    'MFIVE': 'The buyer commits to the procedure',
-    'MSIX': '',
-    'MSEVEN': '',
-    'MEIGHT': 'You have received the result from the transaction',
+    'MTWO': 'You have been sent buying request',
+    'MTHREE': 'The owner has responded on your buying request',
+    'MFOUR':'The buyer accepted your offer',
+    'MFIVE': 'The owner sent you the encrypted idea',
+    'MSIX': 'The buyer commits to the procedure',
+    'MSEVEN':'',
+    'MEIGHT': '',
   };
 
   private valueIsProtocolTransactionMessageNumber(value: ProtocolTransactionMessageNumber) {

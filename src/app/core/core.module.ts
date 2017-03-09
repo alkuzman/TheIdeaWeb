@@ -25,10 +25,12 @@ import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
 import {ProtocolMessagesReconstructionService} from "./security-protocols/constructors/protocol-messages-reconstruction.service";
+import {SecurityPasswordDialogComponent} from "../domain/security/components/security-password-dialog/security-password-dialog.component";
+import {SecurityModule} from "../domain/security/security.module";
 
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [SharedModule, SecurityModule],
   declarations: [],
   exports: [],
   providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,

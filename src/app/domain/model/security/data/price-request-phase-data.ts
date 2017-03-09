@@ -6,4 +6,7 @@ import {Price} from "../../helpers/price";
 
 export interface PriceRequestPhaseData {
     price?: Price;
+    key?: CryptoKey;
+    nonce?: number;
+    otherParty?: string;
 }

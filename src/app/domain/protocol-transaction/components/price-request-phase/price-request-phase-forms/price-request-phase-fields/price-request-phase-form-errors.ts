@@ -5,6 +5,6 @@ import {Properties} from "../../../../../../shared/utils/properties";
 
 
 export interface PriceRequestPhaseFormErrors extends Properties {
-    price?: string,
-    currency?: string
+    price?: string;
+    currency?: string;
 }

@@ -40,7 +40,6 @@ export class PriceRequestPhaseFormComponent implements OnInit {
   }
 
   readyAccept() {
-    this.submitted = true;
     this.data.price = this.currentPrice;
     this.dataReady.emit(this.data);
   }

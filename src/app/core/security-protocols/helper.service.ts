@@ -23,7 +23,6 @@ export class HelperService {
       case ('pkcs8'): {
         switch (algString) {
           case (this.ASYMMETRIC_ENCRYPTION_ALG): {
-            console.log("===========HELPER==========");
             return ["decrypt"];
           }
         }

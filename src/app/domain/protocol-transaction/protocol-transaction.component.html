@@ -4,7 +4,7 @@
       <ideal-idea-details [idea]="transaction.idea"></ideal-idea-details>
     </md-tab>
     <md-tab label="Buying Procedure">
-      <ideal-price-request-phase-form-new (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
+      <ideal-price-request-phase-form-new [previousData]="priceRequestPhaseData" (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
     </md-tab>
   </md-tab-group>
 </div>

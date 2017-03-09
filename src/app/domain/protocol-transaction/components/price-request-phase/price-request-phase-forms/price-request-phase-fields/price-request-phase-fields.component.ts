@@ -17,7 +17,6 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
   templateUrl: "price-request-phase-fields.component.html"
 })
 export class PriceRequestPhaseFieldsComponent implements OnInit {
-
   @Input("form") form: FormGroup;
   private currentForm: FormGroup;
   private _submitted: boolean;
