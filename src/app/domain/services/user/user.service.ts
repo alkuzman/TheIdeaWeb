@@ -92,4 +92,8 @@ export class UserService {
   public getAuthenticatedUser(): User {
     return this.jwtSecurityContext.principal;
   }
+
+  public getAuthenticatedUserObservable(): Observable<User> {
+    return this.jwtAuthenticationService.userObservable();
+  }
 }

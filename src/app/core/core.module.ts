@@ -20,24 +20,24 @@ import {SocketService} from "./socket/socket.service";
 import {KeysService} from "./security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
-import {SecurityProfileService} from "./security-protocols/security-profile/security-profile.service";
 import {IconRegistryService} from "./icon-registry/icon-registry.service";
 import {SecurityProfileConstructorService} from "./security-protocols/constructors/security-profile-constructor.service";
 import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/protocol-messages-builder.service";
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
+import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
 
 
 @NgModule({
   imports: [SharedModule],
   declarations: [],
   exports: [],
-  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
+  providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    HelperService, ParserPemService, SecurityProfileService, IconRegistryService]
+    HelperService, ParserPemService, SecurityProfileService]
 })
 export class CoreModule {
 }
