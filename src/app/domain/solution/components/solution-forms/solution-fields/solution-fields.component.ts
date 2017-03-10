@@ -9,6 +9,8 @@ import {SolutionFormErrors} from "./solution-form-errors";
 import {SolutionValidationMessages} from "./solution-validation-messages";
 import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {Award} from "../../../../model/awards/award";
+import {Badge} from "../../../../model/awards/badges/badge";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-fields",
@@ -48,6 +50,12 @@ export class SolutionFieldsComponent {
       this.solution.text = value;
     });
     this.form.addControl("text", control);
+
+    control = this.fb.control(this.solution.idea.awards);
+    control.valueChanges.subscribe((value: Award<Badge<any, any>>[]) => {
+      this.solution.idea.awards = value;
+    });
+    this.form.addControl("awards", control);
 
     this.ideaFields = this.fb.group({});
     this.form.addControl("ideaFields", this.ideaFields);
@@ -107,7 +115,6 @@ export class SolutionFieldsComponent {
   analyze() {
     this.analyzerService.analyzeIdea(this.solution).subscribe((ideaAnalysis: IdeaAnalysis) => {
       this.ideaAnalysis = ideaAnalysis;
-      console.log(ideaAnalysis);
       this.numberOfTags = 5;
     });
   }

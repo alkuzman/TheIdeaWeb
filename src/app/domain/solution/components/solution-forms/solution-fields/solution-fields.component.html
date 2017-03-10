@@ -14,7 +14,7 @@
   <div class="padding-top">
     <span class="ideal-subheading">Solution Quality <md-icon class="icon-middle">timeline</md-icon></span>
     <div>
-      <ideal-solution-quality [solutionQuality]="ideaAnalysis?.solutionQuality"></ideal-solution-quality>
+      <ideal-solution-quality formControlName="awards" [solutionQuality]="ideaAnalysis?.solutionQuality"></ideal-solution-quality>
     </div>
     <div style="text-align: end" class="ideal-caption">Awards will be private unless you want to share them with potential buyers. <a routerLink="/awards" idealColor="accent" target="_blank">More details</a></div>
   </div>

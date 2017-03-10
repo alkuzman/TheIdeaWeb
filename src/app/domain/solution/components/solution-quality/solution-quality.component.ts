@@ -9,13 +9,15 @@ import {SolutionQualityDialog} from "./solution-quality-dialog/solution-quality-
 import {Award} from "../../../model/awards/award";
 import {AwardService} from "../../../services/award/award.service";
 import {Badge} from "../../../model/awards/badges/badge";
+import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-value-accessor";
 
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-quality",
-  templateUrl: "solution-quality.component.html"
+  templateUrl: "solution-quality.component.html",
+  providers: [MakeProvider(SolutionQualityComponent)]
 })
-export class SolutionQualityComponent {
+export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<any, any>>[]> {
   private _solutionQuality: SolutionQuality;
   private awards: Award<Badge<any, any>>[];
 
@@ -28,11 +30,17 @@ export class SolutionQualityComponent {
     this.awards = [];
     this.awardService.generateAwards(this._solutionQuality).subscribe((awards: Award<Badge<any, any>>[]) => {
       this.awards = awards;
+      this.value = [];
+      for (let award of awards) {
+        if (award.badge.id != null)
+          this.value.push(award);
+      }
+      this.notify();
     })
   }
 
   constructor(public dialog: MdDialog, private awardService: AwardService) {
-
+    super([]);
   }
 
   public getQualityStatusName(qualityStatus: SolutionQualityStatus): string {
