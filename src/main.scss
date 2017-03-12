@@ -8,6 +8,14 @@ body {
   padding: 0px !important;
 }
 
+.icon-middle {
+  transform: translateY(5px);
+}
+
+md-sidenav {
+  width: 280px !important;
+}
+
 .flex {
   flex: 1 1 auto;
 }
@@ -26,14 +34,11 @@ body {
   height: auto !important;
 }
 
-md-card-header, .md-card-header-text {
+md-card-header, .mat-card-header-text {
   height: auto !important;
 }
 
 /* Box-sizing border-box */
-* {
-  box-sizing: border-box;
-}
 
 /* Set up a default font and some padding to provide breathing room */
 body {
@@ -41,24 +46,6 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-p {
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 20px;
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
-ul {
-  margin: 10px 0 0;
-  padding: 0 0 0 20px;
-}
-
-li {
-  font-weight: 400;
-  margin-top: 4px;
 }
 
 .full-width {
@@ -115,4 +102,134 @@ li {
 .icon-20 {
   font-size: 20px;
   opacity: 0.70;
+}
+
+.icon-44 {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.ideal-display-1 {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 34px;
+  line-height: 40px;
+  font-weight: normal;
+  padding-left: 10px;
+}
+
+.ideal-display-2 {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 45px;
+  line-height: 48px;
+  font-weight: normal;
+  padding-left: 10px;
+}
+
+.ideal-display-3 {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 56px;
+  line-height: 60px;
+  font-weight: normal;
+  padding-left: 15px;
+}
+
+.ideal-display-4 {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 112px;
+  line-height: 120px;
+  font-weight: lighter;
+  padding-left: 20px;
+}
+
+.ideal-headline {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: normal;
+  padding-left: 10px;
+}
+
+.ideal-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 21px;
+  line-height: 30px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.line-break {
+  white-space: pre-line;
+}
+
+.line-break:first-line {
+  line-height: 0px;
+}
+
+.ideal-subheading {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: normal;
+}
+
+.ideal-body-2 {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.ideal-body-1 {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+}
+
+.ideal-caption {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: normal;
+}
+
+.ideal-badge {
+  position: absolute !important;
+  z-index: 1000 !important;
+}
+
+.ideal-badge-left {
+  top: 0; left: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-right {
+  top: 0; right: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-top{
+  top: 0; left: 0; right: 0;
+  margin: auto;
+}
+
+.ideal-badge-bottom {
+  right: 0; left: 0; bottom: 0;
+  margin: auto;
+}
+
+.ideal-badge-top-left {
+  top: 0; left: 0;
+}
+
+.ideal-badge-top-right {
+  top: 0; right: 0;
+}
+
+.ideal-badge-bottom-left {
+  bottom: 0; left: 0;
+}
+
+.ideal-badge-bottom-right {
+  bottom: -5px; right: -5px;
 }

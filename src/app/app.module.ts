@@ -11,6 +11,7 @@ import {CoreModule} from "./core/core.module";
 import {PagesModule} from "./pages/pages.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {DomainServicesModule} from "./domain/services/domain-services.module";
+import 'hammerjs';
 import {AuthHttp, AuthConfig} from "angular2-jwt";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {

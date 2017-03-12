@@ -112,6 +112,9 @@ export class IdeaActionsService {
 
   constructor(private http: Http, private userService: UserService) {
     this.authenticatedUser = this.userService.getAuthenticatedUser();
+    this.userService.getAuthenticatedUserObservable().subscribe((user: User) => {
+      this.authenticatedUser = user;
+    });
   }
 
   public getActions(idea: Idea): Actions {

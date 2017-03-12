@@ -11,14 +11,18 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
   templateUrl: "keyword-search.component.html"
 })
 export class KeywordSearchComponent implements OnInit {
-  @Input("keywords") keywords: Keyword[] = [];
+  @Input("keywords") _keywords: Keyword[] = [];
   private form: FormGroup;
   private searchField: FormControl;
   private keywordResults: Keyword[] = [];
+  @Input("keywords") set keywords(keywords: Keyword[]) {
+    this._keywords = keywords;
+    this.search("");
+  }
   @Input("searchPlaceholder") searchPlaceholder: string = "Search";
   @Input("stopKeywords") stopKeywords: string[];
   @Input("clearAfterSelect") clearAfterSelect: boolean = false;
-  @Output("keywordSelected") keywordSelected: EventEmitter<string> = new EventEmitter<string>()
+  @Output("keywordSelected") keywordSelected: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private formBuilder: FormBuilder, private snackBar: MdSnackBar) {
 
@@ -35,15 +39,17 @@ export class KeywordSearchComponent implements OnInit {
   }
 
   search(value: string) {
-    if (this.keywords)
-      this.keywordResults = value ? this.keywords.filter((s: Keyword) => this.testKeyword(s, value)) : this.keywords;
+    if (this._keywords)
+      this.keywordResults = this._keywords.filter((s: Keyword) => this.testKeyword(s, value));
   }
 
   testKeyword(keyword: Keyword, query: string): boolean {
-    let reg: RegExp = new RegExp(query, 'gi');
-    let matchesQuery: boolean = reg.test(keyword.phrase);
-    if (!matchesQuery)
-      return false;
+    if (query) {
+      let reg: RegExp = new RegExp(query, 'gi');
+      let matchesQuery: boolean = reg.test(keyword.phrase);
+      if (!matchesQuery)
+        return false;
+    }
     return this.stopKeywords.indexOf(keyword.phrase) == -1;
   }
 

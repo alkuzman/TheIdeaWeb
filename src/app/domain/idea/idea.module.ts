@@ -13,13 +13,12 @@ import {IdeaCardComponent} from "./components/idea-card/idea-card.component";
 import {IdeaDetailsLoaderComponent} from "./components/idea-details/idea-details-loader/idea-details-loader.component";
 import {UserModule} from "../user/user.module";
 import {IdeaListLoaderComponenet} from "./components/idea-list/idea-list-loader/idea-list-loader.component";
+import {KeywordModule} from "../keyword/keyword.module";
 
 @NgModule({
-  imports: [SharedModule, ProblemModule, UserModule],
-  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent,
-    IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
-  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent,
-    IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+  imports: [SharedModule, ProblemModule, UserModule, KeywordModule],
+  declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+  exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent, IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
 })
 export class IdeaModule {
 

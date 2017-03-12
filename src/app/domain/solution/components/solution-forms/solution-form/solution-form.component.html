@@ -3,8 +3,8 @@
     <form novalidate *ngIf="active" (ngSubmit)="save()" [formGroup]="form">
       <ideal-solution-fields [showIdeaFields]="showIdeaFields" [showProblemFields]="showProblemFields"
                              [solution]="solution" [submitted]="submitted" [form]="fields"></ideal-solution-fields>
-      <div class="margin-top" fxLayout="row" fxLayoutAlign="end">
-        <button type="button" md-button (click)="clearForm()">Clear</button>
+      <div class="padding-top" fxLayout="row" fxLayoutAlign="end">
+        <button type="button" md-button color="accent" (click)="clearForm()">Clear</button>
         <button type="submit" md-raised-button color="accent">{{submitText}}</button>
       </div>
     </form>

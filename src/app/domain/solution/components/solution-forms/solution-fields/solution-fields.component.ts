@@ -107,6 +107,7 @@ export class SolutionFieldsComponent {
   analyze() {
     this.analyzerService.analyzeIdea(this.solution).subscribe((ideaAnalysis: IdeaAnalysis) => {
       this.ideaAnalysis = ideaAnalysis;
+      console.log(ideaAnalysis);
       this.numberOfTags = 5;
     });
   }

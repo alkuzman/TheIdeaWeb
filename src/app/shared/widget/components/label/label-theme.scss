@@ -1,0 +1,48 @@
+@import '~@angular/material/core/theming/theming';
+
+@mixin _ideal-label-theme-color($theme, $property, $color: 'default') {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  &.ideal-primary {
+    #{$property}: mat-color($primary, $color);
+  }
+  &.ideal-accent {
+    #{$property}: mat-color($accent, $color);
+  }
+  &.ideal-warn {
+    #{$property}: mat-color($warn, $color);
+  }
+
+  &.ideal-primary, &.ideal-accent, &.ideal-warn, &[disabled] {
+    &[disabled] {
+      $palette: if($property == 'color', $foreground, $background);
+      #{$property}: mat-color($palette, disabled-button);
+    }
+  }
+}
+
+@mixin ideal-label-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .ideal-label {
+    @include _ideal-label-theme-color($theme, 'color');
+    background: transparent;
+  }
+
+  .ideal-circle-label, .ideal-raised-label {
+    // Default properties when not using any [color] value.
+    color: mat-color($foreground, text);
+    background-color: mat-color($background, raised-button);
+
+    @include _ideal-label-theme-color($theme, 'color', default-contrast);
+    @include _ideal-label-theme-color($theme, 'background-color');
+  }
+}

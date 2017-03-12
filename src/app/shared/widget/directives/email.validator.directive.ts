@@ -10,6 +10,6 @@ import {NG_VALIDATORS} from "@angular/forms";
     {provide: NG_VALIDATORS, multi: true, useValue: IdeaValidators.email}
   ]
 })
-export class PasswordMatcherDirective {
+export class EmailValidatorDirective {
 
 }

@@ -1,0 +1,8 @@
+<div [ngSwitch]="solutionQuality.problemCoverage.status">
+  <div *ngSwitchCase="good">Your solution quality is good. That means that your solution covers the domain of the problem
+  and the sneakPeak (Abstract) of the idea describes the problem well.</div>
+  <div *ngSwitchCase="fair">Your solution quality is fair. That means that your solution covers the domain of the problem
+    and the sneakPeak (Abstract) of the idea describes the problem, but that does partially.</div>
+  <div *ngSwitchCase="pure">Your solution quality is pure. That means that it doesn't cover problem domain well and/or
+    sneakPeak doesn't describes the solution well.</div>
+</div>

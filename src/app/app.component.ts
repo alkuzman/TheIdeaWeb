@@ -1,5 +1,9 @@
+/**
+ * Created by AKuzmanoski on 09/03/2017.
+ */
 import {Component, HostBinding, OnInit} from "@angular/core";
 import {ThemingService} from "./core/theming/theming.service";
+import {IconRegistryService} from "./core/icon-registry/icon-registry.service";
 
 /**
  * This class represents the main application components. Within the @Routes annotation is the configuration of the
@@ -16,7 +20,7 @@ import {ThemingService} from "./core/theming/theming.service";
 export class AppComponent implements OnInit {
   @HostBinding("class") themeClass = "default-theme";
 
-  constructor(private themingService: ThemingService) {
+  constructor(private themingService: ThemingService, private iconRegistry: IconRegistryService) {
     console.log('Environment config');
   }
 

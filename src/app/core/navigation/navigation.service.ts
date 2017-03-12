@@ -4,34 +4,36 @@ import {NavigationItem} from "./navigation-item";
 import {Observable, Observer} from "rxjs";
 import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
 import {JwtHttpService} from "../authentication/jwt/jwt-http.service";
+import {NavigationItemGroup} from "./navigation-item-group";
 /**
  * Created by AKuzmanoski on 20/12/2016.
  */
 
 @Injectable()
 export class NavigationService {
+
   constructor(private http: JwtHttpService, private authenticationService: JwtAuthenticationService) {
   }
 
-  public get navigationItems(): Observable<NavigationItem[]> {
-    return Observable.create((observer: Observer<NavigationItem[]>) => {
-      let navigationItems: NavigationItem[];
+  public get navigation(): Observable<NavigationItemGroup[]> {
+    return Observable.create((observer: Observer<NavigationItemGroup[]>) => {
 
       this.http.get("/assets/data/navigation/navigation.json").subscribe((response: Response) => {
-        navigationItems = response.json();
-
-        if (this.authenticationService.isAuthenticated()) {
-          this.http.get("/assets/data/navigation/signed-navigation.json").subscribe((response: Response) => {
-            navigationItems = navigationItems.concat(response.json());
-            observer.next(navigationItems);
-          });
-        } else {
-          this.http.get("/assets/data/navigation/not-signed-navigation.json").subscribe((response: Response) => {
-            navigationItems = navigationItems.concat(response.json());
-            observer.next(navigationItems);
-          });
+        let newNavigation: NavigationItemGroup[] = [];
+        let navigation: NavigationItemGroup[] = response.json();
+        let authenticated: boolean = this.authenticationService.isAuthenticated();
+        for (let navigationItemGroup of navigation) {
+          let newNavigationItemGroup: NavigationItemGroup = {name: navigationItemGroup.name, items: [], divider: navigationItemGroup.divider};
+          for (let navigationItem of navigationItemGroup.items) {
+            if (navigationItem.scope == "authenticated" && !authenticated)
+              continue;
+            if (navigationItem.scope == "not-authenticated" && authenticated)
+              continue;
+            newNavigationItemGroup.items.push(navigationItem);
+          }
+          newNavigation.push(newNavigationItemGroup);
         }
-
+        observer.next(newNavigation);
       });
     })
   }

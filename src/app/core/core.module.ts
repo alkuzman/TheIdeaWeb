@@ -20,6 +20,7 @@ import {SocketService} from "./socket/socket.service";
 import {KeysService} from "./security-protocols/keys/keys.service";
 import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
+import {IconRegistryService} from "./icon-registry/icon-registry.service";
 import {SecurityProfileConstructorService} from "./security-protocols/constructors/security-profile-constructor.service";
 import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/protocol-messages-builder.service";
 import {HelperService} from "./security-protocols/helper.service";
@@ -30,17 +31,19 @@ import {SecurityModule} from "../domain/security/security.module";
 import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/constructors/protocol-transaction-step-notice-constructor.service";
 import {EncryptingService} from "./security-protocols/encrypting.service";
 import {DecryptingService} from "./security-protocols/decrypting.service";
+import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
 
 
 @NgModule({
   imports: [SharedModule, SecurityModule],
   declarations: [],
   exports: [],
-  providers: [JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
+  providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
+    HelperService, ParserPemService, SecurityProfileService,
     ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor,
     EncryptingService, DecryptingService]
 })

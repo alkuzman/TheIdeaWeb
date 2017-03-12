@@ -1,0 +1,45 @@
+$ideal-label-display: inline-block !default;
+$ideal-label-margin: 0 !default;
+$ideal-label-font-size: 12px !default;
+$ideal-label-font-weight: normal !default;
+
+// Raised Label standards
+$ideal-raised-label-padding: 0 5px !default;
+$ideal-raised-label-border-radius: 2px !default;
+$ideal-raised-label-height: 18px !default;
+$ideal-raised-label-line-height: 18px !default;
+
+// Circle Label standards
+$ideal-circle-label-border-radius: 50% !default;
+$ideal-circle-label-width: 20px !default;
+$ideal-circle-label-height: 20px !default;
+$ideal-circle-label-line-height: 20px !default;
+
+// Standard Label standards
+$ideal-standard-label-font-size: 16px !default;
+
+.ideal-circle-label, .ideal-raised-label, .ideal-label {
+  display: $ideal-label-display;
+  font-size: $ideal-label-font-size;
+  font-weight: $ideal-label-font-weight !important;
+}
+
+.ideal-label {
+  font-size: $ideal-standard-label-font-size;
+}
+
+.ideal-circle-label {
+  border-radius: $ideal-circle-label-border-radius;
+  width: $ideal-circle-label-width;
+  height: $ideal-circle-label-height;
+  line-height: $ideal-circle-label-line-height;
+  border: 2px solid white;
+  text-align: center;
+}
+
+.ideal-raised-label {
+  height: $ideal-raised-label-height;
+  line-height: $ideal-raised-label-line-height;
+  padding: $ideal-raised-label-padding;
+  border-radius: $ideal-raised-label-border-radius;
+}

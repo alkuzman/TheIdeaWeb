@@ -9,4 +9,5 @@ export interface NavigationItem {
   params?: any,
   theme: string,
   color: string
+  scope: string;
 }

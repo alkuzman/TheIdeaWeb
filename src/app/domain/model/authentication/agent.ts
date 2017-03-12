@@ -10,6 +10,7 @@ export class Agent extends BaseEntityImpl implements Searchable {
   public telephone: string;
   public profilePicture: string;
   public coverPicture: string;
+  public name: string;
 
   public get fullName(): string {
     return "";
