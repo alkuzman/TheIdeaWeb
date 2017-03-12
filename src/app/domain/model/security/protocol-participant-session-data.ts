@@ -5,7 +5,7 @@ import {Agent} from "../authentication/agent";
  */
 
 
-export class ProtocolParticipantSessionData {
+export class ProtocolParticipantSessionData  {
     public participant: Agent;
     public sessionKeyEncrypted: string;
 }

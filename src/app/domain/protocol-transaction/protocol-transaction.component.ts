@@ -58,6 +58,7 @@ export class ProtocolTransactionComponent implements OnInit {
                     this.protocolMessageReconstructionService.constructProtocolMessageOne(currentStep.message, password, this.protocolSession)
                         .subscribe((data: PriceRequestPhaseData) => {
                             this.priceRequestPhaseData = data;
+                            console.log(this.protocolSession);
                         });
                 } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
                     this.protocolMessageReconstructionService.constructProtocolMessageTwo(currentStep.message, password, this.protocolSession)

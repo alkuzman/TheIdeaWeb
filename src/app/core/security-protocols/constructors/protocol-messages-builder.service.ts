@@ -45,6 +45,7 @@ export class ProtocolMessagesBuilderService {
 
     private sendMessage(notice: ProtocolTransactionStepNotice<any>) {
         console.log(notice.type);
+        console.log(notice.protocolSession);
         if (notice.previousStepNotice != null) {
             notice.previousStepNotice.activated = true;
         }
@@ -72,60 +73,68 @@ export class ProtocolMessagesBuilderService {
                                                     participant.sessionKeyEncrypted = encryptedSessionKey;
                                                     protocolSession.participantsSessionData.push(participant);
 
-                                                    this.keysService.exportKey(key, 'raw')
-                                                        .then((keyBuffer: ArrayBuffer) => {
-                                                            let Kcm: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(keyBuffer));
-                                                            let N: string = this.cryptographicOperations.generateNonce();
-                                                            let obj = {
-                                                                'key': Kcm,
-                                                                'nonce': N,
-                                                                'identity': this.userService.getAuthenticatedUser().email
-                                                            };
-                                                            let jsonObj: string = JSON.stringify(obj);
-                                                            this.cryptographicOperations.encrypt(
-                                                                this.cryptographicOperations.getAlgorithm('RSA-OAEP', 'SHA256', 'encrypt').algorithm,
-                                                                ownerPublicKeyEncryption,
-                                                                this.cryptographicOperations.convertStringToBuffer(jsonObj))
-                                                                .then((initDataEncryptionBuf: ArrayBuffer) => {
-                                                                    let initDataEncryption: string = this.cryptographicOperations
-                                                                        .convertUint8ToString(new Uint8Array(initDataEncryptionBuf));
-                                                                    let hashInitData: string = this.cryptographicOperations.hash(jsonObj);
-                                                                    this.keysService.extractPrivateKey(this.securityProfile.encryptedPrivateKey, password,
-                                                                        this.helper.ASYMMETRIC_SIGNING_ALG)
-                                                                        .subscribe((privateSigningKey: CryptoKey) => {
-                                                                            this.cryptographicOperations.sign(this.helper.ASYMMETRIC_SIGNING_ALG, privateSigningKey,
-                                                                                this.cryptographicOperations.convertStringToUint8(hashInitData).buffer)
-                                                                                .then((signedHashedInitDataBuf: ArrayBuffer) => {
-                                                                                    let signedHashedInitData: string = this.cryptographicOperations
-                                                                                        .convertUint8ToString(new Uint8Array(signedHashedInitDataBuf));
-                                                                                    console.log(signedHashedInitData);
-                                                                                    let data = {
-                                                                                        'bid': userData.price
-                                                                                    };
-                                                                                    let jsonData: string = JSON.stringify(data);
-                                                                                    this.cryptographicOperations.encrypt(
-                                                                                        this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA256', 'encrypt').algorithm,
-                                                                                        key,
-                                                                                        this.cryptographicOperations.convertStringToBuffer(jsonData))
-                                                                                        .then((dataEncryptedBuf: ArrayBuffer) => {
-                                                                                            let dataEncrypted: string = this.cryptographicOperations
-                                                                                                .convertUint8ToString(new Uint8Array(dataEncryptedBuf));
-                                                                                            let hashedDataEncrypted: string = this.cryptographicOperations.hash(dataEncrypted);
-                                                                                            let message = {
-                                                                                                'signature': signedHashedInitData,
-                                                                                                'object': initDataEncryption,
-                                                                                                'data': dataEncrypted,
-                                                                                                'hashedData': hashedDataEncrypted
+                                                    this.keysService.insertSessionKey(key, ownerPublicKeyEncryption)
+                                                        .subscribe((ownerEncryptedSessionKey: string) => {
+                                                            participant = new ProtocolParticipantSessionData();
+                                                            participant.participant = protocolSession.idea.owner;
+                                                            participant.sessionKeyEncrypted = ownerEncryptedSessionKey;
+                                                            protocolSession.participantsSessionData.push(participant);
+
+                                                            this.keysService.exportKey(key, 'raw')
+                                                                .then((keyBuffer: ArrayBuffer) => {
+                                                                    let Kcm: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(keyBuffer));
+                                                                    let N: string = this.cryptographicOperations.generateNonce();
+                                                                    let obj = {
+                                                                        'key': Kcm,
+                                                                        'nonce': N,
+                                                                        'identity': this.userService.getAuthenticatedUser().email
+                                                                    };
+                                                                    let jsonObj: string = JSON.stringify(obj);
+                                                                    this.cryptographicOperations.encrypt(
+                                                                        this.cryptographicOperations.getAlgorithm('RSA-OAEP', 'SHA256', 'encrypt').algorithm,
+                                                                        ownerPublicKeyEncryption,
+                                                                        this.cryptographicOperations.convertStringToBuffer(jsonObj))
+                                                                        .then((initDataEncryptionBuf: ArrayBuffer) => {
+                                                                            let initDataEncryption: string = this.cryptographicOperations
+                                                                                .convertUint8ToString(new Uint8Array(initDataEncryptionBuf));
+                                                                            let hashInitData: string = this.cryptographicOperations.hash(jsonObj);
+                                                                            this.keysService.extractPrivateKey(this.securityProfile.encryptedPrivateKey, password,
+                                                                                this.helper.ASYMMETRIC_SIGNING_ALG)
+                                                                                .subscribe((privateSigningKey: CryptoKey) => {
+                                                                                    this.cryptographicOperations.sign(this.helper.ASYMMETRIC_SIGNING_ALG, privateSigningKey,
+                                                                                        this.cryptographicOperations.convertStringToUint8(hashInitData).buffer)
+                                                                                        .then((signedHashedInitDataBuf: ArrayBuffer) => {
+                                                                                            let signedHashedInitData: string = this.cryptographicOperations
+                                                                                                .convertUint8ToString(new Uint8Array(signedHashedInitDataBuf));
+                                                                                            console.log(signedHashedInitData);
+                                                                                            let data = {
+                                                                                                'bid': userData.price
                                                                                             };
-                                                                                            let jsonMessage: string = JSON.stringify(message);
-                                                                                            console.log(jsonMessage);
+                                                                                            let jsonData: string = JSON.stringify(data);
+                                                                                            this.cryptographicOperations.encrypt(
+                                                                                                this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA256', 'encrypt').algorithm,
+                                                                                                key,
+                                                                                                this.cryptographicOperations.convertStringToBuffer(jsonData))
+                                                                                                .then((dataEncryptedBuf: ArrayBuffer) => {
+                                                                                                    let dataEncrypted: string = this.cryptographicOperations
+                                                                                                        .convertUint8ToString(new Uint8Array(dataEncryptedBuf));
+                                                                                                    let hashedDataEncrypted: string = this.cryptographicOperations.hash(dataEncrypted);
+                                                                                                    let message = {
+                                                                                                        'signature': signedHashedInitData,
+                                                                                                        'object': initDataEncryption,
+                                                                                                        'data': dataEncrypted,
+                                                                                                        'hashedData': hashedDataEncrypted
+                                                                                                    };
+                                                                                                    let jsonMessage: string = JSON.stringify(message);
+                                                                                                    console.log(jsonMessage);
 
-                                                                                            this.sendMessage(this.protocolTransactionStepNoticeConstructor
-                                                                                                .constructProtocolTransactionStepOneNotice(protocolSession, jsonMessage,
-                                                                                                    this.userService.getAuthenticatedUser(),
-                                                                                                    <ProtocolTransactionStepThreeNotice>previousNotice,
-                                                                                                    previousNotice == null ? protocolSession.idea.owner : previousNotice.originator));
+                                                                                                    this.sendMessage(this.protocolTransactionStepNoticeConstructor
+                                                                                                        .constructProtocolTransactionStepOneNotice(protocolSession, jsonMessage,
+                                                                                                            this.userService.getAuthenticatedUser(),
+                                                                                                            <ProtocolTransactionStepThreeNotice>previousNotice,
+                                                                                                            previousNotice == null ? protocolSession.idea.owner : previousNotice.originator));
 
+                                                                                                });
                                                                                         });
                                                                                 });
                                                                         });
@@ -142,8 +151,8 @@ export class ProtocolMessagesBuilderService {
     }
 
     public buildProtocolMessageTwo(userData: PriceRequestPhaseData, password: string,
-                            previousMessageData: PriceRequestPhaseData, protocolSession: ProtocolSession,
-                            previousNotice: ProtocolTransactionStepOneNotice) {
+                                   previousMessageData: PriceRequestPhaseData, protocolSession: ProtocolSession,
+                                   previousNotice: ProtocolTransactionStepOneNotice) {
         let data = {
             'price': userData.price,
             'nonce': previousMessageData.nonce
