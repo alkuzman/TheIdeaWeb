@@ -7,8 +7,9 @@ import {SolutionFieldsComponent} from "./components/solution-forms/solution-fiel
 import {IdeaModule} from "../idea/idea.module";
 import {SolutionFormComponent} from "./components/solution-forms/solution-form/solution-form.component";
 import {NewSolutionFormComponent} from "./components/solution-forms/solution-form-new/solution-form-new.component";
+import {SecurityModule} from "../security/security.module";
 @NgModule({
-  imports: [SharedModule, IdeaModule],
+  imports: [SharedModule, IdeaModule, SecurityModule],
   declarations: [SolutionFieldsComponent, SolutionFormComponent, NewSolutionFormComponent],
   exports: [SolutionFieldsComponent, SolutionFormComponent, NewSolutionFormComponent],
 })

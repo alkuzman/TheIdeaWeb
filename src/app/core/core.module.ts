@@ -28,6 +28,8 @@ import {ProtocolMessagesReconstructionService} from "./security-protocols/constr
 import {SecurityPasswordDialogComponent} from "../domain/security/components/security-password-dialog/security-password-dialog.component";
 import {SecurityModule} from "../domain/security/security.module";
 import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/constructors/protocol-transaction-step-notice-constructor.service";
+import {EncryptingService} from "./security-protocols/encrypting.service";
+import {DecryptingService} from "./security-protocols/decrypting.service";
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/con
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor]
+    ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor,
+    EncryptingService, DecryptingService]
 })
 export class CoreModule {
 }

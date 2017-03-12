@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {getCrypto, getAlgorithmParameters} from "pkijs/src/common";
 import * as CryptoJS from "crypto-js";
+import {Observable} from "rxjs";
 
 /**
  * Created by Viki on 2/7/2017.

@@ -152,6 +152,16 @@ export class KeysService {
         });
     }
 
+    public encryptSymmetricKeyWithPasswordKey(key: CryptoKey, password: string): Observable<string> {
+        return Observable.create((observer) => {
+            this.generateSymmetricKeyFromPassword(password).then((passwordKey: CryptoKey) => {
+               this.encryptSymmetricKey(key, passwordKey).subscribe((encryptedKey: string) => {
+                   observer.next(encryptedKey);
+               });
+            });
+        });
+    }
+
     public encryptSymmetricKey(key: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
         return Observable.create((observer) => {
             this.exportKey(key, "raw").then((keyBuf: ArrayBuffer) => {
@@ -162,6 +172,16 @@ export class KeysService {
                     observer.next(encryptedKey);
                 });
             });
+        });
+    }
+
+    public decryptSymmetricKeyWithPasswordKey(encryptedKey: string, password: string): Observable<CryptoKey> {
+        return Observable.create((observer) => {
+           this.generateSymmetricKeyFromPassword(password).then((passwordKey: CryptoKey) => {
+              this.decryptSymmetricKey(encryptedKey, passwordKey).subscribe((key: CryptoKey) => {
+                  observer.next(key);
+              });
+           });
         });
     }
 
