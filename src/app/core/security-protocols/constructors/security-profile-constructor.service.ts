@@ -14,14 +14,16 @@ export class SecurityProfileConstructorService {
   }
 
   public createSecurityProfile(certificationRequestPEM: string, certificatePEM: string, privateKeyEncrypted: string,
-                               type: CertificateType, user: User, encryptionPair: EncryptionPair): SecurityProfile {
+                               type: CertificateType, user: User, encryptionPair: EncryptionPair,
+                               encryptedSessionKey: string): SecurityProfile {
 
     let securityProfile: SecurityProfile = new SecurityProfile();
 
     securityProfile.certificationRequestPEM = certificationRequestPEM;
     securityProfile.certificatePEM = certificatePEM;
+    securityProfile.encryptedSymmetricKey = encryptedSessionKey;
     securityProfile.certificateType = type;
-    securityProfile.agent = user
+    securityProfile.agent = user;
     securityProfile.encryptionPair = encryptionPair;
     if (privateKeyEncrypted !== undefined) {
       securityProfile.encryptedPrivateKey = privateKeyEncrypted;

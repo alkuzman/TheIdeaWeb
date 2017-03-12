@@ -152,4 +152,31 @@ export class KeysService {
         });
     }
 
+    public encryptSymmetricKey(key: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
+        return Observable.create((observer) => {
+            this.exportKey(key, "raw").then((keyBuf: ArrayBuffer) => {
+                this.cryptographicOperations.encrypt(this.cryptographicOperations
+                    .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "encrypt").algorithm,
+                    encryptionKey, keyBuf).then((encryptedKeyBuf: ArrayBuffer) => {
+                    let encryptedKey: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(encryptedKeyBuf));
+                    observer.next(encryptedKey);
+                });
+            });
+        });
+    }
+
+    public decryptSymmetricKey(encryptedKey: string, decryptionKey: CryptoKey): Observable<CryptoKey> {
+        return Observable.create((observer) => {
+           this.cryptographicOperations.decrypt(this.cryptographicOperations
+               .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
+               decryptionKey, this.cryptographicOperations.convertStringToUint8(encryptedKey).buffer)
+               .then((keyBuf: ArrayBuffer) => {
+                   this.importKey(keyBuf, "raw", this.helper.SYMMETRIC_ALG)
+                       .then((key: CryptoKey) => {
+                           observer.next(key);
+                       });
+               });
+        });
+    }
+
 }

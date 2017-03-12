@@ -14,4 +14,5 @@ export class SecurityProfile extends BaseEntityImpl {
   public certificateType: CertificateType;
   public agent: Agent;
   public encryptionPair: EncryptionPair;
+  public encryptedSymmetricKey: string;
 }
