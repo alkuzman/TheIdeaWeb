@@ -124,4 +124,32 @@ export class KeysService {
         });
     }
 
+    public extractSessionKey(encryptedSessionKey: string, decryptionKey: CryptoKey): Observable<CryptoKey> {
+        return Observable.create((observer) => {
+            this.cryptographicOperations.decrypt(this.cryptographicOperations
+                    .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
+                decryptionKey, this.cryptographicOperations
+                    .convertStringToUint8(encryptedSessionKey).buffer)
+                .then((sessionKeyBuf: ArrayBuffer) => {
+                    this.importKey(sessionKeyBuf, 'raw', this.helper.SYMMETRIC_ALG)
+                        .then((sessionKey: CryptoKey) => {
+                            observer.next(sessionKey);
+                        });
+            });
+        })
+    }
+
+    public insertSessionKey(sessionKey: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
+        return Observable.create((observer) => {
+           this.exportKey(sessionKey, "raw").then((sessionKeyBuf: ArrayBuffer) => {
+               this.cryptographicOperations.encrypt(this.cryptographicOperations
+                   .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "encrypt").algorithm,
+                   encryptionKey, sessionKeyBuf).then((encryptedSessionKeyBuf: ArrayBuffer) => {
+                   observer.next(this.cryptographicOperations
+                       .convertUint8ToString(new Uint8Array(encryptedSessionKeyBuf)));
+               });
+           });
+        });
+    }
+
 }

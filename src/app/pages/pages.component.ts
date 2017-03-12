@@ -9,10 +9,10 @@ import {LoadingService} from "../core/loading/loading.service";
 import {ScrollService} from "../core/scrolling/scroll-service";
 import {RedirectService} from "../core/navigation/redirect.service";
 import {SocketService} from "../core/socket/socket.service";
-import {Notice} from "../domain/model/sharing/notice";
 import {NoticeService} from "../domain/services/notice/notice.service";
 import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-context.service";
 import {Subscription} from "rxjs";
+import {Notice} from "../domain/model/sharing/notice";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',

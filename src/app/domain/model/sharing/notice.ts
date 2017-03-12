@@ -1,13 +1,11 @@
-import {BaseEntityImpl} from "../base-entity-impl";
+import {BaseEntity} from "../base-entity";
 import {Recipient} from "./recipient";
 /**
- * Created by AKuzmanoski on 23/10/2016.
+ * Created by Viki on 3/9/2017.
  */
-export abstract class Notice extends BaseEntityImpl {
-    public recipients: Recipient[];
 
-    constructor() {
-        super();
-        this.recipients = [];
-    }
+
+export interface Notice extends BaseEntity{
+
+    recipients: Recipient[];
 }

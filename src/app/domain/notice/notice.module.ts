@@ -12,16 +12,16 @@ import {AgentModule} from "../agent/agent.module";
 import {NoticeListComponent} from "./components/notice-list/notice-list.component";
 import {NoticeListLoaderComponent} from "./components/notice-list/notice-list-loader/notice-list-loader.component";
 import {NoticeCardComponent} from "./components/notice-card/notice-card.component";
-import {BuyingTransactionNoticeCardComponent} from "./components/notice-card/buying-transaction-notice-card/buying-transaction-notice-card.component";
+import {ProtocolTransactionStepNoticeCard} from "./components/notice-card/protocol-transaction-step-notice-card/protocol-transaction-step-notice-card.component";
 import {UserModule} from "../user/user.module";
-import {BuyingTransactionNoticeMessageNumberPipe} from "./pipes/buying-transaction-notice-message-number.pipe";
+import {BuyingTransactionNoticeMessageNumberPipe} from "./pipes/protocol-trasaction-step-notice-message.pipe";
 @NgModule({
   imports: [SharedModule, PackageModule, AgentModule, UserModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
-    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent,
+    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
     BuyingTransactionNoticeMessageNumberPipe],
   exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
-    NoticeListLoaderComponent, NoticeCardComponent, BuyingTransactionNoticeCardComponent,
+    NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
     BuyingTransactionNoticeMessageNumberPipe]
 })
 export class NoticeModule {

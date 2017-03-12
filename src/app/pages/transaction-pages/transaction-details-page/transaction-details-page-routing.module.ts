@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TransactionDetailsPageRoutes} from "./transaction-details-page.routes";
-import {TransactionDetailsBuyingTransactionResolverService} from "./transaction-details-buying-transaction-resolver.service";
+import {TransactionDetailsProtocolTransactionStepNoticeResolverService} from "./transaction-details-protocol-transaction-step-notice-resolver.service";
 /**
  * Created by Viki on 3/3/2017.
  */
@@ -11,6 +11,6 @@ import {TransactionDetailsBuyingTransactionResolverService} from "./transaction-
 @NgModule({
   imports: [RouterModule.forChild(TransactionDetailsPageRoutes)],
   exports: [RouterModule],
-  providers: [TransactionDetailsBuyingTransactionResolverService]
+  providers: [TransactionDetailsProtocolTransactionStepNoticeResolverService]
 })
 export class TransactionDetailsPageRoutingModule {}

@@ -1,21 +1,21 @@
 <md-card>
     <md-card-header>
-        <img md-card-avatar (click)="getSender()" [src]="notice?.buyingTransaction?.idea?.owner | idealUserProfilePicture" />
+        <img md-card-avatar (click)="getSender()" [src]="notice?.protocolSession?.idea?.owner | idealUserProfilePicture" />
         <md-card-title>
             <strong idealColor="accent" (click)="getSender()">
-                {{notice?.buyingTransaction?.idea?.owner?.firstName}} {{notice?.buyingTransaction?.idea?.owner?.lastName}}
+                {{notice?.protocolSession?.idea?.owner?.firstName}} {{notice?.protocolSession?.idea?.owner?.lastName}}
             </strong>
             sent you notice for
             <strong idealColor="accent" (click)="getIdea()">
-                {{notice?.buyingTransaction?.idea?.title}}
+                {{notice?.protocolSession?.idea?.title}}
             </strong>
         </md-card-title>
         <md-card-subtitle>{{notice?.creationDate | amTimeAgo}}</md-card-subtitle>
     </md-card-header>
     <md-card-content (click)="getContent()">
         <md-card-title-group>
-            <md-card-title>{{notice?.buyingTransaction?.idea?.title}}</md-card-title>
-            <md-card-subtitle>{{notice?.buyingTransaction?.currentStep | buyingTransactionNoticeMessageNumber}}</md-card-subtitle>
+            <md-card-title>{{notice?.protocolSession?.idea?.title}}</md-card-title>
+            <md-card-subtitle>{{notice | protocolTransactionStepNoticeMessage}}</md-card-subtitle>
         </md-card-title-group>
     </md-card-content>
     <!--

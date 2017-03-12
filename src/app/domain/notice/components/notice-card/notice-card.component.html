@@ -1,5 +1,8 @@
 <div [ngSwitch]="notice?.type">
-    <div *ngSwitchCase="buyingTransactionNotice">
-        <ideal-buying-transaction-notice-card [notice]="notice"></ideal-buying-transaction-notice-card>
+    <div *ngSwitchCase="protocolTransactionStepOneNoticeType">
+        <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
+    </div>
+    <div *ngSwitchCase="protocolTransactionStepTwoNoticeType">
+        <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
     </div>
 </div>

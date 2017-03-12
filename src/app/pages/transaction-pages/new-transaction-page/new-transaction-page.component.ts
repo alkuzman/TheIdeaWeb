@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {ActivatedRoute} from "@angular/router";
-import {CertificateService} from "../../../domain/services/certificate/certificate.service";
-import {BuyingTransaction} from "../../../domain/model/security/buying-transaction";
 import {UserService} from "../../../domain/services/user/user.service";
+import {ProtocolSession} from "../../../domain/model/security/protocol-session";
+import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 /**
  * Created by Viki on 2/19/2017.
  */
@@ -15,17 +15,16 @@ import {UserService} from "../../../domain/services/user/user.service";
   templateUrl: "new-transaction-page.component.html"
 })
 export class NewTransactionPageComponent implements OnInit {
-  private transaction: BuyingTransaction;
+  private protocolSession: ProtocolSession;
+
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
   }
 
   ngOnInit() {
     this.route.data.subscribe((data: {idea: Idea}) => {
-      this.transaction = new BuyingTransaction();
-      this.transaction.idea = data.idea;
-      this.transaction.members.push(data.idea.owner);
-      this.transaction.members.push(this.userService.getAuthenticatedUser());
+      this.protocolSession = new ProtocolSession();
+      this.protocolSession.idea = data.idea;
     });
   }
 }

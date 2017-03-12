@@ -14,4 +14,7 @@ export class NoticeListComponent {
 
   @Input("noticeList") noticeList: Notice[];
 
+  constructor() {
+  }
+
 }

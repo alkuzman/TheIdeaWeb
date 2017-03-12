@@ -3,12 +3,12 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Notice} from "../../model/sharing/notice";
 import {PropertiesToUrlSearchParams} from "../../../shared/utils/properties-to-url-search-params";
 import {Response, Headers} from "@angular/http";
 import {StandardFilterProperties} from "../standard-filter.properties";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 import {NoticeFilterProperties} from "./notice-filter-properties";
+import {Notice} from "../../model/sharing/notice";
 @Injectable()
 export class NoticeService {
   private noticesUrl = "/api/notices";
@@ -29,6 +29,13 @@ export class NoticeService {
     return this.http.post(this.noticesUrl, body, {headers: this.getHeaders()}, true)
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));
+  }
+
+  public getNotice(id: number) {
+    let url: string = this.noticesUrl + "/" + id;
+    return this.http.get(url, {headers: this.getHeaders()}, true)
+        .map((response: Response) => this.extractData(response))
+        .catch((error: any) => this.handleError(error));
   }
 
   public getNoticeCount(): Observable<number> {

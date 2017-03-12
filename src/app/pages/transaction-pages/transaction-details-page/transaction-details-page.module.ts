@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {TransactionDetailsPageRoutingModule} from "./transaction-details-page-routing.module";
 import {TransactionDetailsPageComponent} from "./transaction-details-page.component";
-import {ProtocolTransaction} from "../../../domain/model/security/protocol-transaction";
 import {ProtocolTransactionModule} from "../../../domain/protocol-transaction/protocol-transaction.module";
 /**
  * Created by Viki on 3/3/2017.

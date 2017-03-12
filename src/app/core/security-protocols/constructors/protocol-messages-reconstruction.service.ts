@@ -13,6 +13,9 @@ import {PriceRequestPhaseData} from "../../../domain/model/security/data/price-r
 import {Observable} from "rxjs";
 import {SecurityPasswordDialogComponent} from "../../../domain/security/components/security-password-dialog/security-password-dialog.component";
 import {MdDialog} from "@angular/material";
+import {ProtocolSession} from "../../../domain/model/security/protocol-session";
+import {UserService} from "../../../domain/services/user/user.service";
+import {ProtocolParticipantSessionData} from "../../../domain/model/security/protocol-participant-session-data";
 /**
  * Created by Viki on 3/1/2017.
  */
@@ -25,7 +28,7 @@ export class ProtocolMessagesReconstructionService {
 
     constructor(private securityContext: JwtSecurityContext, private cryptographicOperations: CryptographicOperations,
                 private helper: HelperService, private keysService: KeysService, private pemParser: ParserPemService,
-                private certificateService: CertificateService, private dialog: MdDialog) {
+                private certificateService: CertificateService, private userService: UserService) {
         this.initializeSecurityProfile();
     }
 
@@ -36,7 +39,8 @@ export class ProtocolMessagesReconstructionService {
         });
     }
 
-    public constructProtocolMessageOne(jsonMessage: string): Observable<PriceRequestPhaseData> {
+    public constructProtocolMessageOne(jsonMessage: string, password: string,
+                                       protocolSession: ProtocolSession): Observable<PriceRequestPhaseData> {
 
         return Observable.create((observer) => {
 
@@ -48,62 +52,69 @@ export class ProtocolMessagesReconstructionService {
             // Integrity check of the data sent
             if (this.cryptographicOperations.hash(message.data) == message.hashedData) {
                 // Extracting user private key
-                let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
-                dialogRef.afterClosed().subscribe((password: string) => {
-                    this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
-                        this.helper.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKey: CryptoKey) => {
-                        // Decrypting object
-                        console.log("TUKA");
-                        this.cryptographicOperations.decrypt(this.cryptographicOperations.getAlgorithm(
-                            this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
-                            privateKey, this.cryptographicOperations.convertStringToUint8(message.object).buffer)
-                            .then((jsonObjectBuffer: ArrayBuffer) => {
-                                // Parse decrypted object in JSON
-                                console.log("TUKA2");
-                                let jsonObject = this.cryptographicOperations.convertBufferToString(Buffer.from(jsonObjectBuffer));
-                                let object: {key: string, nonce: number, identity: string} = JSON.parse(jsonObject);
-                                result.nonce = object.nonce;
-                                result.otherParty = object.identity;
-                                // Get other party certificate to verify the signature
-                                this.certificateService.get({email: object.identity})
-                                    .subscribe((otherPartyCertificatePEM: string) => {
-                                        let certificate: Certificate = this.pemParser
-                                            .parseCertificateFromPem(otherPartyCertificatePEM);
-                                        // Extract public key from certificate
-                                        certificate.getPublicKey().then((otherPartyPublicKey: CryptoKey) => {
-                                            // Verify other party signature
-                                            this.cryptographicOperations.verify(this.helper.ASYMMETRIC_SIGNING_ALG,
-                                                otherPartyPublicKey,
-                                                this.cryptographicOperations.convertStringToUint8(message.signature).buffer,
-                                                this.cryptographicOperations.convertStringToUint8(this
-                                                    .cryptographicOperations.hash(jsonObject)).buffer)
-                                                .then((verifyResult: boolean) => {
-                                                    if (verifyResult) {
-                                                        // Import session key from string into CryptoKey
-                                                        this.keysService.importKey(this.cryptographicOperations
-                                                            .convertStringToUint8(object.key).buffer, 'raw', this.helper.SYMMETRIC_ALG)
-                                                            .then((sessionKey: CryptoKey) => {
-                                                                result.key = sessionKey;
-                                                                // Decrypt data sent with session key
-                                                                this.cryptographicOperations.decrypt(this.cryptographicOperations
-                                                                        .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG,
-                                                                            'decrypt').algorithm, sessionKey,
-                                                                    this.cryptographicOperations.convertStringToUint8(message.data).buffer)
-                                                                    .then((decryptedDataBuf: ArrayBuffer) => {
-                                                                        let jsonData: string = this.cryptographicOperations.convertBufferToString(Buffer.from(decryptedDataBuf));
-                                                                        let data: {bid: Price} = JSON.parse(jsonData);
-                                                                        result.price = data.bid;
-                                                                        observer.next(result);
-                                                                    });
-                                                            });
-                                                    } else {
-                                                        console.log("signature is not valid");
-                                                    }
-                                                });
-                                        });
+                this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
+                    this.helper.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKey: CryptoKey) => {
+                    // Decrypting object
+                    this.cryptographicOperations.decrypt(this.cryptographicOperations.getAlgorithm(
+                        this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
+                        privateKey, this.cryptographicOperations.convertStringToUint8(message.object).buffer)
+                        .then((jsonObjectBuffer: ArrayBuffer) => {
+                            // Parse decrypted object in JSON
+                            let jsonObject = this.cryptographicOperations.convertBufferToString(Buffer.from(jsonObjectBuffer));
+                            let object: {key: string, nonce: number, identity: string} = JSON.parse(jsonObject);
+                            result.nonce = object.nonce;
+                            result.otherParty = object.identity;
+                            // Get other party certificate to verify the signature
+                            this.certificateService.get({email: object.identity})
+                                .subscribe((otherPartyCertificatePEM: string) => {
+                                    let certificate: Certificate = this.pemParser
+                                        .parseCertificateFromPem(otherPartyCertificatePEM);
+                                    // Extract public key from certificate
+                                    certificate.getPublicKey().then((otherPartyPublicKey: CryptoKey) => {
+                                        // Verify other party signature
+                                        this.cryptographicOperations.verify(this.helper.ASYMMETRIC_SIGNING_ALG,
+                                            otherPartyPublicKey,
+                                            this.cryptographicOperations.convertStringToUint8(message.signature).buffer,
+                                            this.cryptographicOperations.convertStringToUint8(this
+                                                .cryptographicOperations.hash(jsonObject)).buffer)
+                                            .then((verifyResult: boolean) => {
+                                                if (verifyResult) {
+                                                    // Import session key from string into CryptoKey
+                                                    this.keysService.importKey(this.cryptographicOperations
+                                                        .convertStringToUint8(object.key).buffer, 'raw', this.helper.SYMMETRIC_ALG)
+                                                        .then((sessionKey: CryptoKey) => {
+                                                            result.key = sessionKey;
+                                                            // Add the session key encrypted into protocol session
+                                                            this.pemParser.parsePublicKeyFromPem(this.securityProfile.encryptionPair.publicPem)
+                                                                .subscribe((encryptionPublicKey: CryptoKey) => {
+                                                                    this.keysService.insertSessionKey(sessionKey, encryptionPublicKey)
+                                                                        .subscribe((encryptedSessionKey: string) => {
+                                                                            let participant: ProtocolParticipantSessionData = new ProtocolParticipantSessionData();
+                                                                            participant.participant = this.userService.getAuthenticatedUser();
+                                                                            participant.sessionKeyEncrypted = encryptedSessionKey;
+                                                                            console.log(protocolSession);
+                                                                            protocolSession.participantsSessionData.push(participant);
+                                                                        });
+                                                                });
+                                                            // Decrypt data sent with session key
+                                                            this.cryptographicOperations.decrypt(this.cryptographicOperations
+                                                                    .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG,
+                                                                        'decrypt').algorithm, sessionKey,
+                                                                this.cryptographicOperations.convertStringToUint8(message.data).buffer)
+                                                                .then((decryptedDataBuf: ArrayBuffer) => {
+                                                                    let jsonData: string = this.cryptographicOperations.convertBufferToString(Buffer.from(decryptedDataBuf));
+                                                                    let data: {bid: Price} = JSON.parse(jsonData);
+                                                                    result.price = data.bid;
+                                                                    observer.next(result);
+                                                                });
+                                                        });
+                                                } else {
+                                                    console.log("signature is not valid");
+                                                }
+                                            });
                                     });
-                            });
-                    });
+                                });
+                        });
                 });
 
             }
@@ -112,10 +123,41 @@ export class ProtocolMessagesReconstructionService {
 
     }
 
-    public constructProtocolMessageTwo(jsonMessage: string): Observable<PriceRequestPhaseData> {
+    public constructProtocolMessageTwo(jsonMessage: string, password: string,
+                                       protocolSession: ProtocolSession): Observable<PriceRequestPhaseData> {
 
         return Observable.create((observer) => {
             console.log(jsonMessage);
+            // Parse the json string into an object
+            let message: {data: string, hashedData: string} = JSON.parse(jsonMessage);
+            // Integrity check of the data send
+            if (this.cryptographicOperations.hash(message.data) == message.hashedData) {
+                let encryptedSessionKey: string = "";
+                for (let participant of protocolSession.participantsSessionData) {
+                    if (participant.participant.email == this.userService.getAuthenticatedUser().email) {
+                        encryptedSessionKey = participant.sessionKeyEncrypted;
+                        break;
+                    }
+                }
+                this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
+                    this.helper.ASYMMETRIC_ENCRYPTION_ALG)
+                    .subscribe((privateEncryptionKey: CryptoKey) => {
+                        this.keysService.extractSessionKey(encryptedSessionKey, privateEncryptionKey)
+                            .subscribe((sessionKey: CryptoKey) => {
+                                this.cryptographicOperations.decrypt(this.cryptographicOperations
+                                    .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
+                                    sessionKey, this.cryptographicOperations.convertStringToUint8(message.data).buffer)
+                                    .then((decryptedDataBuf: ArrayBuffer) => {
+                                        let decryptedDataJson: string = this.cryptographicOperations.convertBufferToString(Buffer.from(decryptedDataBuf));
+                                        let decryptedData: {price: Price} = JSON.parse(decryptedDataJson);
+                                        console.log(decryptedData);
+                                        let result: PriceRequestPhaseData = {};
+                                        result.price = decryptedData.price;
+                                        observer.next(result);
+                                    });
+                            });
+                    });
+            }
         });
     }
 }

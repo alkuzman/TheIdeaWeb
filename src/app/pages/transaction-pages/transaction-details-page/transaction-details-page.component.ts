@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {BuyingTransaction} from "../../../domain/model/security/buying-transaction";
-import {ProtocolTransactionMessageNumber} from "../../../domain/model/enumerations/protocol-transaction-message-number";
+import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 /**
  * Created by Viki on 3/3/2017.
  */
@@ -13,14 +12,13 @@ import {ProtocolTransactionMessageNumber} from "../../../domain/model/enumeratio
   templateUrl: 'transaction-details-page.component.html'
 })
 export class TransactionDetailsPageComponent implements OnInit {
-  private transaction: BuyingTransaction;
+  private currentNotice: ProtocolTransactionStepNotice<any>;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: {transaction: BuyingTransaction}) => {
-      this.transaction = data.transaction;
-      this.transaction.currentStep = ProtocolTransactionMessageNumber.getNumber(this.transaction.currentStep);
+    this.route.data.subscribe((data: {notice: ProtocolTransactionStepNotice<any>}) => {
+      this.currentNotice = data.notice;
     });
   }
 
