@@ -4,6 +4,8 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {Award} from "../../../model/awards/award";
 import {Badge} from "../../../model/awards/badges/badge";
+import {AwardDetailsDialogComponent} from "../award-details/dialog/award-details-dialog.component";
+import {MdDialogConfig, MdDialog} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-award-list",
@@ -18,10 +20,25 @@ export class AwardListComponent {
   private noAwardsIcon: string = "award";
   private noAwardsName: string = "No awards found";
 
-  constructor() {
+  constructor(private dialog: MdDialog) {
   }
 
   onAwardSelected(award: Award<Badge<any, any>>): void {
     this.awardSelected.emit(award);
+    this.openDetails(award);
+  }
+
+  openDetails(award: Award<Badge<any, any>>): void {
+    let dialogRef = this.dialog.open(AwardDetailsDialogComponent, <MdDialogConfig>{
+      disableClose: false,
+      width: '',
+      height: '',
+      position: {
+        top: '',
+        bottom: '',
+        left: '',
+        right: ''
+      }, data: {award: award}
+    });
   }
 }

@@ -1,0 +1,9 @@
+<div [style.max-width]="maxWidth">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <md-icon [md-tooltip]="badge?.name | idealClean:!tooltip" [style.font-size]="iconSize" [style.width]="iconSize" [style.height]="iconSize"
+             [style.line-height]="iconSize" class="icon" color="primary" [svgIcon]="getIcon()"></md-icon>
+  </div>
+  <div *ngIf="!tooltip" class="name" fxLayout="row" fxLayoutAlign="center">
+    <span class="ideal-caption">{{badge.name}}</span>
+  </div>
+</div>

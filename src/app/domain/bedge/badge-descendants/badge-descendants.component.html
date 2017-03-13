@@ -1,0 +1,8 @@
+<div class="badge-descendants-container">
+  <div *ngIf="!hasItems(descendants)">
+    Highest level achieved
+  </div>
+  <div *ngIf="hasItems(descendants)" fxLayout="row" fxLayoutAlign="space-around" fxLayoutWrap="wrap">
+    <ideal-badge-avatar *ngFor="let badge of descendants" [badge]="badge" [tooltip]="true" iconSize="30px" maxWidth="30px"></ideal-badge-avatar>
+  </div>
+</div>

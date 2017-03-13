@@ -5,11 +5,16 @@ import {NgModule} from "@angular/core";
 import {SharedModule} from "../../shared/shared.module";
 import {BadgeIconResolverService} from "./badge-icon-resolver.service";
 import {BadgeButtonComponent} from "./badge-button/badge-button.component";
+import {ProblemCoverageBadgeDetailsComponent} from "./bedge-details/problem-coverage-bage-details/problem-coverage-badge-details.component";
+import {BadgeInfoComponent} from "./badge-info/badge-info.component";
+import {BadgeDescendantsComponent} from "./badge-descendants/badge-descendants.component";
+import {BadgeAvatarComponent} from "./badge-avatar/badge-avatar.component";
+import {BadgeSiblingsService} from "./badge-siblings.service";
 @NgModule({
   imports: [SharedModule],
-  providers: [BadgeIconResolverService],
-  declarations: [BadgeButtonComponent],
-  exports: [BadgeButtonComponent]
+  providers: [BadgeIconResolverService, BadgeSiblingsService],
+  declarations: [BadgeDescendantsComponent, BadgeAvatarComponent, BadgeInfoComponent, ProblemCoverageBadgeDetailsComponent, BadgeButtonComponent],
+  exports: [BadgeDescendantsComponent, BadgeAvatarComponent, BadgeInfoComponent, ProblemCoverageBadgeDetailsComponent, BadgeButtonComponent]
 })
 export class BadgeModule {
 
