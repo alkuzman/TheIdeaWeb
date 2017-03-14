@@ -12,6 +12,28 @@ export class HelperService {
   public HASH_ALG: string = 'SHA-256';
   public SYMMETRIC_ALG: string = 'AES-CTR';
 
+  constructor() {
+  }
+
+  public getUsagesForAlgorithmAndFormat(algString: string, format: string): string[] {
+    switch (format) {
+      case ('raw'): { return null; }
+      case ('pkcs8'): {
+        switch (algString) {
+          case (this.ASYMMETRIC_ENCRYPTION_ALG): {
+            return ["decrypt"];
+          }
+        }
+      }
+      case ('spki'): {
+        switch (algString) {
+          case (this.ASYMMETRIC_ENCRYPTION_ALG):
+            return ["encrypt"];
+        }
+      }
+    }
+  }
+
   public equal(buf1, buf2) {
     if (buf1.byteLength != buf2.byteLength) return false;
     var dv1 = new Uint8Array(buf1);

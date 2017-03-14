@@ -4,9 +4,9 @@
 import {Component, Input, OnInit, EventEmitter, Output} from "@angular/core";
 import {NewPackageNotice} from "../../../../model/sharing/new-package-notice";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Notice} from "../../../../model/sharing/notice";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {Package} from "../../../../model/sharing/package";
+import {Notice} from "../../../../model/sharing/notice";
 @Component({
   moduleId: module.id,
   selector: "ideal-notice-form",

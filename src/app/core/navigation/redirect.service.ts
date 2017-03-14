@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {Sharable} from "../../domain/model/sharing/sharable";
 import {Organization} from "../../domain/model/authentication/organization";
 import {Idea} from "../../domain/model/ideas/idea";
+import {Notice} from "../../domain/model/sharing/notice";
 /**
  * Created by AKuzmanoski on 18/01/2017.
  */
@@ -12,7 +13,7 @@ export class RedirectService {
   constructor(private router: Router) {
   }
 
-  getAnnouncemntDetails(id: number) {
+  getAnnouncementDetails(id: number) {
     this.router.navigate(['/announcements', id.toString()]);
   }
 
@@ -50,5 +51,9 @@ export class RedirectService {
 
   newTransaction(idea: Idea) {
     this.router.navigate(["/transactions", "new"], {queryParams: {ideaId: idea.id}});
+  }
+
+  getTransactionDetails(notice: Notice) {
+    this.router.navigate(["/transactions", notice.id]);
   }
 }

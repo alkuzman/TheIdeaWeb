@@ -5,8 +5,8 @@ import {Component, Input, OnInit, EventEmitter, Output} from "@angular/core";
 import {Sharable} from "../../../../model/sharing/sharable";
 import {NewPackageNotice} from "../../../../model/sharing/new-package-notice";
 import {Package} from "../../../../model/sharing/package";
-import {Notice} from "../../../../model/sharing/notice";
 import {NoticeService} from "../../../../services/notice/notice.service";
+import {Notice} from "../../../../model/sharing/notice";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-notice-form",

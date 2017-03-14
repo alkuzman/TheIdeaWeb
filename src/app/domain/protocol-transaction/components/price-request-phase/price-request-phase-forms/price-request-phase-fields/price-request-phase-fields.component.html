@@ -1,0 +1,19 @@
+<div [formGroup]="form" fxLayout="column">
+  <div fxLayout="row">
+    <div *ngIf="lastPrice" align="left">
+      <label>Last Price:</label>
+      <h3>{{lastPrice.value}} {{lastPrice.currency.value}}</h3>
+    </div>
+    <div *ngIf="currentPrice" align="right">
+      <label>Current Price:</label>
+      <h3>{{currentPrice.value}} {{currentPrice.currency.value}}</h3>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <md-input-container [dividerColor]="formErrors.price ? 'warn' : 'primary'" fxFlex="80%">
+      <input mdInput type="number" formControlName="price" placeholder="Price" required/>
+      <md-hint idealColor="warn" *ngIf="formErrors.price" align="end">{{formErrors.price}}</md-hint>
+    </md-input-container>
+    <ideal-currency-select formControlName="currency" placeholder="Currency" fxFlex="20%"></ideal-currency-select>
+  </div>
+</div>

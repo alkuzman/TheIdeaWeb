@@ -13,7 +13,13 @@ import {Notice} from "../../../model/sharing/notice";
 })
 export class NoticeCardComponent {
     @Input("notice") notice: Notice;
-    private buyingTransactionNotice: string = "BuyingTransactionNotice";
+    private protocolTransactionStepOneNoticeType: string = "ProtocolTransactionStepOneNotice";
+    private protocolTransactionStepTwoNoticeType: string = "ProtocolTransactionStepTwoNotice";
 
-    constructor() {}
+    constructor() {
+        if (this.notice != null) {
+            console.log(this.notice.type);
+
+        }
+    }
 }

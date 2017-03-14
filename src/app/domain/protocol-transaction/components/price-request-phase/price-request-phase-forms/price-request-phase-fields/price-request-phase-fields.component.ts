@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {FormGroup, FormControl, FormBuilder, Validators} from "@angular/forms";
-import {StepOneFormErrors} from "./step-one-form-errors";
-import {ValidationMessagesErrors} from "../../../../../../../core/helper/validation-messages-errors";
-import {StepOneValidationMessages} from "./step-one-validation-messages";
-import {ProtocolTransactionMessageOne} from "../../../../../../model/security/messages/protocol-transaction-message-one";
-import {Currency} from "../../../../../../model/helpers/currency";
+import {PriceRequestPhaseFormErrors} from "./price-request-phase-form-errors";
+import {PriceRequestPhaseValidationMessages} from "./price-request-phase-validation-messages";
+import {Price} from "../../../../../model/helpers/price";
+import {Currency} from "../../../../../model/helpers/currency";
+import {ValidationMessagesErrors} from "../../../../../../core/helper/validation-messages-errors";
+import {PriceRequestPhaseData} from "../../../../../model/security/data/price-request-phase-data";
 /**
  * Created by Viki on 2/20/2017.
  */
@@ -12,16 +13,17 @@ import {Currency} from "../../../../../../model/helpers/currency";
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-step-one-fields",
-  templateUrl: "step-one-fields.component.html"
+  selector: "ideal-price-request-phase-fields",
+  templateUrl: "price-request-phase-fields.component.html"
 })
-export class StepOneFieldsComponent implements OnInit {
-
+export class PriceRequestPhaseFieldsComponent implements OnInit {
   @Input("form") form: FormGroup;
   private currentForm: FormGroup;
   private _submitted: boolean;
 
-  @Input("stepData") stepData: ProtocolTransactionMessageOne;
+  @Input("data") data: PriceRequestPhaseData;
+  @Input("lastPrice") lastPrice: Price;
+  @Input("currentPrice") currentPrice: Price;
 
   @Input("submitted")
   set submitted(submitted: boolean) {
@@ -33,17 +35,20 @@ export class StepOneFieldsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let control: FormControl = this.fb.control(this.stepData.biddingPrice.value, Validators.required);
+    if (this.data.price == null) {
+      this.data.price = new Price();
+    }
+    let control: FormControl = this.fb.control(this.data.price.value, Validators.required);
     control.valueChanges.subscribe((value: number) => {
-      this.stepData.biddingPrice.value = value;
+      this.data.price.value = value;
     });
-    this.form.addControl("bidPrice", control);
+    this.form.addControl("price", control);
 
-    control = this.fb.control(this.stepData.biddingPrice.currency);
+    control = this.fb.control(this.data.price.currency);
     control.valueChanges.subscribe((value: Currency) => {
-      this.stepData.biddingPrice.currency = value;
+      this.data.price.currency = value;
     });
-    this.form.addControl("bidCurrency", control);
+    this.form.addControl("currency", control);
   }
 
   ngAfterViewChecked() {
@@ -78,17 +83,19 @@ export class StepOneFieldsComponent implements OnInit {
     }
   }
 
-  formErrors: StepOneFormErrors = {
-    bidPrice: '',
-    bidCurrency: ''
+  validationMessages: PriceRequestPhaseValidationMessages = {
+    price: {
+      required: 'Price is required'
+    },
+    currency: {
+      required: 'Price currency is required '
+    }
   };
 
-  validationMessages: StepOneValidationMessages = {
-    bidPrice: {
-      required: 'Bid price is required'
-    },
-    bidCurrency: {
-      required: 'Bid currency is required '
-    }
-  }
+
+  formErrors: PriceRequestPhaseFormErrors = {
+    price: '',
+    currency: ''
+  };
+
 }

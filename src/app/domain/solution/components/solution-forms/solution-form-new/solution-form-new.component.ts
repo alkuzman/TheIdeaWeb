@@ -9,6 +9,12 @@ import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-sec
 import {User} from "../../../../model/authentication/user";
 import {SolutionService} from "../../../../services/solution/solution.service";
 import {UserService} from "../../../../services/user/user.service";
+import {Observable} from "rxjs";
+import {CryptographicOperations} from "../../../../../core/security-protocols/cryptographic-operations/cryptographic-operations";
+import {EncryptingService} from "../../../../../core/security-protocols/encrypting.service";
+import {MdDialog} from "@angular/material";
+import {SecurityPasswordDialogComponent} from "../../../../security/components/security-password-dialog/security-password-dialog.component";
+import {DecryptingService} from "../../../../../core/security-protocols/decrypting.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-solution-form-new",
@@ -44,7 +50,8 @@ export class NewSolutionFormComponent implements OnInit {
   solution: Solution;
   errorMessage: any;
 
-  constructor(private solutionService: SolutionService, private userService: UserService) {
+  constructor(private solutionService: SolutionService, private userService: UserService,
+              private encryptingService: EncryptingService, private dialog: MdDialog) {
 
   }
 
@@ -64,15 +71,22 @@ export class NewSolutionFormComponent implements OnInit {
       solution.idea.owner = owner;
     if (solution.idea.problem.questioner == null)
       solution.idea.problem.questioner = owner;
-    this.solutionService.addSolution(solution).subscribe(
-      (solution: Solution) => this.onSolutionSaved(solution),
-      (error: any) => this.errorMessage = error
-    );
-
+    let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+    dialogRef.afterClosed().subscribe((password: string) => {
+      this.encryptingService.encryptSolution(solution.text, password).subscribe((encryptedSolution: string) => {
+        solution.text = encryptedSolution;
+        this.solutionService.addSolution(solution).subscribe(
+            (solution: Solution) => this.onSolutionSaved(solution),
+            (error: any) => this.errorMessage = error
+        );
+      });
+    });
   }
 
   onSolutionSaved(solution: Solution) {
     this.solution = solution;
     this.solutionReady.emit(this.solution);
   }
+
+
 }

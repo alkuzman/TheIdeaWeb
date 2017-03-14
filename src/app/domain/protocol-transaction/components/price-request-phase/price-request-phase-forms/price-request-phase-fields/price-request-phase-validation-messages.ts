@@ -4,8 +4,8 @@ import {ValidationMessagesErrors} from "../../../../../../../core/helper/validat
  */
 
 
-export interface StepOneValidationMessages {
+export interface PriceRequestPhaseValidationMessages {
   [key: string]: ValidationMessagesErrors;
-  bidPrice?: ValidationMessagesErrors;
-  bidCurrency?: ValidationMessagesErrors;
+  price?: ValidationMessagesErrors;
+  currency?: ValidationMessagesErrors;
 }

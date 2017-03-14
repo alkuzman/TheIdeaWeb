@@ -13,4 +13,10 @@ export class Price extends BaseEntityImpl {
     super();
     this.currency = new Currency();
   }
+
+  toString(): string {
+    let str: string = this.value + " " + this.currency.value;
+    console.log(str);
+    return str;
+  }
 }

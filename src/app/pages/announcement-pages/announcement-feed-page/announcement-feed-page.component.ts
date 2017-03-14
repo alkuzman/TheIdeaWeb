@@ -95,7 +95,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   }
 
   onAnnouncementSelected(announcement: Announcement): void {
-    this.redirectService.getAnnouncemntDetails(announcement.id);
+    this.redirectService.getAnnouncementDetails(announcement.id);
   }
 
   onIdeaSelected(idea: Idea) {
@@ -136,6 +136,6 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   }
 
   getContent(announcement: Announcement): void {
-    this.redirectService.getAnnouncemntDetails(announcement.id);
+    this.redirectService.getAnnouncementDetails(announcement.id);
   }
 }

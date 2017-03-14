@@ -23,13 +23,11 @@ export const TransactionPagesRoutes: Routes = [
         canActivate: [AuthenticatedGuard],
         loadChildren: "app/pages/transaction-pages/new-transaction-page/new-transaction-page.module#NewTransactionPageModule"
       },
-      /*
-       {
-       path: ":id",
-       canActivate: [AuthenticatedGuard],
-       loadChildren: "app/pages/transaction-pages/transaction-details-page/transaction-details-page.module#TransactionDetailsPageModule"
-       }
-       */
+      {
+        path: ":id",
+        canActivate: [AuthenticatedGuard],
+        loadChildren: "app/pages/transaction-pages/transaction-details-page/transaction-details-page.module#TransactionDetailsPageModule"
+      }
     ]
   }
 ];

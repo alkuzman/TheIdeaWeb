@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {Notice} from "../../../../model/sharing/notice";
 import {NoticeService} from "../../../../services/notice/notice.service";
+import {Notice} from "../../../../model/sharing/notice";
 /**
  * Created by Viki on 3/2/2017.
  */
@@ -19,9 +19,6 @@ export class NoticeListLoaderComponent implements OnInit {
   ngOnInit() {
     this.noticeService.getAnnouncementList().subscribe((notices: Notice[]) => {
       this.noticeList = notices;
-      for (let notice of notices) {
-        console.log(notice.type);
-      }
     });
   }
 }

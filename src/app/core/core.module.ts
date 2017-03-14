@@ -25,11 +25,17 @@ import {SecurityProfileConstructorService} from "./security-protocols/constructo
 import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/protocol-messages-builder.service";
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
+import {ProtocolMessagesReconstructionService} from "./security-protocols/constructors/protocol-messages-reconstruction.service";
+import {SecurityPasswordDialogComponent} from "../domain/security/components/security-password-dialog/security-password-dialog.component";
+import {SecurityModule} from "../domain/security/security.module";
+import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/constructors/protocol-transaction-step-notice-constructor.service";
+import {EncryptingService} from "./security-protocols/encrypting.service";
+import {DecryptingService} from "./security-protocols/decrypting.service";
 import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
 
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [SharedModule, SecurityModule],
   declarations: [],
   exports: [],
   providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
@@ -37,7 +43,9 @@ import {SecurityProfileService} from "../domain/services/security-profile/securi
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    HelperService, ParserPemService, SecurityProfileService]
+    HelperService, ParserPemService, SecurityProfileService,
+    ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor,
+    EncryptingService, DecryptingService]
 })
 export class CoreModule {
 }

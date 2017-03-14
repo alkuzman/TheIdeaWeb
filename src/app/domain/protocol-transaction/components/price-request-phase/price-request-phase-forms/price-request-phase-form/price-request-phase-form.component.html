@@ -1,0 +1,13 @@
+<md-card>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="ready()">
+      <ideal-price-request-phase-fields [form]="fields" [submitted]="submitted" [data]="data"
+                                        [currentPrice]="currentPrice" [lastPrice]="lastPrice"></ideal-price-request-phase-fields>
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button type="submit" md-raised-button color="accent" class="margin">Enter</button>
+        <span *ngIf="currentPrice" class="margin">OR</span>
+        <button *ngIf="currentPrice" type="button" md-raised-button color="accent" class="margin" (click)="readyAccept()">Accept price</button>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>

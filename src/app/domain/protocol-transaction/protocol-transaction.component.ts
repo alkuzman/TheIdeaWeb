@@ -1,38 +1,84 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Idea} from "../model/ideas/idea";
-import {ProtocolTransaction} from "../model/security/protocol-transaction";
-import {ProtocolTransactionMessageOne} from "../model/security/messages/protocol-transaction-message-one";
 import {ProtocolMessagesBuilderService} from "../../core/security-protocols/constructors/protocol-messages-builder.service";
 import {MdDialog} from "@angular/material";
 import {SecurityPasswordDialogComponent} from "../security/components/security-password-dialog/security-password-dialog.component";
+import {PriceRequestPhaseData} from "../model/security/data/price-request-phase-data";
+import {Idea} from "../model/ideas/idea";
+import {ProtocolMessagesReconstructionService} from "../../core/security-protocols/constructors/protocol-messages-reconstruction.service";
+import {UserService} from "../services/user/user.service";
+import {ProtocolSession} from "../model/security/protocol-session";
+import {ProtocolTransactionStepNotice} from "../model/security/notices/protocol-transaction-step-notice";
+import {ProtocolTransactionStepOneNotice} from "../model/security/notices/protocol-transaction-step-one-notice";
+import {ProtocolTransactionStepTwoNotice} from "../model/security/notices/protocol-transaction-step-two-notice";
 /**
  * Created by Viki on 2/19/2017.
  */
 
 @Component({
-  moduleId: module.id,
-  selector: "ideal-protocol-transaction",
-  templateUrl: "protocol-transaction.component.html"
+    moduleId: module.id,
+    selector: "ideal-protocol-transaction",
+    templateUrl: "protocol-transaction.component.html"
 })
 export class ProtocolTransactionComponent implements OnInit {
-  @Input("idea") idea: Idea;
-  @Input("buyingTransaction") protocolTransaction: ProtocolTransaction;
+    @Input("protocolSession") protocolSession: ProtocolSession;
+    @Input("currentStepNotice") currentStepNotice;
+    private priceRequestPhaseData: PriceRequestPhaseData;
 
-  constructor(private protocolMessageConstructorService: ProtocolMessagesBuilderService,
-              private dialog: MdDialog) {
-  }
-
-  ngOnInit() {
-    if (this.protocolTransaction == null) {
-      this.protocolTransaction = new ProtocolTransaction();
+    constructor(private protocolMessageBuilderService: ProtocolMessagesBuilderService,
+                private protocolMessageReconstructionService: ProtocolMessagesReconstructionService,
+                private dialog: MdDialog, private userService: UserService) {
     }
-  }
 
-  stepOneReady(data: ProtocolTransactionMessageOne) {
-    console.log(data);
-    let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
-    dialogRef.afterClosed().subscribe((password: string) => {
-      this.protocolMessageConstructorService.buildProtocolMessageOne(data, this.idea, password);
-    });
-  }
+    ngOnInit() {
+        if (this.protocolSession == null) {
+            if (this.currentStepNotice != null) {
+                this.protocolSession = this.currentStepNotice.protocolSession;
+            } else {
+                this.protocolSession = new ProtocolSession();
+                this.protocolSession.idea = new Idea();
+            }
+        }
+        this.priceRequestPhaseData = {};
+        this.processTransaction();
+    }
+
+    processTransaction() {
+        if (this.currentStepNotice == null) {
+            return;
+        }
+        let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+        dialogRef.afterClosed().subscribe((password: string) => {
+            let currentStep: ProtocolTransactionStepNotice<any> = this.currentStepNotice;
+            while (currentStep != null) {
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    currentStep = currentStep.previousStepNotice;
+                    continue;
+                }
+                if (currentStep.type == "ProtocolTransactionStepOneNotice") {
+                    this.protocolMessageReconstructionService.constructProtocolMessageOne(currentStep.message, password, this.protocolSession)
+                        .subscribe((data: PriceRequestPhaseData) => {
+                            this.priceRequestPhaseData = data;
+                            console.log(this.protocolSession);
+                        });
+                } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
+                    this.protocolMessageReconstructionService.constructProtocolMessageTwo(currentStep.message, password, this.protocolSession)
+                        .subscribe((data: PriceRequestPhaseData) => {
+                            this.priceRequestPhaseData = data;
+                        });
+                }
+                currentStep = currentStep.previousStepNotice;
+            }
+        });
+    }
+
+    ready(data: PriceRequestPhaseData) {
+        let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+        dialogRef.afterClosed().subscribe((password: string) => {
+            if (this.currentStepNotice == null) {
+                this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.protocolSession, this.currentStepNotice);
+            } else if (this.currentStepNotice.type == "ProtocolTransactionStepOneNotice"){
+                this.protocolMessageBuilderService.buildProtocolMessageTwo(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
+            }
+        });
+    }
 }
