@@ -48,18 +48,4 @@ export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<
       return null;
     return SolutionQualityStatus[qualityStatus];
   }
-
-  openDetails(): void {
-    let dialogRef = this.dialog.open(SolutionQualityDialog, <MdDialogConfig>{
-      disableClose: false,
-      width: '',
-      height: '',
-      position: {
-        top: '',
-        bottom: '',
-        left: '',
-        right: ''
-      }, data: {solutionQuality: this._solutionQuality}
-    });
-  }
 }

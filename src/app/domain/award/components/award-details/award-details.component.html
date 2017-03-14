@@ -1,0 +1,4 @@
+<div [ngSwitch]="award.type">
+  <ideal-problem-coverage-award *ngSwitchCase="'ProblemCoverageAward'" [award]="award"></ideal-problem-coverage-award>
+  <ideal-snack-peak-quality-award *ngSwitchCase="'SnackPeakQualityAward'" [award]="award"></ideal-snack-peak-quality-award>
+</div>

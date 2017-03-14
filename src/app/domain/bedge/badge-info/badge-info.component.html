@@ -1,0 +1,16 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign="center">
+      <ideal-badge-avatar [badge]="badge"></ideal-badge-avatar>
+    </div>
+    <div style="max-width: 250px">
+      {{badge.description}}
+    </div>
+  </div>
+  <div>
+    <div>
+      <span class="ideal-body-2">Higher rank badges</span>
+    </div>
+    <ideal-badge-descendants [badge]="badge"></ideal-badge-descendants>
+  </div>
+</div>

@@ -50,8 +50,8 @@ export class IdealLabel {
   @Input()
   get color(): string { return this._color; }
   set color(value: string) {
-    console.log(value);
-    this._updateColor(value); }
+    this._updateColor(value);
+  }
 
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
 
