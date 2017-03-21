@@ -43,9 +43,9 @@ import {SecurityProfileService} from "../domain/services/security-profile/securi
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
     CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    HelperService, ParserPemService, SecurityProfileService,
-    ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor,
-    EncryptingService, DecryptingService]
+    HelperService, ParserPemService, SecurityProfileService, ProtocolMessagesReconstructionService,
+    HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor, EncryptingService,
+    DecryptingService]
 })
 export class CoreModule {
 }
