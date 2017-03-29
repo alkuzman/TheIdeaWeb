@@ -44,10 +44,10 @@ export class HelperService {
     }
 
     public getEncryptedSessionKeyForAuthenticatedUser(protocolSession: ProtocolSession): string {
-        for (let participant of protocolSession.participantsSessionData) {
-            if (participant.participant.email == this.userService.getAuthenticatedUser().email) {
-                return participant.sessionKeyEncrypted;
-            }
+        if (protocolSession.participantOneSessionData.participant.email == this.userService.getAuthenticatedUser().email) {
+            return protocolSession.participantOneSessionData.sessionKeyEncrypted;
+        } else if (protocolSession.participantTwoSessionData.participant.email == this.userService.getAuthenticatedUser().email) {
+            return protocolSession.participantTwoSessionData.sessionKeyEncrypted;
         }
     }
 

@@ -15,7 +15,7 @@ import {SecurityPasswordDialogComponent} from "../../../domain/security/componen
 import {MdDialog} from "@angular/material";
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {UserService} from "../../../domain/services/user/user.service";
-import {ProtocolParticipantSessionData} from "../../../domain/model/security/protocol-participant-session-data";
+import {ProtocolParticipantOneSessionData} from "../../../domain/model/security/protocol-participant-one-session-data";
 import {exhaustMap} from "rxjs/operator/exhaustMap";
 import {SimpleSecurityProfile} from "../../../domain/model/security/simple-security-profile";
 import {SecurityProfileConstructorService} from "./security-profile-constructor.service";
@@ -78,7 +78,7 @@ export class ProtocolMessagesReconstructionService {
                             this.getOtherPartySignatureVerifyingKey(object.identity)
                                 .subscribe((otherPartyPublicKey: CryptoKey) => {
 
-                                // Verify other party signature
+                                    // Verify other party signature
                                     this.cryptographicOperations.verify(this.helper.ASYMMETRIC_SIGNING_ALG,
                                         otherPartyPublicKey,
                                         this.cryptographicOperations.convertStringToUint8(message.signature).buffer,
@@ -136,13 +136,7 @@ export class ProtocolMessagesReconstructionService {
             let message: {data: string, hashedData: string} = JSON.parse(jsonMessage);
             // Integrity check of the data send
             if (this.cryptographicOperations.hash(message.data) == message.hashedData) {
-                let encryptedSessionKey: string = "";
-                for (let participant of protocolSession.participantsSessionData) {
-                    if (participant.participant.email == this.userService.getAuthenticatedUser().email) {
-                        encryptedSessionKey = participant.sessionKeyEncrypted;
-                        break;
-                    }
-                }
+                let encryptedSessionKey: string = this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession);
                 this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
                     this.helper.ASYMMETRIC_ENCRYPTION_ALG)
                     .subscribe((privateEncryptionKey: CryptoKey) => {

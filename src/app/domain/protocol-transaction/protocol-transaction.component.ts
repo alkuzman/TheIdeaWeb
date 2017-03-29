@@ -32,6 +32,7 @@ export class ProtocolTransactionComponent implements OnInit {
     ngOnInit() {
         if (this.protocolSession == null) {
             if (this.currentStepNotice != null) {
+                console.log(this.currentStepNotice);
                 this.protocolSession = this.currentStepNotice.protocolSession;
             } else {
                 this.protocolSession = new ProtocolSession();
