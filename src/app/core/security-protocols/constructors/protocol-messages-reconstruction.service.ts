@@ -71,9 +71,6 @@ export class ProtocolMessagesReconstructionService {
                     this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
                         simpleSecurityProfile.privateKeyEncryption, message.object).subscribe((jsonObject: string) => {
 
-
-                        console.log("after decrypting");
-
                             // Parse decrypted object in JSON
                             let object: {key: string, nonce: number, identity: string} = JSON.parse(jsonObject);
                             result.nonce = object.nonce;
