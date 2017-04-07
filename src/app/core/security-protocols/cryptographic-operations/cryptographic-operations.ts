@@ -1,70 +1,49 @@
 import {Injectable} from "@angular/core";
-import {getCrypto, getAlgorithmParameters} from "pkijs/src/common";
-import * as CryptoJS from "crypto-js";
 import {Observable} from "rxjs";
+import {SimpleCryptographicOperations} from "./simple-cryptographic-operations";
 
 /**
  * Created by Viki on 2/7/2017.
  */
 
-var n = require('nonce');
-
 @Injectable()
 export class CryptographicOperations {
-  private crypto: SubtleCrypto;
-  private nonce;
 
-  constructor() {
-    this.crypto = getCrypto();
-    this.nonce = n();
-  }
-
-  public encrypt(algorithm: Algorithm, key: CryptoKey, data: BufferSource): PromiseLike<ArrayBuffer> {
-    return this.crypto.encrypt(algorithm, key, data);
-  }
-
-  public decrypt(algorithm: Algorithm, key: CryptoKey, data: BufferSource): PromiseLike<ArrayBuffer> {
-    return this.crypto.decrypt(algorithm, key, data);
-  }
-
-  public sign(algorithm: string, key: CryptoKey, data: BufferSource): PromiseLike<ArrayBuffer> {
-    return this.crypto.sign(algorithm, key, data);
-  }
-
-  public verify(algorithm: string, key: CryptoKey, signature: BufferSource, data: BufferSource): PromiseLike<boolean> {
-    return this.crypto.verify(algorithm, key, signature, data);
-  }
-
-  public getAlgorithm(alg: string, hashAlg: string, operation: string) {
-    let algorithm = getAlgorithmParameters(alg, operation);
-    let algorithmInstTemp: any = algorithm.algorithm;
-    if ("hash" in algorithm.algorithm) {
-      algorithmInstTemp.hash.name = hashAlg;
+    constructor(private operations: SimpleCryptographicOperations) {
     }
-    return algorithm;
-  }
 
-  public convertUint8ToString(array: Uint8Array): string {
-    return btoa(String.fromCharCode.apply(null, array));
-  }
+    public encrypt(algorithm: Algorithm, key: CryptoKey, data: string): Observable<string> {
+        return Observable.create((observer) => {
+            this.operations.encrypt(algorithm, key, this.operations.convertStringToBuffer(data))
+                .then((resultBuf: ArrayBuffer) => {
+                    let result: string = this.operations.convertUint8ToString(new Uint8Array(resultBuf));
+                    observer.next(result);
+                });
+        });
+    }
 
-  public convertStringToUint8(text: string): Uint8Array {
-    return new Uint8Array(atob(text).split("").map((character) => character.charCodeAt(0)));
-  }
+    public decrypt(algorithm: Algorithm, key: CryptoKey, data: string): Observable<string> {
+        return Observable.create((observer) => {
+            this.operations.decrypt(algorithm, key, this.operations.convertStringToUint8(data).buffer)
+                .then((resultBuf: ArrayBuffer) => {
+                    let result: string = this.operations.convertBufferToString(Buffer.from(resultBuf));
+                    observer.next(result);
+                });
+        });
+    }
 
-  public convertStringToBuffer(text: string): Buffer {
-    return Buffer.from(text);
-  }
+    public sign(algorithm: string, key: CryptoKey, data: string): Observable<string> {
+        return Observable.create((observer) => {
+            this.operations.sign(algorithm, key, this.operations.convertStringToBuffer(data))
+                .then((resultBuf: ArrayBuffer) => {
+                    let result: string = this.operations.convertUint8ToString(new Uint8Array(resultBuf));
+                    observer.next(result);
+                })
+        })
+    }
 
-  public convertBufferToString(buffer: Buffer): string {
-    return buffer.toString();
-  }
-
-  public hash(value: string): string {
-    return CryptoJS.SHA256(value).toString();
-  }
-
-  public generateNonce(): string {
-    return this.nonce();
-  }
+    public verify(algorithm: string, key: CryptoKey, signature: string, data: string): PromiseLike<boolean> {
+        return this.operations.verify(algorithm, key, this.operations.convertStringToUint8(signature).buffer,
+            this.operations.convertStringToBuffer(data));
+    }
 }

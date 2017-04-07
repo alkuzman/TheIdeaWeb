@@ -1,42 +1,39 @@
 import {Injectable} from "@angular/core";
 import {getCrypto} from "pkijs/src/common";
-import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
 import {Observable} from "rxjs";
-import {HelperService} from "../helper.service";
+import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
+import {AlgorithmService} from "../algorithms/algorithms.service";
+import {AlgorithmSP} from "../algorithms/algorithm-sp";
 /**
  * Created by Viki on 2/4/2017.
  */
 
-var pbkdf2 = require('pbkdf2');
+const pbkdf2 = require('pbkdf2');
 
 @Injectable()
 export class KeysService {
 
     private crypto: SubtleCrypto;
 
-    constructor(private cryptographicOperations: CryptographicOperations, private helper: HelperService) {
+    constructor(private cryptographicOperations: SimpleCryptographicOperations,
+                private algorithmService: AlgorithmService) {
         this.crypto = getCrypto();
     }
 
     public generatePublicPrivateKeyPair(forSigning: boolean): PromiseLike<CryptoKeyPair> {
-        let algorithm;
-        let algInst: any;
+        let algorithm: AlgorithmSP;
         if (forSigning) {
-            algorithm = this.cryptographicOperations
-                .getAlgorithm(this.helper.ASYMMETRIC_SIGNING_ALG, this.helper.HASH_ALG, "generatekey");
-            algInst = algorithm.algorithm;
+            algorithm = this.algorithmService.getAsymmetricSigningAlgorithmForGenerationKey();
         } else {
-            algorithm = this.cryptographicOperations
-                .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "generatekey");
-            algInst = algorithm.algorithm;
+            algorithm = this.algorithmService.getAsymmetricEncryptionAlgorithmForGenerationKey();
         }
+        let algInst: any = algorithm.algorithm;
 
         return this.crypto.generateKey(algInst, true, algorithm.usages);
     }
 
     public generateSymmetricKey(): PromiseLike<CryptoKey> {
-        let algorithm = this.cryptographicOperations
-            .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "generatekey");
+        let algorithm: AlgorithmSP = this.algorithmService.getSymmetricAlgorithmForGenerationKey();
         let algInst: any = algorithm.algorithm;
         return this.crypto.generateKey(algInst, true, algorithm.usages);
     }
@@ -45,32 +42,49 @@ export class KeysService {
                                                                    byteLength: number,
                                                                    algorithm: string): PromiseLike<CryptoKey> {
         let keyArray: Buffer = pbkdf2.pbkdf2Sync(password, 'iDeal', numIterations, byteLength, algorithm);
-        return this.importKey(keyArray, 'raw', this.helper.SYMMETRIC_ALG);
+        return this.basicImportKey(keyArray, 'raw', this.algorithmService.SYMMETRIC_ALG);
     }
 
     public generateSymmetricKeyFromPassword(password: string): PromiseLike<CryptoKey> {
         return this.generateSymmetricKeyFromPasswordAndAdditionalParameters(password, 6530, 32, 'SHA256');
     }
 
-    public exportKey(key: CryptoKey, format: "raw" | "pkcs8" | "spki" | string): PromiseLike<JsonWebKey|ArrayBuffer> {
+    public exportKey(key: CryptoKey, format: "raw" | "pkcs8" | "spki" | string): Observable<string> {
+        return Observable.create((observer) => {
+            this.basicExportKey(key, format).then((keyBuf: ArrayBuffer) => {
+                let key: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(keyBuf));
+                observer.next(key);
+            });
+        });
+    }
+
+    public basicExportKey(key: CryptoKey, format: "raw" | "pkcs8" | "spki" | string): PromiseLike<JsonWebKey|ArrayBuffer> {
         return this.crypto.exportKey(format, key);
     }
 
-    public importKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKey> {
-        let algorithm = this.cryptographicOperations.getAlgorithm(algString, this.helper.HASH_ALG, 'importkey');
+    public importKey(rawKey: string, format: string, algString: string): Observable<CryptoKey> {
+        return Observable.create((observer) => {
+            this.basicImportKey(this.cryptographicOperations.convertStringToUint8(rawKey).buffer, format, algString)
+                .then((key: CryptoKey) => {
+                    observer.next(key);
+                });
+        });
+    }
+
+    public basicImportKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKey> {
+        let algorithm = this.algorithmService.getAlgorithm(algString, this.algorithmService.HASH_ALG, 'importkey');
         let algInst: any = algorithm.algorithm;
 
         return this.crypto.importKey(format, buffer, algInst, true,
-            this.helper.getUsagesForAlgorithmAndFormat(algString, format) || algorithm.usages);
+            this.algorithmService.getUsagesForAlgorithmAndFormat(algString, format) || algorithm.usages);
     }
 
     public encryptPrivateKeyWithSymmetricKey(privateKey: CryptoKey, symmetricKey: CryptoKey): Observable<string> {
         return Observable.create((observer) => {
-            this.exportKey(privateKey, 'pkcs8')
+            this.basicExportKey(privateKey, 'pkcs8')
                 .then((privateRawKey: ArrayBuffer) => {
                     this.cryptographicOperations.encrypt(
-                        this.cryptographicOperations
-                            .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, 'encrypt').algorithm,
+                        this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
                         symmetricKey, privateRawKey)
                         .then((ciphertext: ArrayBuffer) => {
                             let cipherArray: Uint8Array = new Uint8Array(ciphertext);
@@ -87,7 +101,7 @@ export class KeysService {
         return Observable.create((observer) => {
             this.decryptPrivateKeyWithSymmetricKeyRawFormat(encodedEncryptedPrivateKey, symmetricKey)
                 .subscribe((privateRawKey: ArrayBuffer) => {
-                    this.importKey(privateRawKey, 'pkcs8', algorithm)
+                    this.basicImportKey(privateRawKey, 'pkcs8', algorithm)
                         .then((privateKey: CryptoKey) => {
                             observer.next(privateKey);
                             observer.complete();
@@ -115,8 +129,7 @@ export class KeysService {
             let cipherArray: Uint8Array = this.cryptographicOperations.convertStringToUint8(encodedEncryptedPrivateKey);
             let cipherBuffer: ArrayBuffer = cipherArray.buffer;
             this.cryptographicOperations.decrypt(
-                this.cryptographicOperations
-                    .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, 'decrypt').algorithm, symmetricKey,
+                this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm, symmetricKey,
                 cipherBuffer).then((privateRawKey: ArrayBuffer) => {
                 observer.next(privateRawKey);
                 observer.complete();
@@ -124,49 +137,46 @@ export class KeysService {
         });
     }
 
-    public extractSessionKey(encryptedSessionKey: string, decryptionKey: CryptoKey): Observable<CryptoKey> {
+    public decryptSessionKey(encryptedSessionKey: string, decryptionKey: CryptoKey): Observable<CryptoKey> {
         return Observable.create((observer) => {
-            this.cryptographicOperations.decrypt(this.cryptographicOperations
-                    .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
+            this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
                 decryptionKey, this.cryptographicOperations
                     .convertStringToUint8(encryptedSessionKey).buffer)
                 .then((sessionKeyBuf: ArrayBuffer) => {
-                    this.importKey(sessionKeyBuf, 'raw', this.helper.SYMMETRIC_ALG)
+                    this.basicImportKey(sessionKeyBuf, 'raw', this.algorithmService.SYMMETRIC_ALG)
                         .then((sessionKey: CryptoKey) => {
                             observer.next(sessionKey);
                         });
-            });
+                });
         })
     }
 
-    public insertSessionKey(sessionKey: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
+    public encryptSessionKey(sessionKey: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
         return Observable.create((observer) => {
-           this.exportKey(sessionKey, "raw").then((sessionKeyBuf: ArrayBuffer) => {
-               this.cryptographicOperations.encrypt(this.cryptographicOperations
-                   .getAlgorithm(this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "encrypt").algorithm,
-                   encryptionKey, sessionKeyBuf).then((encryptedSessionKeyBuf: ArrayBuffer) => {
-                   observer.next(this.cryptographicOperations
-                       .convertUint8ToString(new Uint8Array(encryptedSessionKeyBuf)));
-               });
-           });
+            this.basicExportKey(sessionKey, "raw").then((sessionKeyBuf: ArrayBuffer) => {
+                this.cryptographicOperations.encrypt(this.algorithmService.getAsymmetricEncryptionAlgorithm().algorithm,
+                    encryptionKey, sessionKeyBuf).then((encryptedSessionKeyBuf: ArrayBuffer) => {
+                    observer.next(this.cryptographicOperations
+                        .convertUint8ToString(new Uint8Array(encryptedSessionKeyBuf)));
+                });
+            });
         });
     }
 
     public encryptSymmetricKeyWithPasswordKey(key: CryptoKey, password: string): Observable<string> {
         return Observable.create((observer) => {
             this.generateSymmetricKeyFromPassword(password).then((passwordKey: CryptoKey) => {
-               this.encryptSymmetricKey(key, passwordKey).subscribe((encryptedKey: string) => {
-                   observer.next(encryptedKey);
-               });
+                this.encryptSymmetricKey(key, passwordKey).subscribe((encryptedKey: string) => {
+                    observer.next(encryptedKey);
+                });
             });
         });
     }
 
     public encryptSymmetricKey(key: CryptoKey, encryptionKey: CryptoKey): Observable<string> {
         return Observable.create((observer) => {
-            this.exportKey(key, "raw").then((keyBuf: ArrayBuffer) => {
-                this.cryptographicOperations.encrypt(this.cryptographicOperations
-                    .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "encrypt").algorithm,
+            this.basicExportKey(key, "raw").then((keyBuf: ArrayBuffer) => {
+                this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
                     encryptionKey, keyBuf).then((encryptedKeyBuf: ArrayBuffer) => {
                     let encryptedKey: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(encryptedKeyBuf));
                     observer.next(encryptedKey);
@@ -177,25 +187,24 @@ export class KeysService {
 
     public decryptSymmetricKeyWithPasswordKey(encryptedKey: string, password: string): Observable<CryptoKey> {
         return Observable.create((observer) => {
-           this.generateSymmetricKeyFromPassword(password).then((passwordKey: CryptoKey) => {
-              this.decryptSymmetricKey(encryptedKey, passwordKey).subscribe((key: CryptoKey) => {
-                  observer.next(key);
-              });
-           });
+            this.generateSymmetricKeyFromPassword(password).then((passwordKey: CryptoKey) => {
+                this.decryptSymmetricKey(encryptedKey, passwordKey).subscribe((key: CryptoKey) => {
+                    observer.next(key);
+                });
+            });
         });
     }
 
     public decryptSymmetricKey(encryptedKey: string, decryptionKey: CryptoKey): Observable<CryptoKey> {
         return Observable.create((observer) => {
-           this.cryptographicOperations.decrypt(this.cryptographicOperations
-               .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
-               decryptionKey, this.cryptographicOperations.convertStringToUint8(encryptedKey).buffer)
-               .then((keyBuf: ArrayBuffer) => {
-                   this.importKey(keyBuf, "raw", this.helper.SYMMETRIC_ALG)
-                       .then((key: CryptoKey) => {
-                           observer.next(key);
-                       });
-               });
+            this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                decryptionKey, this.cryptographicOperations.convertStringToUint8(encryptedKey).buffer)
+                .then((keyBuf: ArrayBuffer) => {
+                    this.basicImportKey(keyBuf, "raw", this.algorithmService.SYMMETRIC_ALG)
+                        .then((key: CryptoKey) => {
+                            observer.next(key);
+                        });
+                });
         });
     }
 

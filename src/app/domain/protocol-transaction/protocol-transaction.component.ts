@@ -32,6 +32,7 @@ export class ProtocolTransactionComponent implements OnInit {
     ngOnInit() {
         if (this.protocolSession == null) {
             if (this.currentStepNotice != null) {
+                console.log(this.currentStepNotice);
                 this.protocolSession = this.currentStepNotice.protocolSession;
             } else {
                 this.protocolSession = new ProtocolSession();
@@ -65,6 +66,9 @@ export class ProtocolTransactionComponent implements OnInit {
                         .subscribe((data: PriceRequestPhaseData) => {
                             this.priceRequestPhaseData = data;
                         });
+                } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
+                    this.protocolMessageReconstructionService.constructProtocolMessageThree(currentStep.message, password, this.protocolSession)
+                        .subscribe();
                 }
                 currentStep = currentStep.previousStepNotice;
             }
@@ -75,9 +79,17 @@ export class ProtocolTransactionComponent implements OnInit {
         let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
         dialogRef.afterClosed().subscribe((password: string) => {
             if (this.currentStepNotice == null) {
-                this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.protocolSession, this.currentStepNotice);
+                this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
             } else if (this.currentStepNotice.type == "ProtocolTransactionStepOneNotice"){
                 this.protocolMessageBuilderService.buildProtocolMessageTwo(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
+            } else if (this.currentStepNotice.type == "ProtocolTransactionStepTwoNotice") {
+                if (data.price == this.priceRequestPhaseData.price) {
+                    console.log("same prices");
+                    this.protocolMessageBuilderService.buildProtocolMessageThree(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
+                } else {
+                    console.log("different prices");
+                    this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
+                }
             }
         });
     }

@@ -15,6 +15,7 @@ export class NoticeCardComponent {
     @Input("notice") notice: Notice;
     private protocolTransactionStepOneNoticeType: string = "ProtocolTransactionStepOneNotice";
     private protocolTransactionStepTwoNoticeType: string = "ProtocolTransactionStepTwoNotice";
+    private protocolTransactionStepThreeNoticeType: string = "ProtocolTransactionStepThreeNotice";
 
     constructor() {
         if (this.notice != null) {

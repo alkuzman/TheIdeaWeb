@@ -109,7 +109,7 @@ export class VerifyPageComponent implements OnInit {
         this.keysService.generatePublicPrivateKeyPair(false)
             .then((keyPair: CryptoKeyPair) => {
                 this.privateKeyE = keyPair.privateKey;
-                this.keysService.exportKey(keyPair.publicKey, 'spki')
+                this.keysService.basicExportKey(keyPair.publicKey, 'spki')
                     .then((keyBuf: ArrayBuffer) => {
                         this._pemPublicKeyE = this.pemParser.parsePublicKeyPEM(keyBuf);
                         this.encryptedKeyPairGenerated = true;

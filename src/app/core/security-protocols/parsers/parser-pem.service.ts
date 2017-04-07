@@ -6,6 +6,8 @@ import * as asn1js from "asn1js";
 import {KeysService} from "../keys/keys.service";
 import {HelperService} from "../helper.service";
 import {Observable} from "rxjs";
+import {AlgorithmService} from "../algorithms/algorithms.service";
+import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
 
 /**
  * Created by Viki on 2/26/2017.
@@ -15,8 +17,8 @@ import {Observable} from "rxjs";
 @Injectable()
 export class ParserPemService {
 
-  constructor(private cryptographicOperations: CryptographicOperations,
-              private keysService: KeysService, private helper: HelperService) {
+  constructor(private simpleCryptographicOperations: SimpleCryptographicOperations,
+              private keysService: KeysService, private algorithmService: AlgorithmService) {
 
   }
 
@@ -69,7 +71,7 @@ export class ParserPemService {
 
   public parseCertificateFromPem(certPEM: string): Certificate {
     certPEM = certPEM.replace(/(-----(BEGIN|END) CERTIFICATE-----|\n)/g, '');
-    let certBuf: ArrayBuffer = this.cryptographicOperations.convertStringToUint8(certPEM).buffer;
+    let certBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(certPEM).buffer;
     let certAsn1 = asn1js.fromBER(certBuf);
     let certificate: Certificate = new Certificate({schema: certAsn1.result});
     return certificate;
@@ -77,9 +79,9 @@ export class ParserPemService {
 
   public parsePublicKeyFromPem(publicKeyPEM: string): Observable<CryptoKey> {
     publicKeyPEM = publicKeyPEM.replace(/(-----(BEGIN|END) PUBLIC KEY-----|\n)/g, '');
-    let pubKeyBuf: ArrayBuffer = this.cryptographicOperations.convertStringToUint8(publicKeyPEM).buffer;
+    let pubKeyBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(publicKeyPEM).buffer;
     return Observable.create((observer) => {
-      this.keysService.importKey(pubKeyBuf, 'spki', this.helper.ASYMMETRIC_ENCRYPTION_ALG)
+      this.keysService.basicImportKey(pubKeyBuf, 'spki', this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG)
         .then((key: CryptoKey) => {
           observer.next(key);
         });
