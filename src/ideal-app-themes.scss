@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 15/12/2016.
  */
-@import '~@angular/material/core/theming/theming';
+@import '~@angular/material/theming';
 @import "app/shared/widget/components/label/label-theme";
 
 @mixin main_mixin($theme) {

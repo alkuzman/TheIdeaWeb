@@ -13,6 +13,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {DomainServicesModule} from "./domain/services/domain-services.module";
 import 'hammerjs';
 import {AuthHttp, AuthConfig} from "angular2-jwt";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -23,7 +24,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, MaterialRootModule, CoreModule, FlexLayoutModule, SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
+  imports: [BrowserModule, HttpModule, MaterialRootModule, CoreModule, BrowserAnimationsModule, FlexLayoutModule, SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [{
     provide: AuthHttp,

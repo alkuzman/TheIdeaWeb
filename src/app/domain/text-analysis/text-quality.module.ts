@@ -7,11 +7,12 @@ import {ProblemCoverageDetailsComponent} from "./components/problem-coverage/pro
 import {ProblemCoverageValueComponent} from "./components/problem-coverage/problem-coverage-value/problem-coverage-value.component";
 import {ProblemCoverageKeywordsComponent} from "./components/problem-coverage/problem-coverage-keywords/problem-coverage-keywords.component";
 import {KeywordSelectionService} from "./keyword-selection.service";
+import {SnackPeakQualityComponent} from "./components/snack-peak-quality/snack-peak-quality.component";
 @NgModule({
   imports: [SharedModule],
   providers: [KeywordSelectionService],
-  declarations: [ProblemCoverageKeywordsComponent, ProblemCoverageValueComponent, ProblemCoverageDetailsComponent],
-  exports: [ProblemCoverageKeywordsComponent, ProblemCoverageValueComponent, ProblemCoverageDetailsComponent]
+  declarations: [ProblemCoverageKeywordsComponent, ProblemCoverageValueComponent, ProblemCoverageDetailsComponent, SnackPeakQualityComponent],
+  exports: [ProblemCoverageKeywordsComponent, ProblemCoverageValueComponent, ProblemCoverageDetailsComponent, SnackPeakQualityComponent]
 })
 export class TextQualityModule {
 
