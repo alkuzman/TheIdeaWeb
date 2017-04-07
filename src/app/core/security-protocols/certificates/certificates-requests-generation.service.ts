@@ -12,6 +12,7 @@ import Attribute from "pkijs/src/Attribute";
 import {User} from "../../../domain/model/authentication/user";
 import {CountryService} from "../../../domain/services/localization/country.service";
 import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
+import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class CertificateRequestGenerationService {
   private signAlg: string = "RSA-PSS";
   private hashAlg: string = "sha-256";
 
-  constructor(private countryService: CountryService, private cryptographicOperations: CryptographicOperations) {
+  constructor(private countryService: CountryService, private simpleCryptographicOperations: SimpleCryptographicOperations) {
   }
 
   public createPKCS10Internal(privateKey: CryptoKey, publicKey: CryptoKey, user: User) {
@@ -42,7 +43,7 @@ export class CertificateRequestGenerationService {
     //common name
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
       type: "2.5.4.3",
-      value: new asn1js.Utf8String({value: this.cryptographicOperations.hash(user.email)})
+      value: new asn1js.Utf8String({value: this.simpleCryptographicOperations.hash(user.email)})
     }));
     //country code
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({

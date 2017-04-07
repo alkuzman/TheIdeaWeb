@@ -18,6 +18,8 @@ import {ProtocolTransactionStepTwoNotice} from "../../../domain/model/security/n
 import {ProtocolParticipantOneSessionData} from "../../../domain/model/security/protocol-participant-one-session-data";
 import {SimpleSecurityProfile} from "../../../domain/model/security/simple-security-profile";
 import {SecurityProfileConstructorService} from "./security-profile-constructor.service";
+import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
+import {AlgorithmService} from "../algorithms/algorithms.service";
 /**
  * Created by Viki on 2/21/2017.
  */
@@ -28,12 +30,18 @@ export class ProtocolMessagesBuilderService {
 
     private securityProfile: SecurityProfile;
 
-    constructor(private securityContext: JwtSecurityContext, private certificateService: CertificateService,
-                private keysService: KeysService, private cryptographicOperations: CryptographicOperations,
-                private userService: UserService, private helper: HelperService,
-                private pemParser: ParserPemService, private noticeService: NoticeService,
-                private protocolTransactionStepNoticeConstructor: ProtocolTransactionStepNoticeConstructor,
-                private securityProfileConstructor: SecurityProfileConstructorService) {
+    constructor(private helper: HelperService,
+                private keysService: KeysService,
+                private userService: UserService,
+                private pemParser: ParserPemService,
+                private noticeService: NoticeService,
+                private securityContext: JwtSecurityContext,
+                private certificateService: CertificateService,
+                private algorithmService: AlgorithmService,
+                private cryptographicOperations: CryptographicOperations,
+                private simpleCryptographicOperations: SimpleCryptographicOperations,
+                private securityProfileConstructor: SecurityProfileConstructorService,
+                private protocolTransactionStepNoticeConstructor: ProtocolTransactionStepNoticeConstructor) {
 
         this.initializeSecurityProfile();
     }
@@ -59,134 +67,131 @@ export class ProtocolMessagesBuilderService {
     public buildProtocolMessageOne(userData: PriceRequestPhaseData, password: string, previousData: PriceRequestPhaseData,
                                    protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepThreeNotice) {
 
-        // Retrieve other party public key
-        this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
-            .subscribe((pemPublicKeyEncryption: string) => {
+        // Initialize Simple Security Profile
+        this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+            .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
-                    // Parse the public key from pem format
-                    this.pemParser.parsePublicKeyFromPem(pemPublicKeyEncryption)
-                        .subscribe((ownerPublicKeyEncryption: CryptoKey) => {
+                // Retrieve other party public key
+                this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
+                    .subscribe((otherPartyPublicKeyForEncryptionPEM: string) => {
 
-                            // Generate the session key that will be used
-                            this.keysService.generateSymmetricKey()
-                                .then((key: CryptoKey) => {
+                        console.log("Parse pem public key");
 
-                                    // Parse own public key from pem format
-                                    this.pemParser.parsePublicKeyFromPem(this.securityProfile.encryptionPair.publicPem)
-                                        .subscribe((ownPublicKeyEncryption: CryptoKey) => {
+                        // Parse the public key from pem format
+                        this.pemParser.parsePublicKeyFromPem(otherPartyPublicKeyForEncryptionPEM)
+                            .subscribe((otherPartyPublicKeyForEncryption: CryptoKey) => {
 
-                                            // Add the session key encrypted with own public key into protocol session
-                                            this.keysService.insertSessionKey(key, ownPublicKeyEncryption)
-                                                .subscribe((encryptedSessionKey: string) => {
-                                                    if (protocolSession.participantOneSessionData == null) {
-                                                        let participant: ProtocolParticipantOneSessionData = new ProtocolParticipantOneSessionData();
-                                                        participant.participant = this.userService.getAuthenticatedUser();
-                                                        participant.sessionKeyEncrypted = encryptedSessionKey;
-                                                        protocolSession.participantOneSessionData = participant;
-                                                    }
+                                // Generate the session key that will be used
+                                this.keysService.generateSymmetricKey()
+                                    .then((sessionKey: CryptoKey) => {
 
-                                                    // Add the session key encrypted with other party public key into protocol session
-                                                    this.keysService.insertSessionKey(key, ownerPublicKeyEncryption)
-                                                        .subscribe((ownerEncryptedSessionKey: string) => {
-                                                            if (protocolSession.participantTwoSessionData == null) {
-                                                                let participant = new ProtocolParticipantOneSessionData();
-                                                                participant.participant = protocolSession.idea.owner;
-                                                                participant.sessionKeyEncrypted = ownerEncryptedSessionKey;
-                                                                protocolSession.participantTwoSessionData = participant;
-                                                            }
+                                        console.log("generate session key");
 
-                                                            // Export the session key as CryptoKey
-                                                            this.keysService.exportKey(key, 'raw')
-                                                                .then((keyBuffer: ArrayBuffer) => {
+                                        // Add the session key encrypted with own public key into protocol session
+                                        this.keysService.encryptSessionKey(sessionKey, simpleSecurityProfile.publicKey)
+                                            .subscribe((encryptedSessionKey: string) => {
+                                                if (protocolSession.participantOneSessionData == null) {
+                                                    let participant: ProtocolParticipantOneSessionData = new ProtocolParticipantOneSessionData();
+                                                    participant.participant = this.userService.getAuthenticatedUser();
+                                                    participant.sessionKeyEncrypted = encryptedSessionKey;
+                                                    protocolSession.participantOneSessionData = participant;
+                                                }
 
-                                                                    // Create message object
-                                                                    let Kcm: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(keyBuffer));
-                                                                    let N: string = this.cryptographicOperations.generateNonce();
-                                                                    let obj = {
-                                                                        'key': Kcm,
-                                                                        'nonce': N,
-                                                                        'identity': this.userService.getAuthenticatedUser().email
-                                                                    };
-                                                                    let jsonObj: string = JSON.stringify(obj);
+                                                // Add the session key encrypted with other party public key into protocol session
+                                                this.keysService.encryptSessionKey(sessionKey, otherPartyPublicKeyForEncryption)
+                                                    .subscribe((ownerEncryptedSessionKey: string) => {
+                                                        if (protocolSession.participantTwoSessionData == null) {
+                                                            let participant = new ProtocolParticipantOneSessionData();
+                                                            participant.participant = protocolSession.idea.owner;
+                                                            participant.sessionKeyEncrypted = ownerEncryptedSessionKey;
+                                                            protocolSession.participantTwoSessionData = participant;
+                                                        }
 
-                                                                    // Encrypt message object with other party encryption public key
-                                                                    this.cryptographicOperations.encrypt(
-                                                                        this.cryptographicOperations.getAlgorithm('RSA-OAEP', 'SHA256', 'encrypt').algorithm,
-                                                                        ownerPublicKeyEncryption,
-                                                                        this.cryptographicOperations.convertStringToBuffer(jsonObj))
-                                                                        .then((initDataEncryptionBuf: ArrayBuffer) => {
-                                                                            let initDataEncryption: string = this.cryptographicOperations
-                                                                                .convertUint8ToString(new Uint8Array(initDataEncryptionBuf));
-                                                                            let hashInitData: string = this.cryptographicOperations.hash(jsonObj);
 
-                                                                            // Extract own signing private key
-                                                                            this.keysService.extractPrivateKey(this.securityProfile.encryptedPrivateKey, password,
-                                                                                this.helper.ASYMMETRIC_SIGNING_ALG)
-                                                                                .subscribe((privateSigningKey: CryptoKey) => {
+                                                        console.log("export session key");
 
-                                                                                    // Sign hashed message object
-                                                                                    this.cryptographicOperations.sign(this.helper.ASYMMETRIC_SIGNING_ALG, privateSigningKey,
-                                                                                        this.cryptographicOperations.convertStringToUint8(hashInitData).buffer)
-                                                                                        .then((signedHashedInitDataBuf: ArrayBuffer) => {
-                                                                                            let signedHashedInitData: string = this.cryptographicOperations
-                                                                                                .convertUint8ToString(new Uint8Array(signedHashedInitDataBuf));
+                                                        // Export the session key into raw format
+                                                        this.keysService.exportKey(sessionKey, 'raw')
+                                                            .subscribe((keyRaw: string) => {
 
-                                                                                            // Create message data
-                                                                                            let TID: number = 1;
-                                                                                            let productID: number = protocolSession.idea.id;
-                                                                                            if (previousNotice != null) {
-                                                                                                TID = previousData.tID + 1;
-                                                                                                productID = previousData.productID;
-                                                                                            }
-                                                                                            let data = {
-                                                                                                'productID': productID,
-                                                                                                'bid': userData.price,
-                                                                                                'TID': TID
-                                                                                            };
-                                                                                            let jsonData: string = JSON.stringify(data);
+                                                                // Create message object
+                                                                let Kcm: string = keyRaw;
+                                                                let N: string = this.simpleCryptographicOperations.generateNonce();
+                                                                let obj = {
+                                                                    'key': Kcm,
+                                                                    'nonce': N,
+                                                                    'identity': this.userService.getAuthenticatedUser().email
+                                                                };
+                                                                let jsonObj: string = JSON.stringify(obj);
 
-                                                                                            // Encrypt message data with session key
-                                                                                            this.cryptographicOperations.encrypt(
-                                                                                                this.cryptographicOperations.getAlgorithm('AES-CTR', 'SHA256', 'encrypt').algorithm,
-                                                                                                key,
-                                                                                                this.cryptographicOperations.convertStringToBuffer(jsonData))
-                                                                                                .then((dataEncryptedBuf: ArrayBuffer) => {
-                                                                                                    let dataEncrypted: string = this.cryptographicOperations
-                                                                                                        .convertUint8ToString(new Uint8Array(dataEncryptedBuf));
-                                                                                                    let hashedDataEncrypted: string = this.cryptographicOperations.hash(dataEncrypted);
+                                                                console.log("encrypt");
 
-                                                                                                    // Construct final message
-                                                                                                    let message = {
-                                                                                                        'signature': signedHashedInitData,
-                                                                                                        'object': initDataEncryption,
-                                                                                                        'data': dataEncrypted,
-                                                                                                        'hashedData': hashedDataEncrypted
-                                                                                                    };
-                                                                                                    let jsonMessage: string = JSON.stringify(message);
-                                                                                                    console.log(jsonMessage);
+                                                                // Encrypt message object with other party encryption public key
+                                                                this.cryptographicOperations.encrypt(
+                                                                    this.algorithmService.getAsymmetricEncryptionAlgorithm().algorithm,
+                                                                    otherPartyPublicKeyForEncryption, jsonObj)
+                                                                    .subscribe((initDataEncryption: string) => {
+                                                                        let hashInitData: string = this.simpleCryptographicOperations.hash(jsonObj);
 
-                                                                                                    // Construct notice and send notice
-                                                                                                    this.sendMessage(this.protocolTransactionStepNoticeConstructor
-                                                                                                        .constructProtocolTransactionStepOneNotice(protocolSession, jsonMessage,
-                                                                                                            this.userService.getAuthenticatedUser(),
-                                                                                                            <ProtocolTransactionStepThreeNotice>previousNotice,
-                                                                                                            previousNotice == null ? protocolSession.idea.owner : previousNotice.originator));
 
-                                                                                                });
-                                                                                        });
+                                                                        console.log("sign");
+
+                                                                        // Sign hashed message object
+                                                                        this.cryptographicOperations.sign(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
+                                                                            simpleSecurityProfile.privateKeySigning, hashInitData)
+                                                                            .subscribe((signedHashedInitData: string) => {
+
+                                                                                // Create message data
+                                                                                let TID: number = 1;
+                                                                                let productID: number = protocolSession.idea.id;
+                                                                                if (previousNotice != null) {
+                                                                                    TID = previousData.tID + 1;
+                                                                                    productID = previousData.productID;
+                                                                                }
+                                                                                let data = {
+                                                                                    'productID': productID,
+                                                                                    'bid': userData.price,
+                                                                                    'TID': TID
+                                                                                };
+                                                                                let jsonData: string = JSON.stringify(data);
+
+                                                                                // Encrypt message data with session key
+                                                                                this.cryptographicOperations.encrypt(
+                                                                                    this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
+                                                                                    sessionKey, jsonData).subscribe((dataEncrypted: string) => {
+                                                                                    let hashedDataEncrypted: string = this.simpleCryptographicOperations.hash(dataEncrypted);
+
+                                                                                    console.log("final");
+
+                                                                                    // Construct final message
+                                                                                    let message = {
+                                                                                        'signature': signedHashedInitData,
+                                                                                        'object': initDataEncryption,
+                                                                                        'data': dataEncrypted,
+                                                                                        'hashedData': hashedDataEncrypted
+                                                                                    };
+                                                                                    let jsonMessage: string = JSON.stringify(message);
+                                                                                    console.log(jsonMessage);
+
+                                                                                    // Construct notice and send notice
+                                                                                    this.sendMessage(this.protocolTransactionStepNoticeConstructor
+                                                                                        .constructProtocolTransactionStepOneNotice(protocolSession, jsonMessage,
+                                                                                            this.userService.getAuthenticatedUser(),
+                                                                                            <ProtocolTransactionStepThreeNotice>previousNotice,
+                                                                                            previousNotice == null ? protocolSession.idea.owner : previousNotice.originator));
+
                                                                                 });
-                                                                        });
-                                                                });
-                                                        });
-                                                });
+                                                                            });
+                                                                    });
+                                                            });
+                                                    });
+                                            });
+                                    });
 
-                                        });
+                            });
 
-                                });
-                        });
-
-                }
-            );
+                    });
+            });
     }
 
     public buildProtocolMessageTwo(userData: PriceRequestPhaseData, password: string,
@@ -202,21 +207,18 @@ export class ProtocolMessagesBuilderService {
         };
         let jsonData: string = JSON.stringify(data);
 
-        // Extract own encryption private key
-        this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password, this.helper.ASYMMETRIC_ENCRYPTION_ALG)
-            .subscribe((privateKey: CryptoKey) => {
+        // Initialize Simple Security Profile
+        this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+            .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
                 // Extract session key
-                this.keysService.extractSessionKey(this.helper
-                        .getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
-                    privateKey).subscribe((sessionKey: CryptoKey) => {
+                this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                    simpleSecurityProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
 
                     // Encrypt message data with session key
-                    this.cryptographicOperations.encrypt(this.cryptographicOperations.getAlgorithm(this.helper.SYMMETRIC_ALG,
-                        this.helper.HASH_ALG, "encrypt").algorithm, sessionKey, this.cryptographicOperations
-                        .convertStringToBuffer(jsonData)).then((encryptedDataBuffer: ArrayBuffer) => {
-                        let encryptedData: string = this.cryptographicOperations.convertUint8ToString(new Uint8Array(encryptedDataBuffer));
-                        let encryptedDataHash = this.cryptographicOperations.hash(encryptedData);
+                    this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
+                        sessionKey, jsonData).subscribe((encryptedData: string) => {
+                        let encryptedDataHash = this.simpleCryptographicOperations.hash(encryptedData);
 
                         // Construct final message
                         let message = {
@@ -246,7 +248,7 @@ export class ProtocolMessagesBuilderService {
                                      protocolSession: ProtocolSession,
                                      previousNotice: ProtocolTransactionStepTwoNotice) {
 
-        // Construct Simple security profile
+        // Initialize Simple Security Profile
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleProfile: SimpleSecurityProfile) => {
 
@@ -261,42 +263,35 @@ export class ProtocolMessagesBuilderService {
                 let jsonData: string = JSON.stringify(data);
 
                 // Extract The Session Key
-                this.keysService.extractSessionKey(this.helper
+                this.keysService.decryptSessionKey(this.helper
                         .getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
                     simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
 
                     // Encrypt the json from the message data with the session key
-                    this.cryptographicOperations.encrypt(this.cryptographicOperations
-                            .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "encrypt").algorithm,
-                        sessionKey, this.cryptographicOperations.convertStringToUint8(jsonData).buffer)
-                        .then((dataEncryptedBuf: ArrayBuffer) => {
-                            let dataEncrypted: string = this.cryptographicOperations
-                                .convertUint8ToString(new Uint8Array(dataEncryptedBuf));
+                    this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
+                        sessionKey, jsonData).subscribe((dataEncrypted: string) => {
 
-                            // Hash the json from the message data
-                            let hashedData: string = this.cryptographicOperations.hash(jsonData);
+                        // Hash the json from the message data
+                        let hashedData: string = this.simpleCryptographicOperations.hash(jsonData);
 
-                            // Sign the hash
-                            this.cryptographicOperations.sign(this.helper.ASYMMETRIC_SIGNING_ALG,
-                                simpleProfile.privateKeySigning,
-                                this.cryptographicOperations.convertStringToUint8(hashedData).buffer)
-                                .then((signedHashedDataBuf: ArrayBuffer) => {
-                                    let signedHashedData: string = this.cryptographicOperations
-                                        .convertUint8ToString(new Uint8Array(signedHashedDataBuf));
-                                    let message = {
-                                        "signature": signedHashedData,
-                                        "data": dataEncrypted
-                                    };
-                                    let jsonMessage: string = JSON.stringify(message);
-                                    let notice: ProtocolTransactionStepThreeNotice = this.protocolTransactionStepNoticeConstructor
-                                        .constructProtocolTransactionStepThreeNotice(protocolSession, jsonMessage,
-                                            this.userService.getAuthenticatedUser(),
-                                            <ProtocolTransactionStepTwoNotice>previousNotice,
-                                            previousNotice.originator);
-                                    console.log(notice);
-                                    this.sendMessage(notice);
-                                });
-                        })
+                        // Sign the hash
+                        this.cryptographicOperations.sign(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
+                            simpleProfile.privateKeySigning, hashedData).subscribe((signedHashedData: string) => {
+
+                            let message = {
+                                "signature": signedHashedData,
+                                "data": dataEncrypted
+                            };
+                            let jsonMessage: string = JSON.stringify(message);
+                            let notice: ProtocolTransactionStepThreeNotice = this.protocolTransactionStepNoticeConstructor
+                                .constructProtocolTransactionStepThreeNotice(protocolSession, jsonMessage,
+                                    this.userService.getAuthenticatedUser(),
+                                    <ProtocolTransactionStepTwoNotice>previousNotice,
+                                    previousNotice.originator);
+                            console.log(notice);
+                            this.sendMessage(notice);
+                        });
+                    })
                 });
 
             });

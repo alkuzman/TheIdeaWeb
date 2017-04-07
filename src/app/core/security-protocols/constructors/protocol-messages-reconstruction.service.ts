@@ -19,6 +19,8 @@ import {ProtocolParticipantOneSessionData} from "../../../domain/model/security/
 import {exhaustMap} from "rxjs/operator/exhaustMap";
 import {SimpleSecurityProfile} from "../../../domain/model/security/simple-security-profile";
 import {SecurityProfileConstructorService} from "./security-profile-constructor.service";
+import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
+import {AlgorithmService} from "../algorithms/algorithms.service";
 /**
  * Created by Viki on 3/1/2017.
  */
@@ -30,9 +32,12 @@ export class ProtocolMessagesReconstructionService {
     private securityProfile: SecurityProfile;
 
     constructor(private securityContext: JwtSecurityContext,
-                private cryptographicOperations: CryptographicOperations, private helper: HelperService,
+                private cryptographicOperations: CryptographicOperations,
+                private simpleCryptographicOperations: SimpleCryptographicOperations,
+                private helper: HelperService,
+                private algorithmService: AlgorithmService,
                 private keysService: KeysService, private pemParser: ParserPemService,
-                private certificateService: CertificateService, private userService: UserService,
+                private certificateService: CertificateService,
                 private securityProfileConstructor: SecurityProfileConstructorService) {
         this.initializeSecurityProfile();
     }
@@ -56,20 +61,20 @@ export class ProtocolMessagesReconstructionService {
                 JSON.parse(jsonMessage);
 
             // Integrity check of the data sent
-            if (this.cryptographicOperations.hash(message.data) == message.hashedData) {
+            if (this.simpleCryptographicOperations.hash(message.data) == message.hashedData) {
 
-                // Extracting user private key
-                this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
-                    this.helper.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKey: CryptoKey) => {
+                // Initialize Simple Security Profile
+                this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                    .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
                     // Decrypting object
-                    this.cryptographicOperations.decrypt(this.cryptographicOperations.getAlgorithm(
-                        this.helper.ASYMMETRIC_ENCRYPTION_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
-                        privateKey, this.cryptographicOperations.convertStringToUint8(message.object).buffer)
-                        .then((jsonObjectBuffer: ArrayBuffer) => {
+                    this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
+                        simpleSecurityProfile.privateKeyEncryption, message.object).subscribe((jsonObject: string) => {
+
+
+                        console.log("after decrypting");
 
                             // Parse decrypted object in JSON
-                            let jsonObject = this.cryptographicOperations.convertBufferToString(Buffer.from(jsonObjectBuffer));
                             let object: {key: string, nonce: number, identity: string} = JSON.parse(jsonObject);
                             result.nonce = object.nonce;
                             result.otherParty = object.identity;
@@ -79,18 +84,15 @@ export class ProtocolMessagesReconstructionService {
                                 .subscribe((otherPartyPublicKey: CryptoKey) => {
 
                                     // Verify other party signature
-                                    this.cryptographicOperations.verify(this.helper.ASYMMETRIC_SIGNING_ALG,
+                                    this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
                                         otherPartyPublicKey,
-                                        this.cryptographicOperations.convertStringToUint8(message.signature).buffer,
-                                        this.cryptographicOperations.convertStringToUint8(this
-                                            .cryptographicOperations.hash(jsonObject)).buffer)
-                                        .then((verifyResult: boolean) => {
+                                        message.signature,
+                                        this.simpleCryptographicOperations.hash(jsonObject)).then((verifyResult: boolean) => {
                                             if (verifyResult) {
 
                                                 // Import session key from string into CryptoKey
-                                                this.keysService.importKey(this.cryptographicOperations
-                                                    .convertStringToUint8(object.key).buffer, 'raw', this.helper.SYMMETRIC_ALG)
-                                                    .then((sessionKey: CryptoKey) => {
+                                                this.keysService.importKey(object.key, 'raw', this.algorithmService.SYMMETRIC_ALG)
+                                                    .subscribe((sessionKey: CryptoKey) => {
                                                         result.key = sessionKey;
 
                                                         // Add the session key encrypted into protocol session
@@ -98,12 +100,8 @@ export class ProtocolMessagesReconstructionService {
                                                             .subscribe((encryptionPublicKey: CryptoKey) => {
 
                                                                 // Decrypt data sent with session key
-                                                                this.cryptographicOperations.decrypt(this.cryptographicOperations
-                                                                        .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG,
-                                                                            'decrypt').algorithm, sessionKey,
-                                                                    this.cryptographicOperations.convertStringToUint8(message.data).buffer)
-                                                                    .then((decryptedDataBuf: ArrayBuffer) => {
-                                                                        let jsonData: string = this.cryptographicOperations.convertBufferToString(Buffer.from(decryptedDataBuf));
+                                                                this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                                                                    sessionKey, message.data).subscribe((jsonData: string) => {
                                                                         let data: {productID: number, bid: Price, TID: number} = JSON.parse(jsonData);
                                                                         result.price = data.bid;
                                                                         result.productID = data.productID;
@@ -132,21 +130,27 @@ export class ProtocolMessagesReconstructionService {
 
         return Observable.create((observer) => {
             console.log(jsonMessage);
+
             // Parse the json string into an object
             let message: {data: string, hashedData: string} = JSON.parse(jsonMessage);
+
             // Integrity check of the data send
-            if (this.cryptographicOperations.hash(message.data) == message.hashedData) {
+            if (this.simpleCryptographicOperations.hash(message.data) == message.hashedData) {
+
+                // Get encrypted session key
                 let encryptedSessionKey: string = this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession);
-                this.keysService.extractPrivateKey(this.securityProfile.encryptionPair.privateEncrypted, password,
-                    this.helper.ASYMMETRIC_ENCRYPTION_ALG)
-                    .subscribe((privateEncryptionKey: CryptoKey) => {
-                        this.keysService.extractSessionKey(encryptedSessionKey, privateEncryptionKey)
+
+                // Initialize Simple Security Profile
+                this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                    .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
+
+                        // Decrypt session key
+                        this.keysService.decryptSessionKey(encryptedSessionKey, simpleSecurityProfile.privateKeyEncryption)
                             .subscribe((sessionKey: CryptoKey) => {
-                                this.cryptographicOperations.decrypt(this.cryptographicOperations
-                                        .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "decrypt").algorithm,
-                                    sessionKey, this.cryptographicOperations.convertStringToUint8(message.data).buffer)
-                                    .then((decryptedDataBuf: ArrayBuffer) => {
-                                        let decryptedDataJson: string = this.cryptographicOperations.convertBufferToString(Buffer.from(decryptedDataBuf));
+
+                                // Decrypt message data
+                                this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                                    sessionKey, message.data).subscribe((decryptedDataJson: string) => {
                                         let decryptedData: {productID: number, price: Price, nonce: number, TID: number} = JSON.parse(decryptedDataJson);
                                         let result: PriceRequestPhaseData = {};
                                         result.price = decryptedData.price;
@@ -169,18 +173,18 @@ export class ProtocolMessagesReconstructionService {
             // Construct Simple Security Profile
             this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
                 .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
                     // Parse JSON into an object
                     let message: {signature: string, data: string} = JSON.parse(jsonMessage);
 
                     //Extract the session key
-                    this.keysService.extractSessionKey(this.helper
+                    this.keysService.decryptSessionKey(this.helper
                             .getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
                         simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
 
                         // Decrypt data
-                        this.cryptographicOperations.decryptStringInString(this.cryptographicOperations
-                            .getAlgorithm(this.helper.SYMMETRIC_ALG, this.helper.HASH_ALG, "decrypt")
-                            .algorithm, sessionKey, message.data).subscribe((jsonData: string) => {
+                        this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                            sessionKey, message.data).subscribe((jsonData: string) => {
 
                             let data: {identity: string, TID: number, nonce: number} = JSON.parse(jsonData);
 
@@ -189,11 +193,12 @@ export class ProtocolMessagesReconstructionService {
                                 (otherPartyVerifyingKey: CryptoKey) => {
 
                                     // Verify signature
-                                    this.cryptographicOperations.verifyString(this.helper.ASYMMETRIC_SIGNING_ALG,
+                                    this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
                                         otherPartyVerifyingKey, message.signature,
-                                        this.cryptographicOperations.hash(jsonData))
+                                        this.simpleCryptographicOperations.hash(jsonData))
                                         .then((verifyResult: boolean) => {
                                             if (verifyResult) {
+                                                console.log(jsonData);
                                                 observer.next(jsonData);
                                             } else {
                                                 console.log("Signature did not verify");

@@ -66,6 +66,9 @@ export class ProtocolTransactionComponent implements OnInit {
                         .subscribe((data: PriceRequestPhaseData) => {
                             this.priceRequestPhaseData = data;
                         });
+                } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
+                    this.protocolMessageReconstructionService.constructProtocolMessageThree(currentStep.message, password, this.protocolSession)
+                        .subscribe();
                 }
                 currentStep = currentStep.previousStepNotice;
             }
