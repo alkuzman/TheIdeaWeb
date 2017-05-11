@@ -2,13 +2,14 @@
  * Created by Viki on 11/18/2016.
  */
 import {Injectable} from "@angular/core";
-import {Http, Headers, Response} from "@angular/http";
+import {Headers, Response} from "@angular/http";
 import {JwtSecurityContext} from "./jwt-security-context.service";
 import {Observable, Scheduler} from "rxjs";
-import {AuthHttp, JwtHelper} from "angular2-jwt";
+import {JwtHelper} from "angular2-jwt";
 import {JwtRefreshAccessTokenService} from "./jwt-refresh-access-token.service";
 import {Router} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
+import {JwtHttpService} from "./jwt-http.service";
 /**
  * Created by Viki on 11/18/2016.
  */
@@ -21,7 +22,7 @@ export class JwtAuthenticationService {
   private me: JwtAuthenticationService = this;
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: Http, private authHttp: AuthHttp, securityContext: JwtSecurityContext, private refreshAccessTokenService: JwtRefreshAccessTokenService, private router: Router) {
+  constructor(private http: JwtHttpService, securityContext: JwtSecurityContext, private refreshAccessTokenService: JwtRefreshAccessTokenService, private router: Router) {
     this.securityContext = securityContext;
     this.scheduleRefresh();
   }
