@@ -32,6 +32,8 @@ import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/con
 import {EncryptingService} from "./security-protocols/encrypting.service";
 import {DecryptingService} from "./security-protocols/decrypting.service";
 import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
+import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-operations/simple-cryptographic-operations";
+import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
 
 
 @NgModule({
@@ -42,10 +44,10 @@ import {SecurityProfileService} from "../domain/services/security-profile/securi
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
     JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
     SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
-    CryptographicOperations, SecurityProfileConstructorService, ProtocolMessagesBuilderService,
-    HelperService, ParserPemService, SecurityProfileService,
-    ProtocolMessagesReconstructionService, HelperService, ParserPemService, ProtocolTransactionStepNoticeConstructor,
-    EncryptingService, DecryptingService]
+    SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
+    ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
+    ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
+    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService]
 })
 export class CoreModule {
 }

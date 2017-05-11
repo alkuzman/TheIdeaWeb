@@ -1,8 +1,9 @@
 import {BaseEntityImpl} from "../base-entity-impl";
-import {ProtocolParticipantSessionData} from "./protocol-participant-session-data";
+import {ProtocolParticipantOneSessionData} from "./protocol-participant-one-session-data";
 import {ProtocolTransactionStepNotice} from "./notices/protocol-transaction-step-notice";
 import {ProtocolTransactionStepOneNotice} from "./notices/protocol-transaction-step-one-notice";
 import {Idea} from "../ideas/idea";
+import {ProtocolParticipantTwoSessionData} from "./protocol-participant-two-session-data";
 /**
  * Created by Viki on 3/9/2017.
  */
@@ -10,11 +11,11 @@ import {Idea} from "../ideas/idea";
 
 export class ProtocolSession extends BaseEntityImpl {
 
-    public participantsSessionData: ProtocolParticipantSessionData[];
+    public participantOneSessionData: ProtocolParticipantOneSessionData;
+    public participantTwoSessionData: ProtocolParticipantTwoSessionData;
     public idea: Idea;
 
     constructor() {
         super();
-        this.participantsSessionData = [];
     }
 }

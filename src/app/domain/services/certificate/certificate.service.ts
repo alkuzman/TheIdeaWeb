@@ -46,11 +46,17 @@ export class CertificateService {
 
   public get(filterProperties: CertificatesFilterProperties): Observable<string> {
     let params = PropertiesToUrlSearchParams.transform(filterProperties);
-    //let url: string = this.certificatesUrl + "/" + CertificateType[type];
-    let url = this.certificatesUrl;
-    return this.http.get(url, {headers: this.getHeaders(), search: params})
+    let url: string = this.certificatesUrl;
+    return this.http.get(url, {headers: this.getHeaders(), search: params}, true)
       .map((response: Response) => response.text())
       .catch((error: any) => this.handleError(error));
+  }
+
+  public getIssuerCertificate(): Observable<string> {
+    let url: string = this.certificatesUrl + "/issuer";
+    return this.http.get(url, {headers: this.getHeaders()})
+        .map((response: Response) => response.text())
+        .catch((error: any) => this.handleError(error));
   }
 
   public getPublicKey(filterProperties: CertificatesFilterProperties): Observable<string> {

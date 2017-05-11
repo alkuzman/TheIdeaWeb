@@ -9,4 +9,6 @@ export interface PriceRequestPhaseData {
     key?: CryptoKey;
     nonce?: number;
     otherParty?: string;
+    tID?: number;
+    productID?: number;
 }
