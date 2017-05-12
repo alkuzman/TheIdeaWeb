@@ -5,8 +5,6 @@ import {ProtocolTransactionModule} from "../../../domain/protocol-transaction/pr
 /**
  * Created by Viki on 3/3/2017.
  */
-
-
 @NgModule({
   imports: [TransactionDetailsPageRoutingModule, ProtocolTransactionModule],
   declarations: [TransactionDetailsPageComponent],

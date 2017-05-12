@@ -4,8 +4,7 @@
 import {Component, Input} from "@angular/core";
 import {SolutionQuality} from "../../../model/analyzers/analysis/solution-quality";
 import {SolutionQualityStatus} from "../../../model/analyzers/analysis/solution-quality-status";
-import {MdDialog, MdDialogConfig} from "@angular/material";
-import {SolutionQualityDialog} from "./solution-quality-dialog/solution-quality-dialog.component";
+import {MdDialog} from "@angular/material";
 import {Award} from "../../../model/awards/award";
 import {AwardService} from "../../../services/award/award.service";
 import {Badge} from "../../../model/awards/badges/badge";
@@ -23,7 +22,12 @@ export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<
 
   @Input("solutionQuality") set solutionQuality(solutionQuality: SolutionQuality) {
     this._solutionQuality = solutionQuality;
-    this.updateAwards();
+    if (solutionQuality != null) {
+      this.updateAwards();
+    }
+    else {
+      this.awards = [];
+    }
   }
 
   updateAwards(): void {

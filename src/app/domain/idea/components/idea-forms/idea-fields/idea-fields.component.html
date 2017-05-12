@@ -1,5 +1,5 @@
-<div [formGroup]="form" fxLayour="column">
-  <div fxFlex="100%" *ngIf="showProblemFields">
+<div [formGroup]="form" fxLayout="column">
+  <div *ngIf="showProblemFields">
     <h3 class="ideal-headline" idealColor="primary">Problem</h3>
     <ideal-problem-fields [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
                           [tagsLabel]="problemTagsLabel" name="ideaProblem" [form]="problemFields"
@@ -7,7 +7,7 @@
                           [idleDelay]="idleDelay"></ideal-problem-fields>
     <h3 class="ideal-headline" idealColor="primary">Idea</h3>
   </div>
-  <div fxFlex="100%" fxLayout="column">
+  <div fxLayout="column">
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
       <md-input-container [dividerColor]="formErrors.title ? 'warn' : 'primary'" fxFlex="60%" fxFlex.xs="100%">
         <input type="text" md-input mdInput formControlName="title"

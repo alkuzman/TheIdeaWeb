@@ -13,7 +13,6 @@ export enum STOMPState {
   SUBSCRIBED,
   DISCONNECTING
 }
-;
 
 /**
  * Angular2 STOMP Service using stomp.js
