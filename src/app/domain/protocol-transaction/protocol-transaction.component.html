@@ -4,6 +4,14 @@
       <ideal-idea-details [idea]="protocolSession.idea"></ideal-idea-details>
     </md-tab>
     <md-tab label="Buying Procedure">
+      <div>
+        <div class="margin" *ngFor="let prevNotice of previousNotices">
+          <ideal-protocol-transaction-history-step-card [protocolTransactionHistoryStep]="prevNotice"
+                                                        [authenticatedUserEmail]="getAuthenticatedUserEmail()">
+
+          </ideal-protocol-transaction-history-step-card>
+        </div>
+      </div>
       <ideal-price-request-phase-form-new [previousData]="priceRequestPhaseData" (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
     </md-tab>
   </md-tab-group>

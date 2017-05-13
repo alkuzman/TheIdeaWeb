@@ -70,6 +70,10 @@ export class RegisterPageComponent implements OnInit {
     this.router.navigate(["auth"], {queryParams: queryParams});
   }
 
+  registered(user: User): void {
+
+  }
+
   constraintsViolated(fieldErrors: FieldError[]): void {
     let message: string = "";
     for (let fieldError of fieldErrors) {

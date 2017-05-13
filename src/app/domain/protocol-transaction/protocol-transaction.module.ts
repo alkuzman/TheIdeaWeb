@@ -7,6 +7,8 @@ import {PriceRequestPhaseFormComponent} from "./components/price-request-phase/p
 import {PriceRequestPhaseFormNewComponent} from "./components/price-request-phase/price-request-phase-forms/price-request-phase-form-new/price-request-phase-form-new.component";
 import {CurrencyModule} from "../currency/components/currency.module";
 import {SecurityModule} from "../security/security.module";
+import {ProtocolTransactionHistoryStepMessagePipe} from "./pipes/protocol-transaction-history-step-message.pipe";
+import {ProtocolTransactionHistoryStepCardComponent} from "./components/protocol-transaction-history-step-card/protocol-transaction-history-step-card.component";
 /**
  * Created by Viki on 2/19/2017.
  */
@@ -15,9 +17,11 @@ import {SecurityModule} from "../security/security.module";
 @NgModule({
   imports: [SharedModule, IdeaModule, CurrencyModule, SecurityModule],
   declarations: [PriceRequestPhaseFieldsComponent, PriceRequestPhaseFormComponent,
-    PriceRequestPhaseFormNewComponent, ProtocolTransactionComponent],
+    PriceRequestPhaseFormNewComponent, ProtocolTransactionComponent, ProtocolTransactionHistoryStepMessagePipe,
+    ProtocolTransactionHistoryStepCardComponent],
   exports: [PriceRequestPhaseFieldsComponent, PriceRequestPhaseFormComponent, PriceRequestPhaseFormNewComponent,
-    ProtocolTransactionComponent]
+    ProtocolTransactionComponent, ProtocolTransactionHistoryStepMessagePipe,
+    ProtocolTransactionHistoryStepCardComponent]
 })
 export class ProtocolTransactionModule {
 
