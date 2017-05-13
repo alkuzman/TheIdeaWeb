@@ -1,25 +1,25 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {User} from "../../domain/model/authentication/user";
-import {KeysService} from "../../core/security-protocols/keys/keys.service";
-import {CertificateRequestGenerationService} from "../../core/security-protocols/certificates/certificates-requests-generation.service";
-import {SecurityProfile} from "../../domain/model/security/security-profile";
-import {CertificateService} from "../../domain/services/certificate/certificate.service";
-import {SecurityProfileConstructorService} from "../../core/security-protocols/constructors/security-profile-constructor.service";
-import {CertificateType} from "../../domain/model/enumerations/certificate-type";
-import {SecurityProfileService} from "../../domain/services/security-profile/security-profile.service";
-import {EncryptionPair} from "../../domain/model/security/encryption-pair";
-import {ParserPemService} from "../../core/security-protocols/parsers/parser-pem.service";
+import {User} from "../../../domain/model/authentication/user";
+import {KeysService} from "../../../core/security-protocols/keys/keys.service";
+import {CertificateRequestGenerationService} from "../../../core/security-protocols/certificates/certificates-requests-generation.service";
+import {SecurityProfile} from "../../../domain/model/security/security-profile";
+import {CertificateService} from "../../../domain/services/certificate/certificate.service";
+import {SecurityProfileConstructorService} from "../../../core/security-protocols/constructors/security-profile-constructor.service";
+import {CertificateType} from "../../../domain/model/enumerations/certificate-type";
+import {SecurityProfileService} from "../../../domain/services/security-profile/security-profile.service";
+import {EncryptionPair} from "../../../domain/model/security/encryption-pair";
+import {ParserPemService} from "../../../core/security-protocols/parsers/parser-pem.service";
 /**
  * Created by Viki on 2/11/2017.
  */
 
 @Component({
     moduleId: module.id,
-    selector: "ideal-verify-page-component",
-    templateUrl: "verify-page.component.html"
+    selector: "ideal-activate-page-component",
+    templateUrl: "activate-page.component.html"
 })
-export class VerifyPageComponent implements OnInit {
+export class ActivatePageComponent implements OnInit {
     private user: User;
     private privateKeyE: CryptoKey;
     private privateKeyEEncrypted: string;

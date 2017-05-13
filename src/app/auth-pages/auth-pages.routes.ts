@@ -6,7 +6,11 @@ import {AuthPageRoutes} from "./auth-page/auth-page.routes";
 import {LogoutPageRoutes} from "./logout-page/logout-page.routes";
 import {NotAuthenticatedGuard} from "../core/guards/not-authenticated.guard";
 import {AuthenticatedGuard} from "../core/guards/authenticated.guard";
+import {ActivatePageRoutes} from "./activate-page/activate-page.routes";
+import {VerifyPageComponent2} from "./activate-page/activate2";
+import {VerifyPageComponent} from "./verify-page/components/verify-page.component";
 import {VerifyPageRoutes} from "./verify-page/verify-page.routes";
+import {AccessFromUrlNotAllowedGuard} from "../core/guards/access-from-url-not-allowed.guard";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -37,9 +41,14 @@ export const AuthPagesRoutes: Routes = [
         canActivate: [AuthenticatedGuard]
       },
       {
+        path: "activate",
+        children: [...ActivatePageRoutes],
+        canActivate: [NotAuthenticatedGuard]
+      },
+      {
         path: "verify",
         children: [...VerifyPageRoutes],
-        canActivate: [NotAuthenticatedGuard]
+        canActivate: [NotAuthenticatedGuard, AccessFromUrlNotAllowedGuard]
       }
     ]
   }

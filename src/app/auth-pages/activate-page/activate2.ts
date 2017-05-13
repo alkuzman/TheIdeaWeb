@@ -17,7 +17,7 @@ import {SecurityProfileService} from "../../domain/services/security-profile/sec
 @Component({
   moduleId: module.id,
   selector: "ideal-verify-page-component",
-  templateUrl: "verify-page.component.html"
+  templateUrl: "app/auth-pages/activate-page/components/activate-page.component.html"
 })
 export class VerifyPageComponent2 implements OnInit {
   private user: User;

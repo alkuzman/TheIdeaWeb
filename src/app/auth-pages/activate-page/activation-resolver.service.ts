@@ -9,7 +9,7 @@ import {User} from "../../domain/model/authentication/user";
  */
 
 @Injectable()
-export class VerificationResolverService implements Resolve<User> {
+export class ActivationResolverService implements Resolve<User> {
 
   constructor(private errorHandlingService: ErrorHandlingService, private userService: UserService) {
 
