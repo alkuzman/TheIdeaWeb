@@ -10,6 +10,7 @@ import {ProtocolSession} from "../model/security/protocol-session";
 import {ProtocolTransactionStepNotice} from "../model/security/notices/protocol-transaction-step-notice";
 import {ProtocolTransactionStepOneNotice} from "../model/security/notices/protocol-transaction-step-one-notice";
 import {ProtocolTransactionStepTwoNotice} from "../model/security/notices/protocol-transaction-step-two-notice";
+import {ProtocolTransactionHistoryStep} from "./components/protocol-transaction-history-step-card/protocol-transaction-history-step";
 /**
  * Created by Viki on 2/19/2017.
  */
@@ -23,10 +24,12 @@ export class ProtocolTransactionComponent implements OnInit {
     @Input("protocolSession") protocolSession: ProtocolSession;
     @Input("currentStepNotice") currentStepNotice;
     private priceRequestPhaseData: PriceRequestPhaseData;
+    private previousNotices: ProtocolTransactionHistoryStep[];
 
     constructor(private protocolMessageBuilderService: ProtocolMessagesBuilderService,
                 private protocolMessageReconstructionService: ProtocolMessagesReconstructionService,
                 private dialog: MdDialog, private userService: UserService) {
+        this.previousNotices = [];
     }
 
     ngOnInit() {
@@ -51,6 +54,12 @@ export class ProtocolTransactionComponent implements OnInit {
         dialogRef.afterClosed().subscribe((password: string) => {
             let currentStep: ProtocolTransactionStepNotice<any> = this.currentStepNotice;
             while (currentStep != null) {
+                let historyStep = {
+                    messageType: currentStep.type,
+                    originator: currentStep.originator.email,
+                    when: currentStep.creationDate
+                };
+                this.previousNotices.push(historyStep);
                 if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
                     currentStep = currentStep.previousStepNotice;
                     continue;
@@ -72,6 +81,7 @@ export class ProtocolTransactionComponent implements OnInit {
                 }
                 currentStep = currentStep.previousStepNotice;
             }
+            this.previousNotices.reverse();
         });
     }
 
@@ -92,5 +102,9 @@ export class ProtocolTransactionComponent implements OnInit {
                 }
             }
         });
+    }
+
+    getAuthenticatedUserEmail() {
+        return this.userService.getAuthenticatedUser().email;
     }
 }

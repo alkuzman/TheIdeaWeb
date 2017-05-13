@@ -11,7 +11,7 @@ import {ProtocolTransactionStepThreeNotice} from "../../model/security/notices/p
 @Pipe({
   name: "protocolTransactionStepNoticeMessage"
 })
-export class BuyingTransactionNoticeMessageNumberPipe implements PipeTransform {
+export class ProtocolTransactionStepNoticeMessagePipe implements PipeTransform {
   transform(value: ProtocolTransactionStepNotice<any>, args: any[]): any {
     if (value.type == "ProtocolTransactionStepOneNotice") {
       return this.messages['MONE'];
@@ -22,11 +22,15 @@ export class BuyingTransactionNoticeMessageNumberPipe implements PipeTransform {
     if (value.type == "ProtocolTransactionStepThreeNotice") {
       return this.messages['MTHREE'];
     }
+    if (value.type == "ProtocolTransactionStepFourNotice") {
+      return this.messages['MFOUR'];
+    }
   }
 
   private messages = {
     'MONE': 'You have been sent buying request',
     'MTWO': 'The owner has responded on your buying request',
     'MTHREE': 'The buyer accepted your offer',
+    'MFOUR': 'The owner sent you the goods'
   };
 }
