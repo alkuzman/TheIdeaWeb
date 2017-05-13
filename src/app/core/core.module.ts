@@ -34,6 +34,7 @@ import {DecryptingService} from "./security-protocols/decrypting.service";
 import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
 import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-operations/simple-cryptographic-operations";
 import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
+import {DiscardChangesGuard} from "./guards/discard_changes.guard";
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import {AlgorithmService} from "./security-protocols/algorithms/algorithms.servi
     SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
     ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
     ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
-    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService]
+    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard]
 })
 export class CoreModule {
 }

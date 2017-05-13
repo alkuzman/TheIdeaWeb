@@ -233,3 +233,13 @@ body {
 .ideal-badge-bottom-right {
   bottom: -5px; right: -5px;
 }
+
+// TODO remove this commands when specification will be implemented
+
+md-dialog-content, [md-dialog-content] {
+  padding-bottom: 20px !important;
+}
+
+md-dialog-actions, [md-dialog-actions] {
+  margin-right: -16px !important;
+}

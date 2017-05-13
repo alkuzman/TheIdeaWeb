@@ -1,16 +1,14 @@
 <div novalidate [formGroup]="form" fxLayout="column">
   <div fxLayout.xs="column" fxLayout="row">
-    <md-input-container [dividerColor]="formErrors.title ? 'warn' : 'primary'" fxFlex="60%" fxFlex.xs="100%">
-      <input mdInput formControlName="title" [placeholder]="titleLabel" required idealInputIdle [delay]="idleDelay"
-             (idle)="onIdle($event)"/>
-      <md-hint idealColor="warn" *ngIf="formErrors.title" align="end">{{formErrors.title}}</md-hint>
+    <md-input-container [color]="primary" fxFlex="60%" fxFlex.xs="100%">
+      <input mdInput formControlName="title" [placeholder]="titleLabel" required/>
+      <md-error *ngIf="formErrors.title == 'required'" align="start">{{validationMessages.title.required}}</md-error>
     </md-input-container>
     <div fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
-      <ideal-keyword-selector class="full-width" formControlName="keywords" [suggestedKeywords]="problemAnalysis?.keywords" searchPlaceholder="Problem keywords"></ideal-keyword-selector>
+      <ideal-keyword-selector (inputFocused)="getKeywords()" class="full-width" formControlName="keywords" [suggestedKeywords]="keywords" searchPlaceholder="Problem keywords"></ideal-keyword-selector>
     </div>
   </div>
   <div class="margin-top">
-    <ideal-text-editor fxFlex="100%" [title]="bodyLabel" formControlName="text" idealInputIdle [delay]="idleDelay"
-                       (idle)="onIdle($event)"></ideal-text-editor>
+    <ideal-text-editor fxFlex="100%" [title]="bodyLabel" formControlName="text"></ideal-text-editor>
   </div>
 </div>

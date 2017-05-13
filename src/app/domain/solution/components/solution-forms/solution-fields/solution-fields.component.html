@@ -4,18 +4,22 @@
                      [problemTitleLabel]="problemTitleLabel" [problemBodyLabel]="problemBodyLabel"
                      [problemTagsLabel]="problemTagsLabel" [idea]="solution?.idea" [form]="ideaFields"
                      [submitted]="_submitted"
-                     [idleDelay]="idleDelay"
-                     [ideaAnalysis]="ideaAnalysis"
-                     (idle)="onInputIdle($event)"></ideal-idea-fields>
+                     [text]="solution.text"
+                     (contentChanged)="onContentChanged()"></ideal-idea-fields>
   <div class="margin-top">
-    <ideal-text-editor [title]="bodyLabel" formControlName="text" idealInputIdle [delay]="idleDelay"
-                       (idle)="onInputIdle($event)"></ideal-text-editor>
+    <ideal-text-editor [title]="bodyLabel" formControlName="text"></ideal-text-editor>
   </div>
   <div class="padding-top">
-    <span class="ideal-subheading">Solution Quality <md-icon class="icon-middle">timeline</md-icon></span>
+    <span class="ideal-subheading">Solution Quality </span>
+    <button md-icon-button type="button" [disabled]="!contentChanged" [md-tooltip]="'Refresh to get most recent analysis'"
+            (click)="getSolutionQuality()">
+      <md-icon>refresh</md-icon>
+    </button>
     <div>
-      <ideal-solution-quality formControlName="awards" [solutionQuality]="ideaAnalysis?.solutionQuality"></ideal-solution-quality>
+      <ideal-solution-quality formControlName="awards"
+                              [solutionQuality]="solutionQuality"></ideal-solution-quality>
     </div>
-    <div style="text-align: end" class="ideal-caption">Awards will be private unless you want to share them with potential buyers. <a routerLink="/awards" idealColor="accent" target="_blank">More details</a></div>
+    <div style="text-align: end" class="ideal-caption">Awards will be private unless you want to share them with
+      potential buyers. <a routerLink="/awards" idealColor="accent" target="_blank">More details</a></div>
   </div>
 </div>

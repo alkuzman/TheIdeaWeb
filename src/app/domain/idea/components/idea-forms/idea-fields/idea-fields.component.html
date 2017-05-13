@@ -3,29 +3,28 @@
     <h3 class="ideal-headline" idealColor="primary">Problem</h3>
     <ideal-problem-fields [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
                           [tagsLabel]="problemTagsLabel" name="ideaProblem" [form]="problemFields"
-                          [problem]="idea.problem" [submitted]="_submitted"
-                          [idleDelay]="idleDelay"></ideal-problem-fields>
+                          [problem]="idea.problem" [submitted]="_submitted" (contentChanged)="onContentChanged()"></ideal-problem-fields>
     <h3 class="ideal-headline" idealColor="primary">Idea</h3>
   </div>
   <div fxLayout="column">
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
-      <md-input-container [dividerColor]="formErrors.title ? 'warn' : 'primary'" fxFlex="60%" fxFlex.xs="100%">
-        <input type="text" md-input mdInput formControlName="title"
-               [placeholder]="titleLabel" idealInputIdle [delay]="idleDelay" (idle)="onIdle($event)" required/>
-        <md-hint idealColor="warn" align="end" *ngIf="formErrors.title">{{formErrors.title}}</md-hint>
+      <md-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
+        <input type="text" mdInput formControlName="title"
+               [placeholder]="titleLabel" required/>
+        <md-error align="start">{{validationMessages.title.required}}</md-error>
       </md-input-container>
       <div fxFlex="35%" fxFlex.xs="100%"
            fxFlexOffset="5%" fxFlexOffset.xs="0">
-        <ideal-keyword-selector formControlName="keywords" [suggestedKeywords]="ideaAnalysis?.keywords"
+        <ideal-keyword-selector (inputFocused)="getKeywords()" formControlName="keywords" [suggestedKeywords]="keywords"
                                 searchPlaceholder="Idea keywords"></ideal-keyword-selector>
       </div>
     </div>
-    <md-input-container [dividerColor]="formErrors.snackPeak ? 'warn' : 'primary'" fxFlex="100%">
-      <textarea style="resize: none;" md-input mdInput md-autosize minRows="4" [placeholder]="sneakPeakLabel"
+    <md-input-container color="primary" fxFlex="100%">
+      <textarea style="resize: none;" mdInput md-autosize minRows="4" [placeholder]="sneakPeakLabel"
                 class="fullWidth"
-                formControlName="snackPeak" required idealInputIdle [delay]="idleDelay"
-                (idle)="onIdle($event)"></textarea>
-      <md-hint idealColor="warn" align="end" *ngIf="formErrors.snackPeak">{{formErrors.snackPeak}}</md-hint>
+                formControlName="snackPeak" required></textarea>
+      <md-hint>Provide short description which will give a taste to a potential buyer</md-hint>
+      <md-error align="start">{{validationMessages.snackPeak.required}}</md-error>
     </md-input-container>
   </div>
 </div>

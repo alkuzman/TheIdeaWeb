@@ -1,20 +1,22 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
+import {AfterViewChecked, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
-import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
-import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {IdeaFormErrors} from "./idea-form-errors";
 import {IdeaValidationMessages} from "./idea-validation-messages";
-import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
+import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
+import {IdeaLite} from "../../../../model/analyzers/idea-lite";
+import {ProblemLite} from "../../../../model/analyzers/problem-lite";
+import {Keyword} from "../../../../model/ideas/keyword";
 @Component({
   moduleId: module.id,
   selector: "ideal-idea-fields",
   templateUrl: "idea-fields.component.html",
   styleUrls: ["idea-fields.component.scss"],
 })
-export class IdeaFieldsComponent implements OnInit {
+export class IdeaFieldsComponent implements OnInit, AfterViewChecked {
   @Input("sneakPeakLabel") sneakPeakLabel: string = "Sneak Peak";
   @Input("titleLabel") titleLabel: string = "Title";
   @Input("problemTitleLabel") problemTitleLabel = "Problem Title";
@@ -23,32 +25,41 @@ export class IdeaFieldsComponent implements OnInit {
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Input("ideaTagsLabel") ideaTagsLabel: string = "Idea Tags";
   @Input("form") form: FormGroup;
-  @Input("idleDelay") idleDelay = 1500;
-  @Output("idle") idle: EventEmitter<number> = new EventEmitter<number>();
+  private keywords: Keyword[];
   private currentForm: FormGroup;
   private problemFields: FormGroup;
   @Input("idea") idea: Idea;
-  @Input("ideaAnalysis") ideaAnalysis: IdeaAnalysis;
   private _submitted: boolean = false;
+  private _text: string;
+  private ideaChanged: boolean = false;
+
+  @Input("text") set text(text: string) {
+    this._text = text;
+    this.onIdeaChanged();
+  };
+
+  @Output("contentChanged") contentChanged: EventEmitter<void> = new EventEmitter<void>();
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private analyzerService: AnalyzerService) {
   }
 
   ngOnInit(): void {
     let control: FormControl = this.fb.control(this.idea.title, Validators.required);
     control.valueChanges.subscribe((value: string) => {
       this.idea.title = value;
+      this.onIdeaChanged();
     });
     this.form.addControl("title", control);
 
     control = this.fb.control(this.idea.snackPeak, Validators.required);
     control.valueChanges.subscribe((value: string) => {
       this.idea.snackPeak = value;
+      this.onIdeaChanged();
     });
     this.form.addControl("snackPeak", control);
 
@@ -86,11 +97,10 @@ export class IdeaFieldsComponent implements OnInit {
       // clear previous error message (if any)
       this.formErrors[field] = '';
       const control = form.get(field);
-      if (control && (control.dirty || this._submitted) && !control.valid) {
-        const messages: ValidationMessagesErrors = this.validationMessages[field];
+      if (control && !control.valid) {
         for (const key in control.errors) {
 
-          this.formErrors[field] += messages[key] + ' ';
+          this.formErrors[field] = key;
         }
       }
     }
@@ -115,7 +125,27 @@ export class IdeaFieldsComponent implements OnInit {
     }
   };
 
-  onIdle(idle: number) {
-    this.idle.emit(idle);
+  onIdeaChanged(): void {
+    this.ideaChanged = true;
+    this.onContentChanged();
+  }
+
+  onContentChanged(): void {
+    this.contentChanged.emit();
+  }
+
+  getKeywords(): void {
+    if (this.ideaChanged) {
+      this.ideaChanged = false;
+      this.keywords = null;
+      let ideaLite: IdeaLite = new IdeaLite();
+      ideaLite.problem = new ProblemLite(this.idea.problem);
+      ideaLite.snackPeak = this.idea.snackPeak;
+      ideaLite.title = this.idea.title;
+      ideaLite.text = this._text;
+      this.analyzerService.getIdeaKeywords(ideaLite).subscribe((keywords: Keyword[]) => {
+        this.keywords = keywords;
+      });
+    }
   }
 }

@@ -1,2 +1,2 @@
 <ideal-solution-form [showIdeaFields]="showIdeaFields" [showProblemFields]="showProblemFields" [solution]="solution"
-                     (solutionReady)="save($event)"></ideal-solution-form>
+                     (solutionReady)="save($event)" (dirty)="onDirtyChanges($event)"></ideal-solution-form>

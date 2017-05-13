@@ -24,6 +24,7 @@ export class NewSolutionFormComponent implements OnInit {
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
   @Input("showIdeaFields") showIdeaFields: boolean = true;
   @Input("showProblemFields") showProblemFields: boolean = true;
+  @Output("dirty") dirty: EventEmitter<boolean> = new EventEmitter<boolean>();
   _problem: Problem;
   _idea: Idea;
 
@@ -88,5 +89,8 @@ export class NewSolutionFormComponent implements OnInit {
     this.solutionReady.emit(this.solution);
   }
 
+  onDirtyChanges(value: boolean) {
+    this.dirty.emit(value);
+  }
 
 }

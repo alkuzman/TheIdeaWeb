@@ -15,7 +15,6 @@ export class ProblemFormComponent implements OnInit {
   @Input("submitText") submitText = "Submit";
   @Input("problem") problem: Problem;
   @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
-  active = true;
   errorMessage: any;
   private form: FormGroup;
   private fields: FormGroup;
@@ -46,7 +45,6 @@ export class ProblemFormComponent implements OnInit {
 
   clearForm(): void {
     this.problem = new Problem();
-    this.active = false;
-    setTimeout(() => this.active = true, 0);
+    this.form.reset();
   }
 }
