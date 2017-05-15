@@ -12,11 +12,13 @@ export class VerifyPageComponent implements OnInit {
 
     private user: User;
 
-    constructor(private userObjectService: UserObjectService) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.user = this.userObjectService.user;
+        this.route.data.subscribe((data: {user: User}) => {
+            this.user = data.user;
+        });
     }
 
 }

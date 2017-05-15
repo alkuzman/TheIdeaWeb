@@ -1,5 +1,6 @@
 import {Route, Routes} from "@angular/router";
 import {VerifyPageComponent} from "./components/verify-page.component";
+import {VerificationResolverService} from "./verification-resolver.service";
 /**
  * Created by Viki on 5/13/2017.
  */
@@ -8,6 +9,9 @@ import {VerifyPageComponent} from "./components/verify-page.component";
 export const VerifyPageRoutes: Routes = [
     {
         path: '',
-        component: VerifyPageComponent
+        component: VerifyPageComponent,
+        resolve: {
+            user: VerificationResolverService
+        }
     }
 ];
