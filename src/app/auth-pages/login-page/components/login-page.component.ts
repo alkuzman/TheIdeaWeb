@@ -1,7 +1,7 @@
 import {Component, style, HostBinding, OnInit} from "@angular/core";
 import {ActivatedRoute, Router, Params} from "@angular/router";
 import {MdSnackBar} from "@angular/material";
-import {routerAnimations} from "../../../core/helper/standard-route-animations";
+import {enterRightLeaveRight, routerAnimations} from "../../../core/helper/standard-route-animations";
 import {AuthProperties} from "../../auth.properties";
 
 /**
@@ -12,7 +12,7 @@ import {AuthProperties} from "../../auth.properties";
   selector: "ideal-login-page",
   templateUrl: "login-page.component.html",
   animations: [
-    routerAnimations('routeAnimation')
+    enterRightLeaveRight('routeAnimation')
   ]
 })
 export class LoginPageComponent implements OnInit {
@@ -25,7 +25,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   @HostBinding("style.position") get position() {
-    return "absolute";
+    return "relative";
   }
 
   @HostBinding("style.opacity") get opacity() {

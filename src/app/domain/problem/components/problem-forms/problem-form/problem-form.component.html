@@ -4,7 +4,7 @@
       <ideal-problem-fields [problem]="problem" [form]="fields" [submitted]="submitted"></ideal-problem-fields>
       <div style="margin-top: 16px" fxLayout="row" fxLayoutAlign="end">
         <button type="button" md-button (click)="clearForm()">Clear</button>
-        <button type="submit" md-raised-button color="accent">{{submitText}}</button>
+        <button type="submit" md-raised-button color="accent">{{submitText | uppercase}}</button>
       </div>
     </form>
 

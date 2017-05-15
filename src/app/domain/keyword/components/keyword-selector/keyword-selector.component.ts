@@ -13,6 +13,7 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-v
 export class KeywordSelectorComponent extends AbstractValueAccessor<string[]> {
   @Input("searchPlaceholder") searchPlaceholder: string = "Search";
   @Input("suggestedKeywords") suggestedKeywords: Keyword[];
+  @Input("hint") hint: string = "";
   @Output("inputFocused") inputFocused: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {

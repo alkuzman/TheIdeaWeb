@@ -21,9 +21,7 @@ export class DiscardChangesGuard implements CanDeactivate<FormPage> {
   }
 
   confirm(): Observable<boolean> {
-    let dialogRef = this.dialog.open(DiscardChangesDialog, {
-      width: '350px',
-    });
+    let dialogRef = this.dialog.open(DiscardChangesDialog);
     return dialogRef.afterClosed().map((value => {
       let close: boolean = false;
       if (value) {

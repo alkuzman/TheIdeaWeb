@@ -72,6 +72,7 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   }
 
   onValueChanged(data?: any) {
+    console.log(this.problem);
     if (!this.currentForm) {
       return;
     }
@@ -117,4 +118,8 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
       });
     }
   }
+
+  public options: Object = {
+    placeholderText: "Problem Body"
+  };
 }

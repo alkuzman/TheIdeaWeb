@@ -3,7 +3,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {MdSnackBar} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
-import {routerAnimations} from "../../core/helper/standard-route-animations";
+import {enterRightLeaveRight, routerAnimations} from "../../core/helper/standard-route-animations";
 import {AuthProperties} from "../auth.properties";
 /**
  * Created by AKuzmanoski on 29/10/2016.
@@ -13,7 +13,7 @@ import {AuthProperties} from "../auth.properties";
   selector: "ideal-register-page",
   templateUrl: "register-page.component.html",
   animations: [
-    routerAnimations('routeAnimation')
+    enterRightLeaveRight('routeAnimation')
   ]
 })
 export class RegisterPageComponent implements OnInit {
@@ -26,7 +26,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   @HostBinding("style.position") get position() {
-    return "absolute";
+    return "relative";
   }
 
   @HostBinding("style.opacity") get opacity() {

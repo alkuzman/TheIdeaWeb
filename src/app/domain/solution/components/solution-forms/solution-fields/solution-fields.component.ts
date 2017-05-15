@@ -123,4 +123,8 @@ export class SolutionFieldsComponent {
   onContentChanged() {
     this.contentChanged = true;
   }
+
+  public options: Object = {
+    placeholderText: "Solution Body"
+  };
 }

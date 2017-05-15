@@ -13,6 +13,7 @@ import {Observable} from "rxjs";
 })
 export class KeywordSearchComponent implements OnInit {
   @Input("keywords") _keywords: Keyword[] = [];
+  @Input("hint") hint: string = "";
   private form: FormGroup;
   private searchField: FormControl;
   private keywordResults: Observable<Keyword[]>;

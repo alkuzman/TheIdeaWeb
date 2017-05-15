@@ -5,10 +5,13 @@
       <md-error *ngIf="formErrors.title == 'required'" align="start">{{validationMessages.title.required}}</md-error>
     </md-input-container>
     <div fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
-      <ideal-keyword-selector (inputFocused)="getKeywords()" class="full-width" formControlName="keywords" [suggestedKeywords]="keywords" searchPlaceholder="Problem keywords"></ideal-keyword-selector>
+      <ideal-keyword-selector (inputFocused)="getKeywords()" class="full-width"
+                              formControlName="keywords" [suggestedKeywords]="keywords"
+                              searchPlaceholder="Problem keywords"
+      hint="Write down your problem first to get keyword recommendations"></ideal-keyword-selector>
     </div>
   </div>
   <div class="margin-top">
-    <ideal-text-editor fxFlex="100%" [title]="bodyLabel" formControlName="text"></ideal-text-editor>
+    <textarea [froalaEditor]="options" formControlName="text"></textarea>
   </div>
 </div>

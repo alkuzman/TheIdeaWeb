@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ThemingService} from "../../core/theming/theming.service";
-import {Category} from "./category";
+import {Module} from "./module/module";
 import {ActivatedRoute} from "@angular/router";
+import {ModuleService} from "./module/module.service";
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -14,68 +15,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 
 export class HomeComponent implements OnInit {
-  categories: Category[] = [
-    {
-      "title": "New Idea",
-      "description": "Share and try to sell your idea",
-      "url": "/ideas/new",
-      "image": {
-        "src": "/assets/images/new-idea.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    },
-    {
-      "title": "New Problem",
-      "description": "Share your problem, and find solutions",
-      "url": "/problems/new",
-      "image": {
-        "src": "/assets/images/new-problem.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    },
-    {
-      "title": "Ideas",
-      "url": "/announcements/feed/ideas",
-      "description": "Find idea",
-      "image": {
-        "src": "/assets/images/find-idea.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    },
-    {
-      "title": "Problems",
-      "description": "Find problem and try to solve that problem",
-      "url": "/announcements/feed/problems",
-      "image": {
-        "src": "/assets/images/new-solution.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    },
-    {
-      "title": "Incubation",
-      "description": "Find incubators for your idea",
-      "url": "",
-      "image": {
-        "src": "/assets/images/grow-idea.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    },
-    {
-      "title": "Management",
-      "description": "Save your ideas, find new ones, and make them available to you",
-      "url": "",
-      "image": {
-        "src": "/assets/images/manage-ideas.png",
-        "rowSpan": 1,
-        "colSpan": 1
-      }
-    }
-  ];
+  categories: Module[];
   numOfColumns: number = 4;
 
   /**
@@ -85,13 +25,16 @@ export class HomeComponent implements OnInit {
    * @param themingService
    * @param route
    */
-  constructor(private themingService: ThemingService, private route: ActivatedRoute) {
+  constructor(private themingService: ThemingService, private moduleService: ModuleService) {
   }
 
   /**
    * Get the names OnInit
    */
   ngOnInit() {
+    this.moduleService.modules.subscribe((categories: Module[]) => {
+      this.categories = categories;
+    });
     this.themingService.currentTheme = "default-theme";
     this.changeColumns(window.innerWidth);
   }

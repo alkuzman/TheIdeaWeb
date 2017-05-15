@@ -1,9 +1,14 @@
-<div>
-  <md-input-container>
-    <input mdInput md-input placeholder="Place image url here" [(ngModel)]="imageUrl"/>
-  </md-input-container>
-</div>
-<div>
-  <button md-raised-button (click)="cancel()">Cancel</button>
-  <button md-raised-button (click)="submit()" color="primary">Submit</button>
-</div>
+<h2 md-dialog-title>
+  Select your image
+</h2>
+<form novalidate (ngSubmit)="submit()">
+  <div md-dialog-content>
+    <md-input-container style="min-width: 250px;">
+      <input name="imageUrl" mdInput md-input placeholder="Place image url here" [(ngModel)]="imageUrl"/>
+    </md-input-container>
+  </div>
+  <div md-dialog-actions md-dialog-actions fxLayout="row" fxLayoutAlign="end">
+    <button md-button type="button" (click)="cancel()" color="primary">CANCEL</button>
+    <button md-button type="submit" color="primary">OK</button>
+  </div>
+</form>

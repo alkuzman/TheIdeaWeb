@@ -7,7 +7,7 @@
                      [text]="solution.text"
                      (contentChanged)="onContentChanged()"></ideal-idea-fields>
   <div class="margin-top">
-    <ideal-text-editor [title]="bodyLabel" formControlName="text"></ideal-text-editor>
+    <textarea [froalaEditor]="options" formControlName="text"></textarea>
   </div>
   <div class="padding-top">
     <span class="ideal-subheading">Solution Quality </span>

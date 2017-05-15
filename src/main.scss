@@ -145,8 +145,7 @@ body {
   color: rgba(0, 0, 0, 0.87);
   font-size: 24px;
   line-height: 32px;
-  font-weight: normal;
-  padding-left: 10px;
+  font-weight: lighter;
 }
 
 .ideal-title {
@@ -199,47 +198,76 @@ body {
 }
 
 .ideal-badge-left {
-  top: 0; left: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
   margin: auto;
 }
 
 .ideal-badge-right {
-  top: 0; right: 0; bottom: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   margin: auto;
 }
 
-.ideal-badge-top{
-  top: 0; left: 0; right: 0;
+.ideal-badge-top {
+  top: 0;
+  left: 0;
+  right: 0;
   margin: auto;
 }
 
 .ideal-badge-bottom {
-  right: 0; left: 0; bottom: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   margin: auto;
 }
 
 .ideal-badge-top-left {
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
 }
 
 .ideal-badge-top-right {
-  top: 0; right: 0;
+  top: 0;
+  right: 0;
 }
 
 .ideal-badge-bottom-left {
-  bottom: 0; left: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .ideal-badge-bottom-right {
-  bottom: -5px; right: -5px;
+  bottom: -5px;
+  right: -5px;
 }
 
 // TODO remove this commands when specification will be implemented
 
 md-dialog-content, [md-dialog-content] {
-  padding-bottom: 20px !important;
+  min-height: 38px;
 }
 
 md-dialog-actions, [md-dialog-actions] {
   margin-right: -16px !important;
+}
+
+.fr-toolbar {
+  border-top: none !important;
+}
+
+div.__web-inspector-hide-shortcut__ {
+  display: none !important;
+  visibility: hidden !important;
+  z-index: -1 !important;
+}
+
+
+a[href$='https://www.froala.com/wysiwyg-editor?k=u'] {
+  display: none !important;
+  visibility: hidden !important;
+  z-index: -1 !important;
 }
