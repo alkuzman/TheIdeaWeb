@@ -1,11 +1,14 @@
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {Injectable} from "@angular/core";
 /**
  * Created by Viki on 5/13/2017.
  */
 
-
+@Injectable()
 export class AccessFromUrlNotAllowedGuard implements CanActivate {
+
+    constructor(private router: Router) {}
 
     allow: boolean = false;
 
@@ -14,6 +17,7 @@ export class AccessFromUrlNotAllowedGuard implements CanActivate {
             this.allow = !this.allow;
             return !this.allow;
         }
+        this.router.navigate(["/home"]);
         return this.allow;
     }
 

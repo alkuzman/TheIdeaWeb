@@ -6,7 +6,7 @@ import {User} from "../../../domain/model/authentication/user";
 @Component({
     selector: 'ideal-verify-page',
     templateUrl: './verify-page.component.html',
-    styleUrls: ['./verify-page.component.css']
+    styleUrls: ['./verify-page.component.scss']
 })
 export class VerifyPageComponent implements OnInit {
 
