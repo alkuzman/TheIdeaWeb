@@ -72,7 +72,6 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   }
 
   onValueChanged(data?: any) {
-    console.log(this.problem);
     if (!this.currentForm) {
       return;
     }

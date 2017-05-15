@@ -1,7 +1,7 @@
 <form novalidate (ngSubmit)="save()" [formGroup]="form">
   <ideal-idea-fields [form]="fields" [idea]="idea" [submitted]="submitted"></ideal-idea-fields>
   <div class="margin-top">
-    <button type="button" md-button (click)="clearForm()">Clear</button>
-    <button type="submit" md-raised-button color="accent">Submit | uppercase</button>
+    <button type="button" md-button (click)="clearForm()">{{"Clear" | uppercase}}</button>
+    <button type="submit" md-raised-button color="accent">{{"Submit" | uppercase}}</button>
   </div>
 </form>

@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-  <ideal-idea-fields *ngIf="showIdeaFields" [showProblemFields]="showProblemFields" name="solutionIdea"
+  <ideal-idea-fields formGroupName="ideaFields" *ngIf="showIdeaFields" [showProblemFields]="showProblemFields" name="solutionIdea"
                      [titleLabel]="ideaTitleLabel" [sneakPeakLabel]="ideaSnackPeakLabel"
                      [problemTitleLabel]="problemTitleLabel" [problemBodyLabel]="problemBodyLabel"
                      [problemTagsLabel]="problemTagsLabel" [idea]="solution?.idea" [form]="ideaFields"
@@ -7,7 +7,7 @@
                      [text]="solution.text"
                      (contentChanged)="onContentChanged()"></ideal-idea-fields>
   <div class="margin-top">
-    <textarea [froalaEditor]="options" formControlName="text"></textarea>
+    <div [froalaEditor]="options" formControlName="text"></div>
   </div>
   <div class="padding-top">
     <span class="ideal-subheading">Solution Quality </span>

@@ -46,16 +46,16 @@ export class SolutionFieldsComponent {
 
   ngOnInit(): void {
     let control: FormControl = this.fb.control(this.solution.text);
+    this.form.addControl("text", control);
     control.valueChanges.subscribe((value: string) => {
       this.solution.text = value;
     });
-    this.form.addControl("text", control);
 
     control = this.fb.control(this.solution.idea.awards);
+    this.form.addControl("awards", control);
     control.valueChanges.subscribe((value: Award<Badge<any, any>>[]) => {
       this.solution.idea.awards = value;
     });
-    this.form.addControl("awards", control);
 
     this.ideaFields = this.fb.group({});
     this.form.addControl("ideaFields", this.ideaFields);

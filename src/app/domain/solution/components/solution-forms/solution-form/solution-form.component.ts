@@ -57,7 +57,7 @@ export class SolutionFormComponent implements OnInit, AfterViewChecked {
 
   clearForm(): void {
     let problem = this.solution.idea.problem;
-    if (problem.id == null)
+    if (problem && problem.id == null)
       problem = new Problem();
     let idea = new Idea();
     idea.problem = problem;
