@@ -1,18 +1,19 @@
-<div fxLayout="row">
-    <md-card fxLayoutAlign="center" fxLayout="column">
-        <h3 class="ideal-headline" fxLayoutAlign="center">
+<md-card fxLayoutAlign="center" fxLayout="row">
+    <div fxLayout="column" fxFlex="60%">
+        <h3 class="ideal-headline" fxLayoutAlign="left">
             Dear {{user.firstName}},
         </h3>
         <div class="ideal-subheading" fxLayoutAlign="justified">
             To activate your account, please check your email.
         </div>
-    </md-card>
-    <div class="to-right">
+    </div>
+
+    <div class="to-right" fxFlex="40%">
         <ideal-smoot-image-widget class="fit-image" fxLayoutAlign="right"
                                   idealSrc="http://www.freeiconspng.com/uploads/welcome-png-images-16.png">
 
         </ideal-smoot-image-widget>
     </div>
-</div>
+</md-card>
 
 
