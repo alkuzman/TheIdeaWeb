@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 20/02/2017.
  */
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Keyword} from "../../../model/ideas/keyword";
 import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-value-accessor";
 @Component({
@@ -13,6 +13,8 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-v
 export class KeywordSelectorComponent extends AbstractValueAccessor<string[]> {
   @Input("searchPlaceholder") searchPlaceholder: string = "Search";
   @Input("suggestedKeywords") suggestedKeywords: Keyword[];
+  @Input("hint") hint: string = "";
+  @Output("inputFocused") inputFocused: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {
     super([]);
@@ -26,5 +28,9 @@ export class KeywordSelectorComponent extends AbstractValueAccessor<string[]> {
   remove(keyword: string, index: number) {
     this.value.splice(index, 1);
     super.notify();
+  }
+
+  onInputFocused(): void {
+    this.inputFocused.emit();
   }
 }

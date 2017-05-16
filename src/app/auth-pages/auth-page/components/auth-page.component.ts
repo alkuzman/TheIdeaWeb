@@ -1,7 +1,7 @@
 import {Component, OnInit, style, HostBinding} from "@angular/core";
 import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
-import {routerAnimations} from "../../../core/helper/standard-route-animations";
+import {enterLeftLeaveLeft, routerAnimations} from "../../../core/helper/standard-route-animations";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 /**
  * Created by Viki on 10/29/2016.
@@ -12,7 +12,7 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
   selector: "ideal-auth-page",
   templateUrl: "auth-page.component.html",
   styleUrls: ["auth-page.component.scss"],
-  animations: [routerAnimations("routeAnimation")]
+  animations: [enterLeftLeaveLeft("routeAnimation")]
 })
 export class AuthPageComponent implements OnInit {
   @HostBinding("@routeAnimation") get routeAnimation() {
@@ -24,7 +24,7 @@ export class AuthPageComponent implements OnInit {
   }
 
   @HostBinding("style.position") get position() {
-    return "absolute";
+    return "relative";
   }
 
   @HostBinding("style.opacity") get opacity() {

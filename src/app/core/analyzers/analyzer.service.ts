@@ -14,6 +14,8 @@ import {Solution} from "../../domain/model/ideas/solution";
 import {Problem} from "../../domain/model/ideas/problem";
 import {ProblemAnalysis} from "../../domain/model/analyzers/analysis/problem-analysis";
 import {ProblemLite} from "../../domain/model/analyzers/problem-lite";
+import {Keyword} from "../../domain/model/ideas/keyword";
+import {SolutionQuality} from "../../domain/model/analyzers/analysis/solution-quality";
 @Injectable()
 export class AnalyzerService {
   private analyzersUrl: string = "/processing/analyzers";
@@ -76,6 +78,32 @@ export class AnalyzerService {
     let problemLite: ProblemLite = new ProblemLite(problem);
     let body = JSON.stringify(problemLite);
     let url: string = this.analyzersUrl + "/problem";
+    return this.http.post(url, body, {headers: this.getHeaders()})
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  getIdeaKeywords(ideaLite: IdeaLite): Observable<Keyword[]> {
+    let body = JSON.stringify(ideaLite);
+    let url: string = this.analyzersUrl + "/idea/keywords";
+    return this.http.post(url, body, {headers: this.getHeaders()})
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  getProblemKeywords(problem: Problem) {
+    let problemLite: ProblemLite = new ProblemLite(problem);
+    let body = JSON.stringify(problemLite);
+    let url: string = this.analyzersUrl + "/problem/keywords";
+    return this.http.post(url, body, {headers: this.getHeaders()})
+      .map((response: Response) => this.extractData(response))
+      .catch((error: any) => this.handleError(error));
+  }
+
+  getSolutionQuality(solution: Solution): Observable<SolutionQuality> {
+    let ideaLite: IdeaLite = new IdeaLite(solution);
+    let body = JSON.stringify(ideaLite);
+    let url: string = this.analyzersUrl + "/solutionQuality";
     return this.http.post(url, body, {headers: this.getHeaders()})
       .map((response: Response) => this.extractData(response))
       .catch((error: any) => this.handleError(error));

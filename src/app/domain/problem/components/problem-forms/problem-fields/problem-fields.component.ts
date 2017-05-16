@@ -9,6 +9,7 @@ import {ProblemFormErrors} from "./problem-form-errors";
 import {ProblemValidationMessages} from "./problem-validation-messages";
 import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
 import {ProblemAnalysis} from "../../../../model/analyzers/analysis/problem-analysis";
+import {Keyword} from "../../../../model/ideas/keyword";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-fields",
@@ -19,13 +20,12 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   @Input("bodyLabel") bodyLabel: string = "Problem Body";
   @Input("tagsLabel") tagsLabel: string = "Tags";
   @Input("form") form: FormGroup;
-  @Input("idleDelay") idleDelay: number = 1500;
-  @Output("idle") idle: EventEmitter<number> = new EventEmitter<number>();
+  @Output("contentChanged") contentChanged: EventEmitter<void> = new EventEmitter<void>();
   private currentForm: FormGroup;
   @Input("problem") problem: Problem;
   private _submitted: boolean;
-  private problemAnalysis: ProblemAnalysis;
-
+  private keywords: Keyword[];
+  private isContentChanged;
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
@@ -38,12 +38,14 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
     let control: FormControl = this.fb.control(this.problem.title, Validators.required);
     control.valueChanges.subscribe((value: string) => {
       this.problem.title = value;
+      this.onContentChanged();
     });
     this.form.addControl("title", control);
 
     control = this.fb.control(this.problem.text);
     control.valueChanges.subscribe((value: string) => {
       this.problem.text = value;
+      this.onContentChanged();
     });
     this.form.addControl("text", control);
 
@@ -78,11 +80,9 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
       // clear previous error message (if any)
       this.formErrors[field] = '';
       const control = form.get(field);
-      if (control && (control.dirty || this._submitted) && !control.valid) {
-        const messages: ValidationMessagesErrors = this.validationMessages[field];
+      if (control && !control.valid) {
         for (const key in control.errors) {
-
-          this.formErrors[field] += messages[key] + ' ';
+          this.formErrors[field] = key;
         }
       }
     }
@@ -103,11 +103,22 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
     }
   };
 
-  onIdle(value: number) {
-    this.analyzerService.analyzeProblem(this.problem).subscribe((problemAnalysis: ProblemAnalysis) => {
-      this.problemAnalysis = problemAnalysis;
-      console.log("Problem analysis ready");
-    });
-    this.idle.emit(value);
+  private onContentChanged(): void {
+    this.isContentChanged = true;
+    this.contentChanged.emit();
   }
+
+  private getKeywords(): void {
+    if (this.isContentChanged) {
+      this.isContentChanged = false;
+      this.keywords = null;
+      this.analyzerService.getProblemKeywords(this.problem).subscribe((keywords: Keyword[]) => {
+        this.keywords = keywords;
+      });
+    }
+  }
+
+  public options: Object = {
+    placeholderText: "Problem Body"
+  };
 }

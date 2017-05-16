@@ -17,7 +17,6 @@ import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 })
 export class IdeaFormComponent implements OnInit {
   @Input("idea") public idea: Idea;
-  active = true;
   @Output("ideaReady") ideaReady: EventEmitter<Idea> = new EventEmitter<Idea>();
   private form: FormGroup;
   private fields: FormGroup;
@@ -49,8 +48,7 @@ export class IdeaFormComponent implements OnInit {
   clearForm(): void {
     this.idea = new Idea();
     this.idea.problem = new Problem();
-    this.active = false;
-    setTimeout(() => this.active = true, 0);
+    this.form.reset();
   }
 
   analyze(): void {

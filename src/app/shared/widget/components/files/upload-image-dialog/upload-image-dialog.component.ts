@@ -1,8 +1,9 @@
 /**
  * Created by AKuzmanoski on 04/11/2016.
  */
-import {Component} from "@angular/core";
+import {Component, HostBinding} from "@angular/core";
 import {MdDialogRef} from "@angular/material";
+import {ThemingService} from "../../../../../core/theming/theming.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-upload-image-dialog",
@@ -10,9 +11,13 @@ import {MdDialogRef} from "@angular/material";
 })
 export class UploadImageDialogComponent {
   imageUrl: string;
+  @HostBinding("class") themeClass = "default-theme";
 
-  constructor(public dialogRef: MdDialogRef<UploadImageDialogComponent>) {
-
+  constructor(private dialogRef: MdDialogRef<UploadImageDialogComponent>, private themingService: ThemingService) {
+    this.themeClass = this.themingService.currentTheme;
+    this.themingService.themeObservable.subscribe((theme: string) => {
+      this.themeClass = theme;
+    });
   }
 
   cancel(): void {

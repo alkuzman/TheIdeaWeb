@@ -8,6 +8,7 @@ import {MaterialModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {InfiniteScrollModule} from "angular2-infinite-scroll";
 import {MomentModule} from "angular2-moment";
+import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -17,7 +18,7 @@ import {MomentModule} from "angular2-moment";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule]
+  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, FroalaEditorModule, FroalaViewModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

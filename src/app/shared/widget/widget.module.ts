@@ -19,15 +19,16 @@ import {IdealInputIdle} from "./directives/input-idle.directive";
 import {EmailValidatorDirective} from "./directives/email.validator.directive";
 import {IdealLabel, IdealLabelModule} from "./components/label/label.component";
 import {IdealBadge} from "./directives/badge.directive";
+import {DiscardChangesDialog} from "./components/discard-changes/discard-changes-dialog.component";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge, DiscardChangesDialog],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge, DiscardChangesDialog],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule],
-  entryComponents: [UploadImageDialogComponent]
+  entryComponents: [UploadImageDialogComponent, DiscardChangesDialog]
 })
 export class WidgetModule {
 }

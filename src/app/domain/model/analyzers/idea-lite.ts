@@ -9,10 +9,12 @@ export class IdeaLite {
   public text: string;
   public problem: ProblemLite;
 
-  constructor(solution: Solution) {
-    this.title = solution.idea.title;
-    this.snackPeak = solution.idea.snackPeak;
-    this.text = solution.text;
-    this.problem = new ProblemLite(solution.idea.problem)
+  constructor(solution?: Solution) {
+    if (solution != null) {
+      this.title = solution.idea.title;
+      this.snackPeak = solution.idea.snackPeak;
+      this.text = solution.text;
+      this.problem = new ProblemLite(solution.idea.problem)
+    }
   }
 }

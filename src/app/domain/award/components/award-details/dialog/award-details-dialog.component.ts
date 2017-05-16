@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 11/03/2017.
  */
-import {Component, Inject, OnInit, HostBinding} from "@angular/core";
+import {Component, HostBinding, Inject, OnInit} from "@angular/core";
 import {Award} from "../../../../model/awards/award";
 import {Badge} from "../../../../model/awards/badges/badge";
 import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
@@ -11,11 +11,11 @@ import {ThemingService} from "../../../../../core/theming/theming.service";
   selector: "ideal-award-details-dialog",
   templateUrl: "award-details-dialog.component.html"
 })
-export class AwardDetailsDialogComponent implements OnInit{
+export class AwardDetailsDialogComponent implements OnInit {
   private award: Award<Badge<any, any>>;
-  @HostBinding("class") private themeClass: string = "default-theme";
+  @HostBinding("class") themeClass: string;
 
-  constructor(public dialogRef: MdDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService, @Inject(MD_DIALOG_DATA) data: {award: Award<Badge<any, any>>}) {
+  constructor(public dialogRef: MdDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService, @Inject(MD_DIALOG_DATA) data: { award: Award<Badge<any, any>> }) {
     this.award = data.award;
   }
 

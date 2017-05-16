@@ -1,20 +1,20 @@
 /**
  * Created by AKuzmanoski on 06/12/2016.
  */
-import {
-  Component,
+import {Component,
   ChangeDetectorRef,
   Input,
+  HostBinding,
+  HostListener,} from "@angular/core";
+import {
   trigger,
   state,
   style,
   transition,
   animate,
-  HostBinding,
-  HostListener,
   group,
   keyframes
-} from "@angular/core";
+} from "@angular/animations";
 @Component({
   moduleId: module.id,
   selector: "ideal-smoot-image-widget",
@@ -42,9 +42,9 @@ import {
             opacity: 1
           })),
           animate("2s cubic-bezier(0.7,0,0.6,1)", keyframes([
-            style({filter: "saturate(20%) brightness(125%)", offset: 0}),
-            style({filter: "saturate(84.8%) brightness(100%)", offset: 0.75}),
-            style({filter: "saturate(100%) brightness(100%)", offset: 1})
+            style({filter: "saturate(20%) brightness(120%)", offset: 0}),
+            style({filter: "saturate(100%)", offset: 0.75}),
+            style({filter: "brightness(100%)", offset: 1})
           ]))
         ])
       ]),
@@ -74,9 +74,9 @@ import {
             opacity: 1
           })),
           animate("2s cubic-bezier(0.7,0,0.6,1)", keyframes([
-            style({filter: "saturate(20%) brightness(125%)", offset: 0}),
-            style({filter: "saturate(84.8%) brightness(100%)", offset: 0.75}),
-            style({filter: "saturate(100%) brightness(100%)", offset: 1})
+            style({filter: "saturate(20%) brightness(120%)", offset: 0}),
+            style({filter: "brightness(100%)", offset: 0.75}),
+            style({filter: "saturate(100%)", offset: 1})
           ]))
         ])
       ])
