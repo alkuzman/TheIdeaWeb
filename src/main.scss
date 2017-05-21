@@ -114,7 +114,6 @@ body {
   font-size: 34px;
   line-height: 40px;
   font-weight: normal;
-  padding-left: 10px;
 }
 
 .ideal-display-2 {
@@ -122,7 +121,6 @@ body {
   font-size: 45px;
   line-height: 48px;
   font-weight: normal;
-  padding-left: 10px;
 }
 
 .ideal-display-3 {
@@ -130,7 +128,6 @@ body {
   font-size: 56px;
   line-height: 60px;
   font-weight: normal;
-  padding-left: 15px;
 }
 
 .ideal-display-4 {
@@ -138,7 +135,6 @@ body {
   font-size: 112px;
   line-height: 120px;
   font-weight: lighter;
-  padding-left: 20px;
 }
 
 .ideal-headline {
@@ -150,10 +146,9 @@ body {
 
 .ideal-title {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 21px;
+  font-size: 20px;
   line-height: 30px;
   font-weight: bold;
-  padding-left: 5px;
 }
 
 .line-break {
@@ -166,21 +161,21 @@ body {
 
 .ideal-subheading {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 28px;
   font-weight: normal;
 }
 
 .ideal-body-2 {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: bold;
 }
 
 .ideal-body-1 {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-weight: normal;
 }
@@ -271,3 +266,4 @@ a[href$='https://www.froala.com/wysiwyg-editor?k=u'] {
   visibility: hidden !important;
   z-index: -1 !important;
 }
+

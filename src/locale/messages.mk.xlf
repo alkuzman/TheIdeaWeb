@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="mk" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="31dbd85738fe16b9bcac8c2844c76cd9bab07379" datatype="html">
+        <source>iDeal</source>
+        <target>iDeal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/PC/WebstormProjects/TheIdeaWeb/src/app/pages/about/about.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Document title</note>
+        <note priority="1" from="meaning">Main name of the application</note>
+      </trans-unit>
+      <trans-unit id="2b30dbb0eff492225f475bc5f99546035866c161" datatype="html">
+        <source>iDeal - World full of ideas and ideal deals</source>
+        <target>iDeal - Свет полн со идеи и идеални договори</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/PC/WebstormProjects/TheIdeaWeb/src/app/pages/about/about.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Document subtitle</note>
+        <note priority="1" from="meaning">Very short description of the document</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

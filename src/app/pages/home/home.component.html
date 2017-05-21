@@ -1,21 +1,36 @@
-<div fxLayout="row" style="padding: 16px; padding-top: 50px; padding-bottom: 100px;">
-  <div fxFlex="50%" fxFlexOffset="25%" fxFlex.xl="50%" fxFlexOffset.xl="25%"
-       fxFlex.lg="60%" fxFlexOffset.lg="20%" fxFlex.md="70%" fxFlexOffset.md="15%" fxFlex.sm="80%" fxFlexOffset.sm="10%"
-       fxFlex.xs="100%" fxFlexOffset.xs="0%" fxLayout="column" fxLayoutGap="120px">
-    <div fxFlex="none" *ngFor="let category of categories; let i = index"
-         [fxLayout]="i % 2 == 1 ? 'row-reverse' : 'row'" fxLayoutGap="40px" fxLayout.xs="column-reverse">
-      <div fxFlex="50%" fxFlex.xs="none" fxLayout="column" fxLayoutAlign="center">
-        <h2 fxFlex="none" style="margin-top: 0px;" class="ideal-headline">{{category.title}}</h2>
-        <div fxFlex="none" fxLayout="column">
-          <p fxFlex="none" class="ideal-body-1" style="justify-content: center;">
-            {{category.description}}
-          </p>
-          <button *ngIf="category.action" fxFlex="none" fxFlexAlign="center" md-raised-button color="primary" [routerLink]="category.action.url">{{category.action.name | uppercase}}</button>
+<div style="margin-bottom: 100px;">
+  <div style="padding-top: 160px; text-align: center; background: #03A9F4; z-index: 3; height: 340px;">
+    <div>
+      <h1 style="color: white" class="ideal-display-1">iDeal</h1>
+      <h2 style="color: white" class="ideal-headline">World full of ideas and ideal deals</h2>
+    </div>
+
+    <div style="margin: 60px 0;">
+      <button md-raised-button idealColor="primary" type="button" routerLink="/announcements/feed">GET STARTED</button>
+    </div>
+  </div>
+  <div fxLayout="row" style="padding: 16px; padding-top: 50px; padding-bottom: 50px;">
+    <div fxFlex="50%" fxFlexOffset="25%" fxFlex.xl="50%" fxFlexOffset.xl="25%"
+         fxFlex.lg="60%" fxFlexOffset.lg="20%" fxFlex.md="70%" fxFlexOffset.md="15%" fxFlex.sm="80%"
+         fxFlexOffset.sm="10%"
+         fxFlex.xs="100%" fxFlexOffset.xs="0%" fxLayout="column" fxLayoutGap="120px">
+      <div fxFlex="none" *ngFor="let category of categories; let i = index"
+           [fxLayout]="i % 2 == 1 ? 'row-reverse' : 'row'" fxLayoutGap="40px" fxLayout.xs="column-reverse">
+        <div fxFlex="50%" fxFlex.xs="none" fxLayout="column" fxLayoutAlign="center">
+          <h2 fxFlex="none" style="margin-top: 0px;" class="ideal-headline">{{category.title}}</h2>
+          <div fxFlex="none" fxLayout="column">
+            <p fxFlex="none" class="ideal-body-1" style="justify-content: center;">
+              {{category.description}}
+            </p>
+            <button *ngIf="category.action" fxFlex="none" fxFlexAlign="center" md-raised-button color="primary"
+                    [routerLink]="category.action.url">{{category.action.name | uppercase}}
+            </button>
+          </div>
         </div>
-      </div>
-      <div fxFlex="50%" fxFlex.xs="none" style="text-align: center" fxLayout="row">
-        <div fxFlex="90%" fxFlexOffset="5%" fxFlex.xs="50%" fxFlexOffset.xs="25%">
-        <ideal-smoot-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smoot-image-widget>
+        <div fxFlex="50%" fxFlex.xs="none" style="text-align: center" fxLayout="row">
+          <div fxFlex="90%" fxFlexOffset="5%" fxFlex.xs="50%" fxFlexOffset.xs="25%">
+            <ideal-smoot-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smoot-image-widget>
+          </div>
         </div>
       </div>
     </div>

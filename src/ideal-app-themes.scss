@@ -12,13 +12,13 @@
   $foreground: map-get($theme, foreground);
 
   .primary {
-    color: mat-color($primary);
+    color: mat-color($primary) !important;
   }
   .accent {
-    color: mat-color($accent);
+    color: mat-color($accent) !important;
   }
   .warn {
-    color: mat-color($warn);
+    color: mat-color($warn) !important;
   }
 
   .ideal-background-primary {

@@ -23,7 +23,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   }), http, options);
 }
 
-
 @NgModule({
   imports: [BrowserModule, HttpModule, MaterialModule, FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(), CoreModule, BrowserAnimationsModule, FlexLayoutModule, SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],

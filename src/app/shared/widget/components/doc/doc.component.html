@@ -1,0 +1,13 @@
+<section fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="" fxFlex.sm="360px" fxFlex.xs="0 1 360px" fxFlex.md="760px" fxFlex.lg="1160px" fxFlex.xl="1160px"
+       fxLayout="row">
+    <div fxLayout="column" fxLayoutGap="120px">
+      <div fxFlex="">
+        <ng-content select="ideal-doc-header"></ng-content>
+      </div>
+      <div fxFlex="">
+        <ng-content select="ideal-doc-content, [ideal-doc-content]"></ng-content>
+      </div>
+    </div>
+  </div>
+</section>
