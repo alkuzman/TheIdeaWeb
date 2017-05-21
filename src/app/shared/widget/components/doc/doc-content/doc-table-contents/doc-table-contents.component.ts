@@ -1,11 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Content} from "./content";
 import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
 
 @Component({
   selector: 'ideal-doc-table-contents',
   templateUrl: './doc-table-contents.component.html',
-  styleUrls: ['./doc-table-contents.component.css']
+  styleUrls: ['./doc-table-contents.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    "[class.ideal-doc-table-contents]": "true"
+  }
 })
 export class DocTableContentsComponent implements OnInit {
   @Input("contents") contents: Content;

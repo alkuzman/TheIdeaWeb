@@ -3,21 +3,21 @@
   padding-left: 20px !important;
 }
 
-ul {
+.ideal-doc-table-contents ul {
   list-style-type: none;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-li {
+.ideal-doc-table-contents li {
   font-size: 20px;
   line-height: 40px;
 }
 
-a {
+.ideal-doc-table-contents a {
   text-decoration: none;
 }
 
-a:hover {
+.ideal-doc-table-contents a:hover {
   cursor: pointer;
 }
