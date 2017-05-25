@@ -14,10 +14,10 @@ import {NavbarState} from "./navbar-state";
 })
 export class NavbarComponent implements OnInit {
   @Output("sideNavToggle") sideNavToggle: EventEmitter<void> = new EventEmitter<void>();
-  private defaultState: NavbarState = NavbarState.DEFAULT;
-  private searchState: NavbarState = NavbarState.SEARCH;
+  defaultState: NavbarState = NavbarState.DEFAULT;
+  searchState: NavbarState = NavbarState.SEARCH;
   @Input("numberOfNotifications") numberOfNotifications: number = 0;
-  private state: NavbarState = this.defaultState;
+  state: NavbarState = this.defaultState;
   @Output("search") search: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private router: Router) {

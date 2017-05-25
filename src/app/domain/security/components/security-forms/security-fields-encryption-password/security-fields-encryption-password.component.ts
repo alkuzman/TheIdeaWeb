@@ -16,10 +16,10 @@ import {ValidationMessagesErrors} from "../../../../../core/helper/validation-me
 export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
 
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("password") password: string;
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
-  private _submitted: boolean = false;
+  _submitted: boolean = false;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

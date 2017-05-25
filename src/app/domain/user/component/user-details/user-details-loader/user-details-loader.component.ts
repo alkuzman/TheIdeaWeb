@@ -7,12 +7,13 @@ import {UserService} from "../../../../services/user/user.service";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-details-loader",
-  template: `<ideal-user-details [user]="user"></ideal-user-details>`
+  template: `
+    <ideal-user-details [user]="user"></ideal-user-details>`
 })
 export class UserDetailsLoaderComponent implements OnInit {
   @Input("userId") userId: number;
   @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
-  private user: User;
+  user: User;
 
   constructor(private userService: UserService) {
 

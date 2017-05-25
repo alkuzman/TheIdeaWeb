@@ -14,10 +14,10 @@ import {AnnouncementValidationMessages} from "./announcement-validation-messages
 })
 export class AnnouncementFieldsComponent {
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("announcement") announcement: Announcement;
-  private _submitted: boolean;
-  private packageFields: FormGroup;
+  _submitted: boolean;
+  packageFields: FormGroup;
 
 
   @Input("submitted") set submitted(submitted: boolean) {

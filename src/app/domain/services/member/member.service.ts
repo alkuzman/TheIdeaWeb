@@ -13,7 +13,7 @@ export class MemberService {
 
   membersUrl: string = "/api/members";
 
-  constructor(@Inject(JwtHttpService) private http: Http) {
+  constructor(@Inject(JwtHttpService) private http: JwtHttpService) {
   }
 
   save(member: Member): Observable<Member> {

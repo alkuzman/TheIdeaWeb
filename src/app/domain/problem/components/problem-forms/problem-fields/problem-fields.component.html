@@ -1,6 +1,6 @@
 <div novalidate [formGroup]="form" fxLayout="column">
   <div fxLayout.xs="column" fxLayout="row">
-    <md-input-container [color]="primary" fxFlex="60%" fxFlex.xs="100%">
+    <md-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
       <input mdInput formControlName="title" [placeholder]="titleLabel" required/>
       <md-error *ngIf="formErrors.title == 'required'" align="start">{{validationMessages.title.required}}</md-error>
     </md-input-container>

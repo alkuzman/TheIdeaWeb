@@ -41,11 +41,11 @@ export class IdeaDetailsComponent implements OnInit {
     return 'block';
   }
 
-  private ownerAvatarAlignment: Alignment = Alignment.left;
+  ownerAvatarAlignment: Alignment = Alignment.left;
 
   @Input() idea: Idea;
   errorMessage: any;
-  private docs: any;
+  docs: any;
 
   constructor(private analyzerService: AnalyzerService) {
 

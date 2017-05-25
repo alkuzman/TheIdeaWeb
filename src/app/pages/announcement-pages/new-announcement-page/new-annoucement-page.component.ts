@@ -9,17 +9,19 @@ import {MdSnackBar} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-announcement-page",
-  template: `<ideal-new-announcement-form [sharable]="sharable" (announcementCreated)="onAnnouncementCreated($event)"></ideal-new-announcement-form>`
+  template: `
+    <ideal-new-announcement-form [sharable]="sharable"
+                                 (announcementCreated)="onAnnouncementCreated($event)"></ideal-new-announcement-form>`
 })
 export class NewAnnouncementPageComponent implements OnInit {
-  private sharable: Sharable;
+  sharable: Sharable;
 
   constructor(private route: ActivatedRoute, private snackBar: MdSnackBar, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {sharable: Sharable}) => {
+    this.route.data.subscribe((data: { sharable: Sharable }) => {
       this.sharable = data.sharable;
     });
   }

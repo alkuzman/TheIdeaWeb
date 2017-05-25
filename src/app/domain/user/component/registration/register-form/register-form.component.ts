@@ -16,8 +16,8 @@ export class RegisterFormComponent implements OnInit {
   @Input("user") user: User;
   @Input("submitButtonText") submitButtonText: string = "Register";
   @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
-  private form: FormGroup;
-  private fields: FormGroup;
+  form: FormGroup;
+  fields: FormGroup;
   active = true;
   submitted: boolean = false;
   userAvatarType: AvatarType = AvatarType.CHOOSER;

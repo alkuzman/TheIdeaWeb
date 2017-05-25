@@ -5,22 +5,21 @@ import {Notice} from "../../../model/sharing/notice";
  */
 
 
-
 @Component({
-    moduleId: module.id,
-    selector: 'ideal-notice-card',
-    templateUrl: 'notice-card.component.html'
+  moduleId: module.id,
+  selector: 'ideal-notice-card',
+  templateUrl: 'notice-card.component.html'
 })
 export class NoticeCardComponent {
-    @Input("notice") notice: Notice;
-    private protocolTransactionStepOneNoticeType: string = "ProtocolTransactionStepOneNotice";
-    private protocolTransactionStepTwoNoticeType: string = "ProtocolTransactionStepTwoNotice";
-    private protocolTransactionStepThreeNoticeType: string = "ProtocolTransactionStepThreeNotice";
+  @Input("notice") notice: Notice;
+  protocolTransactionStepOneNoticeType: string = "ProtocolTransactionStepOneNotice";
+  protocolTransactionStepTwoNoticeType: string = "ProtocolTransactionStepTwoNotice";
+  protocolTransactionStepThreeNoticeType: string = "ProtocolTransactionStepThreeNotice";
 
-    constructor() {
-        if (this.notice != null) {
-            console.log(this.notice.type);
+  constructor() {
+    if (this.notice != null) {
+      console.log(this.notice.type);
 
-        }
     }
+  }
 }

@@ -61,7 +61,7 @@ export class ProblemListComponent implements OnInit {
   @Output("ban") ban: EventEmitter<Problem> = new EventEmitter<Problem>();
   @Output("questionerUserSelected") questionerUserSelected: EventEmitter<User> = new EventEmitter<User>();
   @Output("questionerOrganizationSelected") questionerOrganizationSelected: EventEmitter<Organization> = new EventEmitter<Organization>();
-  private status: string[] = [];
+  status: string[] = [];
 
   ngOnInit(): void {
     let queueRefresh = Scheduler.queue;

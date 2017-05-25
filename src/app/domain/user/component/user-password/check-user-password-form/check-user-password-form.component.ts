@@ -36,11 +36,11 @@ export class CheckUserPasswordFormComponent implements OnInit {
       (error: Response) => this.onPasswordWrong(error));
   }
 
-  private onPasswordWrong(error: Response) {
+  onPasswordWrong(error: Response) {
     this.notifyPasswordWrong();
   }
 
-  private onPasswordCorrect(response: Response) {
+  onPasswordCorrect(response: Response) {
     this.notifyPasswordCorrect()
   }
 

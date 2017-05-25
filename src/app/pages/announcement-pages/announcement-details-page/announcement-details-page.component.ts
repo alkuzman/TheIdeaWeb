@@ -10,14 +10,14 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: "announcement-details-page.component.html"
 })
 export class AnnouncementDetailsPageComponent implements OnInit {
-  private announcement: Announcement;
+  announcement: Announcement;
 
   constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {announcement: Announcement}) => {
+    this.route.data.subscribe((data: { announcement: Announcement }) => {
       this.announcement = data.announcement;
     });
   }

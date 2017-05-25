@@ -25,13 +25,13 @@ export class IdeaFieldsComponent implements OnInit, AfterViewChecked {
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Input("ideaTagsLabel") ideaTagsLabel: string = "Idea Tags";
   @Input("form") form: FormGroup;
-  private keywords: Keyword[];
-  private currentForm: FormGroup;
-  private problemFields: FormGroup;
+  keywords: Keyword[];
+  currentForm: FormGroup;
+  problemFields: FormGroup;
   @Input("idea") idea: Idea;
-  private _submitted: boolean = false;
-  private _text: string;
-  private ideaChanged: boolean = false;
+  _submitted: boolean = false;
+  _text: string;
+  ideaChanged: boolean = false;
 
   @Input("text") set text(text: string) {
     this._text = text;

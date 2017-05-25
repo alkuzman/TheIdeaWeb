@@ -16,8 +16,8 @@ import {UserPasswordValidationMessages} from "./user-password-validation-message
 export class UserPasswordFieldsComponent implements OnInit {
   @Input("user") user: User;
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
-  private _submitted: boolean = false;
+   currentForm: FormGroup;
+   _submitted: boolean = false;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

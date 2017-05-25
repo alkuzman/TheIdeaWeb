@@ -16,7 +16,7 @@ import {DocSectionComponent} from "./doc-section/doc-section.component";
   }
 })
 export class DocContentComponent implements OnInit, AfterContentChecked  {
-  private contents: Content[];
+  contents: Content[];
   @ContentChildren(DocSectionComponent) sections: QueryList<DocSectionComponent>;
 
   constructor() { }

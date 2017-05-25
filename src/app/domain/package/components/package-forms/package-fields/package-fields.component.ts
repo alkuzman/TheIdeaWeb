@@ -14,9 +14,9 @@ import {PackageValidationMessages} from "./package-validation-messages";
 })
 export class PackageFieldsComponent {
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("package") package: Package;
-  private _submitted: boolean;
+  _submitted: boolean;
 
 
   @Input("submitted") set submitted(submitted: boolean) {

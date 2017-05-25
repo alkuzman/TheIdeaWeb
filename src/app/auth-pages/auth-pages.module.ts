@@ -14,11 +14,12 @@ import {AuthPageComponent} from "./auth-page/components/auth-page.component";
 import {LogoutPageComponent} from "./logout-page/logout-page.component";
 import {VerifyPageComponent} from "./verify-page/verify-page.component";
 import {SecurityModule} from "../domain/security/security.module";
+import {VerifyPageComponent2} from "./verify-page/verify2";
 
 @NgModule({
   imports: [SharedModule, AuthPagesRoutingModule, UserModule, SecurityModule],
   declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent, RegisterPageComponent,
-    AuthPageComponent, LogoutPageComponent, VerifyPageComponent]
+    AuthPageComponent, LogoutPageComponent, VerifyPageComponent, VerifyPageComponent2]
 })
 export class AuthPagesModule {
 }

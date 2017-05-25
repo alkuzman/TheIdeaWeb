@@ -17,8 +17,8 @@ export class AwardListComponent {
   @Input("maxWidth") maxWidth: number = 88;
   @Input("namesAsTooltips") namesAsTooltips: boolean = false;
   @Output("awardSelected") awardSelected: EventEmitter<Award<Badge<any, any>>> = new EventEmitter<Award<Badge<any, any>>>();
-  private noAwardsIcon: string = "award";
-  private noAwardsName: string = "No awards found";
+  noAwardsIcon: string = "award";
+  noAwardsName: string = "No awards found";
 
   constructor(private dialog: MdDialog) {
   }

@@ -14,7 +14,7 @@ import {ParserPemService} from "../../../../../../core/security-protocols/parser
 export class SecurityProfileFieldsPrivateKeyComponent {
   @Input("encryptedPrivateKey") encryptedPrivateKey: string;
   @Input("title") title: string;
-  private decryptedPrivateKey: string;
+  decryptedPrivateKey: string;
 
   constructor(private keysService: KeysService,
               private pemParser: ParserPemService) {

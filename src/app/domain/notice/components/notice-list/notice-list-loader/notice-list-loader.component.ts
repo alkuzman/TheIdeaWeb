@@ -12,9 +12,10 @@ import {Notice} from "../../../../model/sharing/notice";
   templateUrl: 'notice-list-loader.component.html'
 })
 export class NoticeListLoaderComponent implements OnInit {
-  private noticeList: Notice[];
+  noticeList: Notice[];
 
-  constructor(private noticeService: NoticeService) {}
+  constructor(private noticeService: NoticeService) {
+  }
 
   ngOnInit() {
     this.noticeService.getAnnouncementList().subscribe((notices: Notice[]) => {

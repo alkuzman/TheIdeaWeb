@@ -11,8 +11,9 @@ import {Idea} from "../../../model/ideas/idea";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-list-loader",
-  template: `<ideal-announcement-list 
-*ngIf="announcementList" 
+  template: `
+    <ideal-announcement-list
+      *ngIf="announcementList"
       [announcementList]='announcementList'
       (userSelected)="onUserSelected($event)"
       (openContent)="getContent($event)"
@@ -29,7 +30,7 @@ import {Idea} from "../../../model/ideas/idea";
 })
 export class AnnouncementListLoaderComponent implements OnInit {
   @Input("ownerId") ownerId: number;
-  private announcementList: Announcement[];
+  announcementList: Announcement[];
 
   constructor(private announcementService: AnnouncementService) {
 

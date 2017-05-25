@@ -15,18 +15,18 @@ import {Sharable} from "../../domain/model/sharing/sharable";
   templateUrl: "search-page.component.html"
 })
 export class SearchPageComponent implements OnInit {
-  private pageSize: number;
-  private query: string;
+  pageSize: number;
+  query: string;
 
   constructor(private route: ActivatedRoute, private redirectService: RedirectService) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {pageSize: number}) => {
+    this.route.data.subscribe((data: { pageSize: number }) => {
       this.pageSize = data.pageSize;
     });
-    this.route.queryParams.subscribe((data: {query: string}) => {
+    this.route.queryParams.subscribe((data: { query: string }) => {
       this.query = data.query;
     });
   }

@@ -22,9 +22,9 @@ export class SolutionFormComponent implements OnInit, AfterViewChecked {
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
   @Output("dirty") dirty: EventEmitter<boolean> = new EventEmitter<boolean>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
 

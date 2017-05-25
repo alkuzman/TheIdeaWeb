@@ -13,7 +13,7 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
 export class PriceRequestPhaseFormNewComponent implements OnInit {
   @Output("dataReady") dataReady: EventEmitter<PriceRequestPhaseData> =
     new EventEmitter<PriceRequestPhaseData>();
-  private data: PriceRequestPhaseData;
+  data: PriceRequestPhaseData;
   @Input("previousData") previousData: PriceRequestPhaseData;
 
   ngOnInit(): void {

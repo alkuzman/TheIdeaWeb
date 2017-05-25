@@ -13,8 +13,8 @@ import {UserObjectService} from "../../../../services/user/user-object.service";
   templateUrl: "new-registration-form.component.html"
 })
 export class NewRegistrationFormComponent implements OnInit {
-  private ConstraintViolationException: string = "ConstraintViolationException";
-  private user: User;
+  ConstraintViolationException: string = "ConstraintViolationException";
+  user: User;
   @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
   @Output("registrationSuccessful") userReady: EventEmitter<User> = new EventEmitter<User>();
   @Output("constraintViolation") constraintViolation: EventEmitter<FieldError[]> = new EventEmitter<FieldError[]>();

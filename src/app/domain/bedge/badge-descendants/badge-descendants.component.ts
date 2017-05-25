@@ -10,8 +10,8 @@ import {BadgeSiblingsService} from "../badge-siblings.service";
   templateUrl: "badge-descendants.component.html"
 })
 export class BadgeDescendantsComponent {
-  private _badge: Badge<any, any>;
-  private descendants: Badge<any, any>[];
+  _badge: Badge<any, any>;
+  descendants: Badge<any, any>[];
 
   constructor(private badgeSiblings: BadgeSiblingsService) {
 
@@ -21,6 +21,7 @@ export class BadgeDescendantsComponent {
   public get badge(): Badge<any, any> {
     return this._badge
   }
+
   public set badge(value: Badge<any, any>) {
     this._badge = value;
     this.descendants = this.badgeSiblings.getDescendants(this.badge);

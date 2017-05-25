@@ -17,27 +17,27 @@ import {SecurityProfileService} from "../../domain/services/security-profile/sec
 @Component({
   moduleId: module.id,
   selector: "ideal-verify-page-component",
-  templateUrl: "verify-page.component.html"
+  template: `<h1>Here</h1>`
 })
 export class VerifyPageComponent2 implements OnInit {
-  private user: User;
-  private privateKeyE: CryptoKey;
-  private privateKeyEEncrypted: string;
-  private _pemCertificateE: string;
-  private _pemCertificationRequestE: string;
-  private privateKeyS: CryptoKey;
-  private privateKeySEncrypted: string;
-  private _pemCertificateS: string;
-  private _pemCertificationRequestS: string;
-  private password: string;
+  user: User;
+  privateKeyE: CryptoKey;
+  privateKeyEEncrypted: string;
+  _pemCertificateE: string;
+  _pemCertificationRequestE: string;
+  privateKeyS: CryptoKey;
+  privateKeySEncrypted: string;
+  _pemCertificateS: string;
+  _pemCertificationRequestS: string;
+  password: string;
 
-  private certificateGeneratedE: boolean = false;
-  private certificateGeneratedS: boolean = false;
-  private passwordEntered: boolean = false;
-  private eSaved = false;
-  private sSaved = false;
-  private saveDecision: boolean = false;
-  private savePrivateKey: string = "YES";
+  certificateGeneratedE: boolean = false;
+  certificateGeneratedS: boolean = false;
+  passwordEntered: boolean = false;
+  eSaved = false;
+  sSaved = false;
+  saveDecision: boolean = false;
+  savePrivateKey: string = "YES";
 
   constructor(private route: ActivatedRoute, private keysService: KeysService,
               private certificateRequestGenerationService: CertificateRequestGenerationService,
@@ -47,7 +47,7 @@ export class VerifyPageComponent2 implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {user: User}) => {
+    this.route.data.subscribe((data: { user: User }) => {
       this.user = data.user;
       //this.certificationRequestE();
       //this.certificationRequestS();

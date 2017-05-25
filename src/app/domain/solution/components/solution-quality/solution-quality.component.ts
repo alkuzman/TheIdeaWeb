@@ -17,8 +17,8 @@ import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-v
   providers: [MakeProvider(SolutionQualityComponent)]
 })
 export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<any, any>>[]> {
-  private _solutionQuality: SolutionQuality;
-  private awards: Award<Badge<any, any>>[];
+  _solutionQuality: SolutionQuality;
+  awards: Award<Badge<any, any>>[];
 
   @Input("solutionQuality") set solutionQuality(solutionQuality: SolutionQuality) {
     this._solutionQuality = solutionQuality;

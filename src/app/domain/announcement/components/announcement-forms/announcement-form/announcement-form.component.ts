@@ -13,9 +13,9 @@ import {MdSnackBar} from "@angular/material";
 export class AnnouncementFormComponent implements OnInit {
   @Input("announcement") announcement: Announcement;
   @Output("announcementReady") announcementReady: EventEmitter<Announcement> = new EventEmitter<Announcement>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
 

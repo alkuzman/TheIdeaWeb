@@ -28,7 +28,7 @@ export class IdeaCardComponent implements OnInit {
   @Output("report") report: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("remove") remove: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ban") ban: EventEmitter<Idea> = new EventEmitter<Idea>();
-  private actions: Actions;
+  actions: Actions;
 
   constructor(private ideaActionsService: IdeaActionsService, private route: RedirectService) {
 
