@@ -14,8 +14,13 @@
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "target": "es5",
+    "types": [],
     "typeRoots": [
       "../node_modules/@types"
     ]
-  }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
 }
