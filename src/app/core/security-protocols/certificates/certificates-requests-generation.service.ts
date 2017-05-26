@@ -38,23 +38,19 @@ export class CertificateRequestGenerationService {
       return Promise.reject("No WebCrypto extension found");
     //endregion
 
-    console.log("version");
     //region Put a static values
     pkcs10.version = 0;
     //common name
-    console.log("email");
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
       type: "2.5.4.3",
       value: new asn1js.Utf8String({value: this.simpleCryptographicOperations.hash(user.email)})
     }));
     //country code
-    console.log("country code");
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
       type: "2.5.4.6",
       value: new asn1js.PrintableString({value: this.countryService.getMapCountriesToCodes()[user.country]})
     }));
     //state or province name
-    console.log("state or province name");
     pkcs10.subject.typesAndValues.push(new AttributeTypeAndValue({
       type: "2.5.4.8",
       value: new asn1js.PrintableString({value: user.country})
