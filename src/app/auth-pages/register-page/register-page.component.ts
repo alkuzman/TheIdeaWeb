@@ -75,8 +75,12 @@ export class RegisterPageComponent implements OnInit {
   registered(user: User): void {
     this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
 
+    let queryParams: AuthProperties = {};
+    if (this.email != null)
+      queryParams.email = this.email;
+
     this.urlAccessGuard.allow = true;
-    this.router.navigate(["auth/verify"]);
+    this.router.navigate(["auth/verify"], {queryParams: queryParams});
   }
 
   constraintsViolated(fieldErrors: FieldError[]): void {
