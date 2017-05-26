@@ -1,6 +1,5 @@
 import {BaseEntityImpl} from "../base-entity-impl";
 import {Person} from "../authentication/person";
-import any = jasmine.any;
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */

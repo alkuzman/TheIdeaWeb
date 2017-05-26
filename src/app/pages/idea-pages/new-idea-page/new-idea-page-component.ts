@@ -13,8 +13,8 @@ import {FormPage} from "../../../core/helper/form-page";
   templateUrl: "new-idea-page.component.html"
 })
 export class NewIdeaPageComponent implements OnInit, FormPage {
-  private solution: Solution;
-  private dirty: boolean;
+  solution: Solution;
+  dirty: boolean;
 
   constructor(private snackBar: MdSnackBar, private router: Router, private route: ActivatedRoute) {
     this.solution = new Solution();

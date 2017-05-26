@@ -20,14 +20,28 @@ import {EmailValidatorDirective} from "./directives/email.validator.directive";
 import {IdealLabel, IdealLabelModule} from "./components/label/label.component";
 import {IdealBadge} from "./directives/badge.directive";
 import {DiscardChangesDialog} from "./components/discard-changes/discard-changes-dialog.component";
+import { DocComponent } from './components/doc/doc.component';
+import { DocHeaderComponent } from './components/doc/doc-header/doc-header.component';
+import { DocTitleComponent } from './components/doc/doc-header/doc-title/doc-title.component';
+import { DocSubtitleComponent } from './components/doc/doc-header/doc-subtitle/doc-subtitle.component';
+import { DocTextTextFigureLayoutComponent } from './components/doc/layout/doc-text-text-figure-layout/doc-text-text-figure-layout.component';
+import { DocTextFigureFigureLayoutComponent } from './components/doc/layout/doc-text-figure-figure-layout/doc-text-figure-figure-layout.component';
+import { DocTextFigureLayoutComponent } from './components/doc/layout/doc-text-figure-layout/doc-text-figure-layout.component';
+import { TextComponent } from './components/text/text.component';
+import { FigureComponent } from './components/figure/figure.component';
+import { ShortTextComponent } from './components/short-text/short-text.component';
+import { DocContentComponent } from './components/doc/doc-content/doc-content.component';
+import { DocTableContentsComponent } from './components/doc/doc-content/doc-table-contents/doc-table-contents.component';
+import { DocSectionComponent } from './components/doc/doc-content/doc-section/doc-section.component';
+import {RouterModule} from "@angular/router";
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge, DiscardChangesDialog],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge, DiscardChangesDialog],
-  imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent],
+  imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule, RouterModule],
   entryComponents: [UploadImageDialogComponent, DiscardChangesDialog]
 })
 export class WidgetModule {

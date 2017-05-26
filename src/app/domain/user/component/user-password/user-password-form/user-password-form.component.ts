@@ -16,10 +16,10 @@ export class UserPasswordFormComponent implements OnInit {
   @Input("buttonText") buttonText: string = "Login";
   @Input("user") user: User;
   @Output("passwordEntered") passwordEntered: EventEmitter<Credentials> = new EventEmitter<Credentials>();
-  private rememberMe: boolean = false;
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  rememberMe: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private snackBar: MdSnackBar) {
 

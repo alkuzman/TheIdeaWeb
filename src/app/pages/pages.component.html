@@ -2,7 +2,7 @@
   <md-sidenav mode="over" #sidenav>
     <md-toolbar color="primary">
       <ideal-authenticated-user-named-avatar (click)="sidenav.toggle()" [routerLink]="['/users', 'me']"
-                                             style="margin-top: 60px" [profilePictureRadius]="25" nameFontSize="10pt"
+                                             style="margin-top: 60px; cursor: pointer;" [profilePictureRadius]="25" nameFontSize="10pt"
                                              descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
       <md-toolbar-row>
       </md-toolbar-row>

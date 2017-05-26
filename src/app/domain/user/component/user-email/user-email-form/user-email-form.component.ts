@@ -15,9 +15,9 @@ export class UserEmailFormComponent {
   @Input("buttonText") buttonText: string = "Continue";
   @Input("user") user: User = new User();
   @Output("emailEntered") emailEntered: EventEmitter<User> = new EventEmitter<User>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
     this.fields = this.fb.group({});

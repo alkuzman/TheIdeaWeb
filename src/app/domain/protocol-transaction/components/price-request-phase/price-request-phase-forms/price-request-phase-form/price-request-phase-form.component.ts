@@ -18,9 +18,9 @@ export class PriceRequestPhaseFormComponent implements OnInit {
   @Input("lastPrice") lastPrice: Price;
   @Output("dataReady") dataReady: EventEmitter<PriceRequestPhaseData> =
     new EventEmitter<PriceRequestPhaseData>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder) {
   }

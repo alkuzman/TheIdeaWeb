@@ -16,7 +16,7 @@ export class AgentSelectorComponent {
   @Output("agentAdded") agentAdded: EventEmitter<Agent> = new EventEmitter<Agent>();
   @Output("agentRemoved") agentRemoved: EventEmitter<Agent> = new EventEmitter<Agent>();
   @Output("agentListChanged") agentListChanged: EventEmitter<Agent[]> = new EventEmitter<Agent[]>();
-  private agents: Agent[] = [];
+  agents: Agent[] = [];
 
   constructor(private snackBar: MdSnackBar) {
 
@@ -42,7 +42,7 @@ export class AgentSelectorComponent {
     }
   }
 
-  private exists(agent: Agent): boolean {
+  exists(agent: Agent): boolean {
     for (let a of this.agents) {
       if (agent.id == a.id)
         return true;
@@ -50,7 +50,7 @@ export class AgentSelectorComponent {
     return false;
   }
 
-  public remove(agent: Agent, index: number) {
+  remove(agent: Agent, index: number) {
     this.agents.splice(index, 1);
     this.agentRemoved.emit(agent);
     this.agentListChanged.emit(this.agents);

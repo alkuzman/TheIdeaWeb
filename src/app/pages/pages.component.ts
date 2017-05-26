@@ -26,11 +26,11 @@ export class PagesComponent implements OnInit, OnDestroy {
   query: string = "";
   searchState: boolean = false;
   navigation: NavigationItemGroup[];
-  private loadingState: LoadingState; //Subject<LoadingState> = new BehaviorSubject(null);
-  private numberOfNotifications: number = 0;
-  private accessTokenSubscription: Subscription;
-  private loadingStateSubscription: Subscription;
-  private socketSubscription: Subscription;
+  loadingState: LoadingState; //Subject<LoadingState> = new BehaviorSubject(null);
+  numberOfNotifications: number = 0;
+  accessTokenSubscription: Subscription;
+  loadingStateSubscription: Subscription;
+  socketSubscription: Subscription;
 
   constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService, private socketService: SocketService, private securityContext: JwtSecurityContext, private noticeService: NoticeService) {
 

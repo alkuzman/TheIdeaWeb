@@ -15,7 +15,7 @@ import {ProtocolTransactionStepNotice} from "../../../domain/model/security/noti
   templateUrl: "new-transaction-page.component.html"
 })
 export class NewTransactionPageComponent implements OnInit {
-  private protocolSession: ProtocolSession;
+  protocolSession: ProtocolSession;
 
 
   constructor(private route: ActivatedRoute, private userService: UserService) {

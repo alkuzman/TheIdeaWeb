@@ -28,13 +28,13 @@ export class SolutionFieldsComponent {
   @Input("showIdeaFields") showIdeaFields: boolean = true;
   @Input("showProblemFields") showProblemFields: boolean = true;
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+   currentForm: FormGroup;
   @Input("solution") solution: Solution;
-  private _submitted: boolean;
-  private ideaFields: FormGroup;
-  private solutionQuality: SolutionQuality;
-  private numberOfTags = 5;
-  private contentChanged: boolean = false;
+   _submitted: boolean;
+   ideaFields: FormGroup;
+   solutionQuality: SolutionQuality;
+   numberOfTags = 5;
+   contentChanged: boolean = false;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

@@ -17,10 +17,10 @@ import {Sharable} from "../../../../model/sharing/sharable";
 })
 export class SearchableListLoaderComponent implements OnInit {
   @Input("pageSize") pageSize: number;
-  private _query: string;
-  private page: number = 0;
-  private results: Searchable[];
-  private noMoreResults: boolean = false;
+  _query: string;
+  page: number = 0;
+  results: Searchable[];
+  noMoreResults: boolean = false;
 
   @Input("query") set query(query: string) {
     let reload: boolean = this._query != null;

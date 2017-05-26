@@ -21,11 +21,12 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   @Input("tagsLabel") tagsLabel: string = "Tags";
   @Input("form") form: FormGroup;
   @Output("contentChanged") contentChanged: EventEmitter<void> = new EventEmitter<void>();
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("problem") problem: Problem;
-  private _submitted: boolean;
-  private keywords: Keyword[];
-  private isContentChanged;
+  _submitted: boolean;
+  keywords: Keyword[];
+  isContentChanged;
+
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
@@ -103,12 +104,12 @@ export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
     }
   };
 
-  private onContentChanged(): void {
+  onContentChanged(): void {
     this.isContentChanged = true;
     this.contentChanged.emit();
   }
 
-  private getKeywords(): void {
+  getKeywords(): void {
     if (this.isContentChanged) {
       this.isContentChanged = false;
       this.keywords = null;

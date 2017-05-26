@@ -15,7 +15,7 @@ export class NoticeFieldsComponent implements OnInit {
   @Input("notice") notice: NewPackageNotice;
   @Input("form") form: FormGroup;
   @Input("submitted") submitted: boolean;
-  private packageFields: FormGroup;
+  packageFields: FormGroup;
 
   constructor(private fb: FormBuilder) {
   }
@@ -39,7 +39,7 @@ export class NoticeFieldsComponent implements OnInit {
     this.notice.recipients.splice(index, 1);
   }
 
-  private recipientIndex(agent: Agent): number {
+  recipientIndex(agent: Agent): number {
     let i: number = 0;
     for (let recipient of this.notice.recipients) {
       if (agent.id == recipient.agent.id)

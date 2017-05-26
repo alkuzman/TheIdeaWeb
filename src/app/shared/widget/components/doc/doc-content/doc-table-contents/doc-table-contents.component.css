@@ -1,0 +1,23 @@
+.container {
+  border-left: thick solid #03A9F4;
+  padding-left: 20px !important;
+}
+
+.ideal-doc-table-contents ul {
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ideal-doc-table-contents li {
+  font-size: 20px;
+  line-height: 40px;
+}
+
+.ideal-doc-table-contents a {
+  text-decoration: none;
+}
+
+.ideal-doc-table-contents a:hover {
+  cursor: pointer;
+}

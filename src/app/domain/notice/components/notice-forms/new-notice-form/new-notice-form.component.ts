@@ -14,8 +14,8 @@ import {Notice} from "../../../../model/sharing/notice";
 })
 export class NewNoticeFormComponent implements OnInit {
   @Output("noticeReady") noticeReady: EventEmitter<Notice> = new EventEmitter<Notice>();
-  private _sharable: Sharable;
-  private notice: NewPackageNotice;
+  _sharable: Sharable;
+  notice: NewPackageNotice;
 
   constructor(private noticeService: NoticeService) {
 

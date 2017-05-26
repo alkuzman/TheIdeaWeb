@@ -16,7 +16,7 @@ import {RedirectService} from "../../../core/navigation/redirect.service";
   templateUrl: "user-details-page.component.html"
 })
 export class UserDetailsPageComponent implements OnInit {
-  private user: User;
+  user: User;
 
   constructor(private route: ActivatedRoute, private router: Router, private redirectService: RedirectService) {
 
@@ -65,6 +65,10 @@ export class UserDetailsPageComponent implements OnInit {
   }
 
   onOrganizationSelected(organization: Organization) {
+
+  }
+
+  remove(sharable: Sharable) {
 
   }
 

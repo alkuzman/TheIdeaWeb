@@ -12,11 +12,11 @@ import {FormGroup, FormBuilder} from "@angular/forms";
 })
 export class SecurityFormEncryptionPasswordComponent implements OnInit {
 
-  private form: FormGroup;
-  private fields: FormGroup;
+  form: FormGroup;
+  fields: FormGroup;
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
-  private password: string;
-  private submitted: boolean = false;
+  password: string;
+  submitted: boolean = false;
   @Input("buttonText") buttonText: string;
 
   constructor(private fb: FormBuilder) {

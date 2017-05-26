@@ -9,9 +9,9 @@ import {Component, Input} from "@angular/core";
 })
 export class ProblemCoverageValueComponent {
   @Input("coverage") coverage: number;
-  private min: number = 0;
-  private max: number = 100;
-  private step: number = 1;
-  private thumbLabel: boolean = true;
-  private vertical: boolean = false;
+  min: number = 0;
+  max: number = 100;
+  step: number = 1;
+  thumbLabel: boolean = true;
+  vertical: boolean = false;
 }

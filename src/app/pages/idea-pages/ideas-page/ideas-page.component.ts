@@ -13,14 +13,14 @@ import {RedirectService} from "../../../core/navigation/redirect.service";
   templateUrl: "ideas-page.component.html"
 })
 export class IdeasPageComponent implements OnInit {
-  private ideas: Idea[];
+  ideas: Idea[];
 
   constructor(private router: Router, private route: ActivatedRoute, private redirectService: RedirectService) {
 
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: {ideas: Idea[]}) => {
+    this.route.data.subscribe((data: { ideas: Idea[] }) => {
       this.ideas = data.ideas;
     })
   }

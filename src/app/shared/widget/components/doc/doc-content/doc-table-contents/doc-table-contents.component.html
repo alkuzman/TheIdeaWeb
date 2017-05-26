@@ -1,0 +1,6 @@
+<div class="container">
+  <h1 style="opacity: 0.54" class="ideal-subheading">Contents</h1>
+  <ul>
+    <li *ngFor="let content of contents"><a idealColor="primary" (click)="goTo(content.fragment)">{{content.name}}</a></li>
+  </ul>
+</div>

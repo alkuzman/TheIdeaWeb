@@ -12,14 +12,14 @@ import {Notice} from "../../../domain/model/sharing/notice";
   templateUrl: "new-notice-page.component.html"
 })
 export class NewNoticePageComponent implements OnInit {
-  private sharable: Sharable;
+  sharable: Sharable;
 
   constructor(private route: ActivatedRoute, private snackBar: MdSnackBar) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {sharable: Sharable}) => {
+    this.route.data.subscribe((data: { sharable: Sharable }) => {
       this.sharable = data.sharable;
     });
   }

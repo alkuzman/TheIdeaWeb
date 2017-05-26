@@ -1,4 +1,4 @@
-<form (ngSubmit)="certificationRequest()" [formGroup]="form">
+<form (ngSubmit)="submit()" [formGroup]="form">
   <md-slide-toggle class="margin" [checked]="true" (change)="changeStoringPrivateKey($event)">
     Save private key in database
   </md-slide-toggle>

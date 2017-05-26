@@ -5,4 +5,6 @@ import {User} from "./user";
  */
 export interface Person extends BaseEntity {
   getUser(): User;
+  firstName: string;
+  lastName: string;
 }

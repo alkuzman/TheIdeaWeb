@@ -14,15 +14,17 @@ import {Observable} from "rxjs";
 export class KeywordSearchComponent implements OnInit {
   @Input("keywords") _keywords: Keyword[] = [];
   @Input("hint") hint: string = "";
-  private form: FormGroup;
-  private searchField: FormControl;
-  private keywordResults: Observable<Keyword[]>;
+  form: FormGroup;
+  searchField: FormControl;
+  keywordResults: Observable<Keyword[]>;
+
   @Input("keywords") set keywords(keywords: Keyword[]) {
     this._keywords = keywords;
     if (this.searchField) {
       this.searchField.setValue(this.searchField.value);
     }
   }
+
   @Input("searchPlaceholder") searchPlaceholder: string = "Search";
   @Input("stopKeywords") stopKeywords: string[];
   @Input("clearAfterSelect") clearAfterSelect: boolean = false;

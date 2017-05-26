@@ -13,8 +13,8 @@ import {User} from "../../../model/authentication/user";
 export class SharableCardComponent {
   @Input("sharable") sharable: Sharable;
   @Output("openContent") openContent: EventEmitter<void> = new EventEmitter<void>();
-  private ideaType = "Idea";
-  private problemType = "Problem";
+   ideaType = "Idea";
+   problemType = "Problem";
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ideaEdit") ideaEdit: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("problemSelected") problemSelected: EventEmitter<Problem> = new EventEmitter<Problem>();

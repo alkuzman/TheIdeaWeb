@@ -10,7 +10,7 @@ import {SolutionQuality} from "../../../../model/analyzers/analysis/solution-qua
   templateUrl: "solution-quality-dialog.component.html"
 })
 export class SolutionQualityDialog {
-  private solutionQuality: SolutionQuality;
+  solutionQuality: SolutionQuality;
 
   constructor(public dialogRef: MdDialogRef<SolutionQualityDialog>, @Inject(MD_DIALOG_DATA) data: any) {
     console.log(data);

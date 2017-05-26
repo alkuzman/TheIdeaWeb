@@ -15,11 +15,11 @@ import {IdeaValidators} from "../../../../../core/validators/idea.validators";
   templateUrl: "user-email-fields.component.html"
 })
 export class UserEmailFieldsComponent implements OnInit {
-  private _submitted: boolean = false;
+  _submitted: boolean = false;
   @Input("form") currentForm: FormGroup;
   @Input("user") user: User;
   emailForm: FormGroup;
-  private emailControl: FormControl;
+  emailControl: FormControl;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

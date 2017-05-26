@@ -17,9 +17,9 @@ export class OrganizationFormComponent implements OnInit {
   @Output("organizationCompleted") organizationCompleted: EventEmitter<Organization> = new EventEmitter<Organization>();
 
   active = true;
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder) {
   }

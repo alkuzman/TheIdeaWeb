@@ -15,7 +15,7 @@ import {MakeProvider, AbstractValueAccessor} from "../../../../shared/abstract-v
 export class CurrencySelectComponent extends AbstractValueAccessor<Currency> implements OnInit {
 
   @Input("placeholder") placeholder: string;
-  private currencies: Currency[];
+  currencies: Currency[];
 
   constructor(private currencyService: CurrencyService) {
     super(new Currency());

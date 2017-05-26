@@ -37,7 +37,7 @@ export class CheckUserPasswordFormComponent implements OnInit {
             (error: Response) => this.onError(error));
     }
 
-    private onError(error: Response) {
+    onError(error: Response) {
         console.log(error.text());
         if (error.status == 401) {
             if (JSON.parse(error.text()).errorCode == 11) {
@@ -49,9 +49,9 @@ export class CheckUserPasswordFormComponent implements OnInit {
         }
     }
 
-    private onPasswordCorrect(response: Response) {
-        this.notifyPasswordCorrect()
-    }
+  onPasswordCorrect(response: Response) {
+    this.notifyPasswordCorrect()
+  }
 
     notifyPasswordCorrect(): void {
         this.passwordCorrect.emit(this.user);

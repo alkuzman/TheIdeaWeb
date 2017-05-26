@@ -13,7 +13,7 @@ import {IdeaService} from "../../../../services/idea/idea.service";
 export class IdeaDetailsLoaderComponent implements OnInit {
   @Input("ideaId") ideaId: number;
   @Output() ideaReady: EventEmitter<Idea> = new EventEmitter<Idea>();
-  private idea: Idea;
+  idea: Idea;
 
   constructor(private ideaService: IdeaService) {
 

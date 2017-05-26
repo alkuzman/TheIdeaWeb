@@ -12,13 +12,14 @@ import {KeywordSelectionWrapper} from "../../../keyword-selection-wrapper";
   templateUrl: "problem-coverage-keywords.component.html"
 })
 export class ProblemCoverageKeywordsComponent {
-  private _problemCoverage: ProblemCoverage;
-  private keywordSelections: KeywordSelectionWrapper[];
+  _problemCoverage: ProblemCoverage;
+  keywordSelections: KeywordSelectionWrapper[];
 
   @Input("problemCoverage")
   get problemCoverage(): ProblemCoverage {
     return this._problemCoverage;
   }
+
   set problemCoverage(value: ProblemCoverage) {
     this._problemCoverage = value;
     this.keywordSelections = this.keywordSelectionService.getKeywordSelections(value);

@@ -1,5 +1,4 @@
 import {Observable, Subject} from "rxjs";
-import any = jasmine.any;
 /**
  * Created by AKuzmanoski on 21/11/2016.
  */

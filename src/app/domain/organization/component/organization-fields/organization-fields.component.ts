@@ -20,9 +20,9 @@ import {IdeaValidators} from "../../../../core/validators/idea.validators";
 export class OrganizationFieldsComponent implements OnInit {
 
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("organization") organization: Organization;
-  private _submitted: boolean;
+  _submitted: boolean;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

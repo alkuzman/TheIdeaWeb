@@ -12,11 +12,12 @@ import {ThemingService} from "../../../../../core/theming/theming.service";
   templateUrl: "award-details-dialog.component.html"
 })
 export class AwardDetailsDialogComponent implements OnInit {
-  private award: Award<Badge<any, any>>;
+  award: Award<Badge<any, any>>;
   @HostBinding("class") themeClass: string;
 
-  constructor(public dialogRef: MdDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService, @Inject(MD_DIALOG_DATA) data: { award: Award<Badge<any, any>> }) {
-    this.award = data.award;
+  constructor(public dialogRef: MdDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService, @Inject(MD_DIALOG_DATA) data: any) {
+    const d = <{ award: Award<Badge<any, any>> }>data;
+    this.award = d.award;
   }
 
   getTitle(): string {

@@ -19,10 +19,10 @@ import {PasswordStrengthService} from "../../../../../core/helper/services/passw
 export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
 
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("password") password: string;
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
-  private _submitted: boolean = false;
+  _submitted: boolean = false;
 
   private passwordStrengthVisible: boolean = false;
   private passwordStrength: string;

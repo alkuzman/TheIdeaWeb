@@ -16,9 +16,9 @@ export class AgentSearchComponent implements OnInit {
   @Output("agentSelected") agentSelected: EventEmitter<Agent> = new EventEmitter<Agent>();
   @Input("clearAfterSelect") clearAfterSelect: boolean = false;
   @Input("searchPlaceholder") searchPlaceholder: string = "Search";
-  private form: FormGroup;
-  private searchField: FormControl;
-  private agents: Agent[] = [];
+  form: FormGroup;
+  searchField: FormControl;
+  agents: Agent[] = [];
 
   constructor(private formBuilder: FormBuilder, private agentService: AgentService) {
   }

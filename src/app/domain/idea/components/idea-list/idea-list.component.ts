@@ -64,7 +64,7 @@ export class IdeasComponent implements OnInit {
   @Output("report") report: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("remove") remove: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("ban") ban: EventEmitter<Idea> = new EventEmitter<Idea>();
-  private status: string[] = [];
+  status: string[] = [];
 
   ngOnInit(): void {
     let queueRefresh = Scheduler.queue;

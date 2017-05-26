@@ -12,7 +12,7 @@ import {ProtocolTransactionStepNotice} from "../../../domain/model/security/noti
   templateUrl: 'transaction-details-page.component.html'
 })
 export class TransactionDetailsPageComponent implements OnInit {
-  private currentNotice: ProtocolTransactionStepNotice<any>;
+  currentNotice: ProtocolTransactionStepNotice<any>;
 
   constructor(private route: ActivatedRoute) {}
 

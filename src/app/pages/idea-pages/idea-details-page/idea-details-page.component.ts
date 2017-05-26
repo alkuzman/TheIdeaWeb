@@ -10,14 +10,14 @@ import {Idea} from "../../../domain/model/ideas/idea";
   templateUrl: "idea-details-page.component.html"
 })
 export class IdeaDetailsPageComponent implements OnInit {
-  private idea: Idea;
+  idea: Idea;
 
   constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: {idea: Idea}) => {
+    this.route.data.subscribe((data: { idea: Idea }) => {
       this.idea = data.idea;
     })
   }

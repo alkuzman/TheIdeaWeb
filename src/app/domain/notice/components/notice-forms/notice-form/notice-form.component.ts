@@ -17,10 +17,10 @@ export class NoticeFormComponent implements OnInit {
   @Input("canClear") canClear: boolean = false;
   @Input("submitLabel") submitLabel: string;
   @Output("noticeReady") noticeReady: EventEmitter<Notice> = new EventEmitter<Notice>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
-  private active: boolean = true;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
+  active: boolean = true;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
 

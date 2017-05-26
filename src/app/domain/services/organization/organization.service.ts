@@ -11,7 +11,7 @@ import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service"
 export class OrganizationService {
   organizationsUrl: string = "/api/organizations"
 
-  constructor(@Inject(JwtHttpService) private http: Http) {
+  constructor(@Inject(JwtHttpService) private http: JwtHttpService) {
   }
 
   addOrganization(organization: Organization): Observable<Organization> {

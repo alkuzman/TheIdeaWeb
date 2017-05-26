@@ -14,7 +14,7 @@ export class LoadProblemDetailsComponent implements OnInit {
   @Input("problemId") problemId: number;
   @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
   @Output("problemNotFound") problemNotFound: EventEmitter<void> = new EventEmitter<void>();
-  private problem: Problem;
+  problem: Problem;
 
   constructor(private problemService: ProblemService) {
 

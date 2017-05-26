@@ -36,7 +36,7 @@ import {LoadingState} from "../../core/loading/loading-state";
 })
 export class AuthPagesComponent implements OnInit, OnDestroy {
   cardState = "active";
-  private loadingState: LoadingState;
+  loadingState: LoadingState;
 
   constructor(private themingService: ThemingService, private loadingService: LoadingService) {
   }

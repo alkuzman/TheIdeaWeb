@@ -3,6 +3,7 @@
  */
 import {Component, Input} from "@angular/core";
 import {Problem} from "../../../../model/ideas/problem";
+import {Alignment} from "../../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-details",
@@ -10,5 +11,5 @@ import {Problem} from "../../../../model/ideas/problem";
 })
 export class ProblemDetailsComponent {
   @Input("problem") problem: Problem;
-
+  ownerAvatarAlignment: Alignment = Alignment.center;
 }

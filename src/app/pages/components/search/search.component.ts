@@ -8,7 +8,7 @@ import {Component, OnInit, ViewChild, Output, EventEmitter} from "@angular/core"
   templateUrl: "search.component.html"
 })
 export class SearchComponent implements OnInit {
-  private value: string = "";
+  value: string = "";
   @ViewChild("search") search: any;
   @Output("searchSubmit") searchSubmit: EventEmitter<string> = new EventEmitter<string>();
 

@@ -37,8 +37,8 @@ export class LoginPageComponent implements OnInit {
     return "100%";
   }
 
-  private email: string;
-  private returnUrl: string;
+  email: string;
+  returnUrl: string;
 
 
     constructor(private router: Router,

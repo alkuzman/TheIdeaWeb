@@ -10,12 +10,14 @@ import {AnnouncementService} from "../../../../services/announcement/announcemen
 @Component({
   moduleId: module.id,
   selector: "ideal-new-announcement-form",
-  template: `<ideal-announcement-form [announcement]='announcement' (announcementReady)="saveAnnouncement($event)"></ideal-announcement-form>`
+  template: `
+    <ideal-announcement-form [announcement]='announcement'
+                             (announcementReady)="saveAnnouncement($event)"></ideal-announcement-form>`
 })
 export class NewAnnouncementFormComponent implements OnInit {
-  private announcement: Announcement;
-  private _sharable: Sharable;
-  private _contracts: Contract[];
+  announcement: Announcement;
+  _sharable: Sharable;
+  _contracts: Contract[];
   @Output("announcementCreated") announcementCreated: EventEmitter<Announcement> = new EventEmitter<Announcement>();
 
   constructor(private announcementService: AnnouncementService) {

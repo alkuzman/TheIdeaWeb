@@ -18,8 +18,8 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
 })
 export class PriceRequestPhaseFieldsComponent implements OnInit {
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
-  private _submitted: boolean;
+  currentForm: FormGroup;
+  _submitted: boolean;
 
   @Input("data") data: PriceRequestPhaseData;
   @Input("lastPrice") lastPrice: Price;

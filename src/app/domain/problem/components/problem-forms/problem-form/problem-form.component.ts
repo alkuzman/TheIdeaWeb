@@ -16,9 +16,9 @@ export class ProblemFormComponent implements OnInit {
   @Input("problem") problem: Problem;
   @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
   errorMessage: any;
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
 

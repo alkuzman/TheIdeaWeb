@@ -18,9 +18,9 @@ import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
 export class IdeaFormComponent implements OnInit {
   @Input("idea") public idea: Idea;
   @Output("ideaReady") ideaReady: EventEmitter<Idea> = new EventEmitter<Idea>();
-  private form: FormGroup;
-  private fields: FormGroup;
-  private submitted: boolean = false;
+  form: FormGroup;
+  fields: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
 

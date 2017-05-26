@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="40px">
+  <div fxFlex="760px" fxFlex.md="360px" fxFlex.lt-md="none" fxLayout="row" fxLayout.lt-lg="column"
+       fxLayoutGap="40px">
+    <div fxFlex="360px" fxFlex.lt-lg="">
+      <ng-content select="ideal-text.first, [ideal-text].first"></ng-content>
+    </div>
+    <div fxFlex="360px" fxFlex.lt-lg="">
+      <ng-content select="ideal-text.second, [ideal-text].second"></ng-content>
+    </div>
+  </div>
+  <div fxFlex="360px" fxFlex.lt-md="none">
+
+    <ng-content select="ideal-figure, [ideal-figure]"></ng-content>
+
+  </div>
+</div>

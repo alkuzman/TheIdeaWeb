@@ -13,14 +13,14 @@ import {User} from "../../../domain/model/authentication/user";
   templateUrl: "problems-page.component.html"
 })
 export class ProblemsPageComponent implements OnInit {
-  private problems: Problem[];
+  problems: Problem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private redirectService: RedirectService) {
   }
 
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {problems: Problem[]}) => {
+    this.route.data.subscribe((data: { problems: Problem[] }) => {
       this.problems = data.problems;
     });
   }

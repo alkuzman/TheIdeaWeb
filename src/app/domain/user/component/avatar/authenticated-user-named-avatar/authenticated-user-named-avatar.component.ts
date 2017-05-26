@@ -11,7 +11,7 @@ import {Alignment} from "../../../../../shared/widget/components/avatars/named-a
   templateUrl: "authenticated-user-named-avatar.component.html"
 })
 export class AuthenticatedUserNamedAvatarComponent implements OnInit {
-  private user: User;
+  user: User;
   @Input("profilePictureRadius") profilePictureRadius: number = 50;
   @Input("alignment") alignment: Alignment = Alignment.left;
   @Input("nameFontSize") nameFontSize: string = "12pt";

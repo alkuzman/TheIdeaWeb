@@ -19,16 +19,16 @@ import {CountryService} from "../../../../services/localization/country.service"
   styleUrls: ["register-fields.component.scss"]
 })
 export class RegisterFieldsComponent implements OnInit, AfterViewChecked {
-  private userAvatarType: AvatarType = AvatarType.CHOOSER;
+  userAvatarType: AvatarType = AvatarType.CHOOSER;
   @Input("form") form: FormGroup;
-  private currentForm: FormGroup;
+  currentForm: FormGroup;
   @Input("user") user: User;
-  private _submitted: boolean = false;
-  private passwordStrengthVisible: boolean = false;
-  private passwordStrength: string;
-  private passwordStrengthProgress: number;
-  private passwordStrengthColor: string;
-  private countries: string[];
+  _submitted: boolean = false;
+  passwordStrengthVisible: boolean = false;
+  passwordStrength: string;
+  passwordStrengthProgress: number;
+  passwordStrengthColor: string;
+  countries: string[];
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

@@ -18,12 +18,12 @@ import {ThemingService} from "../../../core/theming/theming.service";
   templateUrl: "announcement-feed-page.component.html"
 })
 export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
-  private announcementList: Announcement[];
-  private page: number = 1;
-  private pageSize: number;
-  private type: string;
-  private query: string;
-  private noMoreResults: boolean = false;
+  announcementList: Announcement[];
+  page: number = 1;
+  pageSize: number;
+  type: string;
+  query: string;
+  noMoreResults: boolean = false;
 
   constructor(private route: ActivatedRoute, private scrollService: ScrollService,
               private announcementService: AnnouncementService, private redirectService: RedirectService,
@@ -32,7 +32,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {announcementList: Announcement[], pageSize: number, type: string}) => {
+    this.route.data.subscribe((data: { announcementList: Announcement[], pageSize: number, type: string }) => {
       this.announcementList = data.announcementList;
       this.pageSize = data.pageSize;
       this.type = data.type;
@@ -45,7 +45,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
         this.themingService.currentTheme = "default-theme";
       }
     });
-    this.route.queryParams.subscribe((params: {query: string}) => {
+    this.route.queryParams.subscribe((params: { query: string }) => {
       let isNew = this.query != null;
       this.query = params.query;
       if (isNew) {
@@ -76,7 +76,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
 
   }
 
-  private loadMore(): void {
+  loadMore(): void {
     if (this.noMoreResults)
       return;
     let offset = this.page * this.pageSize;

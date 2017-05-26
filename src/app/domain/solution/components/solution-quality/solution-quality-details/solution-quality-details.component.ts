@@ -10,10 +10,10 @@ import {SolutionQualityStatus} from "../../../../model/analyzers/analysis/soluti
   templateUrl: "solution-quality-details.component.html"
 })
 export class SolutionQualityDetailsComponent {
- @Input("solutionQuality") solutionQuality: SolutionQuality;
- private pure: SolutionQualityStatus = SolutionQualityStatus.POOR;
- private fair: SolutionQualityStatus = SolutionQualityStatus.FAIR;
- private good: SolutionQualityStatus = SolutionQualityStatus.GOOD;
+  @Input("solutionQuality") solutionQuality: SolutionQuality;
+  pure: SolutionQualityStatus = SolutionQualityStatus.POOR;
+  fair: SolutionQualityStatus = SolutionQualityStatus.FAIR;
+  good: SolutionQualityStatus = SolutionQualityStatus.GOOD;
 
   public getQualityStatusName(qualityStatus: SolutionQualityStatus): string {
     if (qualityStatus == null)
