@@ -4,5 +4,7 @@ import {ValidationMessagesErrors} from "../../../../../core/helper/validation-me
  */
 export interface SecurityValidationMessages {
   [key: string]: ValidationMessagesErrors;
-  password?: ValidationMessagesErrors
+  "passwords.password"?: ValidationMessagesErrors;
+  "passwords.confirmPassword"?: ValidationMessagesErrors;
+  passwords?: ValidationMessagesErrors;
 }

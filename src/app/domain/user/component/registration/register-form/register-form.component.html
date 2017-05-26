@@ -1,6 +1,8 @@
 <form novalidate *ngIf="active" (ngSubmit)="save()" #registerForm="ngForm">
   <ideal-register-fields [user]="user" [form]="form" [submitted]="submitted"></ideal-register-fields>
   <div class="padding-top">
-    <button class="full-width" color="primary" type="submit" md-raised-button>{{submitButtonText}}</button>
+    <button class="full-width" color="primary" type="submit" md-raised-button>
+      {{submitButtonText | uppercase}}
+    </button>
   </div>
 </form>

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router, Params} from "@angular/router";
 import {MdSnackBar} from "@angular/material";
 import {enterRightLeaveRight, routerAnimations} from "../../../core/helper/standard-route-animations";
 import {AuthProperties} from "../../auth.properties";
+import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url-not-allowed.guard";
 
 /**
  * Created by Viki on 11/1/2016.
@@ -40,10 +41,11 @@ export class LoginPageComponent implements OnInit {
   private returnUrl: string;
 
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private snackBar: MdSnackBar) {
-  }
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private snackBar: MdSnackBar,
+                private accessFromUrlGuard: AccessFromUrlNotAllowedGuard) {
+    }
 
 
   ngOnInit(): void {
@@ -62,12 +64,24 @@ export class LoginPageComponent implements OnInit {
     this.snackBar.open('You have entered wrong password!', "Try again", {duration: 3000});
   }
 
-  authenticate(): void {
-    let queryParams: AuthProperties = {};
-    if (this.email != null)
-      queryParams.email = this.email;
-    if (this.returnUrl != null)
-      queryParams.returnUrl = this.returnUrl;
-    this.router.navigate(["auth"], {queryParams: queryParams});
-  }
+    onUserNotActivated() {
+        let snackBarRef = this.snackBar.open("You have not activated your account, please check your email.", "More",
+            {duration: 3000}).onAction().subscribe(null, null, () => {
+            let queryParams: AuthProperties = {};
+            if (this.email != null)
+                queryParams.email = this.email;
+            this.accessFromUrlGuard.allow = true;
+            this.router.navigate(["/auth/verify"], {queryParams: queryParams});
+        });
+
+    }
+
+    authenticate(): void {
+        let queryParams: AuthProperties = {};
+        if (this.email != null)
+            queryParams.email = this.email;
+        if (this.returnUrl != null)
+            queryParams.returnUrl = this.returnUrl;
+        this.router.navigate(["auth"], {queryParams: queryParams});
+    }
 }

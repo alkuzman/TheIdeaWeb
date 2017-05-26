@@ -9,47 +9,60 @@ import {UserObjectService} from "../../../../services/user/user-object.service";
  */
 
 @Component({
-  moduleId: module.id,
-  selector: "ideal-check-user-password-form",
-  templateUrl: "check-user-password-form.component.html"
+    moduleId: module.id,
+    selector: "ideal-check-user-password-form",
+    templateUrl: "check-user-password-form.component.html"
 })
 export class CheckUserPasswordFormComponent implements OnInit {
-  @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
-  @Output("passwordCorrect") passwordCorrect: EventEmitter<User> = new EventEmitter<User>();
-  @Output("passwordIncorrect") passwordIncorrect: EventEmitter<void> = new EventEmitter<void>();
+    @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
+    @Output("passwordCorrect") passwordCorrect: EventEmitter<User> = new EventEmitter<User>();
+    @Output("passwordIncorrect") passwordIncorrect: EventEmitter<void> = new EventEmitter<void>();
+    @Output("userNotActivated") userNotActivated: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private userService: UserService, private userObjectService: UserObjectService) {
-  }
-
-  user: User;
-
-  ngOnInit(): void {
-    this.user = this.userObjectService.user;
-    if (this.user == null) {
-      this.usernameNotChecked.emit();
+    constructor(private userService: UserService, private userObjectService: UserObjectService) {
     }
-    this.user.password = "";
-  }
 
-  checkUserPassword(credentials: Credentials) {
-    this.userService.loginUser(credentials).subscribe((response: Response) => this.onPasswordCorrect(response),
-      (error: Response) => this.onPasswordWrong(error));
-  }
+    user: User;
 
-  private onPasswordWrong(error: Response) {
-    this.notifyPasswordWrong();
-  }
+    ngOnInit(): void {
+        this.user = this.userObjectService.user;
+        if (this.user == null) {
+            this.usernameNotChecked.emit();
+        }
+        this.user.password = "";
+    }
 
-  private onPasswordCorrect(response: Response) {
-    this.notifyPasswordCorrect()
-  }
+    checkUserPassword(credentials: Credentials) {
+        this.userService.loginUser(credentials).subscribe((response: Response) => this.onPasswordCorrect(response),
+            (error: Response) => this.onError(error));
+    }
 
-  notifyPasswordCorrect(): void {
-    this.passwordCorrect.emit(this.user);
-  }
+    private onError(error: Response) {
+        console.log(error.text());
+        if (error.status == 401) {
+            if (JSON.parse(error.text()).errorCode == 11) {
+                this.notifyUserNotActivated();
+            }
+            else if (JSON.parse(error.text()).errorCode == 10) {
+                this.notifyPasswordWrong();
+            }
+        }
+    }
 
-  notifyPasswordWrong(): void {
-    this.passwordIncorrect.emit();
-  }
+    private onPasswordCorrect(response: Response) {
+        this.notifyPasswordCorrect()
+    }
+
+    notifyPasswordCorrect(): void {
+        this.passwordCorrect.emit(this.user);
+    }
+
+    notifyPasswordWrong(): void {
+        this.passwordIncorrect.emit();
+    }
+
+    notifyUserNotActivated(): void {
+        this.userNotActivated.emit();
+    }
 }
 

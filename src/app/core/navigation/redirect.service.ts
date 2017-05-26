@@ -13,6 +13,10 @@ export class RedirectService {
   constructor(private router: Router) {
   }
 
+  login(param: {email: string}) {
+    this.router.navigate(['/auth'], {queryParams: param});
+  }
+
   getAnnouncementDetails(id: number) {
     this.router.navigate(['/announcements', id.toString()]);
   }

@@ -5,6 +5,7 @@ import {MdSnackBar} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
 import {enterRightLeaveRight, routerAnimations} from "../../core/helper/standard-route-animations";
 import {AuthProperties} from "../auth.properties";
+import {AccessFromUrlNotAllowedGuard} from "../../core/guards/access-from-url-not-allowed.guard";
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -41,7 +42,8 @@ export class RegisterPageComponent implements OnInit {
   private email: string;
   private returnUrl: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
+  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar,
+              private urlAccessGuard: AccessFromUrlNotAllowedGuard) {
   }
 
   ngOnInit(): void {
@@ -71,7 +73,14 @@ export class RegisterPageComponent implements OnInit {
   }
 
   registered(user: User): void {
+    this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
 
+    let queryParams: AuthProperties = {};
+    if (this.email != null)
+      queryParams.email = this.email;
+
+    this.urlAccessGuard.allow = true;
+    this.router.navigate(["auth/verify"], {queryParams: queryParams});
   }
 
   constraintsViolated(fieldErrors: FieldError[]): void {

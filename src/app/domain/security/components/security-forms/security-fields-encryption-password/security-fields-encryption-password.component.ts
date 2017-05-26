@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {SecurityFieldsEncryptionPasswordErrors} from "./security-fields-encryption-password-errors";
 import {SecurityValidationMessages} from "./security-validation-messages";
 import {ValidationMessagesErrors} from "../../../../../core/helper/validation-messages-errors";
+import {IdeaValidators} from "../../../../../core/validators/idea.validators";
+import {PasswordStrength} from "../../../../../core/helper/services/password-strength";
+import {PasswordStrengthService} from "../../../../../core/helper/services/password-strength.service";
 /**
  * Created by Viki on 2/12/2017.
  */
@@ -21,23 +24,62 @@ export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
   private _submitted: boolean = false;
 
+  private passwordStrengthVisible: boolean = false;
+  private passwordStrength: string;
+  private passwordStrengthProgress: number;
+  private passwordStrengthColor: string;
+
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;
     this.onValueChanged();
   }
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private passwordStrengthService: PasswordStrengthService) {
 
   }
 
   ngOnInit(): void {
-    let control: FormControl = this.fb.control(this.password, Validators.required);
+    let passwords: FormGroup = this.fb.group({});
+    passwords.setValidators(IdeaValidators.passwordMatcher);
+
+    let control: FormControl = this.fb.control(this.password, [Validators.required, Validators.minLength(6)]);
     control.valueChanges.subscribe((value) => {
       this.password = value;
+      this.calculatePasswordStrength();
       this.passwordReady.emit(this.password);
     });
-    this.form.addControl("password", control);
+    passwords.addControl("password", control);
+
+    control = this.fb.control("", [Validators.required]);
+    passwords.addControl("confirmPassword", control);
+
+    this.form.addControl("passwords", passwords);
+
+    this.calculatePasswordStrength();
+  }
+
+  showPasswordStrength() {
+    this.passwordStrengthVisible = true;
+  }
+
+  hidePasswordStrength() {
+    this.passwordStrengthVisible = false;
+  }
+
+  calculatePasswordStrength() {
+    let passwordStrength: PasswordStrength = this.passwordStrengthService.calculate(this.password);
+    this.setupForPasswordStrength(passwordStrength);
+  }
+
+  setupForPasswordStrength(passwordStrength: PasswordStrength) {
+    this.passwordStrengthProgress = (passwordStrength + 1) * 20;
+    this.passwordStrength = PasswordStrength[passwordStrength];
+    if (passwordStrength <= 1)
+      this.passwordStrengthColor = "warn";
+    else if (passwordStrength == 2)
+      this.passwordStrengthColor = "accent";
+    else this.passwordStrengthColor = "primary";
   }
 
   ngAfterViewChecked() {
@@ -75,12 +117,22 @@ export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
   }
 
   formErrors: SecurityFieldsEncryptionPasswordErrors = {
-    password: ''
+    "passwords.password": '',
+    "passwords.confirmPassword": '',
+    passwords: ''
   };
 
   validationMessages: SecurityValidationMessages = {
-    password: {
-      required: 'Password is required'
+    "passwords.password": {
+      required: 'Password is required',
+      minlength: 'Password should be at least 6 characters long',
+      pattern: "Password should have minimum 8 characters, at least 1 alphabet, 1 number and 1 special character"
+    },
+    "passwords.confirmPassword": {
+      required: 'Confirm password is required'
+    },
+    passwords: {
+      passwordMatcher: 'Confirm Password and Password must match'
     }
   };
 }
