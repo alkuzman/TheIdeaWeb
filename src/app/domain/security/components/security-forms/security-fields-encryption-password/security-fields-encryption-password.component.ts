@@ -46,6 +46,7 @@ export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
     let control: FormControl = this.fb.control(this.password, [Validators.required, Validators.minLength(6)]);
     control.valueChanges.subscribe((value) => {
       this.password = value;
+      this.calculatePasswordStrength();
       this.passwordReady.emit(this.password);
     });
     passwords.addControl("password", control);
