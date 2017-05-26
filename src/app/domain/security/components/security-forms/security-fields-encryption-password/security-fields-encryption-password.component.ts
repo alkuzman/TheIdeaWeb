@@ -24,10 +24,10 @@ export class SecurityFieldsEncryptionPasswordComponent implements OnInit {
   @Output("passwordReady") passwordReady: EventEmitter<string> = new EventEmitter<string>();
   _submitted: boolean = false;
 
-  private passwordStrengthVisible: boolean = false;
-  private passwordStrength: string;
-  private passwordStrengthProgress: number;
-  private passwordStrengthColor: string;
+  passwordStrengthVisible: boolean = false;
+  passwordStrength: string;
+  passwordStrengthProgress: number;
+  passwordStrengthColor: string;
 
   @Input("submitted") set submitted(submitted: boolean) {
     this._submitted = submitted;

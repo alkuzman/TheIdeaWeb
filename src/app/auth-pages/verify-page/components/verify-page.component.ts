@@ -12,7 +12,7 @@ import {MdSnackBar} from "@angular/material";
 })
 export class VerifyPageComponent implements OnInit {
 
-    private user: User;
+    user: User;
 
     constructor(private route: ActivatedRoute, private userService: UserService,
                 private snackBar: MdSnackBar) {

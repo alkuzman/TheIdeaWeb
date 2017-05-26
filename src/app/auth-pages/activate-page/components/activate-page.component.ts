@@ -43,13 +43,12 @@ export class ActivatePageComponent implements OnInit {
     private symmetricKey: CryptoKey;
     private symmetricKeyEncrypted: string;
 
-    private encryptedKeyPairGenerated: boolean = false;
-    private certificateGeneratedS: boolean = false;
+    encryptedKeyPairGenerated: boolean = false;
+    certificateGeneratedS: boolean = false;
     passwordEntered: boolean = false;
     saveDecision = true;
     enterPassword = true;
     stepOneFinished = false;
-    private savePrivateKey: string = "YES";
 
     constructor(private route: ActivatedRoute,
                 private keysService: KeysService,
@@ -155,7 +154,7 @@ export class ActivatePageComponent implements OnInit {
     }
 
     finish() {
-        this.saveSecurityProfile(this.saveDecision).subscribe(() => {
+        this.saveSecurityProfile(this.passwordEntered && this.saveDecision).subscribe(() => {
             let queryParams = {"email": this.user.email};
             this.redirectService.login(queryParams);
         });

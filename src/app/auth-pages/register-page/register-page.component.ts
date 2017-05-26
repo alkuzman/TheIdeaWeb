@@ -1,7 +1,7 @@
 import {Component, OnInit, HostBinding} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
-import {MdSnackBar} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
 import {enterRightLeaveRight, routerAnimations} from "../../core/helper/standard-route-animations";
 import {AuthProperties} from "../auth.properties";
@@ -63,7 +63,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   login(user: User): void {
-    this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
+    this.snackBar.open("Your registration is successful!", undefined, <MdSnackBarConfig>{duration: 3000});
     let queryParams: AuthProperties = {};
     if (this.email != null)
       queryParams.email = this.email;
@@ -73,7 +73,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   registered(user: User): void {
-    this.snackBar.open("Your registration is successful!", undefined, {duration: 3000});
+    this.snackBar.open("Your registration is successful!", undefined, <MdSnackBarConfig>{duration: 3000});
 
     let queryParams: AuthProperties = {};
     if (this.email != null)
@@ -89,6 +89,6 @@ export class RegisterPageComponent implements OnInit {
       message += "[" + fieldError.field + "] " + fieldError.message + "\n";
     }
     message = message.substring(0, message.length - 1);
-    this.snackBar.open(message, 'Try Again', {duration: 3000});
+    this.snackBar.open(message, 'Try Again', <MdSnackBarConfig>{duration: 3000});
   }
 }
