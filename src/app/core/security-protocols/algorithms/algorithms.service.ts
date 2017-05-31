@@ -13,6 +13,7 @@ export class AlgorithmService {
     public ASYMMETRIC_SIGNING_ALG2: string = 'RSA-PSS';
     public ASYMMETRIC_ENCRYPTION_ALG: string = 'RSA-OAEP';
     public HASH_ALG: string = 'SHA-256';
+    public HASH_ALG_SHA_512: string = 'sha512';
     public SYMMETRIC_ALG: string = 'AES-CTR';
 
     constructor() {}

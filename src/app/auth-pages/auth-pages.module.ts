@@ -12,14 +12,15 @@ import {RegisterPageComponent} from "./register-page/register-page.component";
 import {LoginPageComponent} from "./login-page/components/login-page.component";
 import {AuthPageComponent} from "./auth-page/components/auth-page.component";
 import {LogoutPageComponent} from "./logout-page/logout-page.component";
-import {VerifyPageComponent} from "./verify-page/verify-page.component";
+import {ActivatePageComponent} from "./activate-page/components/activate-page.component";
 import {SecurityModule} from "../domain/security/security.module";
-import {VerifyPageComponent2} from "./verify-page/verify2";
+import { VerifyPageComponent } from './verify-page/components/verify-page.component';
+import {VerifyPageComponent2} from "./activate-page/activate2";
 
 @NgModule({
   imports: [SharedModule, AuthPagesRoutingModule, UserModule, SecurityModule],
   declarations: [AuthPagesComponent, AuthCardComponent, LoginPageComponent, RegisterPageComponent,
-    AuthPageComponent, LogoutPageComponent, VerifyPageComponent, VerifyPageComponent2]
+    AuthPageComponent, LogoutPageComponent, ActivatePageComponent, VerifyPageComponent, VerifyPageComponent2]
 })
 export class AuthPagesModule {
 }

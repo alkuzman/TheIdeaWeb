@@ -1,0 +1,120 @@
+<md-card>
+    <md-card-content>
+        <div [ngSwitch]="encryptedKeyPairGenerated && certificateGeneratedS">
+            <div *ngSwitchCase="false" fxLayout="column">
+                <!-- Certificate generation in progress -->
+                <h2 fxFlex="auto" fxFlexAlign="center" class="ideal-headline">
+                    We are generating your security profile. Please wait
+                </h2>
+                <div fxFlex="auto" fxFlexAlign="center">
+                    <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+                </div>
+            </div>
+            <div *ngSwitchCase="true" class="full-width">
+                <div [ngSwitch]="stepOneFinished" class="full-width">
+                    <div *ngSwitchCase="false" fxLayout="column">
+                        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="40px">
+                            <div fxFlex="360px" fxFlex.lt-md="">
+                                <h1 idealColor="primary" class="ideal-display-1">Enter password</h1>
+                                <ideal-text>
+                                    <p class="ideal-body-1" style="justify-content: center">
+                                        This password is used for encrypting some of the data in your security profile
+                                        that
+                                        need to be kept save. We strongly recommend to enter a password.
+                                        This password is not saved in the database. You must not forget this password.
+                                    </p>
+                                </ideal-text>
+                                <div style="text-align: right;">
+                                    <a idealColor="primary" routerLink="why">
+                                        {{"Why do I need password" | uppercase}}
+                                    </a>
+                                </div>
+                            </div>
+                            <div fxFlex="auto" fxLayout="row">
+                                <div fxFlex="70%" fxFlexOffset="15%" fxFlex.lt-md="50%" fxFlexOffset.lt-md="25%">
+                                    <img style="width: 100%; height: auto;"
+                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Ob7crpMTlUFB5wRLloeXM_mk_lgjL6C3fcIpsZTLGBGFfz_7RQ"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; margin-bottom: 10px;">
+                            <md-slide-toggle [(ngModel)]="enterPassword">Enter password</md-slide-toggle>
+                        </div>
+                        <ideal-security-form-encryption-password *ngIf="enterPassword" buttonText="Continue"
+                                                                 (passwordReady)="continueWithPassword($event)">
+                        </ideal-security-form-encryption-password>
+                        <div *ngIf="!enterPassword" style="text-align: right">
+                            <button md-raised-button color="primary" (click)="continueWithoutPassword()">
+                                {{"Continue without password" | uppercase}}
+                            </button>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="true" fxLayout="column">
+                        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="40px">
+                            <div fxFlex="360px" fxFlex.lt-md="">
+                                <ideal-text>
+                                    <h1 idealColor="primary" class="ideal-display-1">Generation complete</h1>
+                                    <p class="ideal-body-1" style="justify-content: center">
+                                        We generated your security profile. You will need it for most of the
+                                        functionalities in the application.
+                                    </p>
+                                    <p *ngIf="passwordEntered" class="ideal-body-1" style="justify-content: center">
+                                        Some of the data in the security profile needs to be kept private. This
+                                        information can be kept secure and private on the system. The system can't
+                                        use this data because it encrypts them before saving and only you can
+                                        decrypt it when using. If you don't like to save your private information
+                                        on the system you can download all necessary data and upload them whenever
+                                        you need to make transactions or save new ideas. You can choose to save the
+                                        data and also download them.
+                                    </p>
+                                    <p *ngIf="!passwordEntered" class="ideal-body-1" style="justify-content: center">
+                                        You chose not to enter password. You need to download the zip folder and keep
+                                        it save and private. Don't lose the zip folder because it can't be restored and
+                                        you will lose all saved ideas and past transactions. <br/> If you change your
+                                        mind
+                                        go back and enter password.
+                                    </p>
+                                </ideal-text>
+                                <div style="text-align: right">
+                                    <a color="primary" routerLink="more">LEARN MORE</a>
+                                </div>
+                            </div>
+                            <div fxFlex="auto" fxLayout="row">
+                                <div fxFlex="70%" fxFlexOffset="15%" fxFlex.lt-md="50%" fxFlexOffset.lt-md="25%">
+                                    <img style="width: 100%; height: auto;"
+                                         src="https://lh3.googleusercontent.com/sFyLx6izWjreXTtJp8v4sZD2zGJJoD_74kA9BFyokNEcdzh8UxtCMMsw1056qmA6S7ctXN-Gt5gehiql-4xZig=w978"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button md-raised-button (click)="generateZip()">
+                                DOWNLOAD .ZIP
+                                <md-icon>file_download</md-icon>
+                            </button>
+                        </div>
+                        <div *ngIf="passwordEntered" style="margin-top: 10px">
+                            <button md-raised-button (click)="generateZipSecure()">
+                                DOWNLOAD .ZIP SECURE
+                                <md-icon>file_download</md-icon>
+                            </button>
+                        </div>
+                        <div style="margin-top: 10px">
+                            <md-slide-toggle *ngIf="passwordEntered" [(ngModel)]="saveDecision">
+                                Save on server
+                            </md-slide-toggle>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
+                            <button md-raised-button (click)="goBackToPassword()">
+                                {{"Back" | uppercase}}
+                            </button>
+                            <button md-raised-button color="accent" (click)="finish()">
+                                {{"Finish" | uppercase}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </md-card-content>
+</md-card>

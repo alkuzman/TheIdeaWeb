@@ -34,6 +34,7 @@ import {DecryptingService} from "./security-protocols/decrypting.service";
 import {SecurityProfileService} from "../domain/services/security-profile/security-profile.service";
 import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-operations/simple-cryptographic-operations";
 import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
+import {AccessFromUrlNotAllowedGuard} from "./guards/access-from-url-not-allowed.guard";
 import {DiscardChangesGuard} from "./guards/discard_changes.guard";
 
 
@@ -48,7 +49,7 @@ import {DiscardChangesGuard} from "./guards/discard_changes.guard";
     SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
     ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
     ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
-    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard]
+    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard, AccessFromUrlNotAllowedGuard]
 })
 export class CoreModule {
 }

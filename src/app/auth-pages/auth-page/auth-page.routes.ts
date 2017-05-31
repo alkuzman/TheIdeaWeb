@@ -9,4 +9,4 @@ export const AuthPageRoutes: Routes = [
     path: '',
     component: AuthPageComponent
   }
-]
+];

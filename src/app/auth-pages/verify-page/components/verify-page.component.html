@@ -1,0 +1,24 @@
+<md-card fxLayout="row">
+    <div fxLayout="column" fxFlex="none">
+        <h3 fxFlex="none" class="ideal-headline">
+            Dear {{user?.firstName}},
+        </h3>
+        <p fxFlex="none" class="ideal-body-1">
+            To activate your account, <br /> please check your email.
+        </p>
+        <div fxFlex="none" fxLayout="row" fxLayoutAlign="start">
+            <button md-raised-button color="primary" (click)="resendActivationCode()">
+                {{"Resend Activation Code" | uppercase}}
+            </button>
+        </div>
+    </div>
+
+    <div fxFlex="flex" fxFlexOffset="10%">
+        <ideal-smoot-image-widget class="fit-image"
+                                  idealSrc="http://www.freeiconspng.com/uploads/welcome-png-images-16.png">
+
+        </ideal-smoot-image-widget>
+    </div>
+</md-card>
+
+

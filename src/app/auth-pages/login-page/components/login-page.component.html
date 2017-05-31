@@ -1,4 +1,6 @@
 <md-card>
   <ideal-check-user-password-form (usernameNotChecked)="authenticate()" (passwordCorrect)="onUserLoggedIn()"
-                                  (passwordIncorrect)="onWrongPassword()"></ideal-check-user-password-form>
+                                  (passwordIncorrect)="onWrongPassword()" (userNotActivated)="onUserNotActivated()">
+
+  </ideal-check-user-password-form>
 </md-card>
