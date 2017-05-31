@@ -5,7 +5,7 @@ import {HomeComponent} from "./home.component";
 import {ModuleService} from "./module/module.service";
 
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [SharedModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
   providers: [ModuleService]

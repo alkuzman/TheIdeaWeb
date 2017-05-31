@@ -6,7 +6,7 @@ import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
 import {MaterialModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {InfiniteScrollModule} from "angular2-infinite-scroll";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {MomentModule} from "angular2-moment";
 import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
 
@@ -18,7 +18,7 @@ import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, FroalaEditorModule, FroalaViewModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule]
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, MaterialModule, FroalaEditorModule, FroalaViewModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
