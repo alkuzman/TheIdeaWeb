@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
 import {AlgorithmService} from "../algorithms/algorithms.service";
 import {AlgorithmSP} from "../algorithms/algorithm-sp";
+
 /**
  * Created by Viki on 2/4/2017.
  */
@@ -36,6 +37,7 @@ export class KeysService {
         let algorithm: AlgorithmSP = this.algorithmService.getSymmetricAlgorithmForGenerationKey();
         let algInst: any = algorithm.algorithm;
         return this.crypto.generateKey(algInst, true, algorithm.usages);
+
     }
 
     public generateSymmetricKeyFromPasswordAndAdditionalParameters(password: string, numIterations: number,
