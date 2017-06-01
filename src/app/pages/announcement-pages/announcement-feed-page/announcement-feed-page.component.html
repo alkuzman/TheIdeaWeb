@@ -12,8 +12,7 @@
     (report)="onReport($event)"
     (sendTo)="onSendTo($event)"
     (share)="onShare($event)"></ideal-announcement-list>
-
-</div>
-<div *ngIf="noMoreResults" class="padding" style="text-align: center">
-  <button md-raised-button disabled>No More Results</button>
+  <div *ngIf="noMoreResults" class="padding" style="text-align: center">
+    <button md-raised-button disabled>No More Results</button>
+  </div>
 </div>
