@@ -1,7 +1,7 @@
 import {Component, style, HostBinding, OnInit} from "@angular/core";
 import {ActivatedRoute, Router, Params} from "@angular/router";
 import {MdSnackBar} from "@angular/material";
-import {enterRightLeaveRight, routerAnimations} from "../../../core/helper/standard-route-animations";
+import {enterRightLeaveRight, routerAnimations} from "../../../core/animations/standard-route-animations";
 import {AuthProperties} from "../../auth.properties";
 import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url-not-allowed.guard";
 
@@ -13,13 +13,11 @@ import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url
   selector: "ideal-login-page",
   templateUrl: "login-page.component.html",
   animations: [
-    enterRightLeaveRight('routeAnimation')
+    routerAnimations("routeAnimation")
   ]
 })
 export class LoginPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") get routeAnimation() {
-    return true;
-  }
+  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";

@@ -7,6 +7,11 @@ import {AuthPageComponent} from "./components/auth-page.component";
 export const AuthPageRoutes: Routes = [
   {
     path: '',
-    component: AuthPageComponent
+    component: AuthPageComponent,
+    data: {
+      animation: {
+        value: 'auth',
+      }
+    }
   }
 ];

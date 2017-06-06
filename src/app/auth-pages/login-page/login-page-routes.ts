@@ -7,6 +7,11 @@ import {LoginPageComponent} from "./components/login-page.component";
 export const LoginPageRoutes: Routes = [
   {
     path: '',
-    component: LoginPageComponent
+    component: LoginPageComponent,
+    data: {
+      animation: {
+        value: 'login',
+      }
+    }
   }
-]
+];

@@ -1,15 +1,17 @@
 import {
   Component,
   Input,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
   OnInit,
   Output,
   EventEmitter
 } from "@angular/core";
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate, useAnimation
+} from "@angular/animations";
 import {Announcement} from "../../../model/sharing/announcement";
 import {Scheduler} from "rxjs";
 import {Idea} from "../../../model/ideas/idea";
@@ -17,6 +19,8 @@ import {Problem} from "../../../model/ideas/problem";
 import {User} from "../../../model/authentication/user";
 import {Sharable} from "../../../model/sharing/sharable";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
+import {fadeSlideFromBottom} from "../../../../core/animations/fade-slide-animations";
+import {fadeIn, fadeOut} from "../../../../core/animations/fade-animations";
 /**
  * Created by AKuzmanoski on 08/01/2017.
  */
@@ -25,27 +29,12 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
   selector: "ideal-announcement-list",
   templateUrl: "announcement-list.component.html",
   animations: [
-    trigger('loading', [
-      state('init', style({
-        opacity: 0,
-        transform: 'translateY(10px)'
-      })),
-      state('active', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition("init => active", [
-
-        animate("160ms ease-out", style({
-          opacity: 1,
-          transform: 'translateY(0)'
-        }))
-      ]),
-      transition("active => init", [
-        animate("150ms ease-in", style({
-          opacity: 0,
-          transform: 'translateY(10px)'
-        }))
+    trigger('append', [
+      transition(":enter", [
+        useAnimation(fadeSlideFromBottom)
+      ], {params: {delay: "0ms"}}),
+      transition(":leave", [
+        useAnimation(fadeOut)
       ])
     ])
   ]
@@ -53,24 +42,9 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class AnnouncementListComponent implements OnInit {
   @Input("announcementList") announcementList: Announcement[];
   @Output("openContent") openContent: EventEmitter<Announcement> = new EventEmitter<Announcement>();
-  private status: string[] = [];
 
   ngOnInit(): void {
-    let queueRefresh = Scheduler.queue;
-    this.announcementList.forEach((item, index) => {
-      this.status[index] = "init";
-    });
-    let maxNum = this.announcementList.length;
-    let index = 0;
-    let timer = TimerObservable.create(0, 40);
-    let subscription = timer.subscribe(t => {
-      if (index >= maxNum) {
-        subscription.unsubscribe();
-        return;
-      }
-      this.changeStatus(index);
-      index++;
-    });
+
   }
 
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
@@ -124,12 +98,9 @@ export class AnnouncementListComponent implements OnInit {
     this.sendTo.emit(sharable);
   }
 
-  changeStatus(index: number) {
-    this.status[index] = "active";
-  }
-
   getContent(announcement: Announcement) {
     this.openContent.emit(announcement);
   }
 
+  trackByAnnouncements(index: number, announcement: Announcement): number { return announcement.id; }
 }

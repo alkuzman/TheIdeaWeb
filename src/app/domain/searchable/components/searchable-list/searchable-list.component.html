@@ -1,5 +1,5 @@
 <div>
-  <div *ngFor="let searchable of searchableList" class="margin">
+  <div *ngFor="let searchable of searchableList; let i = index" [idealStagger]="i" class="margin">
     <ideal-searchable-card
       [searchable]="searchable"
       (announcementSelected)="onAnnouncementSelected($event)"

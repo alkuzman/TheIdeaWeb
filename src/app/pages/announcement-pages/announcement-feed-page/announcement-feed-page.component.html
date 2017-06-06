@@ -1,4 +1,4 @@
-<div>
+<div style="margin-bottom: 200px;">
   <ideal-announcement-list
     [announcementList]="announcementList"
     (openContent)="getContent($event)"
@@ -15,4 +15,8 @@
   <div *ngIf="noMoreResults" class="padding" style="text-align: center">
     <button md-raised-button disabled>No More Results</button>
   </div>
+  <div *ngIf="!noMoreResults" class="padding" fxLayout="row" fxLayoutAlign="center">
+    <md-spinner style="height: 40px; width: 40px;" fxFlex="none"></md-spinner>
+  </div>
+  <button [@fab] [routerLink]="additionUrl" md-fab><md-icon>add</md-icon></button>
 </div>

@@ -14,6 +14,11 @@ export const PagesRoutes: Routes = [
   {
     path: "",
     component: PagesComponent,
+    data: {
+      animation: {
+        value: "pages"
+      }
+    },
     children: [
       {
         path: 'about',

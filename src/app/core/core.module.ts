@@ -36,10 +36,11 @@ import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-
 import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
 import {AccessFromUrlNotAllowedGuard} from "./guards/access-from-url-not-allowed.guard";
 import {DiscardChangesGuard} from "./guards/discard_changes.guard";
+import {ScrollDispatchModule} from "@angular/material";
 
 
 @NgModule({
-  imports: [SharedModule, SecurityModule],
+  imports: [SharedModule, SecurityModule, ScrollDispatchModule],
   declarations: [],
   exports: [],
   providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,

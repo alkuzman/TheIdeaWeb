@@ -34,13 +34,16 @@ import { DocContentComponent } from './components/doc/doc-content/doc-content.co
 import { DocTableContentsComponent } from './components/doc/doc-content/doc-table-contents/doc-table-contents.component';
 import { DocSectionComponent } from './components/doc/doc-content/doc-section/doc-section.component';
 import {RouterModule} from "@angular/router";
+import { StaggerDirective } from './directives/stagger.directive';
+import { TextDirective } from './directives/text.directive';
+import { ShortTextDirective } from './directives/short-text.directive';
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @NgModule({
-  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent],
-  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent],
+  declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent, StaggerDirective, TextDirective, ShortTextDirective],
+  exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent, UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealLabelModule, IdealBadge, DiscardChangesDialog, DocComponent, DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent, DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent, DocSectionComponent, StaggerDirective, TextDirective, ShortTextDirective],
   imports: [MaterialModule, CommonModule, FormsModule, PipesModule, FlexLayoutModule, RouterModule],
   entryComponents: [UploadImageDialogComponent, DiscardChangesDialog]
 })

@@ -1,5 +1,5 @@
 <div>
-  <div class="margin" *ngFor="let notice of noticeList">
+  <div class="margin" *ngFor="let notice of noticeList; let i = index" [idealStagger]="i">
     <ideal-notice-card [notice]="notice"></ideal-notice-card>
   </div>
 </div>

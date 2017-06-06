@@ -6,6 +6,11 @@ import {RegisterPageComponent} from "./register-page.component";
 export const RegisterPageRoutes: Routes = [
   {
     path: '',
-    component: RegisterPageComponent
+    component: RegisterPageComponent,
+    data: {
+      animation: {
+        value: 'register',
+      }
+    }
   }
 ]

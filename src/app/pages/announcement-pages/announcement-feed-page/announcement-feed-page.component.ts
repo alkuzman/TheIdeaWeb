@@ -12,10 +12,23 @@ import {Idea} from "../../../domain/model/ideas/idea";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {User} from "../../../domain/model/authentication/user";
 import {ThemingService} from "../../../core/theming/theming.service";
+import {animate, animateChild, state, style, transition, trigger, useAnimation} from "@angular/animations";
+import {scaleIn, scaleOut} from "../../../core/animations/scale-animations";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-feed-page",
-  templateUrl: "announcement-feed-page.component.html"
+  templateUrl: "announcement-feed-page.component.html",
+  styleUrls: ["announcement-feed-page.component.scss"],
+  animations: [
+    trigger("fab", [
+      transition(':enter',
+        useAnimation(scaleIn)
+      ),
+      transition(':leave', [
+        useAnimation(scaleOut)
+      ])
+    ])
+  ]
 })
 export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   announcementList: Announcement[];
@@ -24,6 +37,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   type: string;
   query: string;
   noMoreResults: boolean = false;
+  additionUrl: string;
 
   constructor(private route: ActivatedRoute, private scrollService: ScrollService,
               private announcementService: AnnouncementService, private redirectService: RedirectService,
@@ -37,12 +51,17 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       this.pageSize = data.pageSize;
       this.type = data.type;
       if (this.type != null) {
-        if (this.type == "Idea")
+        if (this.type == "Idea") {
           this.themingService.currentTheme = "idea-theme";
-        else if (this.type == "Problem")
+          this.additionUrl = "/ideas/new";
+        }
+        else if (this.type == "Problem") {
           this.themingService.currentTheme = "problem-theme";
+          this.additionUrl = "/problems/new";
+        }
       } else {
         this.themingService.currentTheme = "default-theme";
+        this.additionUrl = "/ideas/new";
       }
     });
     this.route.queryParams.subscribe((params: { query: string }) => {

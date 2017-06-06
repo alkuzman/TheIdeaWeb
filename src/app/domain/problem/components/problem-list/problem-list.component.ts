@@ -23,31 +23,6 @@ import {Organization} from "../../../model/authentication/organization";
   selector: "ideal-problem-list",
   templateUrl: "problem-list.component.html",
   styleUrls: ["problem-list.component.scss"],
-  animations: [
-    trigger('loading', [
-      state('init', style({
-        opacity: 0,
-        transform: 'translateY(10px)'
-      })),
-      state('active', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition("init => active", [
-
-        animate("160ms ease-out", style({
-          opacity: 1,
-          transform: 'translateY(0)'
-        }))
-      ]),
-      transition("active => init", [
-        animate("150ms ease-in", style({
-          opacity: 0,
-          transform: 'translateY(10px)'
-        }))
-      ])
-    ])
-  ]
 })
 export class ProblemListComponent implements OnInit {
   @Input("problems") problems: Problem[];

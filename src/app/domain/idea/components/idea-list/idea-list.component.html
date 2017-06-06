@@ -1,4 +1,4 @@
-<div *ngFor="let idea of ideas; let i = index;" [@loading]="status[i]" class="margin">
+<div *ngFor="let idea of ideas; let i = index;" [idealStagger]="i" class="margin">
   <ideal-idea-card [idea]="idea" (ideaSelected)="onIdeaSelected(idea)"
                    (ideaOwnerSelected)="onIdeaOwnerSelected(idea.owner)"
                    (ideaProblemSelected)="onIdeaProblemSelected(idea.problem)"
