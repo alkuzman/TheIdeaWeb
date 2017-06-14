@@ -8,14 +8,14 @@ export class UserObjectService {
   private _user: User;
 
   public get user(): User {
-    return JSON.parse(localStorage.getItem("user"));
+    return this._user;
   }
 
   public set user(user: User) {
-    localStorage.setItem("user", JSON.stringify(user));
+    this._user = user;
   }
 
   removeUser(): void {
-    localStorage.removeItem("user");
+    this.user = null;
   }
 }

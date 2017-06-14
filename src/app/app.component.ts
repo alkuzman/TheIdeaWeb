@@ -1,7 +1,7 @@
 /**
  * Created by AKuzmanoski on 09/03/2017.
  */
-import {Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {ThemingService} from "./core/theming/theming.service";
 import {IconRegistryService} from "./core/icon-registry/icon-registry.service";
 import {animateChild, group, query, transition, trigger, useAnimation} from "@angular/animations";
@@ -19,7 +19,8 @@ import {NavigationEnd, Route, Router} from "@angular/router";
   styleUrls: [
     'app.component.css'
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   @HostBinding("class") themeClass = "default-theme";

@@ -4,6 +4,11 @@ import {AboutComponent} from "./index";
 export const AboutRoutes: Route[] = [
   {
     path: '',
-    component: AboutComponent
+    component: AboutComponent,
+    data: {
+      animation: {
+        value: 'about',
+      }
+    }
   }
 ];

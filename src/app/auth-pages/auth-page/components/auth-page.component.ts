@@ -1,7 +1,7 @@
 import {Component, OnInit, HostBinding} from "@angular/core";
 import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
-import {enterLeftLeaveLeft, routerAnimations} from "../../../core/animations/standard-route-animations";
+import {enterLeftLeaveLeft, pageAnimation} from "../../../core/animations/standard-route-animations";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {animate, style, transition, trigger, useAnimation} from "@angular/animations";
 import {slideFromRight} from "../../../core/animations/slide-animations";
@@ -15,7 +15,7 @@ import {slideFromRight} from "../../../core/animations/slide-animations";
   templateUrl: "auth-page.component.html",
   styleUrls: ["auth-page.component.scss"],
   animations: [
-    routerAnimations("routeAnimation")
+    pageAnimation("routeAnimation")
   ]
 })
 export class AuthPageComponent implements OnInit {

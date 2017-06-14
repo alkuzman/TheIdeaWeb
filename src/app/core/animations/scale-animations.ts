@@ -13,6 +13,9 @@ export const scaleIn = animation([
 ], {params: {duration: "158ms", delay: "150ms", easing: "ease-out"}});
 
 export const scaleOut = animation([
+  style({
+    transform: "scale(1)"
+  }),
   animate('{{duration}} {{delay}} {{easing}}', style({
     transform: "scale(0)"
   }))

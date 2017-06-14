@@ -1,7 +1,10 @@
 /**
  * Created by AKuzmanoski on 08/01/2017.
  */
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {
+  Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked, ChangeDetectionStrategy,
+  HostBinding, HostListener, ViewEncapsulation
+} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {ScrollService} from "../../../core/scrolling/scroll-service";
@@ -12,25 +15,43 @@ import {Idea} from "../../../domain/model/ideas/idea";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {User} from "../../../domain/model/authentication/user";
 import {ThemingService} from "../../../core/theming/theming.service";
-import {animate, animateChild, state, style, transition, trigger, useAnimation} from "@angular/animations";
+import {
+  animate, animateChild, AnimationEvent, group, query, state, style, transition, trigger,
+  useAnimation
+} from "@angular/animations";
 import {scaleIn, scaleOut} from "../../../core/animations/scale-animations";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-feed-page",
   templateUrl: "announcement-feed-page.component.html",
   styleUrls: ["announcement-feed-page.component.scss"],
+  encapsulation: ViewEncapsulation.None,
   animations: [
-    trigger("fab", [
+    trigger('pageAnimation', [
       transition(':enter',
-        useAnimation(scaleIn)
-      ),
-      transition(':leave', [
-        useAnimation(scaleOut)
-      ])
+        query('@*', useAnimation(scaleIn))),
+      transition(':leave',
+        query('[md-fab]', useAnimation(scaleOut)))
+    ]),
+    trigger("fab", [
+      state("void", style({
+        transform: "scale(0)"
+      })),
+      transition(':enter', group([
+        useAnimation(scaleIn), animateChild()])),
+      transition(':leave', group([
+        useAnimation(scaleOut), animateChild()]))
     ])
   ]
 })
 export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
+
+  @HostBinding("@pageAnimation") animation: boolean = true;
+
+  @HostBinding("style.display") get display() {
+    return "block";
+  }
+
   announcementList: Announcement[];
   page: number = 1;
   pageSize: number;
@@ -52,16 +73,16 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       this.type = data.type;
       if (this.type != null) {
         if (this.type == "Idea") {
-          this.themingService.currentTheme = "idea-theme";
           this.additionUrl = "/ideas/new";
+          this.themingService.currentTheme = "idea-theme";
         }
         else if (this.type == "Problem") {
-          this.themingService.currentTheme = "problem-theme";
           this.additionUrl = "/problems/new";
+          this.themingService.currentTheme = "problem-theme";
         }
       } else {
-        this.themingService.currentTheme = "default-theme";
         this.additionUrl = "/ideas/new";
+        this.themingService.currentTheme = "default-theme";
       }
     });
     this.route.queryParams.subscribe((params: { query: string }) => {

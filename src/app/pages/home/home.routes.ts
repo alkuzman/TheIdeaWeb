@@ -5,5 +5,10 @@ export const HomeRoutes: Route[] = [
   {
     path: '',
     component: HomeComponent,
+    data: {
+      animation: {
+        value: 'home',
+      }
+    }
   }
 ];

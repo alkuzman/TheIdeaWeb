@@ -1,22 +1,25 @@
-<div style="margin-bottom: 200px;">
-  <ideal-announcement-list
-    [announcementList]="announcementList"
-    (openContent)="getContent($event)"
-    (userSelected)="onUserSelected($event)"
-    (ideaSelected)="onIdeaSelected($event)"
-    (problemSelected)="onProblemSelected($event)"
-    (ideaEdit)="onIdeaEdit($event)"
-    (announce)="onAnnounce($event)"
-    (ban)="onBan($event)"
-    (remove)="onRemove($event)"
-    (report)="onReport($event)"
-    (sendTo)="onSendTo($event)"
-    (share)="onShare($event)"></ideal-announcement-list>
-  <div *ngIf="noMoreResults" class="padding" style="text-align: center">
-    <button md-raised-button disabled>No More Results</button>
+<div style="margin-bottom: 200px;" fxLayout="row">
+  <div fxFlex="50%" fxFlexOffset="25%" fxFlex.md="70%" fxFlexOffset.md="15%"
+  fxFlex.sm="90%" fxFlexOffset.sm="5%" fxFlex.xs="100%" fxFlexOffset.xs="0">
+    <ideal-announcement-list
+      [announcementList]="announcementList"
+      (openContent)="getContent($event)"
+      (userSelected)="onUserSelected($event)"
+      (ideaSelected)="onIdeaSelected($event)"
+      (problemSelected)="onProblemSelected($event)"
+      (ideaEdit)="onIdeaEdit($event)"
+      (announce)="onAnnounce($event)"
+      (ban)="onBan($event)"
+      (remove)="onRemove($event)"
+      (report)="onReport($event)"
+      (sendTo)="onSendTo($event)"
+      (share)="onShare($event)"></ideal-announcement-list>
+    <div [ngSwitch]="noMoreResults" class="padding" fxLayout="row" fxLayoutAlign="center">
+      <button fxFlex="none" *ngSwitchCase="true" md-raised-button disabled>No More Results</button>
+      <md-spinner *ngSwitchCase="false" style="height: 40px; width: 40px;" fxFlex="none"></md-spinner>
+    </div>
+    <button [@fab] [routerLink]="additionUrl" md-fab>
+      <md-icon>add</md-icon>
+    </button>
   </div>
-  <div *ngIf="!noMoreResults" class="padding" fxLayout="row" fxLayoutAlign="center">
-    <md-spinner style="height: 40px; width: 40px;" fxFlex="none"></md-spinner>
-  </div>
-  <button [@fab] [routerLink]="additionUrl" md-fab><md-icon>add</md-icon></button>
 </div>

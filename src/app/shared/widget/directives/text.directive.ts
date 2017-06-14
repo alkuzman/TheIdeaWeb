@@ -1,4 +1,4 @@
-import {Directive, ElementRef} from '@angular/core';
+import {Directive, ElementRef, Renderer2, RendererStyleFlags2} from '@angular/core';
 
 @Directive({
   selector: '[ideal-text]',
@@ -10,5 +10,7 @@ export class TextDirective {
     el.nativeElement.style.minWidth = "240px";
     el.nativeElement.style.maxWidth = "360px";
     el.nativeElement.style.justifyContent = "center";
+    el.nativeElement.classList.add("ideal-body-1");
+
   }
 }

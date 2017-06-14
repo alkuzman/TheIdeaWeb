@@ -16,11 +16,46 @@ import {NavigationItemGroup} from "../core/navigation/navigation-item-group";
 import {MdIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Notice} from "../domain/model/sharing/notice";
+import {transition, trigger, group, query, useAnimation, animateChild} from "@angular/animations";
+import {fadeIn, fadeOut} from "../core/animations/fade-animations";
 @Component({
   moduleId: module.id,
   selector: 'ideal-pages',
   templateUrl: 'pages.component.html',
   styleUrls: ['pages.component.scss'],
+  animations: [
+    trigger('routerAnimations', [
+      transition('feed => about',
+        group([
+          query(':leave',
+            animateChild()),
+          query(':enter',
+            animateChild({delay: "150ms"}))
+        ])
+      ),
+      transition('home => about',
+        group([
+          query(':leave',
+
+            useAnimation(fadeOut, {params: {duration: "500ms"}})
+          ),
+          query(':enter',
+            animateChild()
+          )
+        ])
+      ),
+      transition('about => home',
+        group([
+          query(':enter',
+            useAnimation(fadeIn, {params: {delay: "1000ms"}})
+          ),
+          query(':leave',
+            animateChild()
+          )
+        ])
+      )
+    ])
+  ]
 })
 export class PagesComponent implements OnInit, OnDestroy {
   query: string = "";
@@ -107,5 +142,10 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   onSearch(query: string) {
     this.redirectService.search({query: query});
+  }
+
+  prepareRouteTransition(outlet) {
+    const animation = outlet.activatedRouteData['animation'] || {};
+    return animation['value'] || null;
   }
 }

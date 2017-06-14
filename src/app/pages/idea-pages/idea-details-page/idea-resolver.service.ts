@@ -16,6 +16,6 @@ export class IdeaResolverService implements Resolve<Idea> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Idea>|Promise<Idea>|Idea {
     let ideaId: number = +route.params["id"];
 
-    return this.ideaService.getIdea(ideaId).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.ideaService.getIdea(ideaId).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

@@ -18,7 +18,7 @@ import {RedirectService} from "../../../core/navigation/redirect.service";
 export class UserDetailsPageComponent implements OnInit {
   user: User;
 
-  constructor(private route: ActivatedRoute, private router: Router, private redirectService: RedirectService) {
+  constructor(private route: ActivatedRoute, private redirectService: RedirectService) {
 
   }
 

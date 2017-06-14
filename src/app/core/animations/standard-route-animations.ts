@@ -5,7 +5,7 @@ import {slideFromLeft, slideFromRight, slideToLeft, slideToRight} from "./slide-
  */
 
 
-export function routerAnimations(name: string, durationEnter: number | string = 158, durationLeave: number | string = 150) {
+export function pageAnimation(name: string, durationEnter: number | string = 158, durationLeave: number | string = 150) {
   return trigger(name, [
     transition(':enter', [
       style({

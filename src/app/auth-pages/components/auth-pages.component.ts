@@ -1,13 +1,10 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation, HostBinding} from "@angular/core";
-import {
-  trigger, state, style, transition, animate, query, group, useAnimation,
-  animateChild
-} from "@angular/animations";
+import {Component, HostBinding, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
+import {animateChild, group, query, transition, trigger, useAnimation} from "@angular/animations";
 import {ThemingService} from "../../core/theming/theming.service";
 import {LoadingService} from "../../core/loading/loading.service";
 import {LoadingState} from "../../core/loading/loading-state";
 import {slideFromLeft, slideFromRight, slideToLeft, slideToRight} from "../../core/animations/slide-animations";
-import {routerAnimations} from "../../core/animations/standard-route-animations";
+import {pageAnimation} from "../../core/animations/standard-route-animations";
 /**
  * Created by Viki on 10/28/2016.
  */
@@ -21,82 +18,68 @@ import {routerAnimations} from "../../core/animations/standard-route-animations"
     trigger('routerAnimations', [
       transition('auth => login',
         group([
-          query('ideal-auth-page', group([
-            useAnimation(slideToLeft),
-            animateChild()
-          ])),
-          query('ideal-login-page', group([
-            useAnimation(slideFromRight),
-            animateChild()
-          ]))
+          query(":leave, ideal-login-page",
+            animateChild(), {optional: true}),
+          query(':leave',
+            useAnimation(slideToLeft), {optional: true}),
+          query('ideal-login-page',
+            useAnimation(slideFromRight), {optional: true})
         ])
       ),
-      transition('auth => register', [
+      transition('auth => register',
         group([
-          query('ideal-register-page', group([
-            useAnimation(slideFromRight),
-            animateChild()
-          ]), { optional: true }),
-          query('ideal-auth-page', group([
-            useAnimation(slideToLeft),
-            animateChild()
-          ]), { optional: true })
+          query(":leave, ideal-register-page",
+            animateChild(), {optional: true}),
+          query('ideal-register-page',
+            useAnimation(slideFromRight), {optional: true}),
+          query(':leave',
+            useAnimation(slideToLeft), {optional: true})
         ])
-      ]),
-      transition('login => auth', [
+      ),
+      transition('login => auth',
         group([
-          query('ideal-login-page', group([
-            useAnimation(slideToRight),
-            animateChild()
-          ]), { optional: true }),
-          query('ideal-auth-page', group([
-            useAnimation(slideFromLeft),
-            animateChild()
-          ]), { optional: true })
+          query(":leave, ideal-auth-page",
+            animateChild(), {optional: true}),
+          query(':leave',
+            useAnimation(slideToRight), {optional: true}),
+          query('ideal-auth-page',
+            useAnimation(slideFromLeft), {optional: true})
         ])
-      ]),
-      transition('register => auth', [
+      ),
+      transition('register => auth',
         group([
-          query('ideal-register-page', group([
-            useAnimation(slideToRight),
-            animateChild()
-          ]), { optional: true }),
-          query('ideal-auth-page', group([
-            useAnimation(slideFromLeft),
-            animateChild()
-          ]), { optional: true })
+          query(":leave, ideal-auth-page",
+            animateChild(), {optional: true}),
+          query(':leave',
+            useAnimation(slideToRight), {optional: true}),
+          query('ideal-auth-page',
+            useAnimation(slideFromLeft), {optional: true})
         ])
-      ]),
-      transition('void => auth', [
-        group([
-          query('ideal-auth-page', group([
-            useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-            animateChild()
-          ]), { optional: true })
-        ])
-      ]),
-      transition('void => login', [
-        group([
-          query('ideal-login-page', group([
-            useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-            animateChild()
-          ]), { optional: true })
-        ])
-      ]),
-      transition('void => register', [
-        group([
-          query('ideal-register-page', group([
-            useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-            animateChild()
-          ]), { optional: true })
-        ])
-      ])
+      ),
+      transition('void => auth',
+        query('ideal-auth-page', group([
+          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
+          animateChild()
+        ]), {optional: true})
+      ),
+      transition('void => login',
+        query('ideal-login-page', group([
+          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
+          animateChild()
+        ]), {optional: true})
+      ),
+      transition('void => register',
+        query('ideal-register-page', group([
+          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
+          animateChild()
+        ]), {optional: true})
+      )
     ]),
-    routerAnimations("routeAnimation")
+    pageAnimation("pageAnimation")
   ]
 })
 export class AuthPagesComponent implements OnInit, OnDestroy {
-  @HostBinding("@routeAnimation") animation: boolean = true;
+  @HostBinding("@pageAnimation") animation: boolean = true;
 
   cardState = "active";
   loadingState: LoadingState;
@@ -111,9 +94,10 @@ export class AuthPagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+
   }
 
-  prepareRouteTransition(outlet) {
+  public prepareRouteTransition(outlet) {
     const animation = outlet.activatedRouteData['animation'] || {};
     return animation['value'] || null;
   }

@@ -17,7 +17,7 @@ export class ActivationResolverService implements Resolve<User> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User>|Promise<User>|User {
     let code: string = route.queryParams['code'];
-    return this.userService.activateUser(code).toPromise().catch((error: any) =>
+    return this.userService.activateUser(code).catch((error: any) =>
       this.errorHandlingService.handleError(error));
   }
 

@@ -16,7 +16,7 @@ export class AnnouncementResolverService implements Resolve<Announcement> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement>|Promise<Announcement>|Announcement {
     let id = route.params['id'];
-    return this.announcementService.getAnnouncementById(id).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.announcementService.getAnnouncementById(id).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 
 

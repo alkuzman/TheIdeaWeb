@@ -15,6 +15,6 @@ export class ProblemResolverService implements Resolve<Problem> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Problem>|Promise<Problem>|Problem {
     let problemId: number = +route.params["id"];
-    return this.problemService.getProblem(problemId).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.problemService.getProblem(problemId).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

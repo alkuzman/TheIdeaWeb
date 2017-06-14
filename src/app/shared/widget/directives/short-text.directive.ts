@@ -10,5 +10,6 @@ export class ShortTextDirective {
     el.nativeElement.style.minWidth = "240px";
     el.nativeElement.style.maxWidth = "360px";
     el.nativeElement.style.justifyContent = "center";
+    el.nativeElement.classList.add("ideal-body-1");
   }
 }

@@ -9,7 +9,12 @@ export const AnnouncementFeedPageRoutes: Routes = [
     path: "",
     component: AnnouncementFeedPageComponent,
     resolve: {
-      announcementList: AnnouncementFeedListResolverService
+      announcementList: AnnouncementFeedListResolverService,
+    },
+    data: {
+      animation: {
+        value: 'feed',
+      }
     }
   },
   {
