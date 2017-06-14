@@ -1,4 +1,4 @@
-<div *ngFor="let problem of problems; let i = index;" [@loading]="status[i]" class="margin">
+<div *ngFor="let problem of problems; let i = index;" [idealStagger]="i" class="margin">
   <ideal-problem-card
     [problem]="problem"
     (problemSelected)="onProblemSelected($event)"

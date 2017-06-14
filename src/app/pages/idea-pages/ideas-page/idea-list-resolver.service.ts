@@ -14,6 +14,6 @@ export class IdeaListResolverService implements Resolve<Idea[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Idea[]>|Promise<Idea[]>|Idea[] {
-    return this.ideaService.getIdeas({}).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.ideaService.getIdeas({}).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

@@ -15,6 +15,6 @@ export class UserResolverService implements Resolve<User> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User>|Promise<User>|User {
     let userId: number = +route.params["id"];
-    return this.userService.getUserById(userId).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.userService.getUserById(userId).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

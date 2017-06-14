@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {WidgetModule} from "./widget/widget.module";
 import {PipesModule} from "./pipes/pipes.module";
-import {MaterialModule} from "@angular/material";
+import {MaterialModule} from "./material/material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {MomentModule} from "angular2-moment";

@@ -25,32 +25,7 @@ import {Scheduler} from "rxjs";
   moduleId: module.id,
   selector: 'ideal-idea-list',
   templateUrl: 'idea-list.component.html',
-  styleUrls: ['idea-list.component.scss'],
-  animations: [
-    trigger('loading', [
-      state('init', style({
-        opacity: 0,
-        transform: 'translateY(10px)'
-      })),
-      state('active', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition("init => active", [
-
-        animate("160ms ease-out", style({
-          opacity: 1,
-          transform: 'translateY(0)'
-        }))
-      ]),
-      transition("active => init", [
-        animate("150ms ease-in", style({
-          opacity: 0,
-          transform: 'translateY(10px)'
-        }))
-      ])
-    ])
-  ]
+  styleUrls: ['idea-list.component.scss']
 })
 export class IdeasComponent implements OnInit {
   @Input("ideas") ideas: Idea[];

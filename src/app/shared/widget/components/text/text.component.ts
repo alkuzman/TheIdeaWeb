@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'ideal-text, [ideal-text]',
+  selector: 'ideal-text',
   template: `
     <div class="ideal-body-1">
       <ng-content></ng-content>

@@ -3,7 +3,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {FieldError} from "../../core/helper/field-error";
-import {enterRightLeaveRight, routerAnimations} from "../../core/helper/standard-route-animations";
+import {enterRightLeaveRight, pageAnimation} from "../../core/animations/standard-route-animations";
 import {AuthProperties} from "../auth.properties";
 import {AccessFromUrlNotAllowedGuard} from "../../core/guards/access-from-url-not-allowed.guard";
 /**
@@ -14,13 +14,11 @@ import {AccessFromUrlNotAllowedGuard} from "../../core/guards/access-from-url-no
   selector: "ideal-register-page",
   templateUrl: "register-page.component.html",
   animations: [
-    enterRightLeaveRight('routeAnimation')
+    pageAnimation("routeAnimation")
   ]
 })
 export class RegisterPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") get routeAnimation() {
-    return true;
-  }
+  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";

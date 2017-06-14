@@ -21,7 +21,7 @@ export class KeysService {
         this.crypto = getCrypto();
     }
 
-    public generatePublicPrivateKeyPair(forSigning: boolean): PromiseLike<CryptoKeyPair> {
+    public generatePublicPrivateKeyPair(forSigning: boolean): PromiseLike<CryptoKeyPair | CryptoKey> {
         let algorithm: AlgorithmSP;
         if (forSigning) {
             algorithm = this.algorithmService.getAsymmetricSigningAlgorithmForGenerationKey();
@@ -33,7 +33,7 @@ export class KeysService {
         return this.crypto.generateKey(algInst, true, algorithm.usages);
     }
 
-    public generateSymmetricKey(): PromiseLike<CryptoKey> {
+    public generateSymmetricKey(): PromiseLike<CryptoKeyPair | CryptoKey> {
         let algorithm: AlgorithmSP = this.algorithmService.getSymmetricAlgorithmForGenerationKey();
         let algInst: any = algorithm.algorithm;
         return this.crypto.generateKey(algInst, true, algorithm.usages);
@@ -42,12 +42,12 @@ export class KeysService {
 
     public generateSymmetricKeyFromPasswordAndAdditionalParameters(password: string, numIterations: number,
                                                                    byteLength: number,
-                                                                   algorithm: string): PromiseLike<CryptoKey> {
+                                                                   algorithm: string): PromiseLike<CryptoKeyPair | CryptoKey> {
         let keyArray: BufferSource = pbkdf2.pbkdf2Sync(password, 'iDeal', numIterations, byteLength, algorithm);
         return this.basicImportKey(keyArray, 'raw', this.algorithmService.SYMMETRIC_ALG);
     }
 
-    public generateSymmetricKeyFromPassword(password: string): PromiseLike<CryptoKey> {
+    public generateSymmetricKeyFromPassword(password: string): PromiseLike<CryptoKeyPair | CryptoKey> {
         return this.generateSymmetricKeyFromPasswordAndAdditionalParameters(password, 6530, 32,
             this.algorithmService.HASH_ALG_SHA_512);
     }
@@ -75,7 +75,7 @@ export class KeysService {
         });
     }
 
-    public basicImportKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKey> {
+    public basicImportKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKeyPair | CryptoKey> {
         let algorithm = this.algorithmService.getAlgorithm(algString, this.algorithmService.HASH_ALG, 'importkey');
         let algInst: any = algorithm.algorithm;
 

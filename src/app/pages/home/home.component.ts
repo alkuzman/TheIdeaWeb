@@ -1,8 +1,9 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {ThemingService} from "../../core/theming/theming.service";
 import {Module} from "./module/module";
 import {ActivatedRoute} from "@angular/router";
 import {ModuleService} from "./module/module.service";
+import {pageAnimation} from "../../core/animations/standard-route-animations";
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -12,9 +13,14 @@ import {ModuleService} from "./module/module.service";
   selector: 'ideal-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
+  animations: [
+    pageAnimation("pageAnimation", 500, 500)
+  ]
 })
 
 export class HomeComponent implements OnInit {
+  @HostBinding("@pageAnimation") animation: boolean = true;
+
   categories: Module[];
   numOfColumns: number = 4;
 

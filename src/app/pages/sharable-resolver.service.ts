@@ -16,6 +16,6 @@ export class SharableResolverService implements Resolve<Sharable> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Sharable>|Promise<Sharable>|Sharable {
     let id: number = +route.queryParams["sharableId"];
-    return this.sharableService.getSharableById(id).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.sharableService.getSharableById(id).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

@@ -10,3 +10,9 @@ md-sidenav {
   position: relative;
   z-index: 2;
 }
+
+:host md-sidenav-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100vh;
+}

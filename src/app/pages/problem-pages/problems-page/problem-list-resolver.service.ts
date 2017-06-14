@@ -14,6 +14,6 @@ export class ProblemListResolverService implements Resolve<Problem[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Problem[]>|Promise<Problem[]>|Problem[] {
-    return this.problemService.getProblems({}).toPromise().catch((error: any) => this.errorHandlingService.handleError(error));
+    return this.problemService.getProblems({}).catch((error: any) => this.errorHandlingService.handleError(error));
   }
 }

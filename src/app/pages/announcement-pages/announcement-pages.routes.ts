@@ -12,7 +12,10 @@ export const AnnouncementPagesRoutes: Routes = [
         path: "feed",
         loadChildren: "app/pages/announcement-pages/announcement-feed-page/announcement-feed-page.module#AnnouncementFeedPageModule",
         data: {
-          pageSize: 10
+          pageSize: 10,
+          animation: {
+            value: 'feed',
+          }
         }
       },
       {

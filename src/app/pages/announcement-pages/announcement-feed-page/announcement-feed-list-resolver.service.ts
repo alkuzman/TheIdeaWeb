@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 08/01/2017.
  */
 import {Injectable} from "@angular/core";
-import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {Observable} from "rxjs";
 import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
@@ -14,7 +14,10 @@ export class AnnouncementFeedListResolverService implements Resolve<Announcement
 
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement[]>|Promise<Announcement[]>|Announcement[] {
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement[]>
+    | Promise<Announcement[]>
+    | Announcement[] {
     let type: string = route.data["type"];
     let pageSize: number = route.data["pageSize"];
     let query: string = route.queryParams["query"];
@@ -23,6 +26,6 @@ export class AnnouncementFeedListResolverService implements Resolve<Announcement
       query: query,
       offset: "0",
       limit: pageSize.toString()
-    }).toPromise().catch((error: Response) => this.errorHandlingService.handleError(error));
+    }).catch((error: Response) => this.errorHandlingService.handleError(error));
   }
 }

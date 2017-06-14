@@ -1,8 +1,10 @@
-import {Component, OnInit, style, HostBinding} from "@angular/core";
+import {Component, OnInit, HostBinding} from "@angular/core";
 import {User} from "../../../domain/model/authentication/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
-import {enterLeftLeaveLeft, routerAnimations} from "../../../core/helper/standard-route-animations";
+import {enterLeftLeaveLeft, pageAnimation} from "../../../core/animations/standard-route-animations";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {animate, style, transition, trigger, useAnimation} from "@angular/animations";
+import {slideFromRight} from "../../../core/animations/slide-animations";
 /**
  * Created by Viki on 10/29/2016.
  */
@@ -12,12 +14,12 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
   selector: "ideal-auth-page",
   templateUrl: "auth-page.component.html",
   styleUrls: ["auth-page.component.scss"],
-  animations: [enterLeftLeaveLeft("routeAnimation")]
+  animations: [
+    pageAnimation("routeAnimation")
+  ]
 })
 export class AuthPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") get routeAnimation() {
-    return true;
-  }
+  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";
