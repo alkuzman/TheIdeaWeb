@@ -1,8 +1,8 @@
-<form (ngSubmit)="submit()" fxLayout="row" fxLayout="row">
-  <md-input-container fxFlex="auto" fxFlexOffset="24px" dividerColor="accent">
+<form (ngSubmit)="submit()" style="font: 100 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;">
+  <md-input-container dividerColor="accent" style="width: 100%">
     <input md-input mdInput name="value" [(ngModel)]="value" #search type="text"/>
-    <md-icon style="margin-right: 24px;" md-prefix>search</md-icon>
-    <button md-suffix md-icon-button type="button" style="width: 24px; height: 24px; margin-bottom: -20px;" (click)="clear()">
+    <md-icon style="margin-right: 14px;" mdPrefix>search</md-icon>
+    <button mdSuffix md-icon-button type="button" style="width: 24px; height: 24px; margin-bottom: -20px;" (click)="clear()">
       <md-icon class="md-toolbar-icon">clear</md-icon>
     </button>
   </md-input-container>

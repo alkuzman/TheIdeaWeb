@@ -18,7 +18,7 @@ import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
 @NgModule({
   imports: [],
   providers: [],
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, MaterialModule, FroalaEditorModule, FroalaViewModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule]
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, FroalaEditorModule, FroalaViewModule, WidgetModule, PipesModule, FlexLayoutModule, InfiniteScrollModule, MomentModule, RouterModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

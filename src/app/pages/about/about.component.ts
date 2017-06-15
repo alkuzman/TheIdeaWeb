@@ -1,7 +1,8 @@
-import {Component, HostBinding, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {ThemingService} from "../../core/theming/theming.service";
 import {fadeIn, fadeOut} from "../../core/animations/fade-animations";
 import {transition, trigger, useAnimation} from "@angular/animations";
+import {pageAnimation} from "../../core/animations/standard-route-animations";
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -11,13 +12,9 @@ import {transition, trigger, useAnimation} from "@angular/animations";
   selector: 'ideal-about',
   templateUrl: 'about.component.html',
   styleUrls: ['about.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
-    trigger("pageAnimation", [
-      transition(':enter',
-        useAnimation(fadeIn), {params: {delay: "1000ms"}}),
-      transition(':leave',
-        useAnimation(fadeOut), {params: {duration: "1000ms"}})
-    ])
+    pageAnimation("pageAnimation")
   ]
 })
 export class AboutComponent implements OnInit {

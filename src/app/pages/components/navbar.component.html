@@ -17,7 +17,10 @@
     <button #sidenavbutton md-icon-button (click)="setDefaultState()">
       <md-icon class="sd-toolbar-icon">arrow_back</md-icon>
     </button>
-    <ideal-search class="flex" (searchSubmit)="onSearchSubmit($event)">
-    </ideal-search>
+    <div fxLayout="row" style="width: 100%">
+      <ideal-search fxFlex="auto" fxFlexOffset="0" fxFlex.xl="40%" fxFlexOffset.xl="30%"
+                    fxFlex.lg="50%" fxFlexOffset.lg="25%" fxFlex.md="60%" fxFlexOffset.md="20%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.xs="95%" fxFlexOffset.xs="5%" (searchSubmit)="onSearchSubmit($event)">
+      </ideal-search>
+    </div>
   </md-toolbar>
 </div>

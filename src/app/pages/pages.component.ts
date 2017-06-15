@@ -1,9 +1,8 @@
 /**
  * Created by AKuzmanoski on 19/10/2016.
  */
-import {Component, OnInit, OnDestroy, ChangeDetectorRef} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {NavigationService} from "../core/navigation/navigation.service";
-import {NavigationItem} from "../core/navigation/navigation-item";
 import {LoadingState} from "../core/loading/loading-state";
 import {LoadingService} from "../core/loading/loading.service";
 import {ScrollService} from "../core/scrolling/scroll-service";
@@ -13,10 +12,8 @@ import {NoticeService} from "../domain/services/notice/notice.service";
 import {JwtSecurityContext} from "../core/authentication/jwt/jwt-security-context.service";
 import {Subscription} from "rxjs";
 import {NavigationItemGroup} from "../core/navigation/navigation-item-group";
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
 import {Notice} from "../domain/model/sharing/notice";
-import {transition, trigger, group, query, useAnimation, animateChild} from "@angular/animations";
+import {animateChild, group, query, transition, trigger, useAnimation} from "@angular/animations";
 import {fadeIn, fadeOut} from "../core/animations/fade-animations";
 @Component({
   moduleId: module.id,
@@ -25,33 +22,24 @@ import {fadeIn, fadeOut} from "../core/animations/fade-animations";
   styleUrls: ['pages.component.scss'],
   animations: [
     trigger('routerAnimations', [
-      transition('feed => about',
-        group([
-          query(':leave',
-            animateChild()),
-          query(':enter',
-            animateChild({delay: "150ms"}))
-        ])
-      ),
       transition('home => about',
         group([
           query(':leave',
-
-            useAnimation(fadeOut, {params: {duration: "500ms"}})
+            useAnimation(fadeOut)
           ),
           query(':enter',
-            animateChild()
-          )
+            useAnimation(fadeIn)),
+          query(':leave, :enter', animateChild())
         ])
       ),
       transition('about => home',
         group([
-          query(':enter',
-            useAnimation(fadeIn, {params: {delay: "1000ms"}})
-          ),
           query(':leave',
-            animateChild()
-          )
+            useAnimation(fadeOut)
+          ),
+          query(':enter',
+            useAnimation(fadeIn)),
+          query(':leave, :enter', animateChild())
         ])
       )
     ])
@@ -67,7 +55,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   loadingStateSubscription: Subscription;
   socketSubscription: Subscription;
 
-  constructor(private navigationService: NavigationService, private loadingService: LoadingService, private scrollService: ScrollService, private redirectService: RedirectService, private socketService: SocketService, private securityContext: JwtSecurityContext, private noticeService: NoticeService) {
+  constructor(private navigationService: NavigationService, private loadingService: LoadingService,
+              private scrollService: ScrollService, private redirectService: RedirectService,
+              private socketService: SocketService, private securityContext: JwtSecurityContext,
+              private noticeService: NoticeService) {
 
   }
 

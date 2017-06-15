@@ -13,6 +13,7 @@ import {DomainServicesModule} from "./domain/services/domain-services.module";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
+import {RouterModule} from "@angular/router";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -23,7 +24,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, BrowserAnimationsModule, FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(), CoreModule, BrowserAnimationsModule, FlexLayoutModule, SharedModule.forRoot(), DomainServicesModule, PagesModule, AppRoutingModule],
+  imports: [BrowserModule, HttpModule, RouterModule, BrowserAnimationsModule, FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(), CoreModule, DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [{
     provide: AuthHttp,

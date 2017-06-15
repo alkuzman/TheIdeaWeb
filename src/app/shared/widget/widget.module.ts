@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {WidgetAvatarComponent} from "./components/avatars/avatar/widget-avatar.component";
-import {MaterialModule} from "@angular/material";
+import {MaterialModule} from "../material/material.module";
 import {WidgetNamedAvatarComponent} from "./components/avatars/named-avatar/widget-named-avatar.component";
 import {CommonModule} from "@angular/common";
 import {WidgetLabeledInput} from "./components/labeled-input/widget-labeled-input.component";

@@ -1,7 +1,6 @@
-import {Component, HostBinding, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {ThemingService} from "../../core/theming/theming.service";
 import {Module} from "./module/module";
-import {ActivatedRoute} from "@angular/router";
 import {ModuleService} from "./module/module.service";
 import {pageAnimation} from "../../core/animations/standard-route-animations";
 
@@ -13,13 +12,18 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
   selector: 'ideal-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
-    pageAnimation("pageAnimation", 500, 500)
+    pageAnimation("pageAnimation")
   ]
 })
 
 export class HomeComponent implements OnInit {
   @HostBinding("@pageAnimation") animation: boolean = true;
+
+  @HostBinding("style.display") get display() {
+    return "block";
+  }
 
   categories: Module[];
   numOfColumns: number = 4;
