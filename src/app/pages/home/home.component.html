@@ -22,9 +22,9 @@
             <p fxFlex="none" class="ideal-body-1" style="justify-content: center;">
               {{category.description}}
             </p>
-            <button *ngIf="category.action" fxFlex="none" fxFlexAlign="center" md-raised-button color="primary"
+            <a *ngIf="category.action" fxFlex="none" fxFlexAlign="center" md-raised-button color="primary"
                     [routerLink]="category.action.url">{{category.action.name | uppercase}}
-            </button>
+            </a>
           </div>
         </div>
         <div fxFlex="50%" fxFlex.xs="none" style="text-align: center" fxLayout="row">

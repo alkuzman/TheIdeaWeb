@@ -1,26 +1,10 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter
-} from "@angular/core";
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate, useAnimation
-} from "@angular/animations";
+import {AfterViewChecked, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Announcement} from "../../../model/sharing/announcement";
-import {Scheduler} from "rxjs";
 import {Idea} from "../../../model/ideas/idea";
 import {Problem} from "../../../model/ideas/problem";
 import {User} from "../../../model/authentication/user";
 import {Sharable} from "../../../model/sharing/sharable";
-import {TimerObservable} from "rxjs/observable/TimerObservable";
-import {fadeSlideFromBottom} from "../../../../core/animations/fade-slide-animations";
-import {fadeIn, fadeOut} from "../../../../core/animations/fade-animations";
+import {listStaggerAnimation} from "../../../../core/animations/choreographies/list-stagger-animation";
 /**
  * Created by AKuzmanoski on 08/01/2017.
  */
@@ -29,22 +13,18 @@ import {fadeIn, fadeOut} from "../../../../core/animations/fade-animations";
   selector: "ideal-announcement-list",
   templateUrl: "announcement-list.component.html",
   animations: [
-    trigger('append', [
-      transition(":enter", [
-        useAnimation(fadeSlideFromBottom)
-      ], {params: {delay: "0ms"}}),
-      transition(":leave", [
-        useAnimation(fadeOut)
-      ])
-    ])
+    listStaggerAnimation("myListAnimation")
   ]
 })
-export class AnnouncementListComponent implements OnInit {
+export class AnnouncementListComponent implements OnInit, AfterViewChecked {
   @Input("announcementList") announcementList: Announcement[];
   @Output("openContent") openContent: EventEmitter<Announcement> = new EventEmitter<Announcement>();
 
   ngOnInit(): void {
+  }
 
+  ngAfterViewChecked() {
+    //this.list = this.announcementList;
   }
 
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();
@@ -102,5 +82,11 @@ export class AnnouncementListComponent implements OnInit {
     this.openContent.emit(announcement);
   }
 
-  trackByAnnouncements(index: number, announcement: Announcement): number { return announcement.id; }
+  trackByAnnouncements(index: number, announcement: Announcement): number {
+    return announcement.id;
+  }
+
+  anim(event) {
+    console.log(event)
+  }
 }

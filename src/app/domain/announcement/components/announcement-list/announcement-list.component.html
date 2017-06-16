@@ -1,19 +1,20 @@
-<div class="margin" *ngFor="let announcement of announcementList; trackBy: trackByAnnouncements; let i = index;"
-     [idealStagger]="i">
-  <ideal-announcement-card
-    [announcement]="announcement"
-    (openContent)="getContent($event)"
-    (userSelected)="onUserSelected($event)"
-    (ideaSelected)="onIdeaSelected($event)"
-    (problemSelected)="onProblemSelected($event)"
-    (ideaEdit)="onIdeaEdit($event)"
-    (announce)="onAnnounce($event)"
-    (ban)="onBan($event)"
-    (edit)="onIdeaEdit($event)"
-    (remove)="onRemove($event)"
-    (report)="onReport($event)"
-    (sendTo)="onSendTo($event)"
-    (share)="onShare($event)"
-  ></ideal-announcement-card>
+<div [@myListAnimation]="announcementList?.length">
+  <div class="margin listItem" *ngFor="let announcement of announcementList; trackBy: trackByAnnouncements; let i = index;">
+    <ideal-announcement-card
+      [announcement]="announcement"
+      (openContent)="getContent($event)"
+      (userSelected)="onUserSelected($event)"
+      (ideaSelected)="onIdeaSelected($event)"
+      (problemSelected)="onProblemSelected($event)"
+      (ideaEdit)="onIdeaEdit($event)"
+      (announce)="onAnnounce($event)"
+      (ban)="onBan($event)"
+      (edit)="onIdeaEdit($event)"
+      (remove)="onRemove($event)"
+      (report)="onReport($event)"
+      (sendTo)="onSendTo($event)"
+      (share)="onShare($event)"
+    ></ideal-announcement-card>
+  </div>
 </div>
 
