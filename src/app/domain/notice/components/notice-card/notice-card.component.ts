@@ -15,6 +15,8 @@ export class NoticeCardComponent {
   protocolTransactionStepOneNoticeType: string = "ProtocolTransactionStepOneNotice";
   protocolTransactionStepTwoNoticeType: string = "ProtocolTransactionStepTwoNotice";
   protocolTransactionStepThreeNoticeType: string = "ProtocolTransactionStepThreeNotice";
+  packageNoticeType: string = "NewPackageNotice";
+
 
   constructor() {
     if (this.notice != null) {

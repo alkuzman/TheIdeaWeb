@@ -15,14 +15,16 @@ import {NoticeCardComponent} from "./components/notice-card/notice-card.componen
 import {ProtocolTransactionStepNoticeCard} from "./components/notice-card/protocol-transaction-step-notice-card/protocol-transaction-step-notice-card.component";
 import {UserModule} from "../user/user.module";
 import {ProtocolTransactionStepNoticeMessagePipe} from "./pipes/protocol-trasaction-step-notice-message.pipe";
+import { NewPackageNoticeCardComponent } from './components/notice-card/new-package-notice-card/new-package-notice-card.component';
 @NgModule({
   imports: [SharedModule, PackageModule, AgentModule, UserModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
     NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
-    ProtocolTransactionStepNoticeMessagePipe],
+    ProtocolTransactionStepNoticeMessagePipe,
+    NewPackageNoticeCardComponent],
   exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
     NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
-    ProtocolTransactionStepNoticeMessagePipe]
+    ProtocolTransactionStepNoticeMessagePipe, NewPackageNoticeCardComponent]
 })
 export class NoticeModule {
 

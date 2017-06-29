@@ -6,7 +6,8 @@
   "user": "",
   "pass": "",
   "subscribe": [
-    "/user/topic/notices"
+    "/user/topic/notices",
+    "/user/topic/notices/count"
   ],
   "publish": [
     "/user/topic/notices"

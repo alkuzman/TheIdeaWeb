@@ -7,19 +7,25 @@ import {Notice} from "../../../../model/sharing/notice";
 
 
 @Component({
-  moduleId: module.id,
-  selector: 'ideal-notice-list-loader',
-  templateUrl: 'notice-list-loader.component.html'
+    moduleId: module.id,
+    selector: 'ideal-notice-list-loader',
+    templateUrl: 'notice-list-loader.component.html'
 })
 export class NoticeListLoaderComponent implements OnInit {
-  noticeList: Notice[];
+    noticeList: Notice[];
 
-  constructor(private noticeService: NoticeService) {
-  }
+    constructor(private noticeService: NoticeService) {
+    }
 
-  ngOnInit() {
-    this.noticeService.getAnnouncementList().subscribe((notices: Notice[]) => {
-      this.noticeList = notices;
-    });
-  }
+    ngOnInit() {
+        this.noticeService.getAnnouncementList().subscribe((notices: Notice[]) => {
+            this.noticeList = notices;
+            this.markNoticesAsSeen();
+        });
+    }
+
+    private markNoticesAsSeen() {
+        this.noticeService.markAsSeen().subscribe(() => {
+        });
+    }
 }

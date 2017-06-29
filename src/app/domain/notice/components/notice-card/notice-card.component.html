@@ -8,4 +8,8 @@
     <div *ngSwitchCase="protocolTransactionStepThreeNoticeType">
         <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
     </div>
+    <div *ngSwitchCase="packageNoticeType">
+        <ideal-new-package-notice-card [notice]="notice"></ideal-new-package-notice-card>
+    </div>
+    {{notice.type}}
 </div>
