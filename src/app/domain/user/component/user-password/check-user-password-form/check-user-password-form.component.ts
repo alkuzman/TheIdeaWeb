@@ -25,7 +25,7 @@ export class CheckUserPasswordFormComponent implements OnInit {
     user: User;
 
     ngOnInit(): void {
-        this.user = this.userObjectService.user;
+        this.user = Object.assign({}, this.userObjectService.user);
         if (this.user == null) {
             this.usernameNotChecked.emit();
         }

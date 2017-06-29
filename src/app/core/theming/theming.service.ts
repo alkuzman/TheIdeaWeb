@@ -1,11 +1,12 @@
 import {Injectable, EventEmitter} from "@angular/core";
+import {Subject} from "rxjs/Subject";
 /**
  * Created by AKuzmanoski on 13/12/2016.
  */
 @Injectable()
 export class ThemingService {
   private _currentTheme: string;
-  public themeObservable: EventEmitter<string> = new EventEmitter<string>();
+  public themeObservable: EventEmitter<string> = new EventEmitter<string>(true);
 
   constructor() {
     this.currentTheme = "default-theme";

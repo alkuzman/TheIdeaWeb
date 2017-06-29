@@ -14,6 +14,7 @@ export class CryptographicOperations {
 
     public encrypt(algorithm: Algorithm, key: CryptoKey, data: string): Observable<string> {
         return Observable.create((observer) => {
+            console.log(data);
             this.operations.encrypt(algorithm, key, this.operations.convertStringToBuffer(data))
                 .then((resultBuf: ArrayBuffer) => {
                     let result: string = this.operations.convertUint8ToString(new Uint8Array(resultBuf));

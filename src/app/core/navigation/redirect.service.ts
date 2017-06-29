@@ -60,4 +60,8 @@ export class RedirectService {
   getTransactionDetails(notice: Notice) {
     this.router.navigate(["/transactions", notice.id]);
   }
+
+  initSecurityProfile() {
+    this.router.navigate(["/security-profile/init"])
+  }
 }

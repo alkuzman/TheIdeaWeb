@@ -13,6 +13,7 @@ export class User extends Agent implements Person {
   public role: Role;
   public provider: Provider;
   public activationCode: string;
+  public securityProfileInitialized: boolean;
 
   constructor() {
     super();

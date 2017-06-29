@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
-import {UserObjectService} from "../../../domain/services/user/user-object.service";
 import {User} from "../../../domain/model/authentication/user";
 import {UserService} from "../../../domain/services/user/user.service";
 import {MdSnackBar} from "@angular/material";
 
 @Component({
     selector: 'ideal-verify-page',
-    templateUrl: './verify-page.component.html',
-    styleUrls: ['./verify-page.component.scss']
+    templateUrl: 'verify-page.component.html',
+    styleUrls: ['verify-page.component.scss']
 })
 export class VerifyPageComponent implements OnInit {
 

@@ -43,6 +43,7 @@ export class SimpleCryptographicOperations {
     }
 
     public convertStringToBuffer(text: string): Buffer {
+        console.log(text);
         return Buffer.from(text);
     }
 
