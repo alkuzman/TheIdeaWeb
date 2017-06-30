@@ -8,4 +8,7 @@ This file is used to document all notable changes in each release.
 
 * Marking notices when seen and opened
 * Adding the changelog file
+
+###Changed
+
 * Separating security profile initialization from profile activation
