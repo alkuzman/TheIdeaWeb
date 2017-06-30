@@ -87,13 +87,9 @@ export class SocketService implements OnInit, OnDestroy {
 
     public on_next = (message: any) => {
         // Log it to the console
-        console.log(message);
-        console.log(message.headers.destination);
         if (message.headers.destination === "/user/topic/notices") {
-            console.log("da");
             this.noticeMessage.next(JSON.parse(message.body));
         } else if (message.headers.destination === "/user/topic/notices/count") {
-            console.log(JSON.parse(message.body));
             this.noticeCountMessage.next(JSON.parse(message.body));
         }
     }

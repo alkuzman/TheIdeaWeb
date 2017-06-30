@@ -41,7 +41,7 @@ export class NoticeService {
     public getNoticeCount(): Observable<number> {
         let url = this.noticesUrl + "/count";
         return this.http.get(url, undefined, true)
-            .map((response: Response) => this.extractData(response))
+            .map((response: Response) => +this.extractRawData(response))
             .catch((error: any) => this.handleError(error));
     }
 
@@ -59,6 +59,10 @@ export class NoticeService {
         return this.http.get(this.noticesUrl, {headers: this.getHeaders(), search: params}, true)
             .map((response: Response) => this.extractData(response))
             .catch((error: any) => this.handleError(error));
+    }
+
+    private extractRawData(res: Response) {
+        return res.text();
     }
 
     private extractData(res: Response) {
