@@ -23,25 +23,25 @@ export class NoticeFieldsComponent implements OnInit {
   ngOnInit(): void {
     this.packageFields = this.fb.group({});
     this.form.addControl("packageFields", this.packageFields);
-    this.notice.recipients = [];
+    this.notice.recipient = [];
   }
 
   onRecipientAdded(agent: Agent) {
     let recipient: Recipient = new Recipient();
     recipient.agent = agent;
-    this.notice.recipients.push(recipient);
+    this.notice.recipient.push(recipient);
   }
 
   onRecipientRemoved(agent: Agent) {
     let index: number = this.recipientIndex(agent);
     if (index == -1)
       return;
-    this.notice.recipients.splice(index, 1);
+    this.notice.recipient.splice(index, 1);
   }
 
   recipientIndex(agent: Agent): number {
     let i: number = 0;
-    for (let recipient of this.notice.recipients) {
+    for (let recipient of this.notice.recipient) {
       if (agent.id == recipient.agent.id)
         return i;
       i++;

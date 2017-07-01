@@ -9,10 +9,11 @@ import {Notice} from "../../../../model/sharing/notice";
 export class NewPackageNoticeCardComponent implements OnInit {
 
   @Input("notice") notice: Notice;
+  @Input("opened") opened: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    console.log("init");
   }
-
 }

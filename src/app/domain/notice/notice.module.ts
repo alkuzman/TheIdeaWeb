@@ -16,8 +16,9 @@ import {ProtocolTransactionStepNoticeCard} from "./components/notice-card/protoc
 import {UserModule} from "../user/user.module";
 import {ProtocolTransactionStepNoticeMessagePipe} from "./pipes/protocol-trasaction-step-notice-message.pipe";
 import { NewPackageNoticeCardComponent } from './components/notice-card/new-package-notice-card/new-package-notice-card.component';
+import {WidgetModule} from "../../shared/widget/widget.module";
 @NgModule({
-  imports: [SharedModule, PackageModule, AgentModule, UserModule],
+  imports: [SharedModule, PackageModule, AgentModule, UserModule, WidgetModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
     NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
     ProtocolTransactionStepNoticeMessagePipe,

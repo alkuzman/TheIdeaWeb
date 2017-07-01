@@ -1,5 +1,7 @@
-<div>
-  <div class="margin" *ngFor="let notice of noticeList; let i = index" [idealStagger]="i">
-    <ideal-notice-card [notice]="notice"></ideal-notice-card>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="50%" >
+    <div *ngFor="let notice of noticeList; let i = index" [idealStagger]="i">
+      <ideal-notice-card [notice]="notice"></ideal-notice-card>
+    </div>
   </div>
 </div>
