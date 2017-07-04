@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/sharable";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {Notice} from "../../../domain/model/sharing/notice";
 @Component({
@@ -12,19 +12,19 @@ import {Notice} from "../../../domain/model/sharing/notice";
   templateUrl: "new-notice-page.component.html"
 })
 export class NewNoticePageComponent implements OnInit {
-  sharable: Sharable;
+  sharable: Shareable;
 
   constructor(private route: ActivatedRoute, private snackBar: MdSnackBar) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { sharable: Sharable }) => {
+    this.route.data.subscribe((data: { sharable: Shareable }) => {
       this.sharable = data.sharable;
     });
   }
 
-  onNoticeReady(notice: Notice) {
-    this.snackBar.open("Notification sent", undefined, <MdSnackBarConfig>{duration: 3000});
+  onNoticesReady(notices: Notice[]) {
+    this.snackBar.open("Notifications sent", undefined, <MdSnackBarConfig>{duration: 3000});
   }
 }

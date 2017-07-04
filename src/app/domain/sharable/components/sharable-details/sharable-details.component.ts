@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 04/01/2017.
  */
 import {Component, Input} from "@angular/core";
-import {Sharable} from "../../../model/sharing/sharable";
+import {Shareable} from "../../../model/sharing/sharable";
 @Component({
   moduleId: module.id,
   selector: "ideal-sharable-details",
@@ -14,7 +14,7 @@ import {Sharable} from "../../../model/sharing/sharable";
   `
 })
 export class SharableDetailsComponent {
-  @Input("sharable") sharable: Sharable;
+  @Input("sharable") sharable: Shareable;
   ideaType: string = "Idea";
   problemType: string = "Problem";
 }

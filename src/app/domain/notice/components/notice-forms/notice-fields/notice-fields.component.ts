@@ -4,8 +4,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {NewPackageNotice} from "../../../../model/sharing/new-package-notice";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Agent} from "../../../../model/authentication/agent";
-import {Recipient} from "../../../../model/sharing/recipient";
+
 @Component({
   moduleId: module.id,
   selector: "ideal-notice-fields",
@@ -17,15 +16,15 @@ export class NoticeFieldsComponent implements OnInit {
   @Input("submitted") submitted: boolean;
   packageFields: FormGroup;
 
+
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.packageFields = this.fb.group({});
     this.form.addControl("packageFields", this.packageFields);
-    this.notice.recipient = [];
   }
-
+/*
   onRecipientAdded(agent: Agent) {
     let recipient: Recipient = new Recipient();
     recipient.agent = agent;
@@ -48,4 +47,5 @@ export class NoticeFieldsComponent implements OnInit {
     }
     return -1;
   }
+  */
 }

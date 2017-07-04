@@ -1,5 +1,5 @@
 import {BaseEntity} from "../base-entity";
-import {Recipient} from "./recipient";
+import {Agent} from "../authentication/agent";
 /**
  * Created by Viki on 3/9/2017.
  */
@@ -7,5 +7,7 @@ import {Recipient} from "./recipient";
 
 export interface Notice extends BaseEntity{
 
-    recipients: Recipient[];
+    recipient: Agent;
+    seen: Date;
+    opened: Date;
 }

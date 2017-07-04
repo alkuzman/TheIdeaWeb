@@ -9,6 +9,7 @@ import {StandardFilterProperties} from "../standard-filter.properties";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 import {NoticeFilterProperties} from "./notice-filter-properties";
 import {Notice} from "../../model/sharing/notice";
+import {NoticeList} from "../../model/sharing/notice-list";
 @Injectable()
 export class NoticeService {
     private noticesUrl = "/api/notices";
@@ -20,6 +21,14 @@ export class NoticeService {
     public searchNotices(filter: StandardFilterProperties): Observable<Notice[]> {
         let params = PropertiesToUrlSearchParams.transform(filter);
         return this.http.get(this.noticesUrl, {headers: this.getHeaders(), search: params}, true)
+            .map((response: Response) => this.extractData(response))
+            .catch((error: any) => this.handleError(error));
+    }
+
+    public addNotices(noticeList: NoticeList) {
+        const body = JSON.stringify(noticeList);
+        const url = this.noticesUrl + "/bulk";
+        return this.http.post(url, body, {headers: this.getHeaders()}, true)
             .map((response: Response) => this.extractData(response))
             .catch((error: any) => this.handleError(error));
     }
@@ -49,6 +58,13 @@ export class NoticeService {
         let url = this.noticesUrl + "/seen";
         return this.http.put(url, undefined, undefined, true)
             .map((response: Response) => response)
+            .catch((error: any) => this.handleError(error));
+    }
+
+    public markAsOpen(id: number): Observable<Notice> {
+        let url = this.noticesUrl + "/" + id + "/opened";
+        return this.http.put(url, undefined, undefined, true)
+            .map((response: Response) => this.extractData(response))
             .catch((error: any) => this.handleError(error));
     }
 

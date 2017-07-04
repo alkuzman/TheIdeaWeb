@@ -10,7 +10,7 @@ import {Announcement} from "../../../domain/model/sharing/announcement";
 import {ScrollService} from "../../../core/scrolling/scroll-service";
 import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
 import {RedirectService} from "../../../core/navigation/redirect.service";
-import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/sharable";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {User} from "../../../domain/model/authentication/user";
@@ -154,24 +154,24 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
     this.redirectService.getUserDetails(user.id);
   }
 
-  onAnnounce(sharable: Sharable): void {
+  onAnnounce(sharable: Shareable): void {
     this.redirectService.newAnnouncement(sharable);
   }
 
-  onBan(sharable: Sharable): void {
+  onBan(sharable: Shareable): void {
 
   }
 
-  onReport(sharable: Sharable): void {
+  onReport(sharable: Shareable): void {
   }
 
-  onRemove(sharable: Sharable): void {
+  onRemove(sharable: Shareable): void {
   }
 
-  onShare(sharable: Sharable): void {
+  onShare(sharable: Shareable): void {
   }
 
-  onSendTo(sharable: Sharable): void {
+  onSendTo(sharable: Shareable): void {
     this.redirectService.sendTo(sharable);
   }
 

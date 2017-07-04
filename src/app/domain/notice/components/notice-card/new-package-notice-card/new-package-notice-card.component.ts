@@ -14,6 +14,5 @@ export class NewPackageNoticeCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("init");
   }
 }
