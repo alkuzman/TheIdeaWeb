@@ -52,6 +52,7 @@ export class IdeaDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.idea);
     this.getWikipediaDocuments();
   }
 

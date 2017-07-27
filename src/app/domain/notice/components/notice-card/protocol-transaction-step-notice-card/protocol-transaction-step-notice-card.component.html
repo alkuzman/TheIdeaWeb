@@ -1,9 +1,9 @@
 <md-card>
     <md-card-header>
-        <img md-card-avatar (click)="getSender()" [src]="notice?.protocolSession?.idea?.owner | idealUserProfilePicture" />
+        <img md-card-avatar (click)="getSender()" [src]="notice?.originator | idealUserProfilePicture" />
         <md-card-title>
             <strong idealColor="accent" (click)="getSender()">
-                {{notice?.protocolSession?.idea?.owner?.firstName}} {{notice?.protocolSession?.idea?.owner?.lastName}}
+                {{notice?.originator?.firstName}} {{notice?.originator?.lastName}}
             </strong>
             sent you notice for
             <strong idealColor="accent" (click)="getIdea()">
