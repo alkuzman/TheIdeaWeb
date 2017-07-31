@@ -17,7 +17,7 @@ import {Scheduler} from "rxjs";
 import {Idea} from "../../../model/ideas/idea";
 import {Problem} from "../../../model/ideas/problem";
 import {User} from "../../../model/authentication/user";
-import {Sharable} from "../../../model/sharing/sharable";
+import {Shareable} from "../../../model/sharing/shareable";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
 import {fadeSlideFromBottom} from "../../../../core/animations/fade-slide-animations";
 import {fadeIn, fadeOut} from "../../../../core/animations/fade-animations";
@@ -51,12 +51,12 @@ export class AnnouncementListComponent implements OnInit {
   @Output("ideaEdit") ideaEdit: EventEmitter<Idea> = new EventEmitter<Idea>();
   @Output("problemSelected") problemSelected: EventEmitter<Problem> = new EventEmitter<Problem>();
   @Output("userSelected") userSelected: EventEmitter<User> = new EventEmitter<User>();
-  @Output("announce") announce: EventEmitter<Sharable> = new EventEmitter<Sharable>();
-  @Output("ban") ban: EventEmitter<Sharable> = new EventEmitter<Sharable>();
-  @Output("report") report: EventEmitter<Sharable> = new EventEmitter<Sharable>();
-  @Output("remove") remove: EventEmitter<Sharable> = new EventEmitter<Sharable>();
-  @Output("share") share: EventEmitter<Sharable> = new EventEmitter<Sharable>();
-  @Output("sendTo") sendTo: EventEmitter<Sharable> = new EventEmitter<Sharable>();
+  @Output("announce") announce: EventEmitter<Shareable> = new EventEmitter<Shareable>();
+  @Output("ban") ban: EventEmitter<Shareable> = new EventEmitter<Shareable>();
+  @Output("report") report: EventEmitter<Shareable> = new EventEmitter<Shareable>();
+  @Output("remove") remove: EventEmitter<Shareable> = new EventEmitter<Shareable>();
+  @Output("share") share: EventEmitter<Shareable> = new EventEmitter<Shareable>();
+  @Output("sendTo") sendTo: EventEmitter<Shareable> = new EventEmitter<Shareable>();
 
   onIdeaSelected(idea: Idea) {
     this.ideaSelected.emit(idea);
@@ -74,27 +74,27 @@ export class AnnouncementListComponent implements OnInit {
     this.userSelected.emit(user);
   }
 
-  onAnnounce(sharable: Sharable): void {
+  onAnnounce(sharable: Shareable): void {
     this.announce.emit(sharable);
   }
 
-  onBan(sharable: Sharable): void {
+  onBan(sharable: Shareable): void {
     this.ban.emit(sharable);
   }
 
-  onReport(sharable: Sharable): void {
+  onReport(sharable: Shareable): void {
     this.report.emit(sharable);
   }
 
-  onRemove(sharable: Sharable): void {
+  onRemove(sharable: Shareable): void {
     this.remove.emit(sharable);
   }
 
-  onShare(sharable: Sharable): void {
+  onShare(sharable: Shareable): void {
     this.share.emit(sharable);
   }
 
-  onSendTo(sharable: Sharable): void {
+  onSendTo(sharable: Shareable): void {
     this.sendTo.emit(sharable);
   }
 

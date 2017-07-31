@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
-import {Sharable} from "../../domain/model/sharing/sharable";
+import {Shareable} from "../../domain/model/sharing/shareable";
 import {Organization} from "../../domain/model/authentication/organization";
 import {Idea} from "../../domain/model/ideas/idea";
 import {Notice} from "../../domain/model/sharing/notice";
@@ -41,11 +41,11 @@ export class RedirectService {
     this.router.navigate(["/ideas", id]);
   }
 
-  newAnnouncement(sharable: Sharable) {
+  newAnnouncement(sharable: Shareable) {
     this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: sharable.id}});
   }
 
-  sendTo(sharable: Sharable) {
+  sendTo(sharable: Shareable) {
     this.router.navigate(["/notices", "new"], {queryParams: {sharableId: sharable.id}});
   }
 

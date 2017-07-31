@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Sharable} from "../../model/sharing/sharable";
+import {Shareable} from "../../model/sharing/shareable";
 import {Response} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 @Injectable()
@@ -14,7 +14,7 @@ export class SharableService {
 
   }
 
-  getSharableById(id: number): Observable<Sharable> {
+  getSharableById(id: number): Observable<Shareable> {
     let url: string = this.sharableUrl + "/" + id;
     return this.http.get(url)
       .map((response: Response) => this.handleRequest(response))
@@ -22,8 +22,8 @@ export class SharableService {
   }
 
 
-  handleRequest(response: Response): Sharable {
-    let body: Sharable = response.json();
+  handleRequest(response: Response): Shareable {
+    let body: Shareable = response.json();
     return body;
   }
 

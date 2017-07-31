@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Idea} from "../../../domain/model/ideas/idea";
-import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 import {Organization} from "../../../domain/model/authentication/organization";
 import {RedirectService} from "../../../core/navigation/redirect.service";
 /**
@@ -32,15 +32,15 @@ export class UserDetailsPageComponent implements OnInit {
     this.redirectService.getIdeaDetails(idea.id);
   }
 
-  announce(sharable: Sharable) {
+  announce(sharable: Shareable) {
     this.redirectService.newAnnouncement(sharable);
   }
 
-  sendTo(sharable: Sharable) {
+  sendTo(sharable: Shareable) {
     this.redirectService.sendTo(sharable);
   }
 
-  share(sharable: Sharable) {
+  share(sharable: Shareable) {
 
   }
 
@@ -48,11 +48,11 @@ export class UserDetailsPageComponent implements OnInit {
 
   }
 
-  report(sharable: Sharable) {
+  report(sharable: Shareable) {
 
   }
 
-  ban(sharable: Sharable) {
+  ban(sharable: Shareable) {
 
   }
 
@@ -68,7 +68,7 @@ export class UserDetailsPageComponent implements OnInit {
 
   }
 
-  remove(sharable: Sharable) {
+  remove(sharable: Shareable) {
 
   }
 

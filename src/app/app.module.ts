@@ -24,7 +24,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, RouterModule, BrowserAnimationsModule, FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(), CoreModule, DomainServicesModule, PagesModule, AppRoutingModule],
+  imports: [HttpModule, RouterModule, BrowserAnimationsModule, FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(), CoreModule, DomainServicesModule, PagesModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [{
     provide: AuthHttp,

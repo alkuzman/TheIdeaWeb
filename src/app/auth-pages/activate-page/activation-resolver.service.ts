@@ -31,7 +31,7 @@ export class ActivationResolverService implements Resolve<User> {
         return this.userService.activateUser(this.code, this.mail).catch((error: any) => this.onError(error));
     }
 
-    onError(error: Response): ErrorObservable | any {
+    onError(error: Response) {
         if (error.status === 410) {
             this.redirect.login({email: this.mail});
             this.snackBar.open("Your profile is already activated. You can login", undefined,
