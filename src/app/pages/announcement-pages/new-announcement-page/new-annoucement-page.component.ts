@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Shareable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {MdSnackBar} from "@angular/material";
 @Component({

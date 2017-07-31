@@ -8,7 +8,7 @@ import {Announcement} from "../../domain/model/sharing/announcement";
 import {User} from "../../domain/model/authentication/user";
 import {Idea} from "../../domain/model/ideas/idea";
 import {Problem} from "../../domain/model/ideas/problem";
-import {Shareable} from "../../domain/model/sharing/sharable";
+import {Shareable} from "../../domain/model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-search-page",

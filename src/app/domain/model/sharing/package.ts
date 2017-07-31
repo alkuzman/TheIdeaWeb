@@ -1,5 +1,5 @@
 import {BaseEntityImpl} from "../base-entity-impl";
-import {Shareable} from "./sharable";
+import {Shareable} from "./shareable";
 import {Contract} from "../ideas/contract";
 import {Commentable} from "../comments/commentable";
 /**

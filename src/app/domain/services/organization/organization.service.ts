@@ -9,7 +9,7 @@ import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service"
 
 @Injectable()
 export class OrganizationService {
-  organizationsUrl: string = "/api/organizations"
+  organizationsUrl: string = "/api/organizations";
 
   constructor(@Inject(JwtHttpService) private http: JwtHttpService) {
   }

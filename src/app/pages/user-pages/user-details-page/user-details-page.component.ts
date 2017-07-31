@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../domain/model/authentication/user";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Idea} from "../../../domain/model/ideas/idea";
-import {Shareable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 import {Organization} from "../../../domain/model/authentication/organization";
 import {RedirectService} from "../../../core/navigation/redirect.service";
 /**

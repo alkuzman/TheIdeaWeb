@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Shareable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {Notice} from "../../../domain/model/sharing/notice";
 @Component({
@@ -24,7 +24,7 @@ export class NewNoticePageComponent implements OnInit {
     });
   }
 
-  onNoticesReady(notices: Notice[]) {
-    this.snackBar.open("Notifications sent", undefined, <MdSnackBarConfig>{duration: 3000});
+  onNoticeReady(notice: Notice) {
+    this.snackBar.open("Notification sent", undefined, <MdSnackBarConfig>{duration: 3000});
   }
 }

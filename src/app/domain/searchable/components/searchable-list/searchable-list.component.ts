@@ -2,7 +2,7 @@ import {Component, Input, EventEmitter, Output} from "@angular/core";
 import {Searchable} from "../../../model/sharing/searchable";
 import {Announcement} from "../../../model/sharing/announcement";
 import {User} from "../../../model/authentication/user";
-import {Shareable} from "../../../model/sharing/sharable";
+import {Shareable} from "../../../model/sharing/shareable";
 import {Problem} from "../../../model/ideas/problem";
 import {Idea} from "../../../model/ideas/idea";
 /**

@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 09/01/2017.
  */
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {Shareable} from "../../../model/sharing/sharable";
+import {Shareable} from "../../../model/sharing/shareable";
 import {Problem} from "../../../model/ideas/problem";
 import {Idea} from "../../../model/ideas/idea";
 import {User} from "../../../model/authentication/user";
@@ -11,7 +11,7 @@ import {User} from "../../../model/authentication/user";
   templateUrl: "sharable-card.component.html"
 })
 export class SharableCardComponent {
-  @Input("sharable") sharable: Shareable;
+  @Input("shareable") shareable: Shareable;
   @Output("openContent") openContent: EventEmitter<void> = new EventEmitter<void>();
    ideaType = "Idea";
    problemType = "Problem";

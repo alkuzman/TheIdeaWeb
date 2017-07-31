@@ -6,7 +6,7 @@ import {Announcement} from "../../../model/sharing/announcement";
 import {Idea} from "../../../model/ideas/idea";
 import {Problem} from "../../../model/ideas/problem";
 import {User} from "../../../model/authentication/user";
-import {Shareable} from "../../../model/sharing/sharable";
+import {Shareable} from "../../../model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-card",

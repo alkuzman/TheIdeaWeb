@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
-import {Shareable} from "../../domain/model/sharing/sharable";
+import {Shareable} from "../../domain/model/sharing/shareable";
 import {Organization} from "../../domain/model/authentication/organization";
 import {Idea} from "../../domain/model/ideas/idea";
 import {Notice} from "../../domain/model/sharing/notice";

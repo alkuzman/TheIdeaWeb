@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Shareable} from "../../model/sharing/sharable";
+import {Shareable} from "../../model/sharing/shareable";
 import {Response} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 @Injectable()

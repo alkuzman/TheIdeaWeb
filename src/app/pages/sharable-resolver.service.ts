@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
 import {SharableService} from "../domain/services/sharable/sharable.service";
-import {Shareable} from "../domain/model/sharing/sharable";
+import {Shareable} from "../domain/model/sharing/shareable";
 import {ErrorHandlingService} from "../core/error-handling/error-handling.service";
 @Injectable()
 export class SharableResolverService implements Resolve<Shareable> {

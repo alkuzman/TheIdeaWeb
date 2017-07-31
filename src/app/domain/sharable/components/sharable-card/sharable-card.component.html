@@ -1,7 +1,7 @@
-<div [ngSwitch]="sharable?.type">
+<div [ngSwitch]="shareable?.type">
   <ideal-idea-card
     *ngSwitchCase="ideaType"
-    [idea]="sharable"
+    [idea]="shareable"
     (openContent)="getContent()"
     (ideaOwnerSelected)="onUserSelected($event)"
     (ideaSelected)="onIdeaSelected($event)"
@@ -14,7 +14,7 @@
     (sendTo)="onSendTo($event)"
     (share)="onShare($event)"></ideal-idea-card>
   <ideal-problem-card
-    *ngSwitchCase="problemType" [problem]="sharable"
+    *ngSwitchCase="problemType" [problem]="shareable"
     (openContent)="getContent()"
     (announce)="onAnnounce($event)"
     (sendTo)="onSendTo($event)"
