@@ -8,7 +8,7 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 @Injectable()
 export class LoadingService {
   private _loadingState: LoadingState;
-  private _loadingStateChange: EventEmitter<LoadingState> = new EventEmitter<LoadingState>();
+  private _loadingStateChange: EventEmitter<LoadingState> = new EventEmitter<LoadingState>(true);
   private numOfLoadings: number = 0;
   private indefiniteLoading: LoadingState = new LoadingState();
 
