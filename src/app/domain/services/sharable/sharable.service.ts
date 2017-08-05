@@ -8,7 +8,7 @@ import {Response} from "@angular/http";
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 @Injectable()
 export class SharableService {
-  private sharableUrl: string = "/api/sharables";
+  private sharableUrl: string = "/api/shareables";
 
   constructor(private http: JwtHttpService) {
 
