@@ -10,7 +10,6 @@ import {Announcement} from "../../../domain/model/sharing/announcement";
 import {ScrollService} from "../../../core/scrolling/scroll-service";
 import {AnnouncementService} from "../../../domain/services/announcement/announcement.service";
 import {RedirectService} from "../../../core/navigation/redirect.service";
-import {Shareable} from "../../../domain/model/sharing/sharable";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {User} from "../../../domain/model/authentication/user";
@@ -20,6 +19,7 @@ import {
   useAnimation
 } from "@angular/animations";
 import {scaleIn, scaleOut} from "../../../core/animations/scale-animations";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-feed-page",

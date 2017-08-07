@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Shareable} from "../../../../model/sharing/sharable";
 import {Notice} from "../../../../model/sharing/notice";
 import {Agent} from "../../../../model/authentication/agent";
 import {NewPackageNotice} from "../../../../model/sharing/new-package-notice";
 import {Package} from "../../../../model/sharing/package";
 import {NoticeService} from "../../../../services/notice/notice.service";
 import {NoticeList} from "../../../../model/sharing/notice-list";
+import {Shareable} from "../../../../model/sharing/shareable";
 
 @Component({
   selector: 'ideal-send-notice-form',

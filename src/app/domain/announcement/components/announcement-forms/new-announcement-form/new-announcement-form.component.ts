@@ -3,10 +3,10 @@
  */
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {Announcement} from "../../../../model/sharing/announcement";
-import {Shareable} from "../../../../model/sharing/sharable";
 import {Contract} from "../../../../model/ideas/contract";
 import {Package} from "../../../../model/sharing/package";
 import {AnnouncementService} from "../../../../services/announcement/announcement.service";
+import {Shareable} from "../../../../model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-announcement-form",

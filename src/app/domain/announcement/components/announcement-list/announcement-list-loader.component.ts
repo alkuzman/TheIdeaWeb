@@ -4,10 +4,10 @@
 import {Component, OnInit, Input, EventEmitter, Output} from "@angular/core";
 import {Announcement} from "../../../model/sharing/announcement";
 import {AnnouncementService} from "../../../services/announcement/announcement.service";
-import {Shareable} from "../../../model/sharing/sharable";
 import {User} from "../../../model/authentication/user";
 import {Problem} from "../../../model/ideas/problem";
 import {Idea} from "../../../model/ideas/idea";
+import {Shareable} from "../../../model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-list-loader",

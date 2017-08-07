@@ -2,11 +2,11 @@
  * Created by AKuzmanoski on 24/01/2017.
  */
 import {Component, Input, OnInit, EventEmitter, Output} from "@angular/core";
-import {Shareable} from "../../../../model/sharing/sharable";
 import {NewPackageNotice} from "../../../../model/sharing/new-package-notice";
 import {Package} from "../../../../model/sharing/package";
 import {NoticeService} from "../../../../services/notice/notice.service";
 import {Notice} from "../../../../model/sharing/notice";
+import {Shareable} from "../../../../model/sharing/shareable";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-notice-form",
