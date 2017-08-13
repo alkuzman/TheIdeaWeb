@@ -36,7 +36,7 @@ import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-
 import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
 import {AccessFromUrlNotAllowedGuard} from "./guards/access-from-url-not-allowed.guard";
 import {DiscardChangesGuard} from "./guards/discard_changes.guard";
-import {ScrollDispatchModule} from "@angular/material";
+import {ScrollDispatchModule} from "@angular/cdk/overlay";
 
 
 @NgModule({
