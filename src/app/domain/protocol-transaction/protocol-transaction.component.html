@@ -12,7 +12,7 @@
           </ideal-protocol-transaction-history-step-card>
         </div>
       </div>
-      <ideal-price-request-phase-form-new [previousData]="priceRequestPhaseData" (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
+      <ideal-price-request-phase-form-new *ngIf="pricePhase" [previousData]="priceRequestPhaseData" (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
     </md-tab>
   </md-tab-group>
 </div>

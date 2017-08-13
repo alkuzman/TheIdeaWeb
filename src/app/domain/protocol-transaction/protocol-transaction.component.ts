@@ -25,6 +25,7 @@ export class ProtocolTransactionComponent implements OnInit {
   @Input("currentStepNotice") currentStepNotice;
   priceRequestPhaseData: PriceRequestPhaseData;
   previousNotices: ProtocolTransactionHistoryStep[];
+  pricePhase: boolean = true;
 
   constructor(private protocolMessageBuilderService: ProtocolMessagesBuilderService,
               private protocolMessageReconstructionService: ProtocolMessagesReconstructionService,
@@ -76,6 +77,7 @@ export class ProtocolTransactionComponent implements OnInit {
               this.priceRequestPhaseData = data;
             });
         } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
+          this.pricePhase = false;
           this.protocolMessageReconstructionService.constructProtocolMessageThree(currentStep.message, password, this.protocolSession)
             .subscribe();
         }
@@ -88,6 +90,7 @@ export class ProtocolTransactionComponent implements OnInit {
   ready(data: PriceRequestPhaseData) {
     let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
     dialogRef.afterClosed().subscribe((password: string) => {
+      console.log(password);
       if (this.currentStepNotice == null) {
         this.protocolMessageBuilderService.buildProtocolMessageOne(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
       } else if (this.currentStepNotice.type == "ProtocolTransactionStepOneNotice") {

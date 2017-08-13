@@ -80,9 +80,11 @@ export class ParserPemService {
   public parsePublicKeyFromPem(publicKeyPEM: string): Observable<CryptoKey> {
     publicKeyPEM = publicKeyPEM.replace(/(-----(BEGIN|END) PUBLIC KEY-----|\n)/g, '');
     let pubKeyBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(publicKeyPEM).buffer;
+    console.log("after buffer");
     return Observable.create((observer) => {
       this.keysService.basicImportKey(pubKeyBuf, 'spki', this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG)
         .then((key: CryptoKey) => {
+        console.log("parse public pem");
           observer.next(key);
         });
     });

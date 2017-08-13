@@ -79,6 +79,7 @@ export class KeysService {
         let algorithm = this.algorithmService.getAlgorithm(algString, this.algorithmService.HASH_ALG, 'importkey');
         let algInst: any = algorithm.algorithm;
 
+        console.log("in basic import key");
         return this.crypto.importKey(format, buffer, algInst, true,
             this.algorithmService.getUsagesForAlgorithmAndFormat(algString, format) || algorithm.usages);
     }

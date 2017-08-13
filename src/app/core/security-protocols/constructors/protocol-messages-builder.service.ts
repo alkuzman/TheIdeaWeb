@@ -71,6 +71,8 @@ export class ProtocolMessagesBuilderService {
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
+            console.log(password);
+
                 // Retrieve other party public key
                 this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
                     .subscribe((otherPartyPublicKeyForEncryptionPEM: string) => {
