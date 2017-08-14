@@ -72,7 +72,7 @@ export class NewSolutionFormComponent implements OnInit {
       solution.idea.owner = owner;
     if (solution.idea.problem.questioner == null)
       solution.idea.problem.questioner = owner;
-    /*let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
+    let dialogRef = this.dialog.open(SecurityPasswordDialogComponent);
     dialogRef.afterClosed().subscribe((password: string) => {
       this.encryptingService.encryptSolution(solution.text, password).subscribe((encryptedSolution: string) => {
         solution.text = encryptedSolution;
@@ -81,11 +81,13 @@ export class NewSolutionFormComponent implements OnInit {
             (error: any) => this.errorMessage = error
         );
       });
-    });*/
+    });
+    /*
     this.solutionService.addSolution(solution).subscribe(
       (solution: Solution) => this.onSolutionSaved(solution),
       (error: any) => this.errorMessage = error
     );
+    */
   }
 
   onSolutionSaved(solution: Solution) {

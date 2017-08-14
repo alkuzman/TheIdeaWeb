@@ -20,6 +20,14 @@ import {SimpleSecurityProfile} from "../../../domain/model/security/simple-secur
 import {SecurityProfileConstructorService} from "./security-profile-constructor.service";
 import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
 import {AlgorithmService} from "../algorithms/algorithms.service";
+import {SolutionService} from "../../../domain/services/solution/solution.service";
+import {ProtocolParticipantTwoSessionData} from "../../../domain/model/security/protocol-participant-two-session-data";
+import {Solution} from "../../../domain/model/ideas/solution";
+import {DecryptingService} from "../decrypting.service";
+import {EncryptingService} from "../encrypting.service";
+import {ProtocolTransactionService} from "../../../domain/services/protocol-transaction/protocol-transaction.service";
+import {ProtocolTransactionStepFourNotice} from "../../../domain/model/security/notices/protocol-transaction-step-four-notice";
+
 /**
  * Created by Viki on 2/21/2017.
  */
@@ -35,7 +43,11 @@ export class ProtocolMessagesBuilderService {
                 private userService: UserService,
                 private pemParser: ParserPemService,
                 private noticeService: NoticeService,
+                private solutionService: SolutionService,
                 private securityContext: JwtSecurityContext,
+                private decryptingService: DecryptingService,
+                private encryptingService: EncryptingService,
+                private protocolTransactionService: ProtocolTransactionService,
                 private certificateService: CertificateService,
                 private algorithmService: AlgorithmService,
                 private cryptographicOperations: CryptographicOperations,
@@ -71,7 +83,7 @@ export class ProtocolMessagesBuilderService {
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
-            console.log(password);
+                console.log(password);
 
                 // Retrieve other party public key
                 this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
@@ -103,7 +115,7 @@ export class ProtocolMessagesBuilderService {
                                                 this.keysService.encryptSessionKey(sessionKey, otherPartyPublicKeyForEncryption)
                                                     .subscribe((ownerEncryptedSessionKey: string) => {
                                                         if (protocolSession.participantTwoSessionData == null) {
-                                                            let participant = new ProtocolParticipantOneSessionData();
+                                                            let participant = new ProtocolParticipantTwoSessionData();
                                                             participant.participant = protocolSession.idea.owner;
                                                             participant.sessionKeyEncrypted = ownerEncryptedSessionKey;
                                                             protocolSession.participantTwoSessionData = participant;
@@ -200,6 +212,8 @@ export class ProtocolMessagesBuilderService {
                                    previousMessageData: PriceRequestPhaseData, protocolSession: ProtocolSession,
                                    previousNotice: ProtocolTransactionStepOneNotice) {
 
+        // Todo: Add signature to the hash of the whole message in order to authenticate the second party to the
+        // Todo: first party. This is necessary because there is no certificate for the encrypting public key.
         // Create message data
         let data = {
             'productID': previousMessageData.productID,
@@ -245,7 +259,7 @@ export class ProtocolMessagesBuilderService {
             });
     }
 
-    public buildProtocolMessageThree(userData: PriceRequestPhaseData, password: string,
+    public buildProtocolMessageThree(password: string,
                                      previousMessageData: PriceRequestPhaseData,
                                      protocolSession: ProtocolSession,
                                      previousNotice: ProtocolTransactionStepTwoNotice) {
@@ -300,5 +314,82 @@ export class ProtocolMessagesBuilderService {
 
     }
 
+    public buildProtocolMessageFour(abort: boolean, password: string, protocolSession: ProtocolSession,
+                                    previousNotice: ProtocolTransactionStepThreeNotice) {
 
+        // Todo: Implement abort case
+
+        // Initialize simple security profile
+        this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+            .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                // Generate session key for encrypting the goods
+                this.keysService.generateSymmetricKey().then((dataEncryptionKey: CryptoKey) => {
+
+                    // Encrypt session key for encrypting goods with public key for encryption
+                    this.keysService.encryptSessionKey(dataEncryptionKey, simpleProfile.publicKey)
+                        .subscribe((dataEncryptionKeyEncrypted) => {
+                            protocolSession.participantTwoSessionData.dataEncryptionKeyEncrypted = dataEncryptionKeyEncrypted;
+
+                            console.log("Session key for encrypting goods encrypted");
+
+                            // Get solution for given idea
+                            this.solutionService.getSolution(protocolSession.idea.id).subscribe((solution: Solution) => {
+
+                                // Decrypt the solution with the standard user key for encrypting ideas
+                                this.decryptingService.decryptSolutionWithKey(solution.text, simpleProfile.symmetricKey)
+                                    .subscribe((solutionText: string) => {
+
+                                        console.log("decrypt solution");
+
+                                        // Encrypt the solution with the session key for this transaction
+                                        this.encryptingService.encryptSolutionWithKey(solutionText, dataEncryptionKey)
+                                            .subscribe((encryptedSolution: string) => {
+
+                                                console.log("encrypt solution");
+                                                // Hash the encrypted solution
+                                                const hashedEncryptedSolution = this.simpleCryptographicOperations.hash(encryptedSolution);
+
+                                                // Get EPOID
+                                                this.protocolTransactionService.getNewEpoid().subscribe((epoid: string) => {
+
+                                                    // Construct data for encryption
+                                                    const data = {
+                                                        "hashedEncryptedGoods": hashedEncryptedSolution,
+                                                        "epoid": epoid
+                                                    };
+
+                                                    // Convert data into json
+                                                    const jsonData = JSON.stringify(data);
+
+                                                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                                                        simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
+
+                                                        // Encrypt json data
+                                                        this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm, sessionKey, jsonData)
+                                                            .subscribe((encryptedJsonData: string) => {
+
+                                                                const message = {
+                                                                    "encryptedGoods": encryptedSolution,
+                                                                    "encryptedData": encryptedJsonData
+                                                                };
+
+                                                                const jsonMessage = JSON.stringify(message);
+
+                                                                const notice: ProtocolTransactionStepFourNotice =
+                                                                    this.protocolTransactionStepNoticeConstructor
+                                                                        .constructProtocolTransactionStepFourNotice(protocolSession, jsonMessage,
+                                                                            this.userService.getAuthenticatedUser(), previousNotice, previousNotice.originator);
+                                                                this.sendMessage(notice);
+                                                            });
+                                                    });
+                                                });
+                                            });
+                                    });
+                            });
+                        });
+                });
+            });
+
+    }
 }

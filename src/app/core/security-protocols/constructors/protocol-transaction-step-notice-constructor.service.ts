@@ -7,6 +7,7 @@ import {ProtocolTransactionStepTwoNotice} from "../../../domain/model/security/n
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 import {AbstractProtocolTransactionStepNotice} from "../../../domain/model/security/notices/abstract-protocol-transaction-step-notice";
+import {ProtocolTransactionStepFourNotice} from "../../../domain/model/security/notices/protocol-transaction-step-four-notice";
 /**
  * Created by Viki on 3/10/2017.
  */
@@ -44,6 +45,15 @@ export class ProtocolTransactionStepNoticeConstructor {
         let notice: ProtocolTransactionStepThreeNotice = new ProtocolTransactionStepThreeNotice();
         notice.setPreviousStepNotice(previousNotice);
         return <ProtocolTransactionStepThreeNotice>
+            this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
+    }
+
+    public constructProtocolTransactionStepFourNotice(protocolSession: ProtocolSession, message: string, originator: Agent,
+                                                     previousNotice: ProtocolTransactionStepThreeNotice,
+                                                     recipient: Agent): ProtocolTransactionStepFourNotice {
+        let notice: ProtocolTransactionStepFourNotice = new ProtocolTransactionStepFourNotice();
+        notice.setPreviousStepNotice(previousNotice);
+        return <ProtocolTransactionStepFourNotice>
             this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
     }
 
