@@ -2,7 +2,7 @@
 
 import {BaseEntity} from "../base-entity";
 
-export interface Payment extends BaseEntity {
+export interface DigitalGood extends BaseEntity {
 
     getText(): string;
 }

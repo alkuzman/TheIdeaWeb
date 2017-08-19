@@ -3,12 +3,12 @@ import {Problem} from "./problem";
 import {User} from "../authentication/user";
 import {Award} from "../awards/award";
 import {Badge} from "../awards/badges/badge";
-import {DigitalGoods} from "./digital_goods";
+import {DigitalGood} from "./digital_good";
 /**
  * Created by PC on 10/10/2016.
  */
 
-export class Idea extends BaseEntityImpl implements DigitalGoods {
+export class Idea extends BaseEntityImpl {
   public problem: Problem;
   public snackPeak: string;
   public title: string;

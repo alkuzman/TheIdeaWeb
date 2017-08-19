@@ -6,4 +6,9 @@ import {Payment} from "./payment";
 
 export class Contract extends BaseEntityImpl implements Payment{
 
+    public text: string;
+
+    getText(): string {
+        return this.text;
+    }
 }

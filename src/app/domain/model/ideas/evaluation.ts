@@ -1,8 +1,11 @@
 
 
 import {BaseEntityImpl} from "../base-entity-impl";
-import {DigitalGoods} from "./digital_goods";
+import {DigitalGood} from "./digital_good";
 
-export class Evaluation extends BaseEntityImpl implements DigitalGoods {
+export class Evaluation extends BaseEntityImpl implements DigitalGood {
 
+    getText(): string {
+        return "";
+    }
 }

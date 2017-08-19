@@ -16,6 +16,10 @@ export class Price extends BaseEntityImpl implements Payment {
         this.currency = new Currency();
     }
 
+    getText(): string {
+        return this.toString();
+    }
+
     toString(): string {
         let str: string = this.value + " " + this.currency.value;
         return str;

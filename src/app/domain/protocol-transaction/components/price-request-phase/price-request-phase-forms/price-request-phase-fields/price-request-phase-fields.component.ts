@@ -37,6 +37,8 @@ export class PriceRequestPhaseFieldsComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.payment == null) {
       this.data.payment = new Price();
+    } else if (this.data.payment.type !== "Price") {
+      console.log("incorrect payment method");
     }
     let control: FormControl = this.fb.control((<Price>this.data.payment).value, Validators.required);
     control.valueChanges.subscribe((value: number) => {
