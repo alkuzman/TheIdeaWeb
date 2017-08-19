@@ -8,8 +8,8 @@ import {KeysService} from "../keys/keys.service";
 import {ParserPemService} from "../parsers/parser-pem.service";
 import {CertificateService} from "../../../domain/services/certificate/certificate.service";
 import Certificate from "pkijs/src/Certificate";
-import {Price} from "../../../domain/model/helpers/price";
-import {PriceRequestPhaseData} from "../../../domain/model/security/data/price-request-phase-data";
+import {Price} from "../../../domain/model/payment/price";
+import {PaymentRequestPhaseData} from "../../../domain/model/security/data/payment-request-phase-data";
 import {Observable} from "rxjs";
 import {SecurityPasswordDialogComponent} from "../../../domain/security/components/security-password-dialog/security-password-dialog.component";
 import {MdDialog} from "@angular/material";
@@ -50,11 +50,11 @@ export class ProtocolMessagesReconstructionService {
     }
 
     public constructProtocolMessageOne(jsonMessage: string, password: string,
-                                       protocolSession: ProtocolSession): Observable<PriceRequestPhaseData> {
+                                       protocolSession: ProtocolSession): Observable<PaymentRequestPhaseData> {
 
         return Observable.create((observer) => {
 
-            let result: PriceRequestPhaseData = {};
+            let result: PaymentRequestPhaseData = {};
             console.log(jsonMessage);
 
             let message: {'signature': string, 'object': string, 'data': string, 'hashedData': string} =
@@ -100,7 +100,7 @@ export class ProtocolMessagesReconstructionService {
                                                                 this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
                                                                     sessionKey, message.data).subscribe((jsonData: string) => {
                                                                         let data: {productID: number, bid: Price, TID: number} = JSON.parse(jsonData);
-                                                                        result.price = data.bid;
+                                                                        result.payment = data.bid;
                                                                         result.productID = data.productID;
                                                                         result.tID = data.TID;
                                                                         observer.next(result);
@@ -123,7 +123,7 @@ export class ProtocolMessagesReconstructionService {
     }
 
     public constructProtocolMessageTwo(jsonMessage: string, password: string,
-                                       protocolSession: ProtocolSession): Observable<PriceRequestPhaseData> {
+                                       protocolSession: ProtocolSession): Observable<PaymentRequestPhaseData> {
 
         return Observable.create((observer) => {
             console.log(jsonMessage);
@@ -149,8 +149,8 @@ export class ProtocolMessagesReconstructionService {
                                 this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
                                     sessionKey, message.data).subscribe((decryptedDataJson: string) => {
                                         let decryptedData: {productID: number, price: Price, nonce: number, TID: number} = JSON.parse(decryptedDataJson);
-                                        let result: PriceRequestPhaseData = {};
-                                        result.price = decryptedData.price;
+                                        let result: PaymentRequestPhaseData = {};
+                                        result.payment = decryptedData.price;
                                         result.productID = decryptedData.productID;
                                         result.nonce = decryptedData.nonce;
                                         result.tID = decryptedData.TID;

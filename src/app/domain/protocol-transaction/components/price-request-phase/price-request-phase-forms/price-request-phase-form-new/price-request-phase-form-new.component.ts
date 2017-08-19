@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter, OnInit, Input} from "@angular/core";
-import {PriceRequestPhaseData} from "../../../../../model/security/data/price-request-phase-data";
+import {PaymentRequestPhaseData} from "../../../../../model/security/data/payment-request-phase-data";
 /**
  * Created by Viki on 2/20/2017.
  */
@@ -11,16 +11,16 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
   templateUrl: "price-request-phase-form-new.component.html"
 })
 export class PriceRequestPhaseFormNewComponent implements OnInit {
-  @Output("dataReady") dataReady: EventEmitter<PriceRequestPhaseData> =
-    new EventEmitter<PriceRequestPhaseData>();
-  data: PriceRequestPhaseData;
-  @Input("previousData") previousData: PriceRequestPhaseData;
+  @Output("dataReady") dataReady: EventEmitter<PaymentRequestPhaseData> =
+    new EventEmitter<PaymentRequestPhaseData>();
+  data: PaymentRequestPhaseData;
+  @Input("previousData") previousData: PaymentRequestPhaseData;
 
   ngOnInit(): void {
     this.data = {};
   }
 
-  onDataReady(data: PriceRequestPhaseData) {
+  onDataReady(data: PaymentRequestPhaseData) {
     this.dataReady.emit(data);
   }
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {ProtocolMessagesBuilderService} from "../../core/security-protocols/constructors/protocol-messages-builder.service";
 import {MdDialog} from "@angular/material";
 import {SecurityPasswordDialogComponent} from "../security/components/security-password-dialog/security-password-dialog.component";
-import {PriceRequestPhaseData} from "../model/security/data/price-request-phase-data";
+import {PaymentRequestPhaseData} from "../model/security/data/payment-request-phase-data";
 import {Idea} from "../model/ideas/idea";
 import {ProtocolMessagesReconstructionService} from "../../core/security-protocols/constructors/protocol-messages-reconstruction.service";
 import {UserService} from "../services/user/user.service";
@@ -24,7 +24,7 @@ import {ProtocolTransactionHistoryStep} from "./components/protocol-transaction-
 export class ProtocolTransactionComponent implements OnInit {
     @Input("protocolSession") protocolSession: ProtocolSession;
     @Input("currentStepNotice") currentStepNotice;
-    priceRequestPhaseData: PriceRequestPhaseData;
+    priceRequestPhaseData: PaymentRequestPhaseData;
     previousNotices: ProtocolTransactionHistoryStep[];
     pricePhase: boolean = true;
     abort: boolean = true;
@@ -69,13 +69,13 @@ export class ProtocolTransactionComponent implements OnInit {
                 }
                 if (currentStep.type == "ProtocolTransactionStepOneNotice") {
                     this.protocolMessageReconstructionService.constructProtocolMessageOne(currentStep.message, password, this.protocolSession)
-                        .subscribe((data: PriceRequestPhaseData) => {
+                        .subscribe((data: PaymentRequestPhaseData) => {
                             this.priceRequestPhaseData = data;
                             console.log(this.protocolSession);
                         });
                 } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
                     this.protocolMessageReconstructionService.constructProtocolMessageTwo(currentStep.message, password, this.protocolSession)
-                        .subscribe((data: PriceRequestPhaseData) => {
+                        .subscribe((data: PaymentRequestPhaseData) => {
                             this.priceRequestPhaseData = data;
                         });
                 } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
@@ -102,7 +102,7 @@ export class ProtocolTransactionComponent implements OnInit {
             } else if (this.currentStepNotice.type == "ProtocolTransactionStepOneNotice") {
                 this.protocolMessageBuilderService.buildProtocolMessageTwo(data, password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
             } else if (this.currentStepNotice.type == "ProtocolTransactionStepTwoNotice") {
-                if (data.price == this.priceRequestPhaseData.price) {
+                if (data.payment == this.priceRequestPhaseData.payment) {
                     console.log("same prices");
                     this.protocolMessageBuilderService.buildProtocolMessageThree(password, this.priceRequestPhaseData, this.protocolSession, this.currentStepNotice);
                 } else {

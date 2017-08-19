@@ -1,6 +1,6 @@
 import {BaseEntityImpl} from "../base-entity-impl";
 import {Shareable} from "./shareable";
-import {Contract} from "../ideas/contract";
+import {Contract} from "../payment/contract";
 import {Commentable} from "../comments/commentable";
 /**
  * Created by AKuzmanoski on 23/10/2016.

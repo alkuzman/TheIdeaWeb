@@ -8,7 +8,7 @@ import {CertificateService} from "../../../domain/services/certificate/certifica
 import {HelperService} from "../helper.service";
 import {ParserPemService} from "../parsers/parser-pem.service";
 import {NoticeService} from "../../../domain/services/notice/notice.service";
-import {PriceRequestPhaseData} from "../../../domain/model/security/data/price-request-phase-data";
+import {PaymentRequestPhaseData} from "../../../domain/model/security/data/payment-request-phase-data";
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 import {ProtocolTransactionStepNoticeConstructor} from "./protocol-transaction-step-notice-constructor.service";
@@ -76,7 +76,7 @@ export class ProtocolMessagesBuilderService {
         });
     }
 
-    public buildProtocolMessageOne(userData: PriceRequestPhaseData, password: string, previousData: PriceRequestPhaseData,
+    public buildProtocolMessageOne(userData: PaymentRequestPhaseData, password: string, previousData: PaymentRequestPhaseData,
                                    protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepThreeNotice) {
 
         // Initialize Simple Security Profile
@@ -164,7 +164,7 @@ export class ProtocolMessagesBuilderService {
                                                                                 }
                                                                                 let data = {
                                                                                     'productID': productID,
-                                                                                    'bid': userData.price,
+                                                                                    'bid': userData.payment,
                                                                                     'TID': TID
                                                                                 };
                                                                                 let jsonData: string = JSON.stringify(data);
@@ -208,8 +208,8 @@ export class ProtocolMessagesBuilderService {
             });
     }
 
-    public buildProtocolMessageTwo(userData: PriceRequestPhaseData, password: string,
-                                   previousMessageData: PriceRequestPhaseData, protocolSession: ProtocolSession,
+    public buildProtocolMessageTwo(userData: PaymentRequestPhaseData, password: string,
+                                   previousMessageData: PaymentRequestPhaseData, protocolSession: ProtocolSession,
                                    previousNotice: ProtocolTransactionStepOneNotice) {
 
         // Todo: Add signature to the hash of the whole message in order to authenticate the second party to the
@@ -217,7 +217,7 @@ export class ProtocolMessagesBuilderService {
         // Create message data
         let data = {
             'productID': previousMessageData.productID,
-            'price': userData.price,
+            'price': userData.payment,
             'nonce': previousMessageData.nonce,
             'TID': previousMessageData.tID
         };
@@ -260,7 +260,7 @@ export class ProtocolMessagesBuilderService {
     }
 
     public buildProtocolMessageThree(password: string,
-                                     previousMessageData: PriceRequestPhaseData,
+                                     previousMessageData: PaymentRequestPhaseData,
                                      protocolSession: ProtocolSession,
                                      previousNotice: ProtocolTransactionStepTwoNotice) {
 

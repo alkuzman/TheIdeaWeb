@@ -3,7 +3,7 @@
  */
 import {Component, Input, OnInit, Output, EventEmitter} from "@angular/core";
 import {Announcement} from "../../../../model/sharing/announcement";
-import {Contract} from "../../../../model/ideas/contract";
+import {Contract} from "../../../../model/payment/contract";
 import {Package} from "../../../../model/sharing/package";
 import {AnnouncementService} from "../../../../services/announcement/announcement.service";
 import {Shareable} from "../../../../model/sharing/shareable";
