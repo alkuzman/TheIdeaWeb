@@ -38,15 +38,15 @@ export class PriceRequestPhaseFieldsComponent implements OnInit {
     if (this.data.payment == null) {
       this.data.payment = new Price();
     }
-    let control: FormControl = this.fb.control(this.data.payment.value, Validators.required);
+    let control: FormControl = this.fb.control((<Price>this.data.payment).value, Validators.required);
     control.valueChanges.subscribe((value: number) => {
-      this.data.payment.value = value;
+        (<Price>this.data.payment).value = value;
     });
     this.form.addControl("payment", control);
 
-    control = this.fb.control(this.data.payment.currency);
+    control = this.fb.control((<Price>this.data.payment).currency);
     control.valueChanges.subscribe((value: Currency) => {
-      this.data.payment.currency = value;
+        (<Price>this.data.payment).currency = value;
     });
     this.form.addControl("currency", control);
   }
