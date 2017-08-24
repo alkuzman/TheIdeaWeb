@@ -18,8 +18,6 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
     trigger('routerAnimations', [
       transition('auth => login',
         group([
-          query(":leave, :enter",
-            animateChild(), {optional: true}),
           query(':leave',
             useAnimation(slideToLeft), {optional: true}),
           query(':enter', [
@@ -30,8 +28,6 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
       ),
       transition('auth => register',
         group([
-          query(":leave, :enter",
-            animateChild(), {optional: true}),
           query(':enter',
             useAnimation(slideFromRight), {optional: true}),
           query(':leave',
@@ -40,8 +36,6 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
       ),
       transition('login => auth',
         group([
-          query(":leave, :enter",
-            animateChild(), {optional: true}),
           query(':leave',
             useAnimation(slideToRight), {optional: true}),
           query(':enter',
@@ -50,8 +44,6 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
       ),
       transition('register => auth',
         group([
-          query(":leave, :enter",
-            animateChild(), {optional: true}),
           query(':leave',
             useAnimation(slideToRight), {optional: true}),
           query(':enter',
@@ -60,20 +52,17 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
       ),
       transition('void => auth',
         query(':enter', group([
-          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-          animateChild()
+          useAnimation(slideFromRight, {params: {delay: "150ms"}})
         ]), {optional: true})
       ),
       transition('void => login',
         query(':enter', group([
-          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-          animateChild()
+          useAnimation(slideFromRight, {params: {delay: "150ms"}})
         ]), {optional: true})
       ),
       transition('void => register',
         query(':enter', group([
-          useAnimation(slideFromRight, {params: {delay: "150ms"}}),
-          animateChild()
+          useAnimation(slideFromRight, {params: {delay: "150ms"}})
         ]), {optional: true})
       )
     ]),

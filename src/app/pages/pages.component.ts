@@ -28,8 +28,7 @@ import {fadeIn, fadeOut} from "../core/animations/fade-animations";
                         useAnimation(fadeOut)
                     ),
                     query(':enter',
-                        useAnimation(fadeIn)),
-                    query(':leave, :enter', animateChild())
+                        useAnimation(fadeIn))
                 ])
             ),
             transition('about => home',
@@ -38,8 +37,7 @@ import {fadeIn, fadeOut} from "../core/animations/fade-animations";
                         useAnimation(fadeOut)
                     ),
                     query(':enter',
-                        useAnimation(fadeIn)),
-                    query(':leave, :enter', animateChild())
+                        useAnimation(fadeIn))
                 ])
             )
         ])
