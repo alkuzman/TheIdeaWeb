@@ -19,7 +19,6 @@ import {slideFromRight} from "../../../core/animations/slide-animations";
   ]
 })
 export class AuthPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";

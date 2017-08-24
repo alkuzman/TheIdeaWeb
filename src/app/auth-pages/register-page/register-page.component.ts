@@ -18,7 +18,6 @@ import {AccessFromUrlNotAllowedGuard} from "../../core/guards/access-from-url-no
   ]
 })
 export class RegisterPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";
