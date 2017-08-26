@@ -11,4 +11,8 @@ export class Contract extends BaseEntityImpl implements Payment{
     getText(): string {
         return this.text;
     }
+
+    constructObject(text: string): void {
+        this.text = text;
+    }
 }

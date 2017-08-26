@@ -20,6 +20,12 @@ export class Price extends BaseEntityImpl implements Payment {
         return this.toString();
     }
 
+    constructObject(text: string): void {
+        const fields = text.split(' ');
+        this.value = parseFloat(fields[0]);
+        this.currency.value = fields[1];
+    }
+
     toString(): string {
         let str: string = this.value + " " + this.currency.value;
         return str;

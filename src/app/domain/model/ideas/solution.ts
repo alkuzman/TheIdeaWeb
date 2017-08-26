@@ -1,10 +1,10 @@
 import {BaseEntityImpl} from "../base-entity-impl";
 import {Idea} from "./idea";
-import {DigitalGood} from "./digital_good";
+import {DigitalGoods} from "./digital_goods";
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */
-export class Solution extends BaseEntityImpl implements DigitalGood {
+export class Solution extends BaseEntityImpl implements DigitalGoods {
   public text: string;
   public idea: Idea;
 

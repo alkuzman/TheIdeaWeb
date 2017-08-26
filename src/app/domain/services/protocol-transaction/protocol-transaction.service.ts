@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
 import {Observable} from "rxjs/Observable";
 import {Headers, Response} from "@angular/http";
+import {Epoid} from "../../model/security/data/epoid";
 
 @Injectable()
 export class ProtocolTransactionService {
@@ -35,8 +36,8 @@ export class ProtocolTransactionService {
         return headers;
     }
 
-    public getNewEpoid(): Observable<string> {
-        const url = this.epoidUrl + "/new";
+    public getNewEpoid(merchant: string): Observable<Epoid> {
+        const url = this.epoidUrl + "/new?merchant=" + merchant;
         return this.http.get(url, {headers: this.getHeaders()}, false)
             .map((response: Response) => this.extractRawData(response))
             .catch((error: any) => this.handleError(error));

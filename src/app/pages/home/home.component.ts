@@ -13,14 +13,9 @@ import {pageAnimation} from "../../core/animations/standard-route-animations";
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    pageAnimation("pageAnimation")
-  ]
 })
 
 export class HomeComponent implements OnInit {
-  @HostBinding("@pageAnimation") animation: boolean = true;
-
   @HostBinding("style.display") get display() {
     return "block";
   }

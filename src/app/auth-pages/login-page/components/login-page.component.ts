@@ -39,6 +39,7 @@ export class LoginPageComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log("login on init");
     this.route.queryParams.subscribe((params: Params) => {
       this.email = params['email'];
       this.returnUrl = params['returnUrl'];

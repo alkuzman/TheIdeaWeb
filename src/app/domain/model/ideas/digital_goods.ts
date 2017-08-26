@@ -2,7 +2,7 @@
 
 import {BaseEntity} from "../base-entity";
 
-export interface DigitalGood extends BaseEntity {
+export interface DigitalGoods extends BaseEntity {
 
     getText(): string;
 }

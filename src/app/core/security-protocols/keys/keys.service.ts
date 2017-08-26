@@ -19,6 +19,7 @@ export class KeysService {
     constructor(private cryptographicOperations: SimpleCryptographicOperations,
                 private algorithmService: AlgorithmService) {
         this.crypto = getCrypto();
+        console.log(this.crypto);
     }
 
     public generatePublicPrivateKeyPair(forSigning: boolean): PromiseLike<CryptoKeyPair | CryptoKey> {
@@ -78,8 +79,6 @@ export class KeysService {
     public basicImportKey(buffer: BufferSource, format: string, algString: string): PromiseLike<CryptoKeyPair | CryptoKey> {
         let algorithm = this.algorithmService.getAlgorithm(algString, this.algorithmService.HASH_ALG, 'importkey');
         let algInst: any = algorithm.algorithm;
-
-        console.log("in basic import key");
         return this.crypto.importKey(format, buffer, algInst, true,
             this.algorithmService.getUsagesForAlgorithmAndFormat(algString, format) || algorithm.usages);
     }

@@ -41,29 +41,21 @@ export class SecurityProfileConstructorService {
     public getSecurityProfileSimple(password: string, securityProfile: SecurityProfile): Observable<SimpleSecurityProfile> {
         return Observable.create((observer) => {
 
-            console.log("in simple profile");
-
             // Initialize result
             let result: SimpleSecurityProfile = new SimpleSecurityProfile();
 
             // Initialize certificate
             result.certificate = this.pemParser.parseCertificateFromPem(securityProfile.certificatePEM);
 
-            console.log("certificate");
-
             // Initialize encryption public key
             this.pemParser.parsePublicKeyFromPem(securityProfile.encryptionPair.publicPem)
                 .subscribe((publicKey: CryptoKey) => {
                     result.publicKey = publicKey;
 
-                    console.log("after public");
-
                     // Initialize encryption private key
                     this.keysService.extractPrivateKey(securityProfile.encryptionPair.privateEncrypted,
                         password, this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKeyEncryption) => {
                         result.privateKeyEncryption = privateKeyEncryption;
-
-                        console.log("after private encryption");
 
                         // Initialize signing private key
                         this.keysService.extractPrivateKey(securityProfile.encryptedPrivateKey, password,

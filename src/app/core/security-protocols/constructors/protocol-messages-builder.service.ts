@@ -27,6 +27,11 @@ import {DecryptingService} from "../decrypting.service";
 import {EncryptingService} from "../encrypting.service";
 import {ProtocolTransactionService} from "../../../domain/services/protocol-transaction/protocol-transaction.service";
 import {ProtocolTransactionStepFourNotice} from "../../../domain/model/security/notices/protocol-transaction-step-four-notice";
+import {PaymentType} from "../../../domain/model/payment/payment_type";
+import {DigitalGoodsType} from "../../../domain/model/ideas/digital_goods_type";
+import {Epoid} from "../../../domain/model/security/data/epoid";
+import {ProtocolTransactionStepTwoDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-two-data-recipient";
+import {ProtocolTransactionStepOneDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-one-data-recipient";
 
 /**
  * Created by Viki on 2/21/2017.
@@ -76,20 +81,18 @@ export class ProtocolMessagesBuilderService {
         });
     }
 
-    public buildProtocolMessageOne(userData: PaymentRequestPhaseData, password: string, previousData: PaymentRequestPhaseData,
-                                   protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepThreeNotice) {
+    public buildProtocolMessageOne(userData: PaymentRequestPhaseData, password: string,
+                                   previousData: ProtocolTransactionStepTwoDataRecipient,
+                                   protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepThreeNotice,
+                                   paymentType: PaymentType, goodType: DigitalGoodsType) {
 
         // Initialize Simple Security Profile
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
-                console.log(password);
-
                 // Retrieve other party public key
                 this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
                     .subscribe((otherPartyPublicKeyForEncryptionPEM: string) => {
-
-                        console.log("Parse pem public key");
 
                         // Parse the public key from pem format
                         this.pemParser.parsePublicKeyFromPem(otherPartyPublicKeyForEncryptionPEM)
@@ -98,8 +101,6 @@ export class ProtocolMessagesBuilderService {
                                 // Generate the session key that will be used
                                 this.keysService.generateSymmetricKey()
                                     .then((sessionKey: CryptoKey) => {
-
-                                        console.log("generate session key");
 
                                         // Add the session key encrypted with own public key into protocol session
                                         this.keysService.encryptSessionKey(sessionKey, simpleSecurityProfile.publicKey)
@@ -121,24 +122,18 @@ export class ProtocolMessagesBuilderService {
                                                             protocolSession.participantTwoSessionData = participant;
                                                         }
 
-
-                                                        console.log("export session key");
-
                                                         // Export the session key into raw format
                                                         this.keysService.exportKey(sessionKey, 'raw')
                                                             .subscribe((keyRaw: string) => {
 
                                                                 // Create message object
-                                                                let Kcm: string = keyRaw;
-                                                                let N: string = this.simpleCryptographicOperations.generateNonce();
                                                                 let obj = {
-                                                                    'key': Kcm,
-                                                                    'nonce': N,
+                                                                    'sessionKey': keyRaw,
+                                                                    'nonce': this.simpleCryptographicOperations.generateNonce(),
                                                                     'identity': this.userService.getAuthenticatedUser().email
                                                                 };
+                                                                console.log(obj);
                                                                 let jsonObj: string = JSON.stringify(obj);
-
-                                                                console.log("encrypt");
 
                                                                 // Encrypt message object with other party encryption public key
                                                                 this.cryptographicOperations.encrypt(
@@ -147,9 +142,6 @@ export class ProtocolMessagesBuilderService {
                                                                     .subscribe((initDataEncryption: string) => {
                                                                         let hashInitData: string = this.simpleCryptographicOperations.hash(jsonObj);
 
-
-                                                                        console.log("sign");
-
                                                                         // Sign hashed message object
                                                                         this.cryptographicOperations.sign(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
                                                                             simpleSecurityProfile.privateKeySigning, hashInitData)
@@ -157,15 +149,13 @@ export class ProtocolMessagesBuilderService {
 
                                                                                 // Create message data
                                                                                 let TID: number = 1;
-                                                                                let productID: number = protocolSession.idea.id;
                                                                                 if (previousNotice != null) {
-                                                                                    TID = previousData.tID + 1;
-                                                                                    productID = previousData.productID;
+                                                                                    TID = previousData.tid + 1;
                                                                                 }
                                                                                 let data = {
-                                                                                    'productID': productID,
-                                                                                    'bid': userData.payment,
-                                                                                    'TID': TID
+                                                                                    'appData': {'goodsType': goodType, 'paymentType': paymentType},
+                                                                                    'bid': userData.payment.getText(),
+                                                                                    'tid': TID
                                                                                 };
                                                                                 let jsonData: string = JSON.stringify(data);
 
@@ -175,17 +165,14 @@ export class ProtocolMessagesBuilderService {
                                                                                     sessionKey, jsonData).subscribe((dataEncrypted: string) => {
                                                                                     let hashedDataEncrypted: string = this.simpleCryptographicOperations.hash(dataEncrypted);
 
-                                                                                    console.log("final");
-
                                                                                     // Construct final message
                                                                                     let message = {
                                                                                         'signature': signedHashedInitData,
-                                                                                        'object': initDataEncryption,
+                                                                                        'primaryData': initDataEncryption,
                                                                                         'data': dataEncrypted,
-                                                                                        'hashedData': hashedDataEncrypted
+                                                                                        'dataIntegrity': hashedDataEncrypted
                                                                                     };
                                                                                     let jsonMessage: string = JSON.stringify(message);
-                                                                                    console.log(jsonMessage);
 
                                                                                     // Construct notice and send notice
                                                                                     this.sendMessage(this.protocolTransactionStepNoticeConstructor
@@ -209,18 +196,17 @@ export class ProtocolMessagesBuilderService {
     }
 
     public buildProtocolMessageTwo(userData: PaymentRequestPhaseData, password: string,
-                                   previousMessageData: PaymentRequestPhaseData, protocolSession: ProtocolSession,
-                                   previousNotice: ProtocolTransactionStepOneNotice) {
+                                   previousMessageData: ProtocolTransactionStepOneDataRecipient,
+                                   protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepOneNotice) {
 
-        // Todo: Add signature to the hash of the whole message in order to authenticate the second party to the
-        // Todo: first party. This is necessary because there is no certificate for the encrypting public key.
         // Create message data
         let data = {
-            'productID': previousMessageData.productID,
-            'price': userData.payment,
+            'productId': protocolSession.idea.id,
+            'payment': userData.payment.getText(),
             'nonce': previousMessageData.nonce,
-            'TID': previousMessageData.tID
+            'tid': previousMessageData.tid + 1
         };
+        console.log(data);
         let jsonData: string = JSON.stringify(data);
 
         // Initialize Simple Security Profile
@@ -236,31 +222,35 @@ export class ProtocolMessagesBuilderService {
                         sessionKey, jsonData).subscribe((encryptedData: string) => {
                         let encryptedDataHash = this.simpleCryptographicOperations.hash(encryptedData);
 
-                        // Construct final message
-                        let message = {
-                            'data': encryptedData,
-                            'hashedData': encryptedDataHash
-                        };
-                        let jsonMessage: string = JSON.stringify(message);
-                        console.log(jsonMessage);
+                        // Sign the hash value in order to authenticate yourself to the other party
+                        this.cryptographicOperations.sign(this.algorithmService.ASYMMETRIC_SIGNING_ALG, simpleSecurityProfile.privateKeySigning,
+                            encryptedDataHash).subscribe((signedData: string) => {
 
-                        // Construct notice
-                        let notice: ProtocolTransactionStepTwoNotice = this.protocolTransactionStepNoticeConstructor
-                            .constructProtocolTransactionStepTwoNotice(protocolSession, jsonMessage,
-                                this.userService.getAuthenticatedUser(),
-                                <ProtocolTransactionStepOneNotice>previousNotice,
-                                previousNotice.originator);
-                        console.log(notice);
+                            // Construct final message
+                            let message = {
+                                'signature': signedData,
+                                'data': encryptedData
+                            };
+                            let jsonMessage: string = JSON.stringify(message);
 
-                        // Send notice
-                        this.sendMessage(notice);
+                            // Construct notice
+                            let notice: ProtocolTransactionStepTwoNotice = this.protocolTransactionStepNoticeConstructor
+                                .constructProtocolTransactionStepTwoNotice(protocolSession, jsonMessage,
+                                    this.userService.getAuthenticatedUser(),
+                                    <ProtocolTransactionStepOneNotice>previousNotice,
+                                    previousNotice.originator);
+
+                            // Send notice
+                            this.sendMessage(notice);
+                        });
+
                     });
                 });
             });
     }
 
     public buildProtocolMessageThree(password: string,
-                                     previousMessageData: PaymentRequestPhaseData,
+                                     previousMessageData: ProtocolTransactionStepTwoDataRecipient,
                                      protocolSession: ProtocolSession,
                                      previousNotice: ProtocolTransactionStepTwoNotice) {
 
@@ -268,10 +258,12 @@ export class ProtocolMessagesBuilderService {
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleProfile: SimpleSecurityProfile) => {
 
+                console.log(previousMessageData);
+
                 // Construct message data
                 let data = {
                     "identity": this.userService.getAuthenticatedUser().email,
-                    "TID": previousMessageData.tID,
+                    "tid": previousMessageData.tid + 1,
                     "nonce": previousMessageData.nonce
                 };
 
@@ -304,7 +296,7 @@ export class ProtocolMessagesBuilderService {
                                     this.userService.getAuthenticatedUser(),
                                     <ProtocolTransactionStepTwoNotice>previousNotice,
                                     previousNotice.originator);
-                            console.log(notice);
+
                             this.sendMessage(notice);
                         });
                     })
@@ -323,15 +315,13 @@ export class ProtocolMessagesBuilderService {
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
             .subscribe((simpleProfile: SimpleSecurityProfile) => {
 
-                // Generate session key for encrypting the goods
+                // Generate key for encrypting the goods
                 this.keysService.generateSymmetricKey().then((dataEncryptionKey: CryptoKey) => {
 
-                    // Encrypt session key for encrypting goods with public key for encryption
+                    // Encrypt key for encrypting goods with public key for encryption
                     this.keysService.encryptSessionKey(dataEncryptionKey, simpleProfile.publicKey)
                         .subscribe((dataEncryptionKeyEncrypted) => {
                             protocolSession.participantTwoSessionData.dataEncryptionKeyEncrypted = dataEncryptionKeyEncrypted;
-
-                            console.log("Session key for encrypting goods encrypted");
 
                             // Get solution for given idea
                             this.solutionService.getSolution(protocolSession.idea.id).subscribe((solution: Solution) => {
@@ -340,28 +330,29 @@ export class ProtocolMessagesBuilderService {
                                 this.decryptingService.decryptSolutionWithKey(solution.text, simpleProfile.symmetricKey)
                                     .subscribe((solutionText: string) => {
 
-                                        console.log("decrypt solution");
-
                                         // Encrypt the solution with the session key for this transaction
                                         this.encryptingService.encryptSolutionWithKey(solutionText, dataEncryptionKey)
                                             .subscribe((encryptedSolution: string) => {
 
-                                                console.log("encrypt solution");
                                                 // Hash the encrypted solution
                                                 const hashedEncryptedSolution = this.simpleCryptographicOperations.hash(encryptedSolution);
 
                                                 // Get EPOID
-                                                this.protocolTransactionService.getNewEpoid().subscribe((epoid: string) => {
+                                                this.protocolTransactionService.getNewEpoid(previousNotice.originator.email)
+                                                    .subscribe((epoid: Epoid) => {
 
+                                                    const epoidJson = JSON.stringify(epoid);
+                                                    console.log(epoidJson);
                                                     // Construct data for encryption
                                                     const data = {
-                                                        "hashedEncryptedGoods": hashedEncryptedSolution,
+                                                        "goodsIntegrity": hashedEncryptedSolution,
                                                         "epoid": epoid
                                                     };
 
                                                     // Convert data into json
                                                     const jsonData = JSON.stringify(data);
 
+                                                    // Decrypt session key
                                                     this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
                                                         simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
 
@@ -370,8 +361,8 @@ export class ProtocolMessagesBuilderService {
                                                             .subscribe((encryptedJsonData: string) => {
 
                                                                 const message = {
-                                                                    "encryptedGoods": encryptedSolution,
-                                                                    "encryptedData": encryptedJsonData
+                                                                    "goods": encryptedSolution,
+                                                                    "dataIntegrity": encryptedJsonData
                                                                 };
 
                                                                 const jsonMessage = JSON.stringify(message);
@@ -380,6 +371,7 @@ export class ProtocolMessagesBuilderService {
                                                                     this.protocolTransactionStepNoticeConstructor
                                                                         .constructProtocolTransactionStepFourNotice(protocolSession, jsonMessage,
                                                                             this.userService.getAuthenticatedUser(), previousNotice, previousNotice.originator);
+
                                                                 this.sendMessage(notice);
                                                             });
                                                     });

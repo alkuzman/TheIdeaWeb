@@ -44,7 +44,7 @@ export class PriceRequestPhaseFieldsComponent implements OnInit {
     control.valueChanges.subscribe((value: number) => {
         (<Price>this.data.payment).value = value;
     });
-    this.form.addControl("payment", control);
+    this.form.addControl("price", control);
 
     control = this.fb.control((<Price>this.data.payment).currency);
     control.valueChanges.subscribe((value: Currency) => {
