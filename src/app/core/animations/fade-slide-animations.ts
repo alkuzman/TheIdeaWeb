@@ -16,4 +16,4 @@ export const fadeSlideFromBottom = animation([
       opacity: 1
     })),
   ])
-], {params: {duration: "200ms", opacityDuration: "40ms", delay: "0ms", easing: "ease-out", translate: "10px"}});
+], {params: {duration: "200ms", opacityDuration: "40ms", delay: "0ms", easing: "ease-out", translate: "20px"}});

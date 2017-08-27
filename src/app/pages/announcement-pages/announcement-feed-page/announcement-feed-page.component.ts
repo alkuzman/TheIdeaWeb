@@ -29,7 +29,7 @@ import {Shareable} from "../../../domain/model/sharing/shareable";
   animations: [
     trigger('pageAnimation', [
       transition(':enter',
-        query('@*', useAnimation(scaleIn))),
+        query('@fab', useAnimation(scaleIn))),
       transition(':leave',
         query('[md-fab]', useAnimation(scaleOut)))
     ]),
