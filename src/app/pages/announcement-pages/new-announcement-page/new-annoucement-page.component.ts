@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Sharable} from "../../../domain/model/sharing/sharable";
+import {Shareable} from "../../../domain/model/sharing/shareable";
 import {Announcement} from "../../../domain/model/sharing/announcement";
 import {MdSnackBar} from "@angular/material";
 @Component({
@@ -14,14 +14,14 @@ import {MdSnackBar} from "@angular/material";
                                  (announcementCreated)="onAnnouncementCreated($event)"></ideal-new-announcement-form>`
 })
 export class NewAnnouncementPageComponent implements OnInit {
-  sharable: Sharable;
+  sharable: Shareable;
 
   constructor(private route: ActivatedRoute, private snackBar: MdSnackBar, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { sharable: Sharable }) => {
+    this.route.data.subscribe((data: { sharable: Shareable }) => {
       this.sharable = data.sharable;
     });
   }

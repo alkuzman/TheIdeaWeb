@@ -1,4 +1,4 @@
-<div [ngSwitch]="notice?.type">
+<div [ngSwitch]="notice?.type" (click)="open()">
     <div *ngSwitchCase="protocolTransactionStepOneNoticeType">
         <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
     </div>
@@ -7,5 +7,14 @@
     </div>
     <div *ngSwitchCase="protocolTransactionStepThreeNoticeType">
         <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
+    </div>
+    <div *ngSwitchCase="protocolTransactionStepFourNoticeType">
+        <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
+    </div>
+    <div *ngSwitchCase="protocolTransactionStepFiveNoticeType">
+        <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
+    </div>
+    <div *ngSwitchCase="packageNoticeType">
+        <ideal-new-package-notice-card [notice]="notice" [opened]="notice?.opened"></ideal-new-package-notice-card>
     </div>
 </div>

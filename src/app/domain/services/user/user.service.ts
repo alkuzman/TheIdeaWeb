@@ -40,8 +40,8 @@ export class UserService {
             .catch((error: any) => this.handleError(error));
     }
 
-    activateUser(code: string): Observable<User> {
-        let url = this.usersUrl + "/activation?code=" + code;
+    activateUser(code: string, mail: string): Observable<User> {
+        let url = this.usersUrl + "/activation?code=" + code + "&user=" + mail;
         return this.http.get(url)
             .map((response: Response) => this.extractData(response))
             .catch((error: any) => this.handleError(error));

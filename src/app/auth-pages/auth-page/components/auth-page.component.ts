@@ -13,13 +13,9 @@ import {slideFromRight} from "../../../core/animations/slide-animations";
   moduleId: module.id,
   selector: "ideal-auth-page",
   templateUrl: "auth-page.component.html",
-  styleUrls: ["auth-page.component.scss"],
-  animations: [
-    pageAnimation("routeAnimation")
-  ]
+  styleUrls: ["auth-page.component.scss"]
 })
 export class AuthPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";

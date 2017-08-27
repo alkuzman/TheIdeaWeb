@@ -1,7 +1,7 @@
 import {BaseEntityImpl} from "../base-entity-impl";
 import {Person} from "../authentication/person";
 import {Idea} from "./idea";
-import {Contract} from "./contract";
+import {Contract} from "../payment/contract";
 /**
  * Created by AKuzmanoski on 23/10/2016.
  */

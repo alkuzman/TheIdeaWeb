@@ -8,10 +8,12 @@ export class UserObjectService {
   private _user: User;
 
   public get user(): User {
+    console.log(this._user);
     return this._user;
   }
 
   public set user(user: User) {
+    console.log(this._user);
     this._user = user;
   }
 

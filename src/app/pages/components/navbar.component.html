@@ -1,7 +1,7 @@
 <div [ngSwitch]="state">
   <md-toolbar *ngSwitchCase="defaultState" class="md-elevation-z4" color="primary">
     <button #sidenavbutton md-icon-button (click)="onSideNavToggle()">
-      <label ideal-circle-label color="accent" [text]="numberOfNotifications" *ngIf="numberOfNotifications > 0"
+      <label ideal-circle-label color="accent" [text]="numberOfNotifications" *ngIf="numberOfNotifications !== 0"
              ideal-badge position="bottom-right">
       </label>
       <md-icon class="md-toolbar-icon">menu</md-icon>

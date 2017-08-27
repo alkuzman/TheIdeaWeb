@@ -29,4 +29,13 @@ export class EncryptingService {
             });
         });
     }
+
+    public encryptSolutionWithKey(solution: string, key: CryptoKey): Observable<string> {
+        return Observable.create((observer) => {
+            this.cryptographicOperation.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm,
+                key, solution).subscribe((encryptedSolution: string) => {
+                observer.next(encryptedSolution);
+            });
+        });
+    }
 }

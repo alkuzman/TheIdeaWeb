@@ -15,14 +15,20 @@ import {NoticeCardComponent} from "./components/notice-card/notice-card.componen
 import {ProtocolTransactionStepNoticeCard} from "./components/notice-card/protocol-transaction-step-notice-card/protocol-transaction-step-notice-card.component";
 import {UserModule} from "../user/user.module";
 import {ProtocolTransactionStepNoticeMessagePipe} from "./pipes/protocol-trasaction-step-notice-message.pipe";
+import { NewPackageNoticeCardComponent } from './components/notice-card/new-package-notice-card/new-package-notice-card.component';
+import {WidgetModule} from "../../shared/widget/widget.module";
+import { SendNoticeFormComponent } from './components/notice-forms/send-notice-form/send-notice-form.component';
+import {SharableModule} from "../sharable/sharable.module";
 @NgModule({
-  imports: [SharedModule, PackageModule, AgentModule, UserModule],
+  imports: [SharedModule, PackageModule, AgentModule, UserModule, WidgetModule, SharableModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
     NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
-    ProtocolTransactionStepNoticeMessagePipe],
+    ProtocolTransactionStepNoticeMessagePipe,
+    NewPackageNoticeCardComponent,
+    SendNoticeFormComponent],
   exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
     NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
-    ProtocolTransactionStepNoticeMessagePipe]
+    ProtocolTransactionStepNoticeMessagePipe, NewPackageNoticeCardComponent, SendNoticeFormComponent]
 })
 export class NoticeModule {
 

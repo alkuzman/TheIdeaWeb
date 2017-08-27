@@ -1,0 +1,10 @@
+<form (ngSubmit)="save()" class="margin">
+  <ideal-agent-selector (agentAdded)="onRecipientAdded($event)" (agentRemoved)="onRecipientRemoved($event)"
+                        searchPlaceholder="Recipients" style="width: 100%"></ideal-agent-selector>
+  <!--<ideal-package-fields [submitted]="submitted" [package]="notice?.pckg" [form]="packageFields"></ideal-package-fields>-->
+  <ideal-sharable-details [shareable]="shareable"></ideal-sharable-details>
+  <div class="margin-top" fxLayout="row" fxLayoutAlign="end">
+    <!-- <button *ngIf="canClear" type="button" md-button (click)="clearForm()">Clear</button> -->
+    <button type="submit" md-raised-button color="accent">Send</button>
+  </div>
+</form>

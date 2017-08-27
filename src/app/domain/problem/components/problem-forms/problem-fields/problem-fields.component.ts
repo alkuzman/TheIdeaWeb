@@ -13,7 +13,8 @@ import {Keyword} from "../../../../model/ideas/keyword";
 @Component({
   moduleId: module.id,
   selector: "ideal-problem-fields",
-  templateUrl: "problem-fields.component.html"
+  templateUrl: "problem-fields.component.html",
+  styleUrls: ["problem-fields.component.scss"]
 })
 export class ProblemFieldsComponent implements OnInit, AfterViewChecked {
   @Input("titleLabel") titleLabel: string = "Title";

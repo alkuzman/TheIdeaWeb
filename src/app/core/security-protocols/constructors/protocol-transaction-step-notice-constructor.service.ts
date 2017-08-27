@@ -3,11 +3,11 @@ import {ProtocolTransactionStepOneNotice} from "../../../domain/model/security/n
 import {ProtocolTransactionStepThreeNotice} from "../../../domain/model/security/notices/protocol-transaction-step-three-notice";
 import {Idea} from "../../../domain/model/ideas/idea";
 import {Agent} from "../../../domain/model/authentication/agent";
-import {Recipient} from "../../../domain/model/sharing/recipient";
 import {ProtocolTransactionStepTwoNotice} from "../../../domain/model/security/notices/protocol-transaction-step-two-notice";
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 import {AbstractProtocolTransactionStepNotice} from "../../../domain/model/security/notices/abstract-protocol-transaction-step-notice";
+import {ProtocolTransactionStepFourNotice} from "../../../domain/model/security/notices/protocol-transaction-step-four-notice";
 /**
  * Created by Viki on 3/10/2017.
  */
@@ -48,6 +48,15 @@ export class ProtocolTransactionStepNoticeConstructor {
             this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
     }
 
+    public constructProtocolTransactionStepFourNotice(protocolSession: ProtocolSession, message: string, originator: Agent,
+                                                     previousNotice: ProtocolTransactionStepThreeNotice,
+                                                     recipient: Agent): ProtocolTransactionStepFourNotice {
+        let notice: ProtocolTransactionStepFourNotice = new ProtocolTransactionStepFourNotice();
+        notice.setPreviousStepNotice(previousNotice);
+        return <ProtocolTransactionStepFourNotice>
+            this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
+    }
+
     private setNoticeProperties(notice: AbstractProtocolTransactionStepNotice<any>,
                                 protocolSession: ProtocolSession, message: string,
                                 originator: Agent, recipient: Agent): ProtocolTransactionStepNotice<any> {
@@ -56,12 +65,7 @@ export class ProtocolTransactionStepNoticeConstructor {
         notice.setMessage(message);
         notice.setOriginator(originator);
 
-        // Add recipient
-        let recipients: Recipient[] = [];
-        let tempRecipient = new Recipient();
-        tempRecipient.agent = recipient;
-        recipients.push(tempRecipient);
-        notice.setRecipients(recipients);
+        notice.recipient = recipient;
         return notice;
     }
 }

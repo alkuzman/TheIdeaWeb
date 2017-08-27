@@ -12,7 +12,8 @@ import {IdeaValidators} from "../../../../../core/validators/idea.validators";
 @Component({
   moduleId: module.id,
   selector: "ideal-user-email-fields",
-  templateUrl: "user-email-fields.component.html"
+  templateUrl: "user-email-fields.component.html",
+  styleUrls: ["user-email-fields.component.scss"]
 })
 export class UserEmailFieldsComponent implements OnInit {
   _submitted: boolean = false;

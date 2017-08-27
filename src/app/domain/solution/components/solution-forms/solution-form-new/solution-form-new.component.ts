@@ -82,6 +82,12 @@ export class NewSolutionFormComponent implements OnInit {
         );
       });
     });
+    /*
+    this.solutionService.addSolution(solution).subscribe(
+      (solution: Solution) => this.onSolutionSaved(solution),
+      (error: any) => this.errorMessage = error
+    );
+    */
   }
 
   onSolutionSaved(solution: Solution) {

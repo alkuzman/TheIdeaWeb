@@ -3,6 +3,7 @@
  */
 @import '~@angular/material/theming';
 @import "app/shared/widget/components/label/label-theme";
+@import "app/shared/widget/directives/background-color/_background-color-theme";
 
 @mixin main_mixin($theme) {
   $primary: map-get($theme, primary);
@@ -57,4 +58,5 @@
   @include main_mixin($theme);
   @include text_editor_mixin($theme);
   @include ideal_label_theme($theme);
+  @include background-color-theme($theme);
 }

@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Price} from "../../../../../model/helpers/price";
-import {PriceRequestPhaseData} from "../../../../../model/security/data/price-request-phase-data";
+import {Price} from "../../../../../model/payment/price";
+import {PaymentRequestPhaseData} from "../../../../../model/security/data/payment-request-phase-data";
 /**
  * Created by Viki on 2/20/2017.
  */
@@ -13,11 +13,11 @@ import {PriceRequestPhaseData} from "../../../../../model/security/data/price-re
 })
 export class PriceRequestPhaseFormComponent implements OnInit {
 
-  @Input("data") data: PriceRequestPhaseData;
+  @Input("data") data: PaymentRequestPhaseData;
   @Input("currentPrice") currentPrice: Price;
   @Input("lastPrice") lastPrice: Price;
-  @Output("dataReady") dataReady: EventEmitter<PriceRequestPhaseData> =
-    new EventEmitter<PriceRequestPhaseData>();
+  @Output("dataReady") dataReady: EventEmitter<PaymentRequestPhaseData> =
+    new EventEmitter<PaymentRequestPhaseData>();
   form: FormGroup;
   fields: FormGroup;
   submitted: boolean = false;
@@ -40,7 +40,7 @@ export class PriceRequestPhaseFormComponent implements OnInit {
   }
 
   readyAccept() {
-    this.data.price = this.currentPrice;
+    this.data.payment = this.currentPrice;
     this.dataReady.emit(this.data);
   }
 }

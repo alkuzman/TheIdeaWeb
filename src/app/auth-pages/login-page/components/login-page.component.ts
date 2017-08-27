@@ -11,17 +11,9 @@ import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url
 @Component({
   moduleId: module.id,
   selector: "ideal-login-page",
-  templateUrl: "login-page.component.html",
-  animations: [
-    pageAnimation("routeAnimation")
-  ]
+  templateUrl: "login-page.component.html"
 })
 export class LoginPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") animation: boolean = true;
-
-  @HostBinding("style.display") get display() {
-    return "block";
-  }
 
   @HostBinding("style.position") get position() {
     return "relative";
@@ -47,6 +39,7 @@ export class LoginPageComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log("login on init");
     this.route.queryParams.subscribe((params: Params) => {
       this.email = params['email'];
       this.returnUrl = params['returnUrl'];

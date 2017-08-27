@@ -1,18 +1,29 @@
 <div>
-  <md-tab-group>
-    <md-tab label="Idea Details">
-      <ideal-idea-details [idea]="protocolSession.idea"></ideal-idea-details>
-    </md-tab>
-    <md-tab label="Buying Procedure">
-      <div>
-        <div class="margin" *ngFor="let prevNotice of previousNotices">
-          <ideal-protocol-transaction-history-step-card [protocolTransactionHistoryStep]="prevNotice"
-                                                        [authenticatedUserEmail]="getAuthenticatedUserEmail()">
+    <md-tab-group>
+        <md-tab label="Idea Details">
+            <ideal-idea-details [idea]="protocolSession.digitalGoods"></ideal-idea-details>
+        </md-tab>
+        <md-tab label="Buying Procedure">
+            <div>
+                <div class="margin" *ngFor="let prevNotice of previousNotices">
+                    <ideal-protocol-transaction-history-step-card [protocolTransactionHistoryStep]="prevNotice"
+                                                                  [authenticatedUserEmail]="getAuthenticatedUserEmail()">
 
-          </ideal-protocol-transaction-history-step-card>
-        </div>
-      </div>
-      <ideal-price-request-phase-form-new [previousData]="priceRequestPhaseData" (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
-    </md-tab>
-  </md-tab-group>
+                    </ideal-protocol-transaction-history-step-card>
+                </div>
+            </div>
+            <ideal-price-request-phase-form-new *ngIf="pricePhase" [lastPayment]="lastPayment"
+                                                (dataReady)="ready($event)"></ideal-price-request-phase-form-new>
+            <md-card *ngIf="!pricePhase" class="margin">
+                <md-card-content>
+                    <p>This is your last chance to abort the transaction. After this step you can not go back</p>
+                    <div>
+                        <button type="button" md-raised-button color="accent" (click)="ready(!abort)">Continue</button>
+                        <button type="button" md-raised-button (click)="ready(abort)">Abort</button>
+                    </div>
+                </md-card-content>
+            </md-card>
+
+        </md-tab>
+    </md-tab-group>
 </div>

@@ -4,12 +4,13 @@
 }
 
 .ideal-doc-table-contents ul {
-  list-style-type: none;
+  list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
 .ideal-doc-table-contents li {
+  list-style-type: none !important;
   font-size: 20px;
   line-height: 40px;
 }

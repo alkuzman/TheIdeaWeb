@@ -7,4 +7,5 @@ import {BaseRelationship} from "../base-relationship";
 export class ProtocolParticipantTwoSessionData extends BaseRelationship {
     public participant: Agent;
     public sessionKeyEncrypted: string;
+    public dataEncryptionKeyEncrypted: string;
 }

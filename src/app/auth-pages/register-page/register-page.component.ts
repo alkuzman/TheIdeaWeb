@@ -12,13 +12,9 @@ import {AccessFromUrlNotAllowedGuard} from "../../core/guards/access-from-url-no
 @Component({
   moduleId: module.id,
   selector: "ideal-register-page",
-  templateUrl: "register-page.component.html",
-  animations: [
-    pageAnimation("routeAnimation")
-  ]
+  templateUrl: "register-page.component.html"
 })
 export class RegisterPageComponent implements OnInit {
-  @HostBinding("@routeAnimation") animation: boolean = true;
 
   @HostBinding("style.display") get display() {
     return "block";

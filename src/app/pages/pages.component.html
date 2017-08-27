@@ -51,7 +51,7 @@
          (scrolled)="onScroll()"
          [scrollWindow]="false"
          >
-      <div [@routerAnimations]="prepareRouteTransition(outlet)">
+      <div>
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </div>
