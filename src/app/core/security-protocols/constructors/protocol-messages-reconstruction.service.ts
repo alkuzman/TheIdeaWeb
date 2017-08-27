@@ -30,7 +30,9 @@ import {ProtocolTransactionStepThreeDataRecipient} from "../../../domain/model/s
 import {ProtocolTransactionStepThreeDataOriginator} from "../../../domain/model/security/data/protocol-transaction-step-three-data-originator";
 import {Payment} from "../../../domain/model/payment/payment";
 import {Subject} from "rxjs/Subject";
-import {createUrlResolverWithoutPackagePrefix} from "@angular/compiler";
+import {ProtocolTransactionStepFourDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-four-data-recipient";
+import {ProtocolTransactionService} from "../../../domain/services/protocol-transaction/protocol-transaction.service";
+import {ProtocolTransactionStepFourDataOriginator} from "../../../domain/model/security/data/protocol-transaction-step-four-data-originator";
 
 /**
  * Created by Viki on 3/1/2017.
@@ -50,101 +52,27 @@ export class ProtocolMessagesReconstructionService {
                 private keysService: KeysService, private pemParser: ParserPemService,
                 private certificateService: CertificateService,
                 private securityProfileConstructor: SecurityProfileConstructorService,
-                private userService: UserService) {
+                private userService: UserService,
+                private transactionService: ProtocolTransactionService) {
         this.initializeSecurityProfile();
     }
 
     public reconstructMessages(array: ProtocolTransactionStepNotice<any>[], password: string,
-                                previousNotices: ProtocolTransactionHistoryStep[],
-                                previousNoticesData: PreviousNoticesData,
-                                protocolSession: ProtocolSession,
-                                lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
+                               previousNotices: ProtocolTransactionHistoryStep[],
+                               previousNoticesData: PreviousNoticesData,
+                               protocolSession: ProtocolSession,
+                               lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
 
         return this.reconstructProtocolMessage(array.pop(), password, previousNotices, previousNoticesData, protocolSession,
             lastPaymentSubject).expand((currentStep: ProtocolTransactionStepNotice<any>) => {
-                if (array.length > 0) {
-                    return this.reconstructProtocolMessage(array.pop(), password, previousNotices, previousNoticesData,
-                        protocolSession, lastPaymentSubject);
-                } else {
-                    return Observable.empty();
-                }
-            });
-    }
-
-    private reconstructProtocolMessage(currentStep: ProtocolTransactionStepNotice<any>, password: string,
-                                        previousNotices: ProtocolTransactionHistoryStep[],
-                                        previousNoticesData: PreviousNoticesData,
-                                        protocolSession: ProtocolSession,
-                                        lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
-        const historyStep = {
-            messageType: currentStep.type,
-            originator: currentStep.originator.email,
-            when: currentStep.creationDate
-        };
-        previousNotices.push(historyStep);
-
-        return Observable.create((observer) => {
-
-            // Processing Protocol transaction steps
-            if (currentStep.type == "ProtocolTransactionStepOneNotice") {
-                // Check if the authenticated user is originator or recipient of the message
-                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                    this.constructProtocolMessageOneForOriginator(currentStep.message, password, protocolSession)
-                        .subscribe((data: ProtocolTransactionStepOneDataOriginator) => {
-                            previousNoticesData["ProtocolTransactionStepOneDataOriginator"] = data;
-                            lastPaymentSubject.next(data.bid);
-                            observer.next(previousNoticesData);
-                        });
-                } else {
-                    this.constructProtocolMessageOneForRecipient(currentStep.message, password, protocolSession)
-                        .subscribe((data: ProtocolTransactionStepOneDataRecipient) => {
-                            previousNoticesData["ProtocolTransactionStepOneDataRecipient"] = data;
-                            lastPaymentSubject.next(data.bid);
-                            observer.next(previousNoticesData);
-                        });
-                }
-            } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
-                // Check if the authenticated user is originator or recipient of the message
-                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                    this.constructProtocolMessageTwoForOriginator(currentStep.message, password,
-                        protocolSession, previousNoticesData)
-                        .subscribe((data: ProtocolTransactionStepTwoDataOriginator) => {
-                            previousNoticesData["ProtocolTransactionStepTwoDataOriginator"] = data;
-                            lastPaymentSubject.next(data.payment);
-                            observer.next(previousNoticesData);
-                        });
-                } else {
-                    this.constructProtocolMessageTwoForRecipient(currentStep.message, password,
-                        protocolSession, previousNoticesData)
-                        .subscribe((data: ProtocolTransactionStepTwoDataRecipient) => {
-                            previousNoticesData["ProtocolTransactionStepTwoDataRecipient"] = data;
-                            lastPaymentSubject.next(data.payment);
-                            observer.next(previousNoticesData);
-                        });
-                }
-            } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
-                // TODO: Change the price phase to false in protocol transaction component
-
-                // Check if the authenticated user is originator or recipient of the message
-                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                    this.constructProtocolMessageThreeForOriginator(currentStep.message, password, protocolSession)
-                        .subscribe((data: ProtocolTransactionStepThreeDataOriginator) => {
-                            previousNoticesData["ProtocolTransactionStepThreeDataOriginator"] = data;
-                            observer.next(previousNoticesData);
-                        });
-                } else {
-                    this.constructProtocolMessageThreeForRecipient(currentStep.message, password, protocolSession)
-                        .subscribe((data: ProtocolTransactionStepThreeDataRecipient) => {
-                            previousNoticesData["ProtocolTransactionStepThreeDataRecipient"] = data;
-                            observer.next(previousNoticesData);
-                        });
-                }
-            } else if (currentStep.type == "ProtocolTransactionStepFourNotice") {
-
+            if (array.length > 0) {
+                return this.reconstructProtocolMessage(array.pop(), password, previousNotices, previousNoticesData,
+                    protocolSession, lastPaymentSubject);
+            } else {
+                return Observable.empty();
             }
         });
     }
-
 
     public reconstructProtocolMessages(currentStep: ProtocolTransactionStepNotice<any>, password: string,
                                        previousNotices: ProtocolTransactionHistoryStep[],
@@ -236,6 +164,91 @@ export class ProtocolMessagesReconstructionService {
             previousNotices.reverse();
 
             observer.next(previousNoticesData);
+        });
+    }
+
+    private reconstructProtocolMessage(currentStep: ProtocolTransactionStepNotice<any>, password: string,
+                                       previousNotices: ProtocolTransactionHistoryStep[],
+                                       previousNoticesData: PreviousNoticesData,
+                                       protocolSession: ProtocolSession,
+                                       lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
+        const historyStep = {
+            messageType: currentStep.type,
+            originator: currentStep.originator.email,
+            when: currentStep.creationDate
+        };
+        previousNotices.push(historyStep);
+
+        return Observable.create((observer) => {
+
+            // Processing Protocol transaction steps
+            if (currentStep.type == "ProtocolTransactionStepOneNotice") {
+                // Check if the authenticated user is originator or recipient of the message
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageOneForOriginator(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepOneDataOriginator) => {
+                            previousNoticesData["ProtocolTransactionStepOneDataOriginator"] = data;
+                            lastPaymentSubject.next(data.bid);
+                            observer.next(previousNoticesData);
+                        });
+                } else {
+                    this.constructProtocolMessageOneForRecipient(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepOneDataRecipient) => {
+                            previousNoticesData["ProtocolTransactionStepOneDataRecipient"] = data;
+                            lastPaymentSubject.next(data.bid);
+                            observer.next(previousNoticesData);
+                        });
+                }
+            } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
+                // Check if the authenticated user is originator or recipient of the message
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageTwoForOriginator(currentStep.message, password,
+                        protocolSession, previousNoticesData)
+                        .subscribe((data: ProtocolTransactionStepTwoDataOriginator) => {
+                            previousNoticesData["ProtocolTransactionStepTwoDataOriginator"] = data;
+                            lastPaymentSubject.next(data.payment);
+                            observer.next(previousNoticesData);
+                        });
+                } else {
+                    this.constructProtocolMessageTwoForRecipient(currentStep.message, password,
+                        protocolSession, previousNoticesData)
+                        .subscribe((data: ProtocolTransactionStepTwoDataRecipient) => {
+                            previousNoticesData["ProtocolTransactionStepTwoDataRecipient"] = data;
+                            lastPaymentSubject.next(data.payment);
+                            observer.next(previousNoticesData);
+                        });
+                }
+            } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
+                // Check if the authenticated user is originator or recipient of the message
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageThreeForOriginator(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepThreeDataOriginator) => {
+                            previousNoticesData["ProtocolTransactionStepThreeDataOriginator"] = data;
+                            observer.next(previousNoticesData);
+                        });
+                } else {
+                    this.constructProtocolMessageThreeForRecipient(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepThreeDataRecipient) => {
+                            previousNoticesData["ProtocolTransactionStepThreeDataRecipient"] = data;
+                            observer.next(previousNoticesData);
+                        });
+                }
+            } else if (currentStep.type == "ProtocolTransactionStepFourNotice") {
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageFourForOriginator(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepFourDataOriginator) => {
+                            previousNoticesData["ProtocolTransactionStepFourDataOriginator"] = data;
+                            observer.next(previousNoticesData);
+                    });
+                } else {
+                    this.constructProtocolMessageFourForRecipient(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepFourDataRecipient) => {
+                            console.log(data);
+                            previousNoticesData["ProtocolTransactionStepFourDataRecipient"] = data;
+                            observer.next(previousNoticesData);
+                        })
+                }
+            }
         });
     }
 
@@ -567,6 +580,93 @@ export class ProtocolMessagesReconstructionService {
                             observer.next(result);
                         });
 
+                    });
+                });
+        });
+    }
+
+    private constructProtocolMessageFourForRecipient(jsonMessage: string, password: string,
+                                                     protocolSession: ProtocolSession): Observable<ProtocolTransactionStepFourDataRecipient> {
+
+        return Observable.create((observer) => {
+
+            // Parse JSON message
+            const message: { goods: string, dataIntegrity: string } = JSON.parse(jsonMessage);
+
+            // Initialize result
+            let result: ProtocolTransactionStepFourDataRecipient = {};
+
+            // Construct simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    result.goods = message.goods;
+
+                    // Decrypt session key
+                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                        simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
+
+                        // Decrypt dataIntegrity part
+                        this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                            sessionKey, message.dataIntegrity).subscribe((dataIntegrityDecrypted: string) => {
+
+                            // Parse JSON from data integrity
+                            const dataIntegrity: { goodsIntegrity: string, epoid: string } = JSON.parse(dataIntegrityDecrypted);
+
+                            // Verify that goods are intact
+                            const messageGoodsHashed = this.simpleCryptographicOperations.hash(message.goods);
+
+                            if (messageGoodsHashed == dataIntegrity.goodsIntegrity) {
+                                result.epoid = JSON.parse(dataIntegrity.epoid);
+
+                                // Update protocol session in order to save the encrypted goods
+                                protocolSession.participantOneSessionData.encryptedGoods = result.goods;
+                                this.transactionService.saveProtocolSession(protocolSession)
+                                    .subscribe((value: ProtocolSession) => {
+                                        observer.next(result);
+                                    });
+                            } else {
+                                console.log("Data integrity is violated");
+                            }
+
+                        });
+                    });
+                });
+        });
+    }
+
+    private constructProtocolMessageFourForOriginator(jsonMessage: string, password: string,
+                                                      protocolSession: ProtocolSession): Observable<ProtocolTransactionStepFourDataOriginator> {
+
+        return Observable.create((observer) => {
+            // Parse JSON message
+            const message: { goods: string, dataIntegrity: string } = JSON.parse(jsonMessage);
+
+            // Initialize result
+            let result: ProtocolTransactionStepFourDataRecipient = {};
+
+            // Construct simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    result.goods = message.goods;
+
+                    // Decrypt session key
+                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                        simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
+
+                        // Decrypt dataIntegrity part
+                        this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                            sessionKey, message.dataIntegrity).subscribe((dataIntegrityDecrypted: string) => {
+
+                            // Parse JSON from data integrity
+                            const dataIntegrity: { goodsIntegrity: string, epoid: string } = JSON.parse(dataIntegrityDecrypted);
+
+                            result.epoid = JSON.parse(dataIntegrity.epoid);
+
+                            observer.next(result);
+
+                        });
                     });
                 });
         });
