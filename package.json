@@ -52,7 +52,7 @@
     "node-rsa": "^0.4.2",
     "nonce": "^1.0.4",
     "pbkdf2": "^3.0.9",
-    "pkijs": "*",
+    "pkijs": "2.1.27",
     "rxjs": "5.5.2",
     "stompjs": "*",
     "text-encoding": "^0.6.4",

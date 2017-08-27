@@ -2,10 +2,10 @@
  * Created by AKuzmanoski on 26/10/2016.
  */
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Solution} from "../../../../model/ideas/solution";
-import {Problem} from "../../../../model/ideas/problem";
-import {Idea} from "../../../../model/ideas/idea";
-import {User} from "../../../../model/authentication/user";
+import {Solution} from '../../../../model/ideas';
+import {Problem} from '../../../../model/ideas';
+import {Idea} from '../../../../model/ideas';
+import {User} from '../../../../model/authentication';
 import {SolutionService} from "../../../../services/solution/solution.service";
 import {UserService} from "../../../../services/user/user.service";
 import {EncryptingService} from "../../../../../core/security-protocols/encrypting.service";
@@ -19,8 +19,8 @@ import {SecurityPasswordDialogComponent} from "../../../../security/components/s
 })
 export class NewSolutionFormComponent implements OnInit {
   @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
-  @Input("showIdeaFields") showIdeaFields = true;
-  @Input("showProblemFields") showProblemFields = true;
+  @Input() showIdeaFields = true;
+  @Input() showProblemFields = true;
   @Output("dirty") dirty: EventEmitter<boolean> = new EventEmitter<boolean>();
   solution: Solution;
   errorMessage: any;

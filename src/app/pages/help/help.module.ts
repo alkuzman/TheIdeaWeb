@@ -8,8 +8,7 @@ import {SharedModule} from "../../shared/shared.module";
 @NgModule({
     imports: [
         CommonModule,
-        SharedModule,
-        HelpRoutingModule
+        SharedModule
     ],
     declarations: [HelpComponent],
     exports: [HelpComponent]

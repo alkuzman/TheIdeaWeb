@@ -5,7 +5,7 @@ import {HelpComponent} from "./help.component";
 
 export const HelpRoutes: Routes = [
     {
-        path: 'help',
+        path: '',
         component: HelpComponent
     }
 ];

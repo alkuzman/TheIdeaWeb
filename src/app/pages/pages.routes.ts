@@ -4,6 +4,7 @@
 import {Routes} from "@angular/router";
 import {PagesComponent} from "./pages.component";
 import {HomeRoutes} from "./home/home.routes";
+import {HelpRoutes} from "./help/help.routes";
 
 export const PagesRoutes: Routes = [
   {
@@ -39,6 +40,12 @@ export const PagesRoutes: Routes = [
             value: 'home',
           }
         }
+      },
+      {
+        path: 'help',
+        children: [
+          ...HelpRoutes
+        ]
       },
       {
         path: 'problems',
