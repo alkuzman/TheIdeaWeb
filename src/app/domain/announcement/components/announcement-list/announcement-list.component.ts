@@ -74,7 +74,7 @@ export class AnnouncementListComponent implements OnInit, AfterViewChecked {
     this.share.emit(sharable);
   }
 
-  onSendTo(sharable: Sharable): void {
+  onSendTo(sharable: Shareable): void {
     this.sendTo.emit(sharable);
   }
 
