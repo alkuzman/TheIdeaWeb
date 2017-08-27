@@ -41,7 +41,7 @@ export class IdeaDetailsComponent implements OnInit {
     return 'block';
   }
 
-  ownerAvatarAlignment: Alignment = Alignment.left;
+  ownerAvatarAlignment: Alignment = Alignment.center;
 
   @Input() idea: Idea;
   errorMessage: any;

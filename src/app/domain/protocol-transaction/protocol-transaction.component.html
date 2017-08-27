@@ -2,7 +2,7 @@
     <div fxFlex="55%" *ngIf="finishInitializing">
         <h3 *ngIf="protocolSession.aborted">Protocol aborted</h3>
         <div fxLayout="column" fxLayoutGap="1%" *ngIf="!protocolSession.aborted">
-            <div fxFlex="none" *ngIf="currentStepNotice.type !== 'ProtocolTransactionStepSevenNotice'">
+            <div fxFlex="none" *ngIf="currentStepNotice?.type !== 'ProtocolTransactionStepSevenNotice'">
                 <div fxFlex *ngIf="paymentType == PaymentType.Money">
                     <ideal-money-type-protocol-transaction [currentStepNotice]="currentStepNotice"
                                                            [lastPrice]="lastPayment"
@@ -18,7 +18,7 @@
                     </ideal-contract-type-protocol-transaction>
                 </div>
             </div>
-            <div fxFlex="none" *ngIf="currentStepNotice.type == 'ProtocolTransactionStepSevenNotice'">
+            <div fxFlex="none" *ngIf="currentStepNotice?.type == 'ProtocolTransactionStepSevenNotice'">
                 <ideal-protocol-transaction-finished [goodsId]="previousNoticesData['ProtocolTransactionStepSevenData'].goodsId"
                                                      [outcome]="previousNoticesData['ProtocolTransactionStepSevenData'].outcome"
                                                      [owner]="getAuthenticatedUserEmail() == protocolSession.digitalGoods.owner.email">
