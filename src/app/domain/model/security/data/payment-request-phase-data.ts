@@ -1,4 +1,3 @@
-import {Price} from "../../payment/price";
 import {Payment} from "../../payment/payment";
 import {PaymentType} from "../../payment/payment_type";
 import {DigitalGoodsType} from "../../ideas/digital_goods_type";
@@ -10,7 +9,7 @@ import {DigitalGoodsType} from "../../ideas/digital_goods_type";
 export interface PaymentRequestPhaseData {
     payment?: Payment;
     key?: CryptoKey;
-    nonce?: number;
+    nonce?: string;
     otherParty?: string;
     tID?: number;
     productID?: number;

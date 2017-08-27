@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {ProtocolTransactionStepOneNotice} from "../../../domain/model/security/notices/protocol-transaction-step-one-notice";
 import {ProtocolTransactionStepThreeNotice} from "../../../domain/model/security/notices/protocol-transaction-step-three-notice";
-import {Idea} from "../../../domain/model/ideas/idea";
 import {Agent} from "../../../domain/model/authentication/agent";
 import {ProtocolTransactionStepTwoNotice} from "../../../domain/model/security/notices/protocol-transaction-step-two-notice";
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {ProtocolTransactionStepNotice} from "../../../domain/model/security/notices/protocol-transaction-step-notice";
 import {AbstractProtocolTransactionStepNotice} from "../../../domain/model/security/notices/abstract-protocol-transaction-step-notice";
 import {ProtocolTransactionStepFourNotice} from "../../../domain/model/security/notices/protocol-transaction-step-four-notice";
+import {ProtocolTransactionStepFiveNotice} from "../../../domain/model/security/notices/protocol-transaction-step-five-notice";
 /**
  * Created by Viki on 3/10/2017.
  */
@@ -56,6 +56,24 @@ export class ProtocolTransactionStepNoticeConstructor {
         return <ProtocolTransactionStepFourNotice>
             this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
     }
+
+    public constructProtocolTransactionStepFiveNotice(protocolSession: ProtocolSession, message: string, originator: Agent,
+                                                      previousNotice: ProtocolTransactionStepFourNotice,
+                                                      recipient: Agent): ProtocolTransactionStepFiveNotice {
+        let notice: ProtocolTransactionStepFiveNotice = new ProtocolTransactionStepFiveNotice();
+        notice.setPreviousStepNotice(previousNotice);
+        return <ProtocolTransactionStepFiveNotice>
+            this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
+    }
+
+    // public constructProtocolTransactionStepSixNotice(protocolSession: ProtocolSession, message: string, originator: Agent,
+    //                                                   previousNotice: ProtocolTransactionStepFiveNotice,
+    //                                                   recipient: Agent): ProtocolTransactionStepFiveNotice {
+    //     let notice: ProtocolTransactionStepSixNotice = new ProtocolTransactionStepSixNotice();
+    //     notice.setPreviousStepNotice(previousNotice);
+    //     return <ProtocolTransactionStepSixNotice>
+    //         this.setNoticeProperties(notice, protocolSession, message, originator, recipient);
+    // }
 
     private setNoticeProperties(notice: AbstractProtocolTransactionStepNotice<any>,
                                 protocolSession: ProtocolSession, message: string,

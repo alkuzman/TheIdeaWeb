@@ -12,8 +12,9 @@ import {NavbarComponent} from "./components/navbar.component";
 import {SearchComponent} from "./components/search/search.component";
 import {ContentComponent} from "./content.component";
 import {SharableResolverService} from "./sharable-resolver.service";
+import {HelpModule} from "./help/help.module";
 @NgModule({
-  imports: [SharedModule, UserModule, HomeModule],
+  imports: [SharedModule, UserModule, HomeModule, HelpModule],
   declarations: [SearchComponent, NavbarComponent, ContentComponent, PagesComponent],
   exports: [PagesComponent],
   providers: [SharableResolverService]

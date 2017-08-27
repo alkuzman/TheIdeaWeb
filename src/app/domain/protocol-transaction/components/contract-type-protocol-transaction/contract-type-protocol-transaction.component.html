@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-title>Continue transaction</mat-card-title>
+  <mat-card-content>
+    <h4 style="text-align: right">Payment type: Contract</h4>
+    <p>
+      {{(currentStepNotice != null ? currentStepNotice.type : "Begin") | protocolTransactionCurrentStepMessage: "contract"}}
+    </p>
+    <button type="button" mat-raised-button color="accent" (click)="continueTransaction()">Continue</button>
+    <button type="button" mat-raised-button color="accent" (click)="abortTransaction()">Abort</button>
+  </mat-card-content>
+</mat-card>

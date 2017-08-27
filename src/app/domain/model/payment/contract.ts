@@ -7,12 +7,19 @@ import {Payment} from "./payment";
 export class Contract extends BaseEntityImpl implements Payment{
 
     public text: string;
+    public title: string;
 
     getText(): string {
-        return this.text;
+        const obj = {
+            title: this.title,
+            text: this.text
+        };
+        return JSON.stringify(obj);
     }
 
     constructObject(text: string): void {
-        this.text = text;
+        const obj: {title: string, text: string} = JSON.parse(text);
+        this.text = obj.text;
+        this.title = obj.title;
     }
 }

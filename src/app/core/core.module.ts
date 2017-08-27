@@ -18,7 +18,7 @@ import {ConfigService} from "./config/config.service";
 import {STOMPService} from "./socket/stopm.service";
 import {SocketService} from "./socket/socket.service";
 import {KeysService} from "./security-protocols/keys/keys.service";
-import {CertificateRequestGenerationService} from "./security-protocols/certificates/certificates-requests-generation.service";
+import {UserCertificationService} from "./security-protocols/certificates/user-certification.service";
 import {CryptographicOperations} from "./security-protocols/cryptographic-operations/cryptographic-operations";
 import {IconRegistryService} from "./icon-registry/icon-registry.service";
 import {SecurityProfileConstructorService} from "./security-protocols/constructors/security-profile-constructor.service";
@@ -26,7 +26,6 @@ import {ProtocolMessagesBuilderService} from "./security-protocols/constructors/
 import {HelperService} from "./security-protocols/helper.service";
 import {ParserPemService} from "./security-protocols/parsers/parser-pem.service";
 import {ProtocolMessagesReconstructionService} from "./security-protocols/constructors/protocol-messages-reconstruction.service";
-import {SecurityPasswordDialogComponent} from "../domain/security/components/security-password-dialog/security-password-dialog.component";
 import {SecurityModule} from "../domain/security/security.module";
 import {ProtocolTransactionStepNoticeConstructor} from "./security-protocols/constructors/protocol-transaction-step-notice-constructor.service";
 import {EncryptingService} from "./security-protocols/encrypting.service";
@@ -36,20 +35,23 @@ import {SimpleCryptographicOperations} from "./security-protocols/cryptographic-
 import {AlgorithmService} from "./security-protocols/algorithms/algorithms.service";
 import {AccessFromUrlNotAllowedGuard} from "./guards/access-from-url-not-allowed.guard";
 import {DiscardChangesGuard} from "./guards/discard_changes.guard";
+import {MyTesterService} from "./security-protocols/my-tester.service";
+import {CertificateOperationsService} from "./security-protocols/certificates/certificate-operations.service";
 
 
 @NgModule({
-  imports: [SharedModule, SecurityModule],
-  declarations: [],
-  exports: [],
-  providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
-    NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
-    JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
-    SocketService, KeysService, CertificateRequestGenerationService, SecurityProfileConstructorService,
-    SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
-    ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
-    ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
-    DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard, AccessFromUrlNotAllowedGuard]
+    imports: [SharedModule, SecurityModule],
+    declarations: [],
+    exports: [],
+    providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
+        NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
+        JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
+        SocketService, KeysService, UserCertificationService, SecurityProfileConstructorService,
+        SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
+        ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
+        ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
+        DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard,
+        AccessFromUrlNotAllowedGuard, MyTesterService, CertificateOperationsService]
 })
 export class CoreModule {
 }

@@ -12,7 +12,7 @@ import {AgentModule} from "../agent/agent.module";
 import {NoticeListComponent} from "./components/notice-list/notice-list.component";
 import {NoticeListLoaderComponent} from "./components/notice-list/notice-list-loader/notice-list-loader.component";
 import {NoticeCardComponent} from "./components/notice-card/notice-card.component";
-import {ProtocolTransactionStepNoticeCard} from "./components/notice-card/protocol-transaction-step-notice-card/protocol-transaction-step-notice-card.component";
+import {ProtocolTransactionStepNoticeCardComponent} from "./components/notice-card/protocol-transaction-step-notice-card/protocol-transaction-step-notice-card.component";
 import {UserModule} from "../user/user.module";
 import {ProtocolTransactionStepNoticeMessagePipe} from "./pipes/protocol-trasaction-step-notice-message.pipe";
 import { NewPackageNoticeCardComponent } from './components/notice-card/new-package-notice-card/new-package-notice-card.component';
@@ -22,12 +22,12 @@ import {SharableModule} from "../sharable/sharable.module";
 @NgModule({
   imports: [SharedModule, PackageModule, AgentModule, UserModule, WidgetModule, SharableModule],
   declarations: [NoticeFieldsComponent, NoticeSubmitLabelPipe, NoticeFormComponent, NewNoticeFormComponent,
-    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
+    NoticeListComponent, NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCardComponent,
     ProtocolTransactionStepNoticeMessagePipe,
     NewPackageNoticeCardComponent,
     SendNoticeFormComponent],
   exports: [NoticeFieldsComponent, NoticeFormComponent, NewNoticeFormComponent, NoticeListComponent,
-    NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCard,
+    NoticeListLoaderComponent, NoticeCardComponent, ProtocolTransactionStepNoticeCardComponent,
     ProtocolTransactionStepNoticeMessagePipe, NewPackageNoticeCardComponent, SendNoticeFormComponent]
 })
 export class NoticeModule {

@@ -1,0 +1,18 @@
+<h3 mat-dialog-title>Please enter your card information in order to proceed</h3>
+<div fxLayout="column">
+  <mat-input-container fxFlex>
+    <input matInput placeholder="Card number" [(ngModel)]="cardInformation.cardNumber">
+  </mat-input-container>
+  <mat-input-container fxFlex>
+    <input matInput placeholder="Card type" [(ngModel)]="cardInformation.cardType">
+  </mat-input-container>
+  <mat-input-container fxFlex>
+    <input matInput placeholder="Expire month" [(ngModel)]="cardInformation.expireMonth">
+  </mat-input-container>
+  <mat-input-container fxFlex>
+    <input matInput placeholder="Expire year" [(ngModel)]="cardInformation.expireYear">
+  </mat-input-container>
+</div>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="closeDialog()">Enter</button>
+</mat-dialog-actions>

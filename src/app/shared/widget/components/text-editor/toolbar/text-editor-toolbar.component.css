@@ -3,11 +3,11 @@
   background: purple;
 }
 
-.noTabPanel md-tab-header {
+.noTabPanel mat-tab-header {
   display: none !important;
 }
 
-md-tab-group.toolbarTabs {
+mat-tab-group.toolbarTabs {
   margin-bottom: -15px;
 }
 

@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter, OnInit, Input} from "@angular/core";
 import {Organization} from "../../../model/authentication/organization";
 import {OrganizationService} from "../../../services/organization/organization.service";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {Member} from "../../../model/authentication/member";
 import {MemberRole} from "../../../model/enumerations/member-role";
 import {UserService} from "../../../services/user/user.service";
@@ -17,13 +17,13 @@ import {MemberService} from "../../../services/member/member.service";
   templateUrl: 'new-organization-form.component.html'
 })
 export class NewOrganizationFormComponent implements OnInit {
-  @Input("buttonText") buttonText: string = "Create";
+  @Input("buttonText") buttonText = "Create";
   organization: Organization;
   @Output("organizationAdded") organizationAdded: EventEmitter<Organization> = new EventEmitter<Organization>();
   @Output("error") error: EventEmitter<Organization> = new EventEmitter<Organization>();
 
   constructor(private organizationService: OrganizationService, private userService: UserService,
-              private memberService: MemberService, private snackBar: MdSnackBar,) {
+              private memberService: MemberService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -31,24 +31,24 @@ export class NewOrganizationFormComponent implements OnInit {
   }
 
   addOrganization(organization: Organization) {
-    let member: Member = new Member();
+    const member: Member = new Member();
     member.organization = organization;
     member.user = this.userService.getAuthenticatedUser();
     member.role = MemberRole.OWNER;
-    this.memberService.save(member).subscribe((member: Member) => this.onOrganizationAdded(organization),
+    this.memberService.save(member).subscribe((savedMember: Member) => this.onOrganizationAdded(organization),
       (error: any) => this.onError(error));
   }
 
   onOrganizationAdded(organization: Organization): void {
-    let settings = new MdSnackBarConfig();
-    let simpleSnackBarRef = this.snackBar.open("Organization Created", null, settings);
+    const settings = new MatSnackBarConfig();
+    const simpleSnackBarRef = this.snackBar.open("Organization Created", null, settings);
     setTimeout(simpleSnackBarRef.dismiss.bind(simpleSnackBarRef), 3000);
     this.organizationAdded.emit(organization);
   }
 
   onError(error: any): void {
-    let settings = new MdSnackBarConfig();
-    let simpleSnackBarRef = this.snackBar.open("Something went wrong. Try Again", null, settings);
+    const settings = new MatSnackBarConfig();
+    const simpleSnackBarRef = this.snackBar.open("Something went wrong. Try Again", null, settings);
     setTimeout(simpleSnackBarRef.dismiss.bind(simpleSnackBarRef), 3000);
     this.error.emit(error);
   }

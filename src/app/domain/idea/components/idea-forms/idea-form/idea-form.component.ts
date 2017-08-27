@@ -1,13 +1,11 @@
 /**
  * Created by PC on 10/10/2016.
  */
-import {Component, EventEmitter, Output, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Idea} from "../../../../model/ideas/idea";
 import {Problem} from "../../../../model/ideas/problem";
-import {FormGroup, FormBuilder} from "@angular/forms";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {AnalyzerService} from "../../../../../core/analyzers/analyzer.service";
-import {IdeaAnalysis} from "../../../../model/analyzers/analysis/idea-analysis";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 
 @Component({
   moduleId: module.id,
@@ -20,9 +18,9 @@ export class IdeaFormComponent implements OnInit {
   @Output("ideaReady") ideaReady: EventEmitter<Idea> = new EventEmitter<Idea>();
   form: FormGroup;
   fields: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
-  constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
 
   }
 
@@ -41,7 +39,7 @@ export class IdeaFormComponent implements OnInit {
     if (this.form.valid) {
       this.ideaReady.emit(this.idea);
     } else {
-      this.snackBar.open("Cannot create idea. Validation errors", undefined, <MdSnackBarConfig>{duration: 3000});
+      this.snackBar.open("Cannot create idea. Validation errors", undefined, <MatSnackBarConfig>{duration: 3000});
     }
   }
 

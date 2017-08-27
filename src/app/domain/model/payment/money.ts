@@ -7,7 +7,7 @@ import {Payment} from "./payment";
  */
 
 
-export class Price extends BaseEntityImpl implements Payment {
+export class Money extends BaseEntityImpl implements Payment {
     public value: number;
     public currency: Currency;
 

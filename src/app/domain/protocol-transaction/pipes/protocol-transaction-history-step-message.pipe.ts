@@ -20,8 +20,8 @@ export class ProtocolTransactionHistoryStepMessagePipe implements PipeTransform 
         "ProtocolTransactionStepTwoNotice": "You responded to the buying request",
         "ProtocolTransactionStepThreeNotice": "You accepted the final offer",
         "ProtocolTransactionStepFourNotice": "You sent the goods encrypted",
-        "ProtocolTransactionStepFiveNotice": "",
-        "ProtocolTransactionStepSixNotice": "",
+        "ProtocolTransactionStepFiveNotice": "You sent electronic payment order",
+        "ProtocolTransactionStepSixNotice": "You sent the transaction request to the server",
         "ProtocolTransactionStepSevenNotice": "",
         "ProtocolTransactionStepEightNotice": ""
     }
@@ -31,8 +31,8 @@ export class ProtocolTransactionHistoryStepMessagePipe implements PipeTransform 
         "ProtocolTransactionStepTwoNotice": "The other party responded to your buying request",
         "ProtocolTransactionStepThreeNotice": "The other party accepted your final offer",
         "ProtocolTransactionStepFourNotice": "The other party sent the goods encrypted",
-        "ProtocolTransactionStepFiveNotice": "",
-        "ProtocolTransactionStepSixNotice": "",
+        "ProtocolTransactionStepFiveNotice": "The other party sent you electronic payment order",
+        "ProtocolTransactionStepSixNotice": "The other party sent the transaction request to the server",
         "ProtocolTransactionStepSevenNotice": "",
         "ProtocolTransactionStepEightNotice": ""
     }

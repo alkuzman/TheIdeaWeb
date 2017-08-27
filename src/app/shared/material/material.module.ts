@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  MdAutocompleteModule, MdCheckboxModule, MdInputModule, MdSelectModule, MdSliderModule, MdSlideToggleModule,
-  MdMenuModule, MdSidenavModule, MdToolbarModule, MdListModule, MdGridListModule, MdCardModule, MdTabsModule,
-  MdButtonModule, MdChipsModule, MdIconModule, MdProgressSpinnerModule, MdProgressBarModule, MdDialogModule,
-  MdTooltipModule, MdSnackBarModule, MdButtonToggleModule
+  MatAutocompleteModule, MatCheckboxModule, MatInputModule, MatSelectModule, MatSliderModule, MatSlideToggleModule,
+  MatMenuModule, MatSidenavModule, MatToolbarModule, MatListModule, MatGridListModule, MatCardModule, MatTabsModule,
+  MatButtonModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatDialogModule,
+  MatTooltipModule, MatSnackBarModule, MatButtonToggleModule, MatRadioModule
 } from "@angular/material";
 
 @NgModule({
   exports: [
-    MdInputModule, MdAutocompleteModule, MdCheckboxModule, MdSelectModule, MdSliderModule, MdSlideToggleModule,
-    MdMenuModule, MdSidenavModule, MdToolbarModule, MdListModule, MdGridListModule, MdCardModule, MdTabsModule,
-    MdButtonModule, MdChipsModule, MdIconModule, MdProgressSpinnerModule, MdProgressBarModule, MdDialogModule,
-    MdTooltipModule, MdSnackBarModule, MdButtonToggleModule
+    MatInputModule, MatAutocompleteModule, MatCheckboxModule, MatSelectModule, MatSliderModule, MatSlideToggleModule,
+    MatMenuModule, MatSidenavModule, MatToolbarModule, MatListModule, MatGridListModule, MatCardModule, MatTabsModule,
+    MatButtonModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatDialogModule,
+    MatTooltipModule, MatSnackBarModule, MatButtonToggleModule, MatRadioModule
   ],
   declarations: []
 })

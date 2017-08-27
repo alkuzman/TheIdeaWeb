@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {MdDialogRef} from "@angular/material";
+import {MatDialogRef} from "@angular/material";
 /**
  * Created by Viki on 2/26/2017.
  */
@@ -11,9 +11,9 @@ import {MdDialogRef} from "@angular/material";
   templateUrl: "security-password-dialog.component.html"
 })
 export class SecurityPasswordDialogComponent {
-  public password: string = "";
+  public password = "";
 
-  constructor(private dialogRef: MdDialogRef<SecurityPasswordDialogComponent>) {
+  constructor(private dialogRef: MatDialogRef<SecurityPasswordDialogComponent>) {
   }
 
   public closeDialog() {

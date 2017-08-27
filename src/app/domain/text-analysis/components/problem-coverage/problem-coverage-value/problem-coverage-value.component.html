@@ -1,5 +1,5 @@
 <div fxLayout="row">
-  <md-slider
+  <mat-slider
     fxFlex
     color="primary"
     [max]="max"
@@ -9,7 +9,7 @@
     [thumb-label]="thumbLabel"
     [value]="coverage * 100"
     [vertical]="vertical">
-  </md-slider>
+  </mat-slider>
   <span>
     {{coverage | percent:"1.0-0"}}
   </span>

@@ -1,0 +1,9 @@
+<h3 mat-dialog-title>Please enter your PayPal account in order to proceed</h3>
+<div fxLayout="row">
+    <mat-input-container fxFlex>
+        <input matInput placeholder="PayPal Account" [(ngModel)]="paypalAccount">
+    </mat-input-container>
+</div>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="closeDialog()">Enter</button>
+</mat-dialog-actions>

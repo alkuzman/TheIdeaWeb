@@ -12,7 +12,7 @@ import {Agent} from "../../../../model/authentication/agent";
     selector: 'ideal-protocol-transaction-step-notice-card',
     templateUrl: 'protocol-transaction-step-notice-card.component.html'
 })
-export class ProtocolTransactionStepNoticeCard {
+export class ProtocolTransactionStepNoticeCardComponent {
     @Input("notice") notice: ProtocolTransactionStepNotice<any>;
 
     constructor(private redirectService: RedirectService) {

@@ -4,7 +4,7 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {Announcement} from "../../../../model/sharing/announcement";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-announcement-form",
@@ -15,9 +15,9 @@ export class AnnouncementFormComponent implements OnInit {
   @Output("announcementReady") announcementReady: EventEmitter<Announcement> = new EventEmitter<Announcement>();
   form: FormGroup;
   fields: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
-  constructor(private fb: FormBuilder, private snackBar: MdSnackBar) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
 
   }
 

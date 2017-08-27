@@ -9,4 +9,5 @@ export interface ProtocolTransactionStepOneDataOriginator {
     goodsType?: DigitalGoodsType;
     bid?: Payment;
     tid?: number;
+    nonce?: string;
 }

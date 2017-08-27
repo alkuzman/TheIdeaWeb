@@ -1,48 +1,48 @@
-<md-card>
-    <md-card-header>
-        <img md-card-avatar (click)="getSender()" [src]="notice?.originator | idealUserProfilePicture" />
-        <md-card-title>
+<mat-card>
+    <mat-card-header>
+        <img mat-card-avatar (click)="getSender()" [src]="notice?.originator | idealUserProfilePicture" />
+        <mat-card-title>
             <strong idealColor="accent" (click)="getSender()">
-                {{notice?.originator?.firstName}} {{notice?.originator?.lastName}}
+                {{notice?.originator?.name}}
             </strong>
             sent you notice for
             <strong idealColor="accent" (click)="getIdea()">
-                {{notice?.protocolSession?.idea?.title}}
+                {{notice?.protocolSession?.digitalGoods?.getText()}}
             </strong>
-        </md-card-title>
-        <md-card-subtitle>{{notice?.creationDate | amTimeAgo}}</md-card-subtitle>
-    </md-card-header>
-    <md-card-content (click)="getContent()">
-        <md-card-title-group>
-            <md-card-title>{{notice?.protocolSession?.idea?.title}}</md-card-title>
-            <md-card-subtitle>{{notice | protocolTransactionStepNoticeMessage}}</md-card-subtitle>
-        </md-card-title-group>
-    </md-card-content>
+        </mat-card-title>
+        <mat-card-subtitle>{{notice?.creationDate | amTimeAgo}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content (click)="getContent()">
+        <mat-card-title-group>
+            <mat-card-title>{{notice?.protocolSession?.digitalGoods?.getText()}}</mat-card-title>
+            <mat-card-subtitle>{{notice | protocolTransactionStepNoticeMessage}}</mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-content>
     <!--
-    <md-card-actions>
+    <mat-card-actions>
         <div fxLayout="row">
             <div fxFlex="none">
-                <button md-icon-button mdTooltipPosition="above" *ngFor="let action of actions?.mainActions"
+                <button mat-icon-button matTooltipPosition="above" *ngFor="let action of actions?.mainActions"
                         (click)="onAction(action)"
                         [idealColor]="action.color"
-                        [mdTooltip]="action.title">
-                    <md-icon class="icon-20">{{action.icon}}</md-icon>
+                        [matTooltip]="action.title">
+                    <mat-icon class="icon-20">{{action.icon}}</mat-icon>
                 </button>
             </div>
             <div fxFlex></div>
             <div fxFlex="none">
-                <button [mdMenuTriggerFor]="appMenu" md-icon-button>
-                    <md-icon>more_vert</md-icon>
+                <button [matMenuTriggerFor]="appMenu" mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <md-menu #appMenu="mdMenu">
-                    <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
-                            [mdTooltip]="action.description" mdTooltipPosition="left">
-                        <md-icon class="icon-20">{{action.icon}}</md-icon>
+                <mat-menu #appMenu="matMenu">
+                    <button mat-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
+                            [matTooltip]="action.description" matTooltipPosition="left">
+                        <mat-icon class="icon-20">{{action.icon}}</mat-icon>
                         <span>{{action.title}}</span>
                     </button>
-                </md-menu>
+                </mat-menu>
             </div>
         </div>
-    </md-card-actions>
+    </mat-card-actions>
     -->
-</md-card>
+</mat-card>

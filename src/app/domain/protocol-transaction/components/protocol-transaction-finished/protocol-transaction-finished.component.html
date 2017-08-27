@@ -1,0 +1,9 @@
+<mat-card>
+    <mat-card-title>Transaction finished</mat-card-title>
+    <mat-card-content>
+        <h4 style="text-align: right">The transaction was {{outcome}}</h4>
+        <div *ngIf="!isOwner">
+            <button mat-button type="button" color="accent" (click)="checkOutGoods()">Checkout goods</button>
+        </div>
+    </mat-card-content>
+</mat-card>

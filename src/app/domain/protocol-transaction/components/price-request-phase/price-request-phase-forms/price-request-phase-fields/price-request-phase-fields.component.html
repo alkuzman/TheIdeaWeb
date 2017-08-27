@@ -10,10 +10,10 @@
     </div>
   </div>
   <div fxLayout="row">
-    <md-input-container [dividerColor]="formErrors.price ? 'warn' : 'primary'" fxFlex="80%">
-      <input mdInput type="number" formControlName="price" placeholder="Price" required/>
-      <md-hint idealColor="warn" *ngIf="formErrors.price" align="end">{{formErrors.price}}</md-hint>
-    </md-input-container>
+    <mat-input-container [dividerColor]="formErrors.price ? 'warn' : 'primary'" fxFlex="80%">
+      <input matInput type="number" formControlName="price" placeholder="Price" required/>
+      <mat-hint idealColor="warn" *ngIf="formErrors.price" align="end">{{formErrors.price}}</mat-hint>
+    </mat-input-container>
     <ideal-currency-select formControlName="currency" placeholder="Currency" fxFlex="20%"></ideal-currency-select>
   </div>
 </div>

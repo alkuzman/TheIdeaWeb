@@ -1,6 +1,6 @@
-<md-card fxFlexOffset="0" fxFlex fxFlex.xs="100%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.md="70%"
+<mat-card fxFlexOffset="0" fxFlex fxFlex.xs="100%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.md="70%"
          fxFlexOffset.md="15%" fxFlex.lg="60%" fxFlexOffset.lg="20%" fxFlex.xl="40%" fxFlexOffset.xl="30%">
-    <md-card-content>
+    <mat-card-content>
         <div [ngSwitch]="encryptedKeyPairGenerated && certificateGeneratedS">
             <div *ngSwitchCase="false" fxLayout="column">
                 <!-- Certificate generation in progress -->
@@ -8,7 +8,7 @@
                     We are generating your security profile. Please wait
                 </h2>
                 <div fxFlex="auto" fxFlexAlign="center">
-                    <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
                 </div>
             </div>
             <div *ngSwitchCase="true" class="full-width">
@@ -39,13 +39,13 @@
                             </div>
                         </div>
                         <div style="margin-top: 10px; margin-bottom: 10px;">
-                            <md-slide-toggle [(ngModel)]="enterPassword">Enter password</md-slide-toggle>
+                            <mat-slide-toggle [(ngModel)]="enterPassword">Enter password</mat-slide-toggle>
                         </div>
                         <ideal-security-form-encryption-password *ngIf="enterPassword" buttonText="Continue"
                                                                  (passwordReady)="continueWithPassword($event)">
                         </ideal-security-form-encryption-password>
                         <div *ngIf="!enterPassword" style="text-align: right">
-                            <button md-raised-button color="primary" (click)="continueWithoutPassword()">
+                            <button mat-raised-button color="primary" (click)="continueWithoutPassword()">
                                 {{"Continue without password" | uppercase}}
                             </button>
                         </div>
@@ -88,27 +88,27 @@
                             </div>
                         </div>
                         <div>
-                            <button md-raised-button (click)="generateZip()">
+                            <button mat-raised-button (click)="generateZip()">
                                 DOWNLOAD .ZIP
-                                <md-icon>file_download</md-icon>
+                                <mat-icon>file_download</mat-icon>
                             </button>
                         </div>
                         <div *ngIf="passwordEntered" style="margin-top: 10px">
-                            <button md-raised-button (click)="generateZipSecure()">
+                            <button mat-raised-button (click)="generateZipSecure()">
                                 DOWNLOAD .ZIP SECURE
-                                <md-icon>file_download</md-icon>
+                                <mat-icon>file_download</mat-icon>
                             </button>
                         </div>
                         <div style="margin-top: 10px">
-                            <md-slide-toggle *ngIf="passwordEntered" [(ngModel)]="saveDecision">
+                            <mat-slide-toggle *ngIf="passwordEntered" [(ngModel)]="saveDecision">
                                 Save on server
-                            </md-slide-toggle>
+                            </mat-slide-toggle>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
-                            <button md-raised-button (click)="goBackToPassword()">
+                            <button mat-raised-button (click)="goBackToPassword()">
                                 {{"Back" | uppercase}}
                             </button>
-                            <button md-raised-button color="accent" (click)="finish()">
+                            <button mat-raised-button color="accent" (click)="finish()">
                                 {{"Finish" | uppercase}}
                             </button>
                         </div>
@@ -117,5 +117,5 @@
             </div>
 
         </div>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

@@ -1,147 +1,147 @@
 <div style="background: rgba(0,0,0,0.05) !important;">
   <div class="flex-container idea-padding " fxLayout="row" fxLayoutWrap="wrap">
-    <md-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
-                            #formatGroup="mdButtonToggleGroup">
-      <md-button-toggle value="bold">
-        <md-icon class="icon-20">format_bold</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="italict">
-        <md-icon class="icon-20">format_italic</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="underline">
-        <md-icon class="icon-20">format_underline</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+    <mat-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
+                            #formatGroup="matButtonToggleGroup">
+      <mat-button-toggle value="bold">
+        <mat-icon class="icon-20">format_bold</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="italict">
+        <mat-icon class="icon-20">format_italic</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="underline">
+        <mat-icon class="icon-20">format_underline</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <md-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" #alignmentGroup="mdButtonToggleGroup">
-      <md-button-toggle value="left">
-        <md-icon class="icon-20">format_align_left</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="center">
-        <md-icon class="icon-20">format_align_center</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="right">
-        <md-icon class="icon-20">format_align_right</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="justify">
-        <md-icon class="icon-20">format_align_justify</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+    <mat-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" #alignmentGroup="matButtonToggleGroup">
+      <mat-button-toggle value="left">
+        <mat-icon class="icon-20">format_align_left</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="center">
+        <mat-icon class="icon-20">format_align_center</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="right">
+        <mat-icon class="icon-20">format_align_right</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="justify">
+        <mat-icon class="icon-20">format_align_justify</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <md-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
-                            #listsGroup="mdButtonToggleGroup">
-      <md-button-toggle value="numbered">
-        <md-icon class="icon-20">format_list_numbered</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="bulleted">
-        <md-icon class="icon-20">format_list_bulleted</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+    <mat-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
+                            #listsGroup="matButtonToggleGroup">
+      <mat-button-toggle value="numbered">
+        <mat-icon class="icon-20">format_list_numbered</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="bulleted">
+        <mat-icon class="icon-20">format_list_bulleted</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <md-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
-                            #undoGroup="mdButtonToggleGroup">
-      <md-button-toggle value="undo">
-        <md-icon class="icon-20">undo</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="redo">
-        <md-icon class="icon-20">redo</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+    <mat-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
+                            #undoGroup="matButtonToggleGroup">
+      <mat-button-toggle value="undo">
+        <mat-icon class="icon-20">undo</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="redo">
+        <mat-icon class="icon-20">redo</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <md-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
-                            #otherGroup="mdButtonToggleGroup">
-      <md-button-toggle value="link">
-        <md-icon class="icon-20">insert_link</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="quote">
-        <md-icon class="icon-20">format_quote</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="code">
-        <md-icon class="icon-20">code</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="insert_photo">
-        <md-icon class="icon-20">insert_photo</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+    <mat-button-toggle-group class="flex-item toggle-group-margin" fxFlex="none" multiple
+                            #otherGroup="matButtonToggleGroup">
+      <mat-button-toggle value="link">
+        <mat-icon class="icon-20">insert_link</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="quote">
+        <mat-icon class="icon-20">format_quote</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="code">
+        <mat-icon class="icon-20">code</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="insert_photo">
+        <mat-icon class="icon-20">insert_photo</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
 
-  <md-tab-group *ngIf="false" [selectedIndex]="selectedTab">
+  <mat-tab-group *ngIf="false" [selectedIndex]="selectedTab">
 
-    <md-tab label="Styles">
+    <mat-tab label="Styles">
       <div class="margin">
-        <md-button-toggle-group class="flex-item" fxFlex="none" multiple #formatGroup="mdButtonToggleGroup">
-          <md-button-toggle value="bold">
-            <md-icon class="icon-20">format_bold</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="italict">
-            <md-icon class="icon-20">format_italic</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="underline">
-            <md-icon class="icon-20">format_underline</md-icon>
-          </md-button-toggle>
-        </md-button-toggle-group>
+        <mat-button-toggle-group class="flex-item" fxFlex="none" multiple #formatGroup="matButtonToggleGroup">
+          <mat-button-toggle value="bold">
+            <mat-icon class="icon-20">format_bold</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="italict">
+            <mat-icon class="icon-20">format_italic</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="underline">
+            <mat-icon class="icon-20">format_underline</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
-    </md-tab>
+    </mat-tab>
 
-    <md-tab label="Alignment">
+    <mat-tab label="Alignment">
       <div class="margin">
-        <md-button-toggle-group class="flex-item" fxFlex="none" #alignmentGroup="mdButtonToggleGroup">
-          <md-button-toggle value="left">
-            <md-icon class="icon-20">format_align_left</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="center">
-            <md-icon class="icon-20">format_align_center</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="right">
-            <md-icon class="icon-20">format_align_right</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="justify">
-            <md-icon class="icon-20">format_align_justify</md-icon>
-          </md-button-toggle>
-        </md-button-toggle-group>
+        <mat-button-toggle-group class="flex-item" fxFlex="none" #alignmentGroup="matButtonToggleGroup">
+          <mat-button-toggle value="left">
+            <mat-icon class="icon-20">format_align_left</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="center">
+            <mat-icon class="icon-20">format_align_center</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="right">
+            <mat-icon class="icon-20">format_align_right</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="justify">
+            <mat-icon class="icon-20">format_align_justify</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
-    </md-tab>
+    </mat-tab>
 
-    <md-tab label="Lists">
+    <mat-tab label="Lists">
       <div class="margin">
-        <md-button-toggle-group class="flex-item" fxFlex="none" multiple #listsGroup="mdButtonToggleGroup">
-          <md-button-toggle value="numbered">
-            <md-icon class="icon-20">format_list_numbered</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="bulleted">
-            <md-icon class="icon-20">format_list_bulleted</md-icon>
-          </md-button-toggle>
-        </md-button-toggle-group>
+        <mat-button-toggle-group class="flex-item" fxFlex="none" multiple #listsGroup="matButtonToggleGroup">
+          <mat-button-toggle value="numbered">
+            <mat-icon class="icon-20">format_list_numbered</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="bulleted">
+            <mat-icon class="icon-20">format_list_bulleted</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
 
-        <md-button-toggle-group class="flex-item" fxFlex="none" multiple #undoGroup="mdButtonToggleGroup">
-          <md-button-toggle value="undo">
-            <md-icon class="icon-20">undo</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="redo">
-            <md-icon class="icon-20">redo</md-icon>
-          </md-button-toggle>
-        </md-button-toggle-group>
+        <mat-button-toggle-group class="flex-item" fxFlex="none" multiple #undoGroup="matButtonToggleGroup">
+          <mat-button-toggle value="undo">
+            <mat-icon class="icon-20">undo</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="redo">
+            <mat-icon class="icon-20">redo</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
-    </md-tab>
+    </mat-tab>
 
-    <md-tab label="Tools">
+    <mat-tab label="Tools">
       <div class="margin">
-        <md-button-toggle-group class="flex-item" fxFlex="none" multiple #otherGroup="mdButtonToggleGroup">
-          <md-button-toggle value="link">
-            <md-icon class="icon-20">insert_link</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="quote">
-            <md-icon class="icon-20">format_quote</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="code">
-            <md-icon class="icon-20">code</md-icon>
-          </md-button-toggle>
-          <md-button-toggle value="insert_photo">
-            <md-icon class="icon-20">insert_photo</md-icon>
-          </md-button-toggle>
-        </md-button-toggle-group>
+        <mat-button-toggle-group class="flex-item" fxFlex="none" multiple #otherGroup="matButtonToggleGroup">
+          <mat-button-toggle value="link">
+            <mat-icon class="icon-20">insert_link</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="quote">
+            <mat-icon class="icon-20">format_quote</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="code">
+            <mat-icon class="icon-20">code</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="insert_photo">
+            <mat-icon class="icon-20">insert_photo</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
-    </md-tab>
+    </mat-tab>
 
-  </md-tab-group>
+  </mat-tab-group>
 </div>

@@ -6,7 +6,7 @@
     </div>
 
     <div style="margin: 60px 0;">
-      <button md-raised-button idealColor="primary" type="button" routerLink="/announcements/feed">GET STARTED</button>
+      <button mat-raised-button idealColor="primary" type="button" routerLink="/announcements/feed">GET STARTED</button>
     </div>
   </div>
   <div fxLayout="row" style="padding: 16px; padding-top: 50px; padding-bottom: 50px;">
@@ -22,7 +22,7 @@
             <p fxFlex="none" class="ideal-body-1" style="justify-content: center;">
               {{category.description}}
             </p>
-            <a *ngIf="category.action" fxFlex="none" fxFlexAlign="center" md-raised-button color="primary"
+            <a *ngIf="category.action" fxFlex="none" fxFlexAlign="center" mat-raised-button color="primary"
                     [routerLink]="category.action.url">{{category.action.name | uppercase}}
             </a>
           </div>

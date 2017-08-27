@@ -1,7 +1,6 @@
-import {Component, HostBinding, OnInit, style} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {pageAnimation} from "../../../core/animations/standard-route-animations";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {AuthProperties} from "../../auth.properties";
 import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url-not-allowed.guard";
 
@@ -15,6 +14,15 @@ import {AccessFromUrlNotAllowedGuard} from "../../../core/guards/access-from-url
 })
 export class LoginPageComponent implements OnInit {
 
+  email: string;
+  returnUrl: string;
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar,
+              private accessFromUrlGuard: AccessFromUrlNotAllowedGuard) {
+  }
+
   @HostBinding("style.position") get position() {
     return "relative";
   }
@@ -27,17 +35,6 @@ export class LoginPageComponent implements OnInit {
     return "100%";
   }
 
-  email: string;
-  returnUrl: string;
-
-
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private snackBar: MdSnackBar,
-              private accessFromUrlGuard: AccessFromUrlNotAllowedGuard) {
-  }
-
-
   ngOnInit(): void {
     console.log("login on init");
     this.route.queryParams.subscribe((params: Params) => {
@@ -47,20 +44,21 @@ export class LoginPageComponent implements OnInit {
   }
 
   onUserLoggedIn(): void {
-    this.snackBar.open("You are logged in", undefined, <MdSnackBarConfig>{duration: 3000});
+    this.snackBar.open("You are logged in", undefined, <MatSnackBarConfig>{duration: 3000});
     this.router.navigateByUrl(this.returnUrl);
   }
 
   onWrongPassword() {
-    this.snackBar.open('You have entered wrong password!', "Try again", <MdSnackBarConfig>{duration: 3000});
+    this.snackBar.open('You have entered wrong password!', "Try again", <MatSnackBarConfig>{duration: 3000});
   }
 
   onUserNotActivated() {
-    let snackBarRef = this.snackBar.open("You have not activated your account, please check your email.", "More",
-      <MdSnackBarConfig>{duration: 3000}).onAction().subscribe(null, null, () => {
-      let queryParams: AuthProperties = {};
-      if (this.email != null)
+    const snackBarRef = this.snackBar.open("You have not activated your account, please check your email.", "More",
+      <MatSnackBarConfig>{duration: 3000}).onAction().subscribe(null, null, () => {
+      const queryParams: AuthProperties = {};
+      if (this.email != null) {
         queryParams.email = this.email;
+      }
       this.accessFromUrlGuard.allow = true;
       this.router.navigate(["/auth/verify"], {queryParams: queryParams});
     });
@@ -68,11 +66,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   authenticate(): void {
-    let queryParams: AuthProperties = {};
-    if (this.email != null)
+    const queryParams: AuthProperties = {};
+    if (this.email != null) {
       queryParams.email = this.email;
-    if (this.returnUrl != null)
+    }
+    if (this.returnUrl != null) {
       queryParams.returnUrl = this.returnUrl;
+    }
     this.router.navigate(["auth"], {queryParams: queryParams});
   }
 }

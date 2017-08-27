@@ -8,7 +8,9 @@ import {ProtocolSession} from "../../model/security/protocol-session";
 @Injectable()
 export class ProtocolTransactionService {
     private epoidUrl: string = "/protocol/epoid";
+    private sessionKeyWithServerUrl = "/protocol/keys";
     private transactionUrl: string = "/api/protocoltransactions";
+    private transactionRequestUrl: string = "/protocol/transactions";
 
     constructor(private http: JwtHttpService) {
 
@@ -48,8 +50,22 @@ export class ProtocolTransactionService {
     public saveProtocolSession(protocolSession: ProtocolSession): Observable<ProtocolSession> {
         const url = this.transactionUrl + "/session/" + protocolSession.id;
         const body = JSON.stringify(protocolSession);
-        return this.http.put(url, body, {headers: this.getHeaders()}, false)
+        return this.http.put(url, body, {headers: this.getHeaders()}, true)
             .map((response: Response) => this.extractData(response))
+            .catch((error: any) => this.handleError(error));
+    }
+
+    public getSessionKeyWithServer(email: string): Observable<string> {
+        const url = this.sessionKeyWithServerUrl + "?email=" + email + "&applicationName=iDeal";
+        return this.http.get(url, {headers: this.getHeaders()})
+            .map((response: Response) => response.text())
+            .catch((error: any) => this.handleError(error));
+    }
+
+    public sendTransactionRequestToServer(jsonMessage: string, email: string): Observable<string> {
+        const url = this.transactionRequestUrl + "?email=" + email + "&applicationName=iDeal";
+        return this.http.post(url, jsonMessage,{headers: this.getHeaders()})
+            .map((response: Response) => response.text())
             .catch((error: any) => this.handleError(error));
     }
 

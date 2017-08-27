@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
 import Certificate from "pkijs/src/Certificate";
 import {arrayBufferToString, toBase64} from "pvutils";
-import {CryptographicOperations} from "../cryptographic-operations/cryptographic-operations";
 import * as asn1js from "asn1js";
 import {KeysService} from "../keys/keys.service";
-import {HelperService} from "../helper.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {AlgorithmService} from "../algorithms/algorithms.service";
 import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
 
@@ -23,31 +21,50 @@ export class ParserPemService {
   }
 
   public parseCertificateRequestPEM(pkcs10Buffer): string {
-    let resultString: string = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
+    let resultString = "-----BEGIN CERTIFICATE REQUEST-----\r\n";
     resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs10Buffer)))}`;
     resultString = `${resultString}\r\n-----END CERTIFICATE REQUEST-----\r\n`;
     return resultString;
   }
 
   public parsePrivateKeyPEM(pkcs8Buffer): string {
-    let resultString: string = "-----BEGIN PRIVATE KEY-----\r\n";
+    let resultString = "-----BEGIN PRIVATE KEY-----\r\n";
     resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pkcs8Buffer)))}`;
     resultString = `${resultString}\r\n-----END PRIVATE KEY-----\r\n`;
     return resultString;
   }
 
   public parsePublicKeyPEM(pubKeyBuffer): string {
-    let resultString: string = "-----BEGIN PUBLIC KEY-----\r\n";
+    let resultString = "-----BEGIN PUBLIC KEY-----\r\n";
     resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(pubKeyBuffer)))}`;
     resultString = `${resultString}\r\n-----END PUBLIC KEY-----\r\n`;
     return resultString;
   }
 
   public parseEncryptedPrivateKeyPEM(epkeyBuffer): string {
-    let resultString: string = "-----BEGIN ENCRYPTED PRIVATE KEY-----\r\n";
+    let resultString = "-----BEGIN ENCRYPTED PRIVATE KEY-----\r\n";
     resultString = `${resultString}${this.formatPEM(toBase64(arrayBufferToString(epkeyBuffer)))}`;
     resultString = `${resultString}\r\n-----END ENCRYPTED PRIVATE KEY-----\r\n`;
     return resultString;
+  }
+
+  public parseCertificateFromPem(certPEM: string): Certificate {
+    certPEM = certPEM.replace(/(-----(BEGIN|END) CERTIFICATE-----|\n)/g, '');
+    const certBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(certPEM).buffer;
+    const certAsn1 = asn1js.fromBER(certBuf);
+    const certificate: Certificate = new Certificate({schema: certAsn1.result});
+    return certificate;
+  }
+
+  public parsePublicKeyFromPem(publicKeyPEM: string): Observable<CryptoKey> {
+    publicKeyPEM = publicKeyPEM.replace(/(-----(BEGIN|END) PUBLIC KEY-----|\n)/g, '');
+    const pubKeyBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(publicKeyPEM).buffer;
+    return Observable.create((observer) => {
+      this.keysService.basicImportKey(pubKeyBuf, 'spki', this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG)
+        .then((key: CryptoKey) => {
+          observer.next(key);
+        });
+    });
   }
 
   private formatPEM(pemString): string {
@@ -67,24 +84,5 @@ export class ParserPemService {
     }
 
     return resultString;
-  }
-
-  public parseCertificateFromPem(certPEM: string): Certificate {
-    certPEM = certPEM.replace(/(-----(BEGIN|END) CERTIFICATE-----|\n)/g, '');
-    let certBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(certPEM).buffer;
-    let certAsn1 = asn1js.fromBER(certBuf);
-    let certificate: Certificate = new Certificate({schema: certAsn1.result});
-    return certificate;
-  }
-
-  public parsePublicKeyFromPem(publicKeyPEM: string): Observable<CryptoKey> {
-    publicKeyPEM = publicKeyPEM.replace(/(-----(BEGIN|END) PUBLIC KEY-----|\n)/g, '');
-    let pubKeyBuf: ArrayBuffer = this.simpleCryptographicOperations.convertStringToUint8(publicKeyPEM).buffer;
-    return Observable.create((observer) => {
-      this.keysService.basicImportKey(pubKeyBuf, 'spki', this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG)
-        .then((key: CryptoKey) => {
-          observer.next(key);
-        });
-    });
   }
 }
