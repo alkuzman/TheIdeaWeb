@@ -20,12 +20,14 @@
                                 hint="Write down your idea first to get keyword recommendations"></ideal-keyword-selector>
       </div>
     </div>
-    <md-input-container color="primary" fxFlex="100%">
+    <div fxFlex="100%">
+    <md-input-container color="primary" class="full-width">
       <textarea style="resize: none;" mdInput md-autosize minRows="4" [placeholder]="sneakPeakLabel"
                 class="fullWidth"
                 formControlName="snackPeak" required></textarea>
       <md-hint>Provide short description which will give a taste to a potential buyer</md-hint>
       <md-error align="start">{{validationMessages.snackPeak.required}}</md-error>
     </md-input-container>
+    </div>
   </div>
 </div>

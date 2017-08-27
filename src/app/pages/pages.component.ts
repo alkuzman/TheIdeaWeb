@@ -19,29 +19,7 @@ import {fadeIn, fadeOut} from "../core/animations/fade-animations";
     moduleId: module.id,
     selector: 'ideal-pages',
     templateUrl: 'pages.component.html',
-    styleUrls: ['pages.component.scss'],
-    animations: [
-        trigger('routerAnimations', [
-            transition('home => about',
-                group([
-                    query(':leave',
-                        useAnimation(fadeOut)
-                    ),
-                    query(':enter',
-                        useAnimation(fadeIn))
-                ])
-            ),
-            transition('about => home',
-                group([
-                    query(':leave',
-                        useAnimation(fadeOut)
-                    ),
-                    query(':enter',
-                        useAnimation(fadeIn))
-                ])
-            )
-        ])
-    ]
+    styleUrls: ['pages.component.scss']
 })
 export class PagesComponent implements OnInit, OnDestroy {
     query: string = "";
