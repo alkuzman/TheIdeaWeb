@@ -32,6 +32,8 @@ import {DigitalGoodsType} from "../../../domain/model/ideas/digital_goods_type";
 import {Epoid} from "../../../domain/model/security/data/epoid";
 import {ProtocolTransactionStepTwoDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-two-data-recipient";
 import {ProtocolTransactionStepOneDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-one-data-recipient";
+import {Observable} from "rxjs/Observable";
+import {PreviousNoticesData} from "../../../domain/model/security/data/previous-notices-data";
 
 /**
  * Created by Viki on 2/21/2017.
@@ -63,24 +65,6 @@ export class ProtocolMessagesBuilderService {
         this.initializeSecurityProfile();
     }
 
-    private initializeSecurityProfile(): void {
-        this.securityProfile = this.securityContext.securityProfile;
-        this.securityContext.securityProfileObservable().subscribe((securityProfile: SecurityProfile) => {
-            this.securityProfile = securityProfile;
-        });
-    }
-
-    private sendMessage(notice: ProtocolTransactionStepNotice<any>) {
-        console.log(notice.type);
-        console.log(notice.protocolSession);
-        if (notice.previousStepNotice != null) {
-            notice.previousStepNotice.activated = true;
-        }
-        this.noticeService.addNotice(notice).subscribe(() => {
-            console.log("SENT");
-        });
-    }
-
     public buildProtocolMessageOne(userData: PaymentRequestPhaseData, password: string,
                                    previousData: ProtocolTransactionStepTwoDataRecipient,
                                    protocolSession: ProtocolSession, previousNotice: ProtocolTransactionStepThreeNotice,
@@ -91,7 +75,7 @@ export class ProtocolMessagesBuilderService {
             .subscribe((simpleSecurityProfile: SimpleSecurityProfile) => {
 
                 // Retrieve other party public key
-                this.certificateService.getPublicKey({email: protocolSession.idea.owner.email})
+                this.certificateService.getPublicKey({email: protocolSession.digitalGoods.owner.email})
                     .subscribe((otherPartyPublicKeyForEncryptionPEM: string) => {
 
                         // Parse the public key from pem format
@@ -117,7 +101,7 @@ export class ProtocolMessagesBuilderService {
                                                     .subscribe((ownerEncryptedSessionKey: string) => {
                                                         if (protocolSession.participantTwoSessionData == null) {
                                                             let participant = new ProtocolParticipantTwoSessionData();
-                                                            participant.participant = protocolSession.idea.owner;
+                                                            participant.participant = protocolSession.digitalGoods.owner;
                                                             participant.sessionKeyEncrypted = ownerEncryptedSessionKey;
                                                             protocolSession.participantTwoSessionData = participant;
                                                         }
@@ -153,7 +137,10 @@ export class ProtocolMessagesBuilderService {
                                                                                     TID = previousData.tid + 1;
                                                                                 }
                                                                                 let data = {
-                                                                                    'appData': {'goodsType': goodType, 'paymentType': paymentType},
+                                                                                    'appData': {
+                                                                                        'goodsType': goodType,
+                                                                                        'paymentType': paymentType
+                                                                                    },
                                                                                     'bid': userData.payment.getText(),
                                                                                     'tid': TID
                                                                                 };
@@ -179,11 +166,12 @@ export class ProtocolMessagesBuilderService {
                                                                                         .constructProtocolTransactionStepOneNotice(protocolSession, jsonMessage,
                                                                                             this.userService.getAuthenticatedUser(),
                                                                                             <ProtocolTransactionStepThreeNotice>previousNotice,
-                                                                                            previousNotice == null ? protocolSession.idea.owner : previousNotice.originator));
+                                                                                            previousNotice == null ? protocolSession.digitalGoods.owner : previousNotice.originator));
 
                                                                                 });
                                                                             });
                                                                     });
+
                                                             });
                                                     });
                                             });
@@ -201,7 +189,7 @@ export class ProtocolMessagesBuilderService {
 
         // Create message data
         let data = {
-            'productId': protocolSession.idea.id,
+            'productId': protocolSession.digitalGoods.id,
             'payment': userData.payment.getText(),
             'nonce': previousMessageData.nonce,
             'tid': previousMessageData.tid + 1
@@ -307,9 +295,17 @@ export class ProtocolMessagesBuilderService {
     }
 
     public buildProtocolMessageFour(abort: boolean, password: string, protocolSession: ProtocolSession,
-                                    previousNotice: ProtocolTransactionStepThreeNotice) {
+                                    previousNotice: ProtocolTransactionStepThreeNotice, previousData: PreviousNoticesData) {
 
         // Todo: Implement abort case
+        if (abort) {
+            protocolSession.aborted = true;
+            this.protocolTransactionService.saveProtocolSession(protocolSession)
+                .subscribe((protocolSession: ProtocolSession) => {
+                    console.log(protocolSession);
+                });
+            return;
+        }
 
         // Initialize simple security profile
         this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
@@ -323,65 +319,100 @@ export class ProtocolMessagesBuilderService {
                         .subscribe((dataEncryptionKeyEncrypted) => {
                             protocolSession.participantTwoSessionData.dataEncryptionKeyEncrypted = dataEncryptionKeyEncrypted;
 
-                            // Get solution for given idea
-                            this.solutionService.getSolution(protocolSession.idea.id).subscribe((solution: Solution) => {
+                            this.convertDigitalGoodsToEncryptedString(previousData, dataEncryptionKey, protocolSession, simpleProfile)
+                                .subscribe((encryptedGoods: string) => {
 
-                                // Decrypt the solution with the standard user key for encrypting ideas
-                                this.decryptingService.decryptSolutionWithKey(solution.text, simpleProfile.symmetricKey)
-                                    .subscribe((solutionText: string) => {
+                                    // Hash the encrypted solution
+                                    const hashedEncryptedSolution = this.simpleCryptographicOperations.hash(encryptedGoods);
 
-                                        // Encrypt the solution with the session key for this transaction
-                                        this.encryptingService.encryptSolutionWithKey(solutionText, dataEncryptionKey)
-                                            .subscribe((encryptedSolution: string) => {
+                                    // Get EPOID
+                                    this.protocolTransactionService.getNewEpoid(previousNotice.originator.email)
+                                        .subscribe((epoid: Epoid) => {
 
-                                                // Hash the encrypted solution
-                                                const hashedEncryptedSolution = this.simpleCryptographicOperations.hash(encryptedSolution);
+                                            const epoidJson = JSON.stringify(epoid);
+                                            console.log(epoidJson);
+                                            // Construct data for encryption
+                                            const data = {
+                                                "goodsIntegrity": hashedEncryptedSolution,
+                                                "epoid": epoid
+                                            };
 
-                                                // Get EPOID
-                                                this.protocolTransactionService.getNewEpoid(previousNotice.originator.email)
-                                                    .subscribe((epoid: Epoid) => {
+                                            // Convert data into json
+                                            const jsonData = JSON.stringify(data);
 
-                                                    const epoidJson = JSON.stringify(epoid);
-                                                    console.log(epoidJson);
-                                                    // Construct data for encryption
-                                                    const data = {
-                                                        "goodsIntegrity": hashedEncryptedSolution,
-                                                        "epoid": epoid
-                                                    };
+                                            // Decrypt session key
+                                            this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                                                simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
 
-                                                    // Convert data into json
-                                                    const jsonData = JSON.stringify(data);
+                                                // Encrypt json data
+                                                this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm, sessionKey, jsonData)
+                                                    .subscribe((encryptedJsonData: string) => {
 
-                                                    // Decrypt session key
-                                                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
-                                                        simpleProfile.privateKeyEncryption).subscribe((sessionKey: CryptoKey) => {
+                                                        const message = {
+                                                            "goods": encryptedGoods,
+                                                            "dataIntegrity": encryptedJsonData
+                                                        };
 
-                                                        // Encrypt json data
-                                                        this.cryptographicOperations.encrypt(this.algorithmService.getSymmetricEncryptionAlgorithm().algorithm, sessionKey, jsonData)
-                                                            .subscribe((encryptedJsonData: string) => {
+                                                        const jsonMessage = JSON.stringify(message);
 
-                                                                const message = {
-                                                                    "goods": encryptedSolution,
-                                                                    "dataIntegrity": encryptedJsonData
-                                                                };
+                                                        const notice: ProtocolTransactionStepFourNotice =
+                                                            this.protocolTransactionStepNoticeConstructor
+                                                                .constructProtocolTransactionStepFourNotice(protocolSession, jsonMessage,
+                                                                    this.userService.getAuthenticatedUser(), previousNotice, previousNotice.originator);
 
-                                                                const jsonMessage = JSON.stringify(message);
-
-                                                                const notice: ProtocolTransactionStepFourNotice =
-                                                                    this.protocolTransactionStepNoticeConstructor
-                                                                        .constructProtocolTransactionStepFourNotice(protocolSession, jsonMessage,
-                                                                            this.userService.getAuthenticatedUser(), previousNotice, previousNotice.originator);
-
-                                                                this.sendMessage(notice);
-                                                            });
+                                                        this.sendMessage(notice);
                                                     });
-                                                });
                                             });
-                                    });
-                            });
+                                        });
+
+                                });
                         });
                 });
             });
+    }
 
+    private initializeSecurityProfile(): void {
+        this.securityProfile = this.securityContext.securityProfile;
+        this.securityContext.securityProfileObservable().subscribe((securityProfile: SecurityProfile) => {
+            this.securityProfile = securityProfile;
+        });
+    }
+
+    private sendMessage(notice: ProtocolTransactionStepNotice<any>) {
+        console.log(notice.type);
+        console.log(notice.protocolSession);
+        if (notice.previousStepNotice != null) {
+            notice.previousStepNotice.activated = true;
+        }
+        this.noticeService.addNotice(notice).subscribe(() => {
+            console.log("SENT");
+        });
+    }
+
+    private convertDigitalGoodsToEncryptedString(previousData: PreviousNoticesData, encryptionKey: CryptoKey,
+                                                 protocolSession: ProtocolSession, simpleProfile: SimpleSecurityProfile): Observable<string> {
+
+        return Observable.create((observer) => {
+            const protocolTransactionStepOneDataForRecipient: ProtocolTransactionStepOneDataRecipient =
+                previousData["ProtocolTransactionStepOneDataRecipient"];
+
+            if (protocolTransactionStepOneDataForRecipient.goodsType === DigitalGoodsType.Solution) {
+                // Get solution for given idea
+                this.solutionService.getSolution(protocolSession.digitalGoods.id).subscribe((solution: Solution) => {
+
+                    // Decrypt the solution with the standard user key for encrypting ideas
+                    this.decryptingService.decryptSolutionWithKey(solution.text, simpleProfile.symmetricKey)
+                        .subscribe((solutionText: string) => {
+
+                            // Encrypt the solution with the session key for this transaction
+                            this.encryptingService.encryptSolutionWithKey(solutionText, encryptionKey)
+                                .subscribe((encryptedSolution: string) => {
+                                    observer.next(encryptedSolution);
+                                });
+                        });
+                });
+
+            }
+        });
     }
 }

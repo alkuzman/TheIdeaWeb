@@ -17,6 +17,7 @@ import {PreviousNoticesData} from "../model/security/data/previous-notices-data"
 import {Payment} from "../model/payment/payment";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
+import {AbstractDigitalGoods} from "../model/ideas/abstract_digital_goods";
 
 /**
  * Created by Viki on 2/19/2017.
@@ -50,7 +51,7 @@ export class ProtocolTransactionComponent implements OnInit {
                 this.protocolSession = this.currentStepNotice.protocolSession;
             } else {
                 this.protocolSession = new ProtocolSession();
-                this.protocolSession.idea = new Idea();
+                this.protocolSession.digitalGoods = new Idea();
             }
         }
         this.priceRequestPhaseData = {};
@@ -118,7 +119,8 @@ export class ProtocolTransactionComponent implements OnInit {
                         this.protocolSession, this.currentStepNotice, PaymentType.Price, DigitalGoodsType.Solution);
                 }
             } else if (this.currentStepNotice.type == "ProtocolTransactionStepThreeNotice") {
-                this.protocolMessageBuilderService.buildProtocolMessageFour(data, password, this.protocolSession, this.currentStepNotice);
+                this.protocolMessageBuilderService.buildProtocolMessageFour(data, password, this.protocolSession,
+                    this.currentStepNotice, this.previousNoticesData);
             }
         });
     }

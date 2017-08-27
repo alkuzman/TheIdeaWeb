@@ -27,6 +27,6 @@ export class ProtocolTransactionStepNoticeCard {
     }
 
     public getIdea(): void {
-        this.redirectService.getIdeaDetails(this.notice.protocolSession.idea.id);
+        this.redirectService.getIdeaDetails(this.notice.protocolSession.digitalGoods.id);
     }
 }

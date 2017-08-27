@@ -4,7 +4,7 @@ import {DigitalGoods} from "./digital_goods";
 /**
  * Created by AKuzmanoski on 17/10/2016.
  */
-export class Solution extends BaseEntityImpl implements DigitalGoods {
+export class Solution extends BaseEntityImpl {
   public text: string;
   public idea: Idea;
 
@@ -12,10 +12,6 @@ export class Solution extends BaseEntityImpl implements DigitalGoods {
     return super.toString() + "\n" +
       "idea-details: " + this.idea + "\n" +
       "text: " + this.text + "\n";
-  }
-
-  getText(): string {
-    return this.text;
   }
 
 }

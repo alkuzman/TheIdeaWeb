@@ -24,7 +24,7 @@ export class NewTransactionPageComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: {idea: Idea}) => {
       this.protocolSession = new ProtocolSession();
-      this.protocolSession.idea = data.idea;
+      this.protocolSession.digitalGoods = data.idea;
     });
   }
 }

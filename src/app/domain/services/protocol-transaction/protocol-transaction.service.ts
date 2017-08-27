@@ -3,10 +3,12 @@ import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service"
 import {Observable} from "rxjs/Observable";
 import {Headers, Response} from "@angular/http";
 import {Epoid} from "../../model/security/data/epoid";
+import {ProtocolSession} from "../../model/security/protocol-session";
 
 @Injectable()
 export class ProtocolTransactionService {
     private epoidUrl: string = "/protocol/epoid";
+    private transactionUrl: string = "/api/protocoltransactions";
 
     constructor(private http: JwtHttpService) {
 
@@ -40,6 +42,14 @@ export class ProtocolTransactionService {
         const url = this.epoidUrl + "/new?merchant=" + merchant;
         return this.http.get(url, {headers: this.getHeaders()}, false)
             .map((response: Response) => this.extractRawData(response))
+            .catch((error: any) => this.handleError(error));
+    }
+
+    public saveProtocolSession(protocolSession: ProtocolSession): Observable<ProtocolSession> {
+        const url = this.transactionUrl + "/session/" + protocolSession.id;
+        const body = JSON.stringify(protocolSession);
+        return this.http.put(url, body, {headers: this.getHeaders()}, false)
+            .map((response: Response) => this.extractData(response))
             .catch((error: any) => this.handleError(error));
     }
 

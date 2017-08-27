@@ -347,6 +347,8 @@ export class ProtocolMessagesReconstructionService {
                             this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
                                 sessionKey, message.data).subscribe((jsonData: string) => {
 
+                                console.log(jsonData);
+
                                 // Parse the json data into an object
                                 const data: {
                                     'appData': { 'goodsType': DigitalGoodsType, 'paymentType': PaymentType },

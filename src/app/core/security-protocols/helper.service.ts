@@ -17,9 +17,9 @@ export class HelperService {
     }
 
     public getEncryptedSessionKeyForAuthenticatedUser(protocolSession: ProtocolSession): string {
-        if (protocolSession.participantOneSessionData.participant.email == this.userService.getAuthenticatedUser().email) {
+        if (protocolSession.participantOneSessionData.participant.email === this.userService.getAuthenticatedUser().email) {
             return protocolSession.participantOneSessionData.sessionKeyEncrypted;
-        } else if (protocolSession.participantTwoSessionData.participant.email == this.userService.getAuthenticatedUser().email) {
+        } else if (protocolSession.participantTwoSessionData.participant.email === this.userService.getAuthenticatedUser().email) {
             return protocolSession.participantTwoSessionData.sessionKeyEncrypted;
         }
     }
