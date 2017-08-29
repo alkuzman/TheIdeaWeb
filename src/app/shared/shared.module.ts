@@ -8,7 +8,7 @@ import {MaterialModule} from "./material/material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {MomentModule} from "angular2-moment";
-import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
+import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
