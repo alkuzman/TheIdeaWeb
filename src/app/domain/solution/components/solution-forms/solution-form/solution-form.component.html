@@ -1,12 +1,12 @@
-<md-card>
-  <md-card-content>
+<mat-card>
+  <mat-card-content>
     <form novalidate (ngSubmit)="save()" [formGroup]="form">
       <ideal-solution-fields [showIdeaFields]="showIdeaFields" [showProblemFields]="showProblemFields"
                              [solution]="solution" [submitted]="submitted" formGroupName="fields" [form]="fields"></ideal-solution-fields>
       <div class="padding-top" fxLayout="row" fxLayoutAlign="end">
-        <button type="button" md-button color="accent" (click)="clearForm()">{{'Clear' | uppercase}}</button>
-        <button type="submit" md-raised-button color="accent">{{submitText | uppercase}}</button>
+        <button type="button" mat-button color="accent" (click)="clearForm()">{{'Clear' | uppercase}}</button>
+        <button type="submit" mat-raised-button color="accent">{{submitText | uppercase}}</button>
       </div>
     </form>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

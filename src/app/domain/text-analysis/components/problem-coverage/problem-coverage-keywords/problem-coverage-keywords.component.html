@@ -4,20 +4,20 @@
       <span class="ideal-body-2">Keywords</span>
     </div>
     <div>
-      <md-chip-list>
-        <md-chip style="opacity: 0.65;" color="primary" [selected]="true">
+      <mat-chip-list>
+        <mat-chip style="opacity: 0.65;" color="primary" [selected]="true">
           Covered
-        </md-chip>
-        <md-chip style="opacity: 0.65;">
+        </mat-chip>
+        <mat-chip style="opacity: 0.65;">
           Not Covered
-        </md-chip>
-      </md-chip-list>
+        </mat-chip>
+      </mat-chip-list>
     </div>
   </div>
-  <md-chip-list>
-    <md-chip style="margin-top: 5px" *ngFor="let keywordSelection of keywordSelections"
-             [selected]="keywordSelection?.selected" color="primary" [md-tooltip]="keywordSelection?.keyword?.score?.toString()">
+  <mat-chip-list>
+    <mat-chip style="margin-top: 5px" *ngFor="let keywordSelection of keywordSelections"
+             [selected]="keywordSelection?.selected" color="primary" [matTooltip]="keywordSelection?.keyword?.score?.toString()">
       {{keywordSelection?.keyword?.phrase}}
-    </md-chip>
-  </md-chip-list>
+    </mat-chip>
+  </mat-chip-list>
 </div>

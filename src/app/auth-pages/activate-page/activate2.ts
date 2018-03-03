@@ -6,7 +6,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {User} from "../../domain/model/authentication/user";
 import {KeysService} from "../../core/security-protocols/keys/keys.service";
-import {CertificateRequestGenerationService} from "../../core/security-protocols/certificates/certificates-requests-generation.service";
+import {UserCertificationService} from "../../core/security-protocols/certificates/user-certification.service";
 import {CertificateService} from "../../domain/services/certificate/certificate.service";
 import {SecurityProfileConstructorService} from "../../core/security-protocols/constructors/security-profile-constructor.service";
 import {SecurityProfileService} from "../../domain/services/security-profile/security-profile.service";
@@ -40,7 +40,7 @@ export class VerifyPageComponent2 implements OnInit {
   savePrivateKey: string = "YES";
 
   constructor(private route: ActivatedRoute, private keysService: KeysService,
-              private certificateRequestGenerationService: CertificateRequestGenerationService,
+              private certificateRequestGenerationService: UserCertificationService,
               private securityProfileService: SecurityProfileService,
               private certificateService: CertificateService,
               private securityProfileConstructorService: SecurityProfileConstructorService) {

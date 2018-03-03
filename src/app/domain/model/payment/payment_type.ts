@@ -1,6 +1,6 @@
 
 
 export enum PaymentType {
-    Price,
+    Money,
     Contract
 }

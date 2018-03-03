@@ -4,54 +4,54 @@
 </div>
 <div [formGroup]="form">
   <div>
-    <md-input-container [dividerColor]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
-      <input md-input mdInput formControlName="firstName" placeholder="First Name" required/>
-      <md-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</md-hint>
-    </md-input-container>
+    <mat-input-container [dividerColor]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
+      <input mat-input matInput formControlName="firstName" placeholder="First Name" required/>
+      <mat-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</mat-hint>
+    </mat-input-container>
   </div>
   <div>
-    <md-input-container [dividerColor]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
-      <input type="text" md-input mdInput formControlName="lastName" placeholder="Last Name" required/>
-      <md-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</md-hint>
-    </md-input-container>
+    <mat-input-container [dividerColor]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
+      <input type="text" mat-input matInput formControlName="lastName" placeholder="Last Name" required/>
+      <mat-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</mat-hint>
+    </mat-input-container>
   </div>
   <div formGroupName="passwords">
     <div>
-      <md-input-container [dividerColor]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
-        <input (focus)="showPasswordStrength()" (blur)="hidePasswordStrength()" md-input mdInput type="password"
+      <mat-input-container [dividerColor]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
+        <input (focus)="showPasswordStrength()" (blur)="hidePasswordStrength()" mat-input matInput type="password"
                formControlName="password"
                placeholder="Password"
-               md-tooltip="For strong password use at least 1 (big/small/special) character, and 1 number" required/>
-        <md-hint align="end" idealColor="warn" *ngIf="formErrors['passwords.password']">
+               matTooltip="For strong password use at least 1 (big/small/special) character, and 1 number" required/>
+        <mat-hint align="end" idealColor="warn" *ngIf="formErrors['passwords.password']">
           {{formErrors['passwords.password']}}
-        </md-hint>
-      </md-input-container>
+        </mat-hint>
+      </mat-input-container>
     </div>
     <div *ngIf="passwordStrengthVisible" class="margin-top margin-bottom">
-      <md-progress-bar
-        [md-tooltip]="'Password strength: ' + passwordStrength"
+      <mat-progress-bar
+        [matTooltip]="'Password strength: ' + passwordStrength"
         [color]="passwordStrengthColor"
         [value]="passwordStrengthProgress">
-      </md-progress-bar>
+      </mat-progress-bar>
     </div>
     <div>
-      <md-input-container [dividerColor]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
-        <input md-input mdInput type="password" formControlName="confirmPassword"
+      <mat-input-container [dividerColor]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
+        <input mat-input matInput type="password" formControlName="confirmPassword"
                placeholder="Confirm Password" required/>
-        <md-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</md-hint>
-      </md-input-container>
+        <mat-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</mat-hint>
+      </mat-input-container>
     </div>
   </div>
   <div [ngClass]="{'error-theme': formErrors.country}">
-    <md-input-container class="full-width">
-      <input type="text" mdInput hidden="true"/>
-      <md-select color="primary" placeholder="Country" formControlName="country" class="full-width" required>
-        <md-option *ngFor="let country of countries" [value]="country">
+    <mat-input-container class="full-width">
+      <input type="text" matInput hidden="true"/>
+      <mat-select color="primary" placeholder="Country" formControlName="country" class="full-width" required>
+        <mat-option *ngFor="let country of countries" [value]="country">
           {{country}}
-        </md-option>
-      </md-select>
-      <md-hint align="end" idealColor="warn" *ngIf="formErrors.country">{{formErrors.country}}</md-hint>
-    </md-input-container>
+        </mat-option>
+      </mat-select>
+      <mat-hint align="end" idealColor="warn" *ngIf="formErrors.country">{{formErrors.country}}</mat-hint>
+    </mat-input-container>
   </div>
 
 </div>

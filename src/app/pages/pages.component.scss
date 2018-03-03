@@ -2,7 +2,7 @@
   background: rgba(100, 100, 255, 0.2);
 }
 
-md-sidenav {
+mat-sidenav {
   width: 250px;
 }
 
@@ -11,7 +11,7 @@ md-sidenav {
   z-index: 2;
 }
 
-:host md-sidenav-container {
+:host mat-sidenav-container {
   margin: 0 !important;
   padding: 0 !important;
   height: 100vh;

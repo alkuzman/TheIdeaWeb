@@ -1,0 +1,12 @@
+<h4 *ngIf="lastPrice" align="right">Last Payment {{lastPrice}}</h4>
+<h3 mat-dialog-title>Enter price:</h3>
+<div mat-dialog-content fxLayout="row">
+  <mat-input-container fxFlex="80%">
+    <input matInput type="number" [(ngModel)]="price.value" placeholder="Price" required/>
+  </mat-input-container>
+  <ideal-currency-select [(ngModel)]="price.currency" placeholder="Currency" fxFlex="20%"></ideal-currency-select>
+</div>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="closeDialog()">Enter</button>
+  <button *ngIf="lastPrice" mat-raised-button color="primary" (click)="acceptPrice()">Accept price</button>
+</mat-dialog-actions>

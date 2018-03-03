@@ -1,7 +1,7 @@
-<md-card>
-  <md-card-header>
-    <img (click)="onQuestionerSelected()" [src]="problem?.questioner | idealUserProfilePicture" md-card-avatar/>
-    <md-card-title>
+<mat-card>
+  <mat-card-header>
+    <img (click)="onQuestionerSelected()" [src]="problem?.questioner | idealUserProfilePicture" mat-card-avatar/>
+    <mat-card-title>
       <strong idealColor="accent" (click)="onQuestionerUserSelected()">
         {{problem?.questioner?.firstName}} {{problem?.questioner?.lastName}}
       </strong>
@@ -12,39 +12,39 @@
         </strong>
       </div>
       announced problem
-    </md-card-title>
-    <md-card-subtitle>{{problem?.creationDate | amTimeAgo}}</md-card-subtitle>
-  </md-card-header>
-  <md-card-content (click)="getContent()">
-    <md-card-title-group>
-      <md-card-title>{{problem?.title}}</md-card-title>
-      <md-card-subtitle>{{problem?.text | slice:0:180}}</md-card-subtitle>
-    </md-card-title-group>
-  </md-card-content>
-  <md-card-actions>
+    </mat-card-title>
+    <mat-card-subtitle>{{problem?.creationDate | amTimeAgo}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content (click)="getContent()">
+    <mat-card-title-group>
+      <mat-card-title>{{problem?.title}}</mat-card-title>
+      <mat-card-subtitle>{{problem?.text | slice:0:180}}</mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-content>
+  <mat-card-actions>
     <div fxLayout="row">
       <div fxFlex="none">
-        <button md-icon-button mdTooltipPosition="above" *ngFor="let action of actions?.mainActions"
+        <button mat-icon-button matTooltipPosition="above" *ngFor="let action of actions?.mainActions"
                 (click)="onAction(action)"
                 [idealColor]="action.color"
-                [mdTooltip]="action.title">
-          <md-icon class="icon-20">{{action.icon}}</md-icon>
+                [matTooltip]="action.title">
+          <mat-icon class="icon-20">{{action.icon}}</mat-icon>
         </button>
       </div>
       <div fxFlex></div>
       <div fxFlex="none">
-        <button [mdMenuTriggerFor]="appMenu" md-icon-button>
-          <md-icon>more_vert</md-icon>
+        <button [matMenuTriggerFor]="appMenu" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
         </button>
-        <md-menu #appMenu="mdMenu">
-          <button md-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
+        <mat-menu #appMenu="matMenu">
+          <button mat-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
                   [idealColor]="action.color"
-                  [mdTooltip]="action.description" mdTooltipPosition="left">
-            <md-icon class="icon-20">{{action.icon}}</md-icon>
+                  [matTooltip]="action.description" matTooltipPosition="left">
+            <mat-icon class="icon-20">{{action.icon}}</mat-icon>
             <span>{{action.title}}</span>
           </button>
-        </md-menu>
+        </mat-menu>
       </div>
     </div>
-  </md-card-actions>
-</md-card>
+  </mat-card-actions>
+</mat-card>

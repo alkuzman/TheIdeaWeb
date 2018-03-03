@@ -1,19 +1,19 @@
 <ideal-widget-avatar-chooser name="organizationProfilePicture" [(ngModel)]="organization.profilePicture"
                              radius="50"></ideal-widget-avatar-chooser>
 <div [formGroup]="form" fxLayout="column">
-  <md-input-container [dividerColor]="formErrors.name ? 'warn' : 'primary'">
-    <input md-input mdInput formControlName="name" placeholder="Name" required>
-    <md-hint idealColor="warn" *ngIf="formErrors.name" align="end">{{formErrors.name}}</md-hint>
-  </md-input-container>
-  <md-input-container [dividerColor]="formErrors.email ? 'warn' : 'primary'">
-    <input md-input mdInput formControlName="email" placeholder="Email" required>
-    <md-hint idealColor="warn" *ngIf="formErrors.email" align="end">{{formErrors.email}}</md-hint>
-  </md-input-container>
+  <mat-input-container [dividerColor]="formErrors.name ? 'warn' : 'primary'">
+    <input mat-input matInput formControlName="name" placeholder="Name" required>
+    <mat-hint idealColor="warn" *ngIf="formErrors.name" align="end">{{formErrors.name}}</mat-hint>
+  </mat-input-container>
+  <mat-input-container [dividerColor]="formErrors.email ? 'warn' : 'primary'">
+    <input mat-input matInput formControlName="email" placeholder="Email" required>
+    <mat-hint idealColor="warn" *ngIf="formErrors.email" align="end">{{formErrors.email}}</mat-hint>
+  </mat-input-container>
   <!--
-    <md-input-container>
-        <textarea mdInput placeholder="Place your description here. Be specific"
+    <mat-input-container>
+        <textarea matInput placeholder="Place your description here. Be specific"
                   formControlName="description">
         </textarea>
-    </md-input-container>
+    </mat-input-container>
     -->
 </div>

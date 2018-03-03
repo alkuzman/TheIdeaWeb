@@ -5,8 +5,8 @@ import {
   Component, ElementRef, Renderer, Input, Directive, NgModule, ViewEncapsulation,
   ChangeDetectionStrategy
 } from "@angular/core";
-import {MaterialModule} from "@angular/material";
 import {CommonModule} from "@angular/common";
+import {MaterialModule} from "../../../material/material.module";
 
 @Directive({
   selector: 'label[ideal-label]',

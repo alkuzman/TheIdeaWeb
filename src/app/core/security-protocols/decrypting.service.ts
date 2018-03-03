@@ -22,6 +22,7 @@ export class DecryptingService {
            this.keysService.decryptSymmetricKeyWithPasswordKey(this.securityContext
                .securityProfile.encryptedSymmetricKey, password)
                .subscribe((key: CryptoKey) => {
+                   console.log(encryptedSolution);
                this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm, key,
                    encryptedSolution).subscribe((solution: string) => {
                        observer.next(solution);

@@ -1,0 +1,7 @@
+<h3 mat-dialog-title>Please choose your type of payment:</h3>
+<mat-radio-group [(ngModel)]="choice">
+  <mat-radio-button *ngFor="let value of keys()" [value]="value">{{value}}</mat-radio-button>
+</mat-radio-group>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="closeDialog()">Select</button>
+</mat-dialog-actions>

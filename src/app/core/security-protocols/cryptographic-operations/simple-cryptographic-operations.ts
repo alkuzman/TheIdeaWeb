@@ -57,4 +57,10 @@ export class SimpleCryptographicOperations {
     public generateNonce(): string {
         return this.nonce();
     }
+
+    public getRandomArrayBuffer(length: number): ArrayBuffer {
+        let array = new Uint8Array(length);
+        window.crypto.getRandomValues(array);
+        return array.buffer;
+    }
 }

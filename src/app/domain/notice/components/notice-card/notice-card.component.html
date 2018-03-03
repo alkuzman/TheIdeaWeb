@@ -14,6 +14,9 @@
     <div *ngSwitchCase="protocolTransactionStepFiveNoticeType">
         <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
     </div>
+    <div *ngSwitchCase="protocolTransactionStepSevenNoticeType">
+        <ideal-protocol-transaction-step-notice-card [notice]="notice"></ideal-protocol-transaction-step-notice-card>
+    </div>
     <div *ngSwitchCase="packageNoticeType">
         <ideal-new-package-notice-card [notice]="notice" [opened]="notice?.opened"></ideal-new-package-notice-card>
     </div>

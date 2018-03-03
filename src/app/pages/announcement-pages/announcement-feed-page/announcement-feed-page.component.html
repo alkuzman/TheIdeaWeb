@@ -15,11 +15,11 @@
       (sendTo)="onSendTo($event)"
       (share)="onShare($event)"></ideal-announcement-list>
     <div [ngSwitch]="noMoreResults" class="padding" fxLayout="row" fxLayoutAlign="center">
-      <button fxFlex="none" *ngSwitchCase="true" md-raised-button disabled>No More Results</button>
-      <md-spinner *ngSwitchCase="false" style="height: 40px; width: 40px;" fxFlex="none"></md-spinner>
+      <button fxFlex="none" *ngSwitchCase="true" mat-raised-button disabled>No More Results</button>
+      <mat-spinner *ngSwitchCase="false" style="height: 40px; width: 40px;" fxFlex="none"></mat-spinner>
     </div>
-    <button [@fab] [routerLink]="additionUrl" md-fab>
-      <md-icon>add</md-icon>
+    <button [@fab] [routerLink]="additionUrl" mat-fab>
+      <mat-icon>add</mat-icon>
     </button>
   </div>
 </div>

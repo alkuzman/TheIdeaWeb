@@ -5,7 +5,7 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {Award} from "../../../model/awards/award";
 import {Badge} from "../../../model/awards/badges/badge";
 import {AwardDetailsDialogComponent} from "../award-details/dialog/award-details-dialog.component";
-import {MdDialogConfig, MdDialog} from "@angular/material";
+import {MatDialogConfig, MatDialog} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-award-list",
@@ -13,14 +13,14 @@ import {MdDialogConfig, MdDialog} from "@angular/material";
 })
 export class AwardListComponent {
   @Input("awards") awards: Award<Badge<any, any>>[];
-  @Input("iconSize") iconSize: number = 44;
-  @Input("maxWidth") maxWidth: number = 88;
-  @Input("namesAsTooltips") namesAsTooltips: boolean = false;
+  @Input("iconSize") iconSize = 44;
+  @Input("maxWidth") maxWidth = 88;
+  @Input("namesAsTooltips") namesAsTooltips = false;
   @Output("awardSelected") awardSelected: EventEmitter<Award<Badge<any, any>>> = new EventEmitter<Award<Badge<any, any>>>();
-  noAwardsIcon: string = "award";
-  noAwardsName: string = "No awards found";
+  noAwardsIcon = "award";
+  noAwardsName = "No awards found";
 
-  constructor(private dialog: MdDialog) {
+  constructor(private dialog: MatDialog) {
   }
 
   onAwardSelected(award: Award<Badge<any, any>>): void {
@@ -29,7 +29,7 @@ export class AwardListComponent {
   }
 
   openDetails(award: Award<Badge<any, any>>): void {
-    let dialogRef = this.dialog.open(AwardDetailsDialogComponent, <MdDialogConfig>{
+    const dialogRef = this.dialog.open(AwardDetailsDialogComponent, <MatDialogConfig>{
       disableClose: false,
       width: '',
       height: '',

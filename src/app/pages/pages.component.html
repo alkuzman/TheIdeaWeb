@@ -1,47 +1,47 @@
-<md-sidenav-container>
-  <md-sidenav mode="over" #sidenav>
-    <md-toolbar style="font: 100 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;" color="primary">
+<mat-sidenav-container>
+  <mat-sidenav mode="over" #sidenav>
+    <mat-toolbar style="font: 100 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;" color="primary">
       <ideal-authenticated-user-named-avatar (click)="sidenav.toggle()" [routerLink]="['/users', 'me']"
                                              style="margin-top: 60px; cursor: pointer;" [profilePictureRadius]="25"
                                              nameFontSize="10pt"
                                              descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
-      <md-toolbar-row>
-      </md-toolbar-row>
-    </md-toolbar>
-    <md-nav-list denese>
+      <mat-toolbar-row>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-nav-list denese>
       <div *ngFor="let navigationItemGroup of navigation">
-        <md-divider *ngIf="navigationItemGroup.divider"></md-divider>
-        <h3 md-subheader>{{navigationItemGroup.name}}</h3>
-        <md-list-item *ngFor="let navigationItem of navigationItemGroup.items"
-                      (click)="sidenav.toggle()"
-                      [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
-          <md-icon class="icon-middle" [ngStyle]="{'color': navigationItem.color}" md-list-avatar>
+        <mat-divider *ngIf="navigationItemGroup.divider"></mat-divider>
+        <h3 mat-subheader>{{navigationItemGroup.name}}</h3>
+        <mat-list-item *ngFor="let navigationItem of navigationItemGroup.items"
+                       (click)="sidenav.toggle()"
+                       [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
+          <mat-icon class="icon-middle" [ngStyle]="{'color': navigationItem.color}" mat-list-avatar>
             {{navigationItem.icon}}
-          </md-icon>
-          <h4 style="position: relative" md-line>
+          </mat-icon>
+          <h4 style="position: relative" mat-line>
             {{navigationItem.title}}
             <label ideal-raised-label *ngIf="navigationItem.title == 'Notifications' && numberOfNotifications > 0"
                    color="primary"
                    [text]="numberOfNotifications + ' New'" ideal-badge position="right"></label>
           </h4>
-        </md-list-item>
+        </mat-list-item>
       </div>
-    </md-nav-list>
-  </md-sidenav>
+    </mat-nav-list>
+  </mat-sidenav>
   <div style="height: 100vh !important;" fxLayout="column">
     <nav class="mat-elevation-z4">
       <ideal-navbar [numberOfNotifications]="numberOfNotifications" (sideNavToggle)="sidenav.toggle()"
                     (search)="onSearch($event)"></ideal-navbar>
     </nav>
     <div>
-      <md-progress-bar
+      <mat-progress-bar
         style="position: absolute; z-index: 100; clear: none"
         *ngIf="loadingState"
         [value]="loadingState?.value"
         [bufferValue]="loadingState?.bufferValue"
         color="accent"
         [mode]="loadingState?.mode">
-      </md-progress-bar>
+      </mat-progress-bar>
     </div>
     <div fxFlex fxFlexFill style="overflow: auto"
          class="search-results"
@@ -50,10 +50,10 @@
          [infiniteScrollThrottle]="300"
          (scrolled)="onScroll()"
          [scrollWindow]="false"
-         >
+    >
       <div>
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </div>
   </div>
-</md-sidenav-container>
+</mat-sidenav-container>

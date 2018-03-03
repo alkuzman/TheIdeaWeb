@@ -1,13 +1,13 @@
 <form [formGroup]="form">
-  <md-input-container class="full-width">
-    <input mdInput autocomplete="off" [placeholder]="searchPlaceholder" [mdAutocomplete]="reactiveAuto"
+  <mat-input-container class="full-width">
+    <input matInput autocomplete="off" [placeholder]="searchPlaceholder" [matAutocomplete]="reactiveAuto"
            [formControl]="searchField">
-  </md-input-container>
-  <md-autocomplete #reactiveAuto="mdAutocomplete">
-    <md-option (click)="onOptionSelected(agent)" *ngFor="let agent of agents" [value]="getValue(agent)">
+  </mat-input-container>
+  <mat-autocomplete #reactiveAuto="matAutocomplete">
+    <mat-option (click)="onOptionSelected(agent)" *ngFor="let agent of agents" [value]="getValue(agent)">
       <div>
         <ideal-agent-list-item [agent]="agent"></ideal-agent-list-item>
       </div>
-    </md-option>
-  </md-autocomplete>
+    </mat-option>
+  </mat-autocomplete>
 </form>

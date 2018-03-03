@@ -8,11 +8,11 @@
   </div>
   <div fxLayout="column">
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
-      <md-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
-        <input type="text" mdInput formControlName="title"
+      <mat-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
+        <input type="text" matInput formControlName="title"
                [placeholder]="titleLabel" required/>
-        <md-error align="start">{{validationMessages.title.required}}</md-error>
-      </md-input-container>
+        <mat-error align="start">{{validationMessages.title.required}}</mat-error>
+      </mat-input-container>
       <div fxFlex="35%" fxFlex.xs="100%"
            fxFlexOffset="5%" fxFlexOffset.xs="0">
         <ideal-keyword-selector (inputFocused)="getKeywords()" formControlName="keywords" [suggestedKeywords]="keywords"
@@ -21,13 +21,13 @@
       </div>
     </div>
     <div fxFlex="100%">
-    <md-input-container color="primary" class="full-width">
-      <textarea style="resize: none;" mdInput md-autosize minRows="4" [placeholder]="sneakPeakLabel"
+    <mat-input-container color="primary" class="full-width">
+      <textarea style="resize: none;" matInput mat-autosize minRows="4" [placeholder]="sneakPeakLabel"
                 class="fullWidth"
                 formControlName="snackPeak" required></textarea>
-      <md-hint>Provide short description which will give a taste to a potential buyer</md-hint>
-      <md-error align="start">{{validationMessages.snackPeak.required}}</md-error>
-    </md-input-container>
+      <mat-hint>Provide short description which will give a taste to a potential buyer</mat-hint>
+      <mat-error align="start">{{validationMessages.snackPeak.required}}</mat-error>
+    </mat-input-container>
     </div>
   </div>
 </div>

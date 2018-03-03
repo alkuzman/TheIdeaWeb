@@ -1,6 +1,6 @@
 import {Component, Input, ViewContainerRef} from "@angular/core";
 import {AbstractValueAccessor, MakeProvider} from "../../../../abstract-value-accessor";
-import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material";
 import {UploadImageDialogComponent} from "../../files/upload-image-dialog/upload-image-dialog.component";
 /**
  * Created by AKuzmanoski on 04/11/2016.
@@ -13,16 +13,16 @@ import {UploadImageDialogComponent} from "../../files/upload-image-dialog/upload
   providers: [MakeProvider(AvatarChooserComponent)]
 })
 export class AvatarChooserComponent extends AbstractValueAccessor<string> {
-  @Input("radius") radius: number = 50;
-  dialogRef: MdDialogRef<UploadImageDialogComponent>;
+  @Input("radius") radius = 50;
+  dialogRef: MatDialogRef<UploadImageDialogComponent>;
 
-  constructor(public dialog: MdDialog,
+  constructor(public dialog: MatDialog,
               public viewContainerRef: ViewContainerRef) {
     super();
   }
 
   onClick(): void {
-    let config = new MdDialogConfig();
+    const config = new MatDialogConfig();
     config.viewContainerRef = this.viewContainerRef;
 
     this.dialogRef = this.dialog.open(UploadImageDialogComponent, config);

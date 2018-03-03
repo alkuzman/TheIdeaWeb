@@ -1,5 +1,7 @@
 @import '~@angular/material/theming';
 
+// Add more dark background to the light theme
+
 @import "ideal-app-themes";
 
 // Plus imports for other components in your app.
@@ -10,6 +12,10 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
+
+$mat-light-theme-background: map-merge($mat-light-theme-background, (
+  background: map_get($mat-grey, 100),
+));
 
 $ideal-app-primary: mat-palette($mat-light-blue);
 $ideal-app-accent: mat-palette($mat-yellow);

@@ -10,4 +10,5 @@ export class ProtocolParticipantOneSessionData extends BaseRelationship {
     public participant: Agent;
     public sessionKeyEncrypted: string;
     public encryptedGoods: string;
+    public nonce: string;
 }

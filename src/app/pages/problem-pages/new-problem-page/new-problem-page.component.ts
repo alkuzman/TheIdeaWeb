@@ -3,7 +3,7 @@
  */
 import {Component} from "@angular/core";
 import {Problem} from "../../../domain/model/ideas/problem";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {ActivatedRoute} from "@angular/router";
 import {RedirectService} from "../../../core/navigation/redirect.service";
 
@@ -17,12 +17,12 @@ export class NewProblemPageComponent {
   submitText = "Save";
 
 
-  constructor(private snackBar: MdSnackBar, private redirectService: RedirectService, private route: ActivatedRoute) {
+  constructor(private snackBar: MatSnackBar, private redirectService: RedirectService, private route: ActivatedRoute) {
 
   }
 
   problemCreated(problem: Problem) {
-    this.snackBar.open("Problem successfully created!", undefined, <MdSnackBarConfig>{duration: 2000});
+    this.snackBar.open("Problem successfully created!", undefined, <MatSnackBarConfig>{duration: 2000});
     this.redirectService.getProblemDetails(problem.id);
   }
 }

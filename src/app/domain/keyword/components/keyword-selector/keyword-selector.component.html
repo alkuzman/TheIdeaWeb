@@ -1,13 +1,13 @@
 <ideal-keyword-search [hint]="hint" (inputFocused)="onInputFocused()" [searchPlaceholder]="searchPlaceholder" [keywords]="suggestedKeywords" [clearAfterSelect]="true" (keywordSelected)="onKeywordSelected($event)" [stopKeywords]="value"></ideal-keyword-search>
-<md-chip-list>
+<mat-chip-list>
   <div *ngFor="let keyword of value; let i = index" class="margin-bottom">
-    <md-chip
+    <mat-chip
       color="primary"
       selected="true">
       {{keyword}}
-      <button type="button" (click)="remove(keyword, i)" md-icon-button class="chip-button">
-        <md-icon>clear</md-icon>
+      <button type="button" (click)="remove(keyword, i)" mat-icon-button class="chip-button">
+        <mat-icon>clear</mat-icon>
       </button>
-    </md-chip>
+    </mat-chip>
   </div>
-</md-chip-list>
+</mat-chip-list>

@@ -1,15 +1,15 @@
 <div>
   <label>{{title}}</label>
-  <md-input-container class="full-width">
-  <textarea md-input mdInput rows="10" placeholder="Encrypted private key" [value]="encryptedPrivateKey"
+  <mat-input-container class="full-width">
+  <textarea mat-input matInput rows="10" placeholder="Encrypted private key" [value]="encryptedPrivateKey"
             disabled style="font-family: 'Courier New', 'Lucida Console', 'Monospaced'"></textarea>
-  </md-input-container>
+  </mat-input-container>
   <ideal-security-form-encryption-password buttonText="Decrypt"
                                            (passwordReady)="decrypt($event)"></ideal-security-form-encryption-password>
   <div class="margin">
-    <md-input-container *ngIf="decryptedPrivateKey" class="full-width">
-  <textarea md-input mdInput rows="10" placeholder="Decrypted private key" [value]="decryptedPrivateKey"
+    <mat-input-container *ngIf="decryptedPrivateKey" class="full-width">
+  <textarea mat-input matInput rows="10" placeholder="Decrypted private key" [value]="decryptedPrivateKey"
             disabled style="font-family: 'Courier New', 'Lucida Console', 'Monospaced'"></textarea>
-    </md-input-container>
+    </mat-input-container>
   </div>
 </div>

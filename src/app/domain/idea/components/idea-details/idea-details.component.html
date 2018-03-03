@@ -1,15 +1,17 @@
 <ideal-problem-details [problem]="idea?.problem"></ideal-problem-details>
-<md-card class="margin-top">
-  <md-card-content>
+<mat-card class="margin-top">
+  <mat-card-content>
     <ideal-user-named-avatar [alignment]="ownerAvatarAlignment" [(ngModel)]="idea.owner"
                              [profilePictureRadius]="25"></ideal-user-named-avatar>
-    <h1>{{idea?.title}}</h1>
+    <h2>{{idea?.title}}</h2>
     <div>
       {{idea?.snackPeak}}
     </div>
+    <!--
     <div>
       <span *ngFor="let doc of docs"><a [href]="'https://en.wikipedia.org/wiki/' + getWikiName(doc.title)"
                                         target="_blank">{{doc.title}}</a>,&nbsp;</span>
     </div>
-  </md-card-content>
-</md-card>
+    -->
+  </mat-card-content>
+</mat-card>

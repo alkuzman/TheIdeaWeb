@@ -24,7 +24,7 @@ export class AnnouncementListComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    //this.list = this.announcementList;
+    // this.list = this.announcementList;
   }
 
   @Output("ideaSelected") ideaSelected: EventEmitter<Idea> = new EventEmitter<Idea>();

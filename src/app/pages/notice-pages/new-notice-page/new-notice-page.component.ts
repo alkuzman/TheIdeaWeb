@@ -4,7 +4,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Shareable} from "../../../domain/model/sharing/shareable";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {Notice} from "../../../domain/model/sharing/notice";
 @Component({
   moduleId: module.id,
@@ -14,7 +14,7 @@ import {Notice} from "../../../domain/model/sharing/notice";
 export class NewNoticePageComponent implements OnInit {
   sharable: Shareable;
 
-  constructor(private route: ActivatedRoute, private snackBar: MdSnackBar) {
+  constructor(private route: ActivatedRoute, private snackBar: MatSnackBar) {
 
   }
 
@@ -25,6 +25,6 @@ export class NewNoticePageComponent implements OnInit {
   }
 
   onNoticeReady(notice: Notice) {
-    this.snackBar.open("Notification sent", undefined, <MdSnackBarConfig>{duration: 3000});
+    this.snackBar.open("Notification sent", undefined, <MatSnackBarConfig>{duration: 3000});
   }
 }

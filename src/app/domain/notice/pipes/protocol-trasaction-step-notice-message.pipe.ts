@@ -18,7 +18,8 @@ export class ProtocolTransactionStepNoticeMessagePipe implements PipeTransform {
         'MTWO': 'The owner has responded on your buying request',
         'MTHREE': 'The buyer accepted your offer',
         'MFOUR': 'The owner sent you the goods',
-        'MFIVE': 'The buyer sent you paying information'
+        'MFIVE': 'The buyer sent you paying information',
+        'MSIX': 'The owner sent the request to the server'
     };
 
     transform(value: ProtocolTransactionStepNotice<any>, args: any[]): any {
@@ -36,6 +37,9 @@ export class ProtocolTransactionStepNoticeMessagePipe implements PipeTransform {
         }
         if (value.type == "ProtocolTransactionStepFiveNotice") {
             return this.messages['MFIVE'];
+        }
+        if (value.type == "ProtocolTransactionStepSixNotice") {
+            return this.messages['MSIX'];
         }
     }
 }

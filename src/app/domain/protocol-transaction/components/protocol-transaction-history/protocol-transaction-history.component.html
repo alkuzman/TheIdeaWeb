@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-title>Transaction history</mat-card-title>
+  <mat-card-content>
+    <div>
+      <div class="margin" *ngFor="let prevNotice of previousNotices">
+        <ideal-protocol-transaction-history-step-card [protocolTransactionHistoryStep]="prevNotice"
+                                                      [authenticatedUserEmail]="authenticatedUserEmail">
+
+        </ideal-protocol-transaction-history-step-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

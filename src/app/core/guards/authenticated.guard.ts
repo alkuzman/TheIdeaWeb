@@ -1,7 +1,8 @@
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+
 /**
  * Created by Viki on 11/17/2016.
  */
@@ -9,7 +10,7 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {
 
-  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MdSnackBar) {
+  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MatSnackBar) {
 
   }
 
@@ -17,7 +18,7 @@ export class AuthenticatedGuard implements CanActivate {
     if (this.authenticationService.isAuthenticated()) {
       return true;
     } else {
-      this.snackBar.open("Login to see this page", undefined, <MdSnackBarConfig>{duration: 3000});
+      this.snackBar.open("Login to see this page", undefined, <MatSnackBarConfig>{duration: 3000});
       this.router.navigate(["auth"], {queryParams: {returnUrl: state.url}});
       return false;
     }

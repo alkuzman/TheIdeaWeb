@@ -13,7 +13,7 @@ body {
   transform: translateY(5px);
 }
 
-md-sidenav {
+mat-sidenav {
   width: 280px !important;
 }
 
@@ -31,11 +31,11 @@ md-sidenav {
   max-width: none !important;
 }
 
-.mat-autocomplete-panel md-option {
+.mat-autocomplete-panel mat-option {
   height: auto !important;
 }
 
-md-card-header, .mat-card-header-text {
+mat-card-header, .mat-card-header-text {
   height: auto !important;
 }
 
@@ -243,11 +243,11 @@ body {
 
 // TODO remove this commands when specification will be implemented
 
-md-dialog-content, [md-dialog-content] {
+mat-dialog-content, [mat-dialog-content] {
   min-height: 38px;
 }
 
-md-dialog-actions, [md-dialog-actions] {
+mat-dialog-actions, [mat-dialog-actions] {
   margin-right: -16px !important;
 }
 

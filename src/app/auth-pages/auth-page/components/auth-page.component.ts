@@ -1,10 +1,8 @@
-import {Component, OnInit, HostBinding} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {User} from "../../../domain/model/authentication/user";
-import {Router, ActivatedRoute, Params} from "@angular/router";
-import {enterLeftLeaveLeft, pageAnimation} from "../../../core/animations/standard-route-animations";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {animate, style, transition, trigger, useAnimation} from "@angular/animations";
-import {slideFromRight} from "../../../core/animations/slide-animations";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+
 /**
  * Created by Viki on 10/29/2016.
  */
@@ -16,6 +14,12 @@ import {slideFromRight} from "../../../core/animations/slide-animations";
   styleUrls: ["auth-page.component.scss"]
 })
 export class AuthPageComponent implements OnInit {
+
+  email: string;
+  returnUrl: string;
+
+  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+  }
 
   @HostBinding("style.display") get display() {
     return "block";
@@ -29,15 +33,8 @@ export class AuthPageComponent implements OnInit {
     return 1;
   }
 
-
   @HostBinding("style.width") get width() {
     return "100%";
-  }
-
-  email: string;
-  returnUrl: string;
-
-  constructor(private router: Router, private route: ActivatedRoute, private snackBar: MdSnackBar) {
   }
 
   ngOnInit(): void {
@@ -48,22 +45,25 @@ export class AuthPageComponent implements OnInit {
   }
 
   continueLogin(user: User) {
-    if (this.email == null)
+    if (this.email == null) {
       this.email = user.email;
-    if (this.returnUrl == null)
+    }
+    if (this.returnUrl == null) {
       this.returnUrl = "/home";
-    let queryParams = {"email": this.email, "returnUrl": this.returnUrl};
+    }
+    const queryParams = {"email": this.email, "returnUrl": this.returnUrl};
     this.router.navigate(["login"], {relativeTo: this.route, queryParams: queryParams});
   }
 
   continueRegister(user: User) {
-    let config: MdSnackBarConfig;
-    this.snackBar.open("You are not registered, or you have misspelt your username", "Try again", <MdSnackBarConfig>{duration: 3000});
-    if (this.email == null)
+    this.snackBar.open("You are not registered, or you have misspelt your username", "Try again", <MatSnackBarConfig>{duration: 3000});
+    if (this.email == null) {
       this.email = user.email;
-    if (this.returnUrl == null)
+    }
+    if (this.returnUrl == null) {
       this.returnUrl = "/home";
-    let queryParams = {"email": this.email, "returnUrl": this.returnUrl};
+    }
+    const queryParams = {"email": this.email, "returnUrl": this.returnUrl};
     this.router.navigate(["register"], {relativeTo: this.route, queryParams: queryParams});
   }
 }

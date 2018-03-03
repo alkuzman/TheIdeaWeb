@@ -1,8 +1,8 @@
-<md-card (click)="onContentSelected(user)">
-  <img md-card-image [src]="user?.coverPicture | idealUserCoverPicture"/>
-  <md-card-content>
+<mat-card (click)="onContentSelected(user)">
+  <img mat-card-image [src]="user?.coverPicture | idealUserCoverPicture"/>
+  <mat-card-content>
     <div style="text-align: center">
       <ideal-user-named-avatar [(ngModel)]="user"></ideal-user-named-avatar>
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

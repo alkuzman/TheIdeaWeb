@@ -19,6 +19,7 @@ export class NoticeCardComponent {
     protocolTransactionStepThreeNoticeType: string = "ProtocolTransactionStepThreeNotice";
     protocolTransactionStepFourNoticeType: string = "ProtocolTransactionStepFourNotice";
     protocolTransactionStepFiveNoticeType: string = "ProtocolTransactionStepFiveNotice";
+    protocolTransactionStepSevenNoticeType: string = "ProtocolTransactionStepSevenNotice";
     packageNoticeType: string = "NewPackageNotice";
 
     constructor(private noticeService: NoticeService) {

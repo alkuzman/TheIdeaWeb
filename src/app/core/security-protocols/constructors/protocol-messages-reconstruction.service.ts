@@ -7,7 +7,6 @@ import {KeysService} from "../keys/keys.service";
 import {ParserPemService} from "../parsers/parser-pem.service";
 import {CertificateService} from "../../../domain/services/certificate/certificate.service";
 import Certificate from "pkijs/src/Certificate";
-import {Price} from "../../../domain/model/payment/price";
 import {Observable} from "rxjs";
 import {ProtocolSession} from "../../../domain/model/security/protocol-session";
 import {UserService} from "../../../domain/services/user/user.service";
@@ -33,6 +32,20 @@ import {Subject} from "rxjs/Subject";
 import {ProtocolTransactionStepFourDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-four-data-recipient";
 import {ProtocolTransactionService} from "../../../domain/services/protocol-transaction/protocol-transaction.service";
 import {ProtocolTransactionStepFourDataOriginator} from "../../../domain/model/security/data/protocol-transaction-step-four-data-originator";
+import {ProtocolTransactionStepFiveDataRecipient} from "../../../domain/model/security/data/protocol-transaction-step-five-data-recipient";
+import {Epo} from "../../../domain/model/security/data/epo";
+import {ProtocolTransactionStepFiveDataOriginator} from "../../../domain/model/security/data/protocol-transaction-step-five-data-originator";
+import {ProtocolParticipantTwoSessionData} from "../../../domain/model/security/protocol-participant-two-session-data";
+import {Money} from "../../../domain/model/payment/money";
+import {CertificateOperationsService} from "../certificates/certificate-operations.service";
+import {Epoid} from "../../../domain/model/security/data/epoid";
+import {ProtocolTransactionStepSevenNotice} from "../../../domain/model/security/notices/protocol-transaction-step-seven-notice";
+import {Solution} from "../../../domain/model/ideas/solution";
+import {Idea} from "../../../domain/model/ideas";
+import {EncryptingService} from "../encrypting.service";
+import {IdeaService} from "../../../domain/services/idea/idea.service";
+import {SolutionService} from "../../../domain/services/solution/solution.service";
+import {ProtocolTransactionStepSevenData} from "../../../domain/model/security/data/protocol-transaction-step-seven-data";
 
 /**
  * Created by Viki on 3/1/2017.
@@ -43,6 +56,7 @@ import {ProtocolTransactionStepFourDataOriginator} from "../../../domain/model/s
 export class ProtocolMessagesReconstructionService {
 
     private securityProfile: SecurityProfile;
+    private protocolSessionSubject: Subject<ProtocolSession>;
 
     constructor(private securityContext: JwtSecurityContext,
                 private cryptographicOperations: CryptographicOperations,
@@ -53,7 +67,12 @@ export class ProtocolMessagesReconstructionService {
                 private certificateService: CertificateService,
                 private securityProfileConstructor: SecurityProfileConstructorService,
                 private userService: UserService,
-                private transactionService: ProtocolTransactionService) {
+                private transactionService: ProtocolTransactionService,
+                private certificateOperations: CertificateOperationsService,
+                private protocolTransactionService: ProtocolTransactionService,
+                private encryptingService: EncryptingService,
+                private ideaService: IdeaService,
+                private solutionService: SolutionService) {
         this.initializeSecurityProfile();
     }
 
@@ -61,109 +80,20 @@ export class ProtocolMessagesReconstructionService {
                                previousNotices: ProtocolTransactionHistoryStep[],
                                previousNoticesData: PreviousNoticesData,
                                protocolSession: ProtocolSession,
+                               protocolSessionSubject: Subject<ProtocolSession>,
+                               finishInitializationSubject: Subject<boolean>,
                                lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
 
+        this.protocolSessionSubject = protocolSessionSubject;
         return this.reconstructProtocolMessage(array.pop(), password, previousNotices, previousNoticesData, protocolSession,
             lastPaymentSubject).expand((currentStep: ProtocolTransactionStepNotice<any>) => {
             if (array.length > 0) {
                 return this.reconstructProtocolMessage(array.pop(), password, previousNotices, previousNoticesData,
                     protocolSession, lastPaymentSubject);
             } else {
+                finishInitializationSubject.next(true);
                 return Observable.empty();
             }
-        });
-    }
-
-    public reconstructProtocolMessages(currentStep: ProtocolTransactionStepNotice<any>, password: string,
-                                       previousNotices: ProtocolTransactionHistoryStep[],
-                                       protocolSession: ProtocolSession,
-                                       lastPaymentSubject: Subject<Payment>): Observable<PreviousNoticesData> {
-
-        return Observable.create((observer) => {
-            // Initialize the array where we will keep the data from all protocol transaction notices until now
-            let previousNoticesData: PreviousNoticesData = {};
-
-            // Protocol transaction notices have relationship with the previous notice. The first notice does not have previous
-            // so this is where we end the process.
-            while (currentStep != null) {
-                // This information for every step are shown to the user
-                const historyStep = {
-                    messageType: currentStep.type,
-                    originator: currentStep.originator.email,
-                    when: currentStep.creationDate
-                };
-                previousNotices.push(historyStep);
-
-                // Processing Protocol transaction steps
-                if (currentStep.type == "ProtocolTransactionStepOneNotice") {
-                    // Check if the authenticated user is originator or recipient of the message
-                    if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                        this.constructProtocolMessageOneForOriginator(currentStep.message, password, protocolSession)
-                            .subscribe((data: ProtocolTransactionStepOneDataOriginator) => {
-                                console.log("ProtocolTransactionStepOneDataOriginator");
-                                console.log(data);
-                                previousNoticesData["ProtocolTransactionStepOneDataOriginator"] = data;
-                                lastPaymentSubject.next(data.bid);
-                            });
-                    } else {
-                        this.constructProtocolMessageOneForRecipient(currentStep.message, password, protocolSession)
-                            .subscribe((data: ProtocolTransactionStepOneDataRecipient) => {
-                                console.log("ProtocolTransactionStepOneDataRecipient");
-                                console.log(data);
-                                previousNoticesData["ProtocolTransactionStepOneDataRecipient"] = data;
-                                lastPaymentSubject.next(data.bid);
-                            });
-                    }
-                } else if (currentStep.type == "ProtocolTransactionStepTwoNotice") {
-                    // Check if the authenticated user is originator or recipient of the message
-                    if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                        this.constructProtocolMessageTwoForOriginator(currentStep.message, password,
-                            protocolSession, previousNoticesData)
-                            .subscribe((data: ProtocolTransactionStepTwoDataOriginator) => {
-                                console.log("ProtocolTransactionStepTwoDataOriginator");
-                                console.log(data);
-                                previousNoticesData["ProtocolTransactionStepTwoDataOriginator"] = data;
-                                lastPaymentSubject.next(data.payment);
-                            });
-                    } else {
-                        console.log(previousNoticesData["ProtocolTransactionStepOneDataOriginator"]);
-                        this.constructProtocolMessageTwoForRecipient(currentStep.message, password,
-                            protocolSession, previousNoticesData)
-                            .subscribe((data: ProtocolTransactionStepTwoDataRecipient) => {
-                                previousNoticesData["ProtocolTransactionStepTwoDataRecipient"] = data;
-                                console.log("ProtocolTransactionStepTwoDataRecipient");
-                                console.log(data);
-                                lastPaymentSubject.next(data.payment);
-                            });
-                    }
-                } else if (currentStep.type == "ProtocolTransactionStepThreeNotice") {
-                    // TODO: Change the price phase to false in protocol transaction component
-
-                    // Check if the authenticated user is originator or recipient of the message
-                    if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
-                        this.constructProtocolMessageThreeForOriginator(currentStep.message, password, protocolSession)
-                            .subscribe((data: ProtocolTransactionStepThreeDataOriginator) => {
-                                console.log("ProtocolTransactionStepThreeDataOriginator");
-                                console.log(data);
-                                previousNoticesData["ProtocolTransactionStepThreeDataOriginator"] = data;
-                            });
-                    } else {
-                        this.constructProtocolMessageThreeForRecipient(currentStep.message, password, protocolSession)
-                            .subscribe((data: ProtocolTransactionStepThreeDataRecipient) => {
-                                console.log("ProtocolTransactionStepThreeDataRecipient");
-                                console.log(data);
-                                previousNoticesData["ProtocolTransactionStepThreeDataRecipient"] = data;
-                            });
-                    }
-                } else if (currentStep.type == "ProtocolTransactionStepFourNotice") {
-
-                }
-                currentStep = currentStep.previousStepNotice;
-            }
-            console.log(previousNoticesData);
-            previousNotices.reverse();
-
-            observer.next(previousNoticesData);
         });
     }
 
@@ -227,7 +157,8 @@ export class ProtocolMessagesReconstructionService {
                             observer.next(previousNoticesData);
                         });
                 } else {
-                    this.constructProtocolMessageThreeForRecipient(currentStep.message, password, protocolSession)
+                    this.constructProtocolMessageThreeForRecipient(currentStep.message, password,
+                        protocolSession, previousNoticesData)
                         .subscribe((data: ProtocolTransactionStepThreeDataRecipient) => {
                             previousNoticesData["ProtocolTransactionStepThreeDataRecipient"] = data;
                             observer.next(previousNoticesData);
@@ -239,14 +170,42 @@ export class ProtocolMessagesReconstructionService {
                         .subscribe((data: ProtocolTransactionStepFourDataOriginator) => {
                             previousNoticesData["ProtocolTransactionStepFourDataOriginator"] = data;
                             observer.next(previousNoticesData);
-                    });
+                        });
                 } else {
                     this.constructProtocolMessageFourForRecipient(currentStep.message, password, protocolSession)
                         .subscribe((data: ProtocolTransactionStepFourDataRecipient) => {
-                            console.log(data);
                             previousNoticesData["ProtocolTransactionStepFourDataRecipient"] = data;
                             observer.next(previousNoticesData);
-                        })
+                        });
+                }
+            } else if (currentStep.type == "ProtocolTransactionStepFiveNotice") {
+                if (currentStep.originator.email == this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageFiveForOriginator(currentStep.message, password, protocolSession)
+                        .subscribe((data: ProtocolTransactionStepFiveDataOriginator) => {
+                            previousNoticesData["ProtocolTransactionStepFiveDataOriginator"] = data;
+                            observer.next(previousNoticesData);
+                        });
+                } else {
+                    this.constructProtocolMessageFiveForRecipient(currentStep.message, password,
+                        protocolSession, previousNoticesData)
+                        .subscribe((data: ProtocolTransactionStepFiveDataRecipient) => {
+                            previousNoticesData["ProtocolTransactionStepFiveDataRecipient"] = data;
+                            observer.next(previousNoticesData);
+                        });
+                }
+            } else if (currentStep.type == "ProtocolTransactionStepSevenNotice") {
+                if (protocolSession.digitalGoods.owner.email != this.userService.getAuthenticatedUser().email) {
+                    this.constructProtocolMessageSevenForOriginator(currentStep.message, password, protocolSession, previousNoticesData)
+                        .subscribe((data: ProtocolTransactionStepSevenData) => {
+                            previousNoticesData["ProtocolTransactionStepSevenData"] = data;
+                            observer.next(previousNoticesData);
+                        });
+                } else {
+                    this.constructProtocolMessageSevenForRecipient(currentStep.message, password, protocolSession, previousNoticesData)
+                        .subscribe((data: ProtocolTransactionStepSevenData) => {
+                            previousNoticesData["ProtocolTransactionStepSevenData"] = data;
+                            observer.next(previousNoticesData);
+                        });
                 }
             }
         });
@@ -301,17 +260,25 @@ export class ProtocolMessagesReconstructionService {
                                                 .subscribe((sessionKey: CryptoKey) => {
                                                     result.sessionKey = sessionKey;
 
-                                                    // Add the session key encrypted into protocol session
-                                                    this.pemParser.parsePublicKeyFromPem(this.securityProfile.encryptionPair.publicPem)
-                                                        .subscribe((encryptionPublicKey: CryptoKey) => {
+                                                    // Add the session key encrypted with own public key into protocol session
+                                                    this.keysService.encryptSessionKey(sessionKey, simpleSecurityProfile.publicKey)
+                                                        .subscribe((encryptedSessionKey: string) => {
+                                                            if (protocolSession.participantTwoSessionData == null) {
+                                                                let participant: ProtocolParticipantTwoSessionData = new ProtocolParticipantTwoSessionData();
+                                                                participant.participant = this.userService.getAuthenticatedUser();
+                                                                participant.sessionKeyEncrypted = encryptedSessionKey;
+                                                                protocolSession.participantTwoSessionData = participant;
+                                                                this.transactionService.saveProtocolSession(protocolSession).subscribe();
+                                                            }
 
                                                             // Decrypt data sent with session key
                                                             this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
                                                                 sessionKey, message.data).subscribe((jsonData: string) => {
-                                                                let data: { appData: { 'goodsType': DigitalGoodsType, 'paymentType': PaymentType }, bid: string, tid: number } =
-                                                                    JSON.parse(jsonData);
-                                                                if (data.appData.paymentType == PaymentType.Price) {
-                                                                    result.bid = new Price();
+                                                                let data: { appData: { 'goodsType': DigitalGoodsType, 'paymentType': PaymentType }, bid: string, tid: number }
+                                                                    = JSON.parse(jsonData);
+
+                                                                if (data.appData.paymentType == PaymentType.Money) {
+                                                                    result.bid = new Money();
                                                                 } else {
                                                                     result.bid = new Contract();
                                                                 }
@@ -325,13 +292,18 @@ export class ProtocolMessagesReconstructionService {
                                                 });
 
                                         } else {
-                                            console.log("signature is not valid");
+                                            this.abortSession(protocolSession, observer);
                                         }
                                     });
                                 });
                         });
                     });
 
+            } else {
+                protocolSession.aborted = true;
+                this.transactionService.saveProtocolSession(protocolSession).subscribe((protocolSession) => {
+                    this.protocolSessionSubject.next(protocolSession);
+                });
             }
         });
     }
@@ -360,8 +332,6 @@ export class ProtocolMessagesReconstructionService {
                             this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
                                 sessionKey, message.data).subscribe((jsonData: string) => {
 
-                                console.log(jsonData);
-
                                 // Parse the json data into an object
                                 const data: {
                                     'appData': { 'goodsType': DigitalGoodsType, 'paymentType': PaymentType },
@@ -370,15 +340,21 @@ export class ProtocolMessagesReconstructionService {
 
                                 result.paymentType = data.appData.paymentType;
                                 result.goodsType = data.appData.goodsType;
-                                if (data.appData.paymentType == PaymentType.Price) {
-                                    result.bid = new Price();
+                                if (data.appData.paymentType == PaymentType.Money) {
+                                    result.bid = new Money();
                                 } else {
                                     result.bid = new Contract();
                                 }
                                 result.bid.constructObject(data.bid);
                                 result.tid = data.tid;
 
-                                observer.next(result);
+                                this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
+                                    simpleSecurityProfile.privateKeyEncryption, protocolSession.participantOneSessionData.nonce)
+                                    .subscribe((nonce: string) => {
+
+                                        result.nonce = nonce;
+                                        observer.next(result);
+                                    });
                             });
                         });
                 });
@@ -395,8 +371,6 @@ export class ProtocolMessagesReconstructionService {
 
             // Get other party certificate to verify the signature
             this.getOtherPartySignatureVerifyingKey(protocolSession).subscribe((otherPartyPublicKey: CryptoKey) => {
-
-                console.log(message.data);
 
                 // Verify other party signature
                 this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
@@ -421,31 +395,36 @@ export class ProtocolMessagesReconstructionService {
                                             sessionKey, message.data).subscribe((decryptedDataJson: string) => {
 
 
-                                            let decryptedData: { productId: number, payment: string, nonce: number, tid: number } = JSON.parse(decryptedDataJson);
+                                            let decryptedData: { productId: number, payment: string, nonce: string, tid: number } = JSON.parse(decryptedDataJson);
+
                                             let result: ProtocolTransactionStepTwoDataRecipient = {};
                                             const stepOneData: ProtocolTransactionStepOneDataOriginator = previousData["ProtocolTransactionStepOneDataOriginator"];
-                                            if (stepOneData.paymentType === PaymentType.Price) {
-                                                const price: Price = new Price();
-                                                price.constructObject(decryptedData.payment);
-                                                result.payment = price;
-                                            } else if (stepOneData.paymentType === PaymentType.Contract) {
-                                                const contract: Contract = new Contract();
-                                                contract.constructObject(decryptedData.payment);
-                                                result.payment = contract;
-                                            }
-                                            result.productId = decryptedData.productId;
-                                            result.nonce = decryptedData.nonce;
-                                            result.tid = decryptedData.tid;
-                                            console.log(result);
-                                            console.log(decryptedData);
-                                            observer.next(result);
 
+                                            if (stepOneData.nonce == decryptedData.nonce) {
+                                                if (stepOneData.paymentType === PaymentType.Money) {
+                                                    const price: Money = new Money();
+                                                    price.constructObject(decryptedData.payment);
+                                                    result.payment = price;
+                                                } else if (stepOneData.paymentType === PaymentType.Contract) {
+                                                    const contract: Contract = new Contract();
+                                                    contract.constructObject(decryptedData.payment);
+                                                    result.payment = contract;
+                                                }
+
+                                                result.productId = decryptedData.productId;
+                                                result.nonce = decryptedData.nonce;
+                                                result.tid = decryptedData.tid;
+
+                                                observer.next(result);
+                                            } else {
+                                                this.abortSession(protocolSession, observer);
+                                            }
                                         });
                                     });
 
                             });
                     } else {
-                        console.log("Signature is not valid");
+                        this.abortSession(protocolSession, observer);
                     }
                 });
             });
@@ -478,16 +457,18 @@ export class ProtocolMessagesReconstructionService {
                                 let decryptedData: { productId: number, payment: string, nonce: number, tid: number } = JSON.parse(decryptedDataJson);
                                 let result: ProtocolTransactionStepTwoDataOriginator = {};
                                 const stepOneData: ProtocolTransactionStepOneDataRecipient = previousData["ProtocolTransactionStepOneDataRecipient"];
-                                if (stepOneData.paymentType === PaymentType.Price) {
-                                    const price: Price = new Price();
+                                if (stepOneData.paymentType === PaymentType.Money) {
+                                    const price: Money = new Money();
                                     price.constructObject(decryptedData.payment);
                                     result.payment = price;
                                 } else if (stepOneData.paymentType === PaymentType.Contract) {
                                     const contract: Contract = new Contract();
                                     contract.constructObject(decryptedData.payment);
                                     result.payment = contract;
-                                    console.log("contract");
                                 }
+
+                                console.log(result.payment.getText());
+
                                 result.productId = decryptedData.productId;
                                 result.nonce = decryptedData.nonce;
                                 result.tid = decryptedData.tid;
@@ -500,8 +481,8 @@ export class ProtocolMessagesReconstructionService {
         });
     }
 
-    private constructProtocolMessageThreeForRecipient(jsonMessage: string, password: string,
-                                                      protocolSession: ProtocolSession): Observable<ProtocolTransactionStepThreeDataRecipient> {
+    private constructProtocolMessageThreeForRecipient(jsonMessage: string, password: string, protocolSession: ProtocolSession,
+                                                      previousData: PreviousNoticesData): Observable<ProtocolTransactionStepThreeDataRecipient> {
 
         return Observable.create((observer) => {
 
@@ -523,6 +504,8 @@ export class ProtocolMessagesReconstructionService {
                             sessionKey, message.data).subscribe((jsonData: string) => {
 
                             let data: { identity: string, tid: number, nonce: number } = JSON.parse(jsonData);
+                            const stepTwoData: ProtocolTransactionStepTwoDataOriginator =
+                                previousData["ProtocolTransactionStepTwoDataOriginator"];
 
                             // Extract other party verifying public key
                             this.getOtherPartySignatureVerifyingKey(protocolSession).subscribe(
@@ -534,12 +517,20 @@ export class ProtocolMessagesReconstructionService {
                                         this.simpleCryptographicOperations.hash(jsonData))
                                         .then((verifyResult: boolean) => {
                                             if (verifyResult) {
-                                                result.identity = data.identity;
-                                                result.tid = data.tid;
-                                                result.nonce = data.nonce;
-                                                observer.next(result);
+
+                                                // Verify the nonce and transaction id
+                                                if (data.nonce == stepTwoData.nonce && data.tid == stepTwoData.tid + 1) {
+                                                    result.identity = data.identity;
+                                                    result.tid = data.tid;
+                                                    result.nonce = data.nonce;
+
+                                                    observer.next(result);
+                                                } else {
+                                                    this.abortSession(protocolSession, observer);
+                                                }
+
                                             } else {
-                                                console.log("Signature did not verify");
+                                                this.abortSession(protocolSession, observer);
                                             }
                                         });
                                 });
@@ -626,7 +617,7 @@ export class ProtocolMessagesReconstructionService {
                                         observer.next(result);
                                     });
                             } else {
-                                console.log("Data integrity is violated");
+                                this.abortSession(protocolSession, observer);
                             }
 
                         });
@@ -672,6 +663,414 @@ export class ProtocolMessagesReconstructionService {
         });
     }
 
+    private constructProtocolMessageFiveForRecipient(jsonMessage: string, password: string, protocolSession: ProtocolSession,
+                                                     previousData: PreviousNoticesData): Observable<ProtocolTransactionStepFiveDataRecipient> {
+
+        const message: { signature: string, data: string } = JSON.parse(jsonMessage);
+        let result: ProtocolTransactionStepFiveDataRecipient = {};
+
+        return Observable.create((observer) => {
+
+            // Construct simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    // Decrypt session key
+                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                        simpleProfile.privateKeyEncryption)
+                        .subscribe((sessionKey: CryptoKey) => {
+
+                            // Decrypt message data
+                            this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                                sessionKey, message.data)
+                                .subscribe((decryptedData: string) => {
+
+                                    // Decrypt signature
+                                    this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                                        sessionKey, message.signature).subscribe((signature: string) => {
+
+                                        // Verify message signature
+                                        this.getOtherPartySignatureVerifyingKey(protocolSession)
+                                            .subscribe((otherPartyVerifyingKey: CryptoKey) => {
+
+                                                this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
+                                                    otherPartyVerifyingKey, signature, decryptedData)
+                                                    .then((signatureVerified: boolean) => {
+
+                                                        if (signatureVerified) {
+
+                                                            // Parse data into an object
+                                                            const data: { epo: Epo, nonce: number } = JSON.parse(decryptedData);
+
+                                                            // Initialize result
+                                                            result.nonce = data.nonce;
+                                                            result.epoid = JSON.parse(data.epo.epoid);
+                                                            result.identity = data.epo.identity;
+                                                            result.merchant = data.epo.merchant;
+                                                            result.productId = data.epo.productId;
+                                                            let payment: Payment;
+                                                            const appData: { goodsType: DigitalGoodsType, paymentType: PaymentType } = JSON.parse(data.epo.appData);
+                                                            if (appData.paymentType == PaymentType.Contract) {
+                                                                payment = new Contract();
+                                                            } else if (appData.paymentType == PaymentType.Money) {
+                                                                payment = new Money();
+                                                            }
+
+                                                            console.log(data.epo.payment);
+
+                                                            payment.constructObject(data.epo.payment);
+                                                            result.payment = payment;
+                                                            result.signature = signature;
+                                                            result.epo = data.epo;
+
+                                                            const stepFourData: ProtocolTransactionStepFourDataOriginator =
+                                                                previousData["ProtocolTransactionStepFourDataOriginator"];
+                                                            const stepThreeData: ProtocolTransactionStepThreeDataRecipient =
+                                                                previousData["ProtocolTransactionStepThreeDataRecipient"];
+                                                            const stepTwoData: ProtocolTransactionStepTwoDataOriginator =
+                                                                previousData["ProtocolTransactionStepTwoDataOriginator"];
+
+                                                            // Check if the data sent is correct
+                                                            if (JSON.stringify(result.epoid) == JSON.stringify(stepFourData.epoid) &&
+                                                                result.identity == stepThreeData.identity &&
+                                                                result.productId == protocolSession.digitalGoods.id &&
+                                                                result.merchant == this.userService.getAuthenticatedUser().email &&
+                                                                data.epo.payment == stepTwoData.payment.getText()) {
+
+                                                                observer.next(result);
+                                                            } else {
+                                                                this.abortSession(protocolSession, observer);
+                                                            }
+                                                        } else {
+                                                            this.abortSession(protocolSession, observer);
+                                                        }
+                                                    });
+                                            });
+                                    });
+                                });
+                        });
+                });
+        });
+    }
+
+    private constructProtocolMessageFiveForOriginator(jsonMessage: string, password: string,
+                                                      protocolSession: ProtocolSession): Observable<ProtocolTransactionStepFiveDataOriginator> {
+
+        const message: { signature: string, data: string } = JSON.parse(jsonMessage);
+        let result: ProtocolTransactionStepFiveDataOriginator = {};
+
+        return Observable.create((observer) => {
+
+            // Construct simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    // Decrypt session key
+                    this.keysService.decryptSessionKey(this.helper.getEncryptedSessionKeyForAuthenticatedUser(protocolSession),
+                        simpleProfile.privateKeyEncryption)
+                        .subscribe((sessionKey: CryptoKey) => {
+
+                            // Decrypt message data
+                            this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                                sessionKey, message.data)
+                                .subscribe((decryptedData: string) => {
+
+                                    // Parse data into an object
+                                    const data: { epo: Epo, nonce: number } = JSON.parse(decryptedData);
+
+                                    // Initialize result
+                                    result.nonce = data.nonce;
+                                    result.epoid = JSON.parse(data.epo.epoid);
+                                    result.identity = data.epo.identity;
+                                    result.merchant = data.epo.merchant;
+                                    result.productId = data.epo.productId;
+                                    let payment: Payment;
+                                    const appData: { goodsType: DigitalGoodsType, paymentType: PaymentType } = JSON.parse(data.epo.appData);
+                                    if (appData.paymentType == PaymentType.Contract) {
+                                        payment = new Contract();
+                                    } else if (appData.paymentType == PaymentType.Money) {
+                                        payment = new Money();
+                                    }
+                                    payment.constructObject(data.epo.payment);
+                                    result.payment = payment;
+
+                                    observer.next(result);
+
+                                });
+                        });
+                });
+        });
+    }
+
+    public constructProtocolMessageSevenForRecipient(jsonMessage: string, password: string, protocolSession: ProtocolSession,
+                                         previousData: PreviousNoticesData): Observable<ProtocolTransactionStepSevenData> {
+
+        const encryptedMessage: { data: string, iv: string } = JSON.parse(jsonMessage);
+
+        return Observable.create((observer) => {
+
+            // Get simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    // Get the session key that is shared with the server
+                    this.protocolTransactionService.getSessionKeyWithServer(this.userService.getAuthenticatedUser().email)
+                        .subscribe((encryptedServerKey: string) => {
+
+                            //Decrypt the session key
+                            this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
+                                simpleProfile.privateKeyEncryption, encryptedServerKey)
+                                .subscribe((decryptedServerKey: string) => {
+
+                                    this.keysService.importKey(decryptedServerKey, "raw", this.algorithmService.SYMMETRIC_ALG)
+                                        .subscribe((serverSharedKey: CryptoKey) => {
+
+                                            // Decrypt the message from the server
+                                            const alg: AesCtrParams = {
+                                                counter: this.simpleCryptographicOperations
+                                                    .convertStringToUint8(encryptedMessage.iv).buffer,
+                                                length: 112,
+                                                name: this.algorithmService.SYMMETRIC_ALG
+                                            };
+
+                                            this.cryptographicOperations.decrypt(alg, serverSharedKey, encryptedMessage.data)
+                                                .subscribe((jsonMessage: string) => {
+
+                                                    const message: {data: string, signature: string} = JSON.parse(jsonMessage);
+
+                                                    // Get iDeal certificate
+                                                    this.certificateOperations.getIDealSecureCertificate()
+                                                        .subscribe((iDealCertificate: Certificate) => {
+
+                                                            // Get public key from certificate
+                                                            iDealCertificate.getPublicKey()
+                                                                .then((iDealPublicKey: CryptoKey) => {
+
+                                                                    // Verify the signature
+                                                                    this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
+                                                                        iDealPublicKey, message.signature, message.data)
+                                                                        .then((verified: boolean) => {
+
+                                                                            if (verified) {
+                                                                                // Parse receipt
+                                                                                const data: {epoId: Epoid, key: string, productId: number, payment: string,
+                                                                                    buyer: string, owner: string, result: {status: string, message: string}}
+                                                                                    = JSON.parse(message.data);
+
+                                                                                const stepFiveDataRecipient: ProtocolTransactionStepFiveDataRecipient
+                                                                                    = previousData["ProtocolTransactionStepFiveDataRecipient"];
+                                                                                let result: ProtocolTransactionStepSevenData = {};
+                                                                                result.outcome = data.result.status;
+                                                                                result.goodsId = -1;
+                                                                                result.message = data.result.message;
+
+                                                                                // Check if the receipt data is correct
+                                                                                if (!(stepFiveDataRecipient.epoid.merchant == data.epoId.merchant &&
+                                                                                        stepFiveDataRecipient.epoid.timestamp == data.epoId.timestamp &&
+                                                                                        stepFiveDataRecipient.epoid.uid == data.epoId.uid) ||
+                                                                                    stepFiveDataRecipient.epo.productId != data.productId ||
+                                                                                    stepFiveDataRecipient.epo.payment != data.payment ||
+                                                                                    stepFiveDataRecipient.epo.identity != data.buyer ||
+                                                                                    stepFiveDataRecipient.epo.merchant != data.owner) {
+
+                                                                                    console.log("Something went wrong");
+                                                                                } else {
+                                                                                    // Parse the transaction result
+                                                                                    if (data.result.status == "successful") {
+                                                                                        // If the recipient is not the owner recreate the goods
+                                                                                        if (protocolSession.digitalGoods.owner.email != this.userService.getAuthenticatedUser().email) {
+
+                                                                                            // Parse the key
+                                                                                            this.keysService.importKey(data.key, "raw", this.algorithmService.SYMMETRIC_ALG)
+                                                                                                .subscribe((goodsKey: CryptoKey) => {
+
+                                                                                                    // Decrypt the goods
+                                                                                                    this.saveEncryptedStringToDigitalGoods(previousData, goodsKey, protocolSession,
+                                                                                                        password, data.productId).subscribe((id) => {
+                                                                                                            result.goodsId = id;
+                                                                                                            observer.next(result);
+                                                                                                    });
+                                                                                                });
+                                                                                        } else {
+                                                                                            observer.next(result);
+                                                                                        }
+                                                                                    } else {
+                                                                                        observer.next(result);
+                                                                                    }
+                                                                                }
+
+                                                                            } else {
+                                                                                console.log("Something went wrong");
+                                                                            }
+                                                                        });
+
+                                                                });
+                                                        });
+
+                                                });
+                                        });
+                                });
+                        });
+                });
+        });
+    }
+
+    public constructProtocolMessageSevenForOriginator(jsonMessage: string, password: string, protocolSession: ProtocolSession,
+                                                     previousData: PreviousNoticesData): Observable<ProtocolTransactionStepSevenData> {
+
+        const encryptedMessage: { data: string, iv: string } = JSON.parse(jsonMessage);
+
+        return Observable.create((observer) => {
+
+            // Get simple security profile
+            this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
+                .subscribe((simpleProfile: SimpleSecurityProfile) => {
+
+                    // Get the session key that is shared with the server
+                    this.protocolTransactionService.getSessionKeyWithServer(this.userService.getAuthenticatedUser().email)
+                        .subscribe((encryptedServerKey: string) => {
+
+                            //Decrypt the session key
+                            this.cryptographicOperations.decrypt(this.algorithmService.getAsymmetricDecryptionAlgorithm().algorithm,
+                                simpleProfile.privateKeyEncryption, encryptedServerKey)
+                                .subscribe((decryptedServerKey: string) => {
+
+                                    this.keysService.importKey(decryptedServerKey, "raw", this.algorithmService.SYMMETRIC_ALG)
+                                        .subscribe((serverSharedKey: CryptoKey) => {
+
+                                            // Decrypt the message from the server
+                                            const alg: AesCtrParams = {
+                                                counter: this.simpleCryptographicOperations
+                                                    .convertStringToUint8(encryptedMessage.iv).buffer,
+                                                length: 112,
+                                                name: this.algorithmService.SYMMETRIC_ALG
+                                            };
+
+                                            this.cryptographicOperations.decrypt(alg, serverSharedKey, encryptedMessage.data)
+                                                .subscribe((jsonMessage: string) => {
+
+                                                    const message: {data: string, signature: string} = JSON.parse(jsonMessage);
+
+                                                    // Get iDeal certificate
+                                                    this.certificateOperations.getIDealSecureCertificate()
+                                                        .subscribe((iDealCertificate: Certificate) => {
+
+                                                            // Get public key from certificate
+                                                            iDealCertificate.getPublicKey()
+                                                                .then((iDealPublicKey: CryptoKey) => {
+
+                                                                    // Verify the signature
+                                                                    this.cryptographicOperations.verify(this.algorithmService.ASYMMETRIC_SIGNING_ALG,
+                                                                        iDealPublicKey, message.signature, message.data)
+                                                                        .then((verified: boolean) => {
+
+                                                                            if (verified) {
+                                                                                // Parse receipt
+                                                                                const data: {epoId: Epoid, key: string, productId: number, payment: string,
+                                                                                    buyer: string, owner: string, result: {status: string, message: string}}
+                                                                                    = JSON.parse(message.data);
+
+                                                                                const stepFiveDataOriginator: ProtocolTransactionStepFiveDataOriginator
+                                                                                    = previousData["ProtocolTransactionStepFiveDataOriginator"];
+                                                                                let result: ProtocolTransactionStepSevenData = {};
+                                                                                result.outcome = data.result.status;
+                                                                                result.goodsId = -1;
+                                                                                result.message = data.result.message;
+
+                                                                                // Check if the receipt data is correct
+                                                                                if (!(stepFiveDataOriginator.epoid.merchant == data.epoId.merchant &&
+                                                                                        stepFiveDataOriginator.epoid.timestamp == data.epoId.timestamp &&
+                                                                                        stepFiveDataOriginator.epoid.uid == data.epoId.uid) ||
+                                                                                    stepFiveDataOriginator.productId != data.productId ||
+                                                                                    stepFiveDataOriginator.payment.getText() != data.payment ||
+                                                                                    stepFiveDataOriginator.identity != data.buyer ||
+                                                                                    stepFiveDataOriginator.merchant != data.owner) {
+
+                                                                                    console.log("Something went wrong");
+                                                                                } else {
+                                                                                    // Parse the transaction result
+                                                                                    if (data.result.status == "successful") {
+                                                                                        // If the recipient is not the owner recreate the goods
+                                                                                        if (protocolSession.digitalGoods.owner.email != this.userService.getAuthenticatedUser().email) {
+
+                                                                                            // Parse the key
+                                                                                            this.keysService.importKey(data.key, "raw", this.algorithmService.SYMMETRIC_ALG)
+                                                                                                .subscribe((goodsKey: CryptoKey) => {
+
+                                                                                                    // Decrypt the goods
+                                                                                                    // this.saveEncryptedStringToDigitalGoods(previousData, goodsKey, protocolSession,
+                                                                                                    //     password, data.productId).subscribe((id) => {
+                                                                                                    //     result.goodsId = id;
+                                                                                                    //     observer.next(result);
+                                                                                                    // });
+                                                                                                    result.goodsId = 138458;
+                                                                                                    observer.next(result)
+                                                                                                });
+                                                                                        } else {
+                                                                                            observer.next(result);
+                                                                                        }
+                                                                                    } else {
+                                                                                        observer.next(result);
+                                                                                    }
+                                                                                }
+
+                                                                            } else {
+                                                                                console.log("Something went wrong");
+                                                                            }
+                                                                        });
+
+                                                                });
+                                                        });
+
+                                                });
+                                        });
+                                });
+                        });
+                });
+        });
+    }
+
+    private saveEncryptedStringToDigitalGoods(previousData: PreviousNoticesData, decryptionKey: CryptoKey,
+                                              protocolSession: ProtocolSession, password: string,
+                                              goodsId: number): Observable<number> {
+
+        return Observable.create((observer) => {
+            const protocolTransactionStepOneDataForOriginator: ProtocolTransactionStepOneDataOriginator =
+                previousData["ProtocolTransactionStepOneDataOriginator"];
+
+            this.cryptographicOperations.decrypt(this.algorithmService.getSymmetricDecryptionAlgorithm().algorithm,
+                decryptionKey, protocolSession.participantOneSessionData.encryptedGoods)
+                .subscribe((goods: string) => {
+
+                    console.log(goods);
+
+                    // Different approaches based on the goods type
+                    if (protocolTransactionStepOneDataForOriginator.goodsType === DigitalGoodsType.Solution) {
+                        this.ideaService.getIdea(goodsId).subscribe((goodsIdea: Idea) => {
+                            const idea = new Idea();
+                            idea.problem = goodsIdea.problem;
+                            idea.snackPeak = goodsIdea.snackPeak;
+                            idea.title = goodsIdea.title;
+                            idea.keywords = goodsIdea.keywords;
+                            const solution = new Solution();
+                            solution.idea = idea;
+                            this.encryptingService.encryptSolution(goods, password).subscribe((encryptedSolution) => {
+                                solution.text = encryptedSolution;
+
+                                // Save the new solution
+                                this.solutionService.addSolution(solution).subscribe((savedSolution: Solution) => {
+                                    observer.next(savedSolution.idea.id);
+                                })
+                            });
+                        });
+                    } else if (protocolTransactionStepOneDataForOriginator.goodsType === DigitalGoodsType.Evaluation) {
+                        // TODO: Implement if the good type is evaluation
+                    }
+                });
+        });
+    }
+
+    // TODO: Validate the certificate carefully
     private getOtherPartySignatureVerifyingKey(protocolSession: ProtocolSession): Observable<CryptoKey> {
         const agent: Agent = this.userService.getAuthenticatedUser();
         let otherPartyEmail: string;
@@ -714,6 +1113,14 @@ export class ProtocolMessagesReconstructionService {
                 });
         });
 
+    }
+
+    private abortSession(protocolSession: ProtocolSession, observer) {
+        protocolSession.aborted = true;
+        this.transactionService.saveProtocolSession(protocolSession).subscribe((protocolSession) => {
+            this.protocolSessionSubject.next(protocolSession);
+            observer.next({});
+        });
     }
 
 }

@@ -5,7 +5,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Shareable} from "../../../domain/model/sharing/shareable";
 import {Announcement} from "../../../domain/model/sharing/announcement";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 @Component({
   moduleId: module.id,
   selector: "ideal-new-announcement-page",
@@ -16,7 +16,7 @@ import {MdSnackBar} from "@angular/material";
 export class NewAnnouncementPageComponent implements OnInit {
   sharable: Shareable;
 
-  constructor(private route: ActivatedRoute, private snackBar: MdSnackBar, private router: Router) {
+  constructor(private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) {
 
   }
 

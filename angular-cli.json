@@ -6,6 +6,7 @@
   "apps": [
     {
       "root": "src",
+      "name": "iDeal",
       "outDir": "dist",
       "assets": [
         "assets",
@@ -19,8 +20,9 @@
       "prefix": "ideal",
       "styles": [
         "main.scss",
-        "../node_modules/font-awesome/css/font-awesome.css",
-        "../node_modules/froala-editor/css/froala_editor.pkgd.min.css"
+        "../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+        "../node_modules/froala-editor/css/froala_style.min.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
@@ -34,6 +36,24 @@
       "addons": [
         "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
       ]
+    },
+    {
+      "name": "playground",
+      "root": "src",
+      "outDir": "dist-playground",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.playground.ts",
+      "polyfills": "polyfills.ts",
+      "tsconfig": "tsconfig.json",
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
     }
   ],
   "e2e": {
@@ -47,7 +67,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "prefixInterfaces": false,
     "inline": {
       "style": false,

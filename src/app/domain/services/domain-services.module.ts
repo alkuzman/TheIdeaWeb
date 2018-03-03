@@ -18,6 +18,8 @@ import {MemberService} from "./member/member.service";
 import {SecurityProfileService} from "./security-profile/security-profile.service";
 import {CurrencyService} from "./currency/currency.service";
 import {ProtocolTransactionService} from "./protocol-transaction/protocol-transaction.service";
+import {TestProtocolTransactionService} from "./protocol-transaction/test-protocol-transaction.service";
+import {ContractService} from "./contract/contract.service";
 
 /**
  * Created by AKuzmanoski on 14/01/2017.
@@ -26,7 +28,7 @@ import {ProtocolTransactionService} from "./protocol-transaction/protocol-transa
     providers: [AnnouncementService, IdeaService, IdeaActionsService, ProblemService, ProblemActionsService,
         SharableService, SolutionService, UserService, UserObjectService, SearchableService, AgentService,
         NoticeService, CountryService, CertificateService, MemberService, SecurityProfileService, CurrencyService,
-        AwardService, ProtocolTransactionService]
+        AwardService, ProtocolTransactionService, TestProtocolTransactionService, ContractService]
 })
 export class DomainServicesModule {
 }

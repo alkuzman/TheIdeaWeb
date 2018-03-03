@@ -4,7 +4,7 @@
 import {CanActivate, Router} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 /**
  * Created by Viki on 11/17/2016.
  */
@@ -12,7 +12,7 @@ import {MdSnackBar} from "@angular/material";
 @Injectable()
 export class NotAuthenticatedGuard implements CanActivate {
 
-  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MdSnackBar) {
+  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MatSnackBar) {
 
   }
 

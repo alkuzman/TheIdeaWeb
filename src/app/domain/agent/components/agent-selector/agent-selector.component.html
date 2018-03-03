@@ -4,16 +4,16 @@
   (agentSelected)="onAgentSelected($event)">
 
 </ideal-agent-search>
-<md-chip-list>
+<mat-chip-list>
   <div *ngFor="let agent of agents; let i = index" [class]="getClass(agent)">
-    <md-chip
+    <mat-chip
       color="primary"
       selected="true"
-      [md-tooltip]="agent.email">
+      [matTooltip]="agent.email">
       {{getName(agent)}}
-      <button type="button" (click)="remove(agent, i)" md-icon-button class="chip-button">
-        <md-icon>clear</md-icon>
+      <button type="button" (click)="remove(agent, i)" mat-icon-button class="chip-button">
+        <mat-icon>clear</mat-icon>
       </button>
-    </md-chip>
+    </mat-chip>
   </div>
-</md-chip-list>
+</mat-chip-list>

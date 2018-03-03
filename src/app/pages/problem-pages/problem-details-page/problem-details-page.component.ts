@@ -5,7 +5,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Problem} from "../../../domain/model/ideas/problem";
 import {Idea} from "../../../domain/model/ideas/idea";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {Solution} from "../../../domain/model/ideas/solution";
 @Component({
   moduleId: module.id,
@@ -16,7 +16,7 @@ export class ProblemDetailsPageComponent implements OnInit {
   problem: Problem;
   ideaList: Idea[];
 
-  constructor(private snackBar: MdSnackBar, private router: Router, private route: ActivatedRoute) {
+  constructor(private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -31,7 +31,7 @@ export class ProblemDetailsPageComponent implements OnInit {
   }
 
   onSolutionReady(solution: Solution) {
-    this.snackBar.open("Idea successfully created!", undefined, <MdSnackBarConfig>{duration: 2000});
+    this.snackBar.open("Idea successfully created!", undefined, <MatSnackBarConfig>{duration: 2000});
     this.router.navigate(["/ideas", solution.idea.id]);
   }
 

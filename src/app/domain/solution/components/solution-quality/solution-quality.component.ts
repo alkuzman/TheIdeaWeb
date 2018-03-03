@@ -4,7 +4,7 @@
 import {Component, Input} from "@angular/core";
 import {SolutionQuality} from "../../../model/analyzers/analysis/solution-quality";
 import {SolutionQualityStatus} from "../../../model/analyzers/analysis/solution-quality-status";
-import {MdDialog} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {Award} from "../../../model/awards/award";
 import {AwardService} from "../../../services/award/award.service";
 import {Badge} from "../../../model/awards/badges/badge";
@@ -24,8 +24,7 @@ export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<
     this._solutionQuality = solutionQuality;
     if (solutionQuality != null) {
       this.updateAwards();
-    }
-    else {
+    } else {
       this.awards = [];
     }
   }
@@ -35,21 +34,23 @@ export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<
     this.awardService.generateAwards(this._solutionQuality).subscribe((awards: Award<Badge<any, any>>[]) => {
       this.awards = awards;
       this.value = [];
-      for (let award of awards) {
-        if (award.badge.id != null)
+      for (const award of awards) {
+        if (award.badge.id != null) {
           this.value.push(award);
+        }
       }
       this.notify();
     })
   }
 
-  constructor(public dialog: MdDialog, private awardService: AwardService) {
+  constructor(public dialog: MatDialog, private awardService: AwardService) {
     super([]);
   }
 
   public getQualityStatusName(qualityStatus: SolutionQualityStatus): string {
-    if (qualityStatus == null)
+    if (qualityStatus == null) {
       return null;
+    }
     return SolutionQualityStatus[qualityStatus];
   }
 }

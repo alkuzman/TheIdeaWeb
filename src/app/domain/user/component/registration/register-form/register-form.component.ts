@@ -1,8 +1,9 @@
-import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {AvatarType} from "../../../../../shared/widget/components/avatars/named-avatar/enum-avatar-type";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+
 /**
  * Created by AKuzmanoski on 29/10/2016.
  */
@@ -14,19 +15,19 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 })
 export class RegisterFormComponent implements OnInit {
   @Input("user") user: User;
-  @Input("submitButtonText") submitButtonText: string = "Register";
+  @Input("submitButtonText") submitButtonText = "Register";
   @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
   form: FormGroup;
   fields: FormGroup;
   active = true;
-  submitted: boolean = false;
+  submitted = false;
   userAvatarType: AvatarType = AvatarType.CHOOSER;
-  passwordStrengthVisible: boolean = false;
+  passwordStrengthVisible = false;
   passwordStrength: string;
   passwordStrengthProgress: number;
   passwordStrengthColor: string;
 
-  constructor(private snackBar: MdSnackBar, private fb: FormBuilder) {
+  constructor(private snackBar: MatSnackBar, private fb: FormBuilder) {
 
   }
 
@@ -39,10 +40,10 @@ export class RegisterFormComponent implements OnInit {
 
   save(): void {
     this.submitted = true;
-    if (this.form.valid)
+    if (this.form.valid) {
       this.userReady.emit(this.user);
-    else {
-      this.snackBar.open("You cannot register with invalid field values", undefined, <MdSnackBarConfig>{duration: 3000});
+    } else {
+      this.snackBar.open("You cannot register with invalid field values", undefined, <MatSnackBarConfig>{duration: 3000});
     }
   }
 

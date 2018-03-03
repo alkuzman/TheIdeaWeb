@@ -4,7 +4,7 @@
 import {Component, HostBinding, Inject, OnInit} from "@angular/core";
 import {Award} from "../../../../model/awards/award";
 import {Badge} from "../../../../model/awards/badges/badge";
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {ThemingService} from "../../../../../core/theming/theming.service";
 @Component({
   moduleId: module.id,
@@ -15,7 +15,8 @@ export class AwardDetailsDialogComponent implements OnInit {
   award: Award<Badge<any, any>>;
   @HostBinding("class") themeClass: string;
 
-  constructor(public dialogRef: MdDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService, @Inject(MD_DIALOG_DATA) data: any) {
+  constructor(public dialogRef: MatDialogRef<AwardDetailsDialogComponent>, private themingService: ThemingService,
+              @Inject(MAT_DIALOG_DATA) data: any) {
     const d = <{ award: Award<Badge<any, any>> }>data;
     this.award = d.award;
   }

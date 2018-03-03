@@ -1,26 +1,26 @@
 <div [ngSwitch]="state">
-  <md-toolbar *ngSwitchCase="defaultState" class="md-elevation-z4" color="primary">
-    <button #sidenavbutton md-icon-button (click)="onSideNavToggle()">
+  <mat-toolbar *ngSwitchCase="defaultState" class="mat-elevation-z4" color="primary">
+    <button #sidenavbutton mat-icon-button (click)="onSideNavToggle()">
       <label ideal-circle-label color="accent" [text]="numberOfNotifications" *ngIf="numberOfNotifications !== 0"
              ideal-badge position="bottom-right">
       </label>
-      <md-icon class="md-toolbar-icon">menu</md-icon>
+      <mat-icon class="mat-toolbar-icon">menu</mat-icon>
     </button>
-    <a md-button routerLink="/home"><span>IDEAL</span></a>
+    <a mat-button routerLink="/home"><span>IDEAL</span></a>
     <span class="flex"></span>
 
-    <button md-icon-button (click)="setSearchState()">
-      <md-icon class="md-toolbar-icon">search</md-icon>
+    <button mat-icon-button (click)="setSearchState()">
+      <mat-icon class="mat-toolbar-icon">search</mat-icon>
     </button>
-  </md-toolbar>
-  <md-toolbar *ngSwitchCase="searchState" class="md-elevation-z4" color="primary">
-    <button #sidenavbutton md-icon-button (click)="setDefaultState()">
-      <md-icon class="sd-toolbar-icon">arrow_back</md-icon>
+  </mat-toolbar>
+  <mat-toolbar *ngSwitchCase="searchState" class="mat-elevation-z4" color="primary">
+    <button #sidenavbutton mat-icon-button (click)="setDefaultState()">
+      <mat-icon class="sd-toolbar-icon">arrow_back</mat-icon>
     </button>
     <div fxLayout="row" style="width: 100%">
       <ideal-search fxFlex="auto" fxFlexOffset="0" fxFlex.xl="40%" fxFlexOffset.xl="30%"
                     fxFlex.lg="50%" fxFlexOffset.lg="25%" fxFlex.md="60%" fxFlexOffset.md="20%" fxFlex.sm="80%" fxFlexOffset.sm="10%" fxFlex.xs="95%" fxFlexOffset.xs="5%" (searchSubmit)="onSearchSubmit($event)">
       </ideal-search>
     </div>
-  </md-toolbar>
+  </mat-toolbar>
 </div>

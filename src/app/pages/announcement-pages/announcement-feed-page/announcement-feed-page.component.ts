@@ -31,7 +31,7 @@ import {Shareable} from "../../../domain/model/sharing/shareable";
       transition(':enter',
         query('@fab', useAnimation(scaleIn))),
       transition(':leave',
-        query('[md-fab]', useAnimation(scaleOut)))
+        query('[mat-fab]', useAnimation(scaleOut)))
     ]),
     trigger("fab", [
       state("void", style({
@@ -46,18 +46,18 @@ import {Shareable} from "../../../domain/model/sharing/shareable";
 })
 export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
 
-  @HostBinding("@pageAnimation") animation: boolean = true;
+  @HostBinding("@pageAnimation") animation = true;
 
   @HostBinding("style.display") get display() {
     return "block";
   }
 
   announcementList: Announcement[];
-  page: number = 1;
+  page = 1;
   pageSize: number;
   type: string;
   query: string;
-  noMoreResults: boolean = false;
+  noMoreResults = false;
   additionUrl: string;
 
   constructor(private route: ActivatedRoute, private scrollService: ScrollService,
@@ -72,11 +72,10 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       this.pageSize = data.pageSize;
       this.type = data.type;
       if (this.type != null) {
-        if (this.type == "Idea") {
+        if (this.type === "Idea") {
           this.additionUrl = "/ideas/new";
           this.themingService.currentTheme = "idea-theme";
-        }
-        else if (this.type == "Problem") {
+        } else if (this.type === "Problem") {
           this.additionUrl = "/problems/new";
           this.themingService.currentTheme = "problem-theme";
         }
@@ -86,7 +85,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       }
     });
     this.route.queryParams.subscribe((params: { query: string }) => {
-      let isNew = this.query != null;
+      const isNew = this.query != null;
       this.query = params.query;
       if (isNew) {
         this.loadData();
@@ -97,7 +96,7 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
 
   loadData(): void {
     this.page = 0;
-    let offset = this.page * this.pageSize;
+    const offset = this.page * this.pageSize;
     this.announcementService.getAnnouncementList({
       type: this.type,
       query: this.query,
@@ -107,8 +106,9 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       .subscribe((announcementList: Announcement[]) => {
         this.announcementList = announcementList;
         this.page += 1;
-        if (announcementList.length < this.pageSize)
+        if (announcementList.length < this.pageSize) {
           this.noMoreResults = true;
+        }
       });
   }
 
@@ -117,9 +117,10 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
   }
 
   loadMore(): void {
-    if (this.noMoreResults)
+    if (this.noMoreResults) {
       return;
-    let offset = this.page * this.pageSize;
+    }
+    const offset = this.page * this.pageSize;
     this.announcementService.getAnnouncementList({
       type: this.type,
       query: this.query,
@@ -129,8 +130,9 @@ export class AnnouncementFeedPageComponent implements OnInit, OnDestroy {
       .subscribe((announcementList: Announcement[]) => {
         this.page += 1;
         this.announcementList = this.announcementList.concat(announcementList);
-        if (announcementList.length < this.pageSize)
+        if (announcementList.length < this.pageSize) {
           this.noMoreResults = true;
+        }
       });
   }
 

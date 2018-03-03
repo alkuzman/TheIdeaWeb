@@ -1,17 +1,17 @@
 <form [formGroup]="form" (submit)="onOptionSelected()">
-  <md-input-container style="width: 100%;">
-    <input mdInput
+  <mat-input-container style="width: 100%;">
+    <input matInput
            autocomplete="off"
            (focus)="onFocus()"
-           [placeholder]="searchPlaceholder" [mdAutocomplete]="reactiveAuto"
+           [placeholder]="searchPlaceholder" [matAutocomplete]="reactiveAuto"
            [formControl]="searchField">
-    <md-hint align="start">{{hint}}</md-hint>
-  </md-input-container>
-  <md-autocomplete #reactiveAuto="mdAutocomplete">
-    <md-option *ngFor="let keyword of keywordResults | async" [value]="keyword.phrase">
+    <mat-hint align="start">{{hint}}</mat-hint>
+  </mat-input-container>
+  <mat-autocomplete #reactiveAuto="matAutocomplete">
+    <mat-option *ngFor="let keyword of keywordResults | async" [value]="keyword.phrase">
       <div>
         {{keyword.phrase}}
       </div>
-    </md-option>
-  </md-autocomplete>
+    </mat-option>
+  </mat-autocomplete>
 </form>

@@ -2,7 +2,7 @@ import {Component, Input, EventEmitter, Output, OnInit} from "@angular/core";
 import {User} from "../../../../model/authentication/user";
 import {Credentials} from "../../../helper/Credentials";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 /**
  * Created by Viki on 11/1/2016.
  */
@@ -13,15 +13,15 @@ import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
   templateUrl: "user-password-form.component.html"
 })
 export class UserPasswordFormComponent implements OnInit {
-  @Input("buttonText") buttonText: string = "Login";
+  @Input("buttonText") buttonText = "Login";
   @Input("user") user: User;
   @Output("passwordEntered") passwordEntered: EventEmitter<Credentials> = new EventEmitter<Credentials>();
-  rememberMe: boolean = false;
+  rememberMe = false;
   form: FormGroup;
   fields: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MdSnackBar) {
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
 
   }
 
@@ -31,7 +31,7 @@ export class UserPasswordFormComponent implements OnInit {
       fields: this.fields
     });
 
-    let control = this.formBuilder.control(this.rememberMe);
+    const control = this.formBuilder.control(this.rememberMe);
     control.valueChanges.subscribe((value: boolean) => {
       this.rememberMe = value;
     });
@@ -41,12 +41,11 @@ export class UserPasswordFormComponent implements OnInit {
   login(): void {
     this.submitted = true;
     if (this.form.valid) {
-      let credentials = new Credentials(this.user, this.rememberMe);
+      const credentials = new Credentials(this.user, this.rememberMe);
       this.passwordEntered.emit(credentials);
-    }
-    else {
+    } else {
       this.snackBar.open("You cannot authenticate with invalid field values", undefined,
-        <MdSnackBarConfig>{duration: 3000});
+        <MatSnackBarConfig>{duration: 3000});
     }
   }
 }

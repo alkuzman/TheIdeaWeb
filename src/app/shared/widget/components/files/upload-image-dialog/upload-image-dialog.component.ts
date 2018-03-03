@@ -2,7 +2,7 @@
  * Created by AKuzmanoski on 04/11/2016.
  */
 import {Component, HostBinding} from "@angular/core";
-import {MdDialogRef} from "@angular/material";
+import {MatDialogRef} from "@angular/material";
 import {ThemingService} from "../../../../../core/theming/theming.service";
 @Component({
   moduleId: module.id,
@@ -13,7 +13,7 @@ export class UploadImageDialogComponent {
   imageUrl: string;
   @HostBinding("class") themeClass = "default-theme";
 
-  constructor(private dialogRef: MdDialogRef<UploadImageDialogComponent>, private themingService: ThemingService) {
+  constructor(private dialogRef: MatDialogRef<UploadImageDialogComponent>, private themingService: ThemingService) {
     this.themeClass = this.themingService.currentTheme;
     this.themingService.themeObservable.subscribe((theme: string) => {
       this.themeClass = theme;

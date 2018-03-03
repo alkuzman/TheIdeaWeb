@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Price} from "../../../../../model/payment/price";
+import {Money} from "../../../../../model/payment/money";
 import {PaymentRequestPhaseData} from "../../../../../model/security/data/payment-request-phase-data";
 /**
  * Created by Viki on 2/20/2017.
@@ -14,8 +14,8 @@ import {PaymentRequestPhaseData} from "../../../../../model/security/data/paymen
 export class PriceRequestPhaseFormComponent implements OnInit {
 
   @Input("data") data: PaymentRequestPhaseData;
-  @Input("currentPrice") currentPrice: Price;
-  @Input("lastPrice") lastPrice: Price;
+  @Input("currentPrice") currentPrice: Money;
+  @Input("lastPrice") lastPrice: Money;
   @Output("dataReady") dataReady: EventEmitter<PaymentRequestPhaseData> =
     new EventEmitter<PaymentRequestPhaseData>();
   form: FormGroup;
