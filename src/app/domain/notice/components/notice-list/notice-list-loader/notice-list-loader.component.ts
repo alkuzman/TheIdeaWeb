@@ -1,8 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {NoticeService} from "../../../../services/notice/notice.service";
-import {Notice} from "../../../../model/sharing/notice";
-import {Subscription} from "rxjs/Subscription";
-import {SocketService} from "../../../../../core/socket/socket.service";
+import {Component, OnInit} from '@angular/core';
+import {NoticeService} from '../../../../services/notice/notice.service';
+import {Notice} from '../../../../model/sharing/notice';
+import {Subscription} from 'rxjs';
+import {SocketService} from '../../../../../core/socket/socket.service';
+
 /**
  * Created by Viki on 3/2/2017.
  */

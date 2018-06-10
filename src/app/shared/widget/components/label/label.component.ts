@@ -2,58 +2,65 @@
  * Created by AKuzmanoski on 02/03/2017.
  */
 import {
-  Component, ElementRef, Renderer, Input, Directive, NgModule, ViewEncapsulation,
-  ChangeDetectionStrategy
-} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {MaterialModule} from "../../../material/material.module";
+  ChangeDetectionStrategy,
+  Component,
+  Directive,
+  ElementRef,
+  HostBinding,
+  Input,
+  NgModule,
+  Renderer2,
+  ViewEncapsulation
+} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MaterialModule} from '../../../material/material.module';
 
 @Directive({
-  selector: 'label[ideal-label]',
-  host: {
-    '[class.ideal-label]': 'true'
-  }
+  selector: 'label[ideal-label]'
 })
-export class IdealLabelStyle {}
+export class IdealLabelStyleDirective {
+  @HostBinding('class.ideal-label') idealLabelClass = true;
+}
 
 @Directive({
-  selector: 'label[ideal-circle-label]',
-  host: {
-    '[class.ideal-circle-label]': 'true'
-  }
+  selector: 'label[ideal-circle-label]'
 })
-export class IdealCircleLabelStyle {}
+export class IdealCircleLabelStyleDirective {
+  @HostBinding('class.ideal-circle-label') idealCircleLabelClass = true;
+}
 
 @Directive({
-  selector: 'label[ideal-raised-label]',
-  host: {
-    '[class.ideal-raised-label]': 'true'
-  }
+  selector: 'label[ideal-raised-label]'
 })
-export class IdealRaisedLabelStyle {}
+export class IdealRaisedLabelStyleDirective {
+  @HostBinding('class.ideal-raised-label') idealRaisedLabelClass = true;
+}
 
 
 @Component({
   moduleId: module.id,
-  selector: "label[ideal-label], label[ideal-circle-label], label[ideal-raised-label]",
-  templateUrl: "label.component.html",
+  selector: 'label[ideal-label], label[ideal-circle-label], label[ideal-raised-label]',
+  templateUrl: 'label.component.html',
   styleUrls: ['label.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IdealLabel {
+export class IdealLabelComponent {
   private _color: string;
 
-  @Input() text: string;
-
-  /** The color of the button. Can be `primary`, `accent`, or `warn`. */
+  /** The idealColor of the button. Can be `primary`, `accent`, or `warn`. */
   @Input()
-  get color(): string { return this._color; }
+  get color(): string {
+    return this._color;
+  }
+
   set color(value: string) {
     this._updateColor(value);
   }
+  @Input() text: string;
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+  }
 
   _getHostElement() {
     return this._elementRef.nativeElement;
@@ -66,8 +73,12 @@ export class IdealLabel {
   }
 
   _setElementColor(color: string, isAdd: boolean) {
-    if (color != null && color != '') {
-      this._renderer.setElementClass(this._getHostElement(), `ideal-${color}`, isAdd);
+    if (color != null && color !== '') {
+      if (isAdd) {
+        this._renderer.addClass(this._getHostElement(), `ideal-${color}`);
+      } else {
+        this._renderer.removeClass(this._getHostElement(), `ideal-${color}`);
+      }
     }
   }
 }
@@ -75,10 +86,10 @@ export class IdealLabel {
 @NgModule({
   imports: [CommonModule, MaterialModule],
   exports: [
-    IdealLabel, IdealLabelStyle, IdealCircleLabelStyle, IdealRaisedLabelStyle
+    IdealLabelComponent, IdealLabelStyleDirective, IdealCircleLabelStyleDirective, IdealRaisedLabelStyleDirective
   ],
   declarations: [
-    IdealLabel, IdealLabelStyle, IdealCircleLabelStyle, IdealRaisedLabelStyle
+    IdealLabelComponent, IdealLabelStyleDirective, IdealCircleLabelStyleDirective, IdealRaisedLabelStyleDirective
   ],
 })
 export class IdealLabelModule {

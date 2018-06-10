@@ -1,9 +1,9 @@
 <div fxLayout="column">
     <div fxFlex="auto">
         <div fxFlexLayout="row" fxLayoutGap="20%">
-            <mat-input-container fxFlex="auto">
+            <mat-form-field fxFlex="auto">
                 <input matInput placeholder="Contract Title" aria-label="Contract" [(ngModel)]="contract.title">
-            </mat-input-container>
+            </mat-form-field>
             <mat-form-field fxFlex="auto">
                 <input matInput placeholder="Search contracts" aria-label="Contract" [matAutocomplete]="auto"
                        [formControl]="contractControl">
@@ -20,9 +20,9 @@
     <div *ngIf="showLastContract" fxFlex="auto" style="margin-top: 2%">
         <h3>Last contract:</h3>
         <div fxFlexLayout="row" fxLayoutGap="20%">
-            <mat-input-container fxFlex="auto">
+            <mat-form-field fxFlex="auto">
                 <input matInput placeholder="Contract Title" aria-label="Contract" [(ngModel)]="lastContract.title">
-            </mat-input-container>
+            </mat-form-field>
         </div>
         <ideal-text-editor [(ngModel)]="lastContract.text"></ideal-text-editor>
     </div>

@@ -1,9 +1,10 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {MatDialog} from "@angular/material";
-import {DiscardChangesDialogComponent} from "../../shared/widget/components/discard-changes/discard-changes-dialog.component";
-import {FormPage} from "../helper/form-page";
+import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {MatDialog} from '@angular/material';
+import {DiscardChangesDialogComponent} from '../../shared/widget/components/discard-changes/discard-changes-dialog.component';
+import {FormPage} from '../helper/form-page';
 
 /**
  * Created by AKuzmanoski on 27/02/2017.
@@ -24,12 +25,12 @@ export class DiscardChangesGuard implements CanDeactivate<FormPage> {
 
   confirm(): Observable<boolean> {
     const dialogRef = this.dialog.open(DiscardChangesDialogComponent);
-    return dialogRef.afterClosed().map((value => {
+    return dialogRef.afterClosed().pipe(map((value => {
       let close = false;
       if (value) {
         close = true;
       }
       return close;
-    }));
+    })));
   }
 }

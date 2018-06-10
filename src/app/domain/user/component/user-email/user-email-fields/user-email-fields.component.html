@@ -2,9 +2,9 @@
   <ideal-user-named-avatar [(ngModel)]="user"></ideal-user-named-avatar>
 </div>
 <div *ngIf="currentForm" [formGroup]="currentForm">
-  <mat-input-container [dividerColor]="formErrors.email ? 'warn' : 'primary'" class="full-width">
+  <mat-form-field [color]="formErrors.email ? 'warn' : 'primary'" class="full-width">
     <input matInput type="text" placeholder="Email" matTooltip="Email format: username@provider"
            formControlName="email" required/>
     <mat-hint align="end" *ngIf="formErrors.email" idealColor="warn">{{formErrors.email}}</mat-hint>
-  </mat-input-container>
+  </mat-form-field>
 </div>

@@ -4,20 +4,20 @@
 </div>
 <div [formGroup]="form">
   <div>
-    <mat-input-container [dividerColor]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
+    <mat-form-field [color]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
       <input mat-input matInput formControlName="firstName" placeholder="First Name" required/>
       <mat-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</mat-hint>
-    </mat-input-container>
+    </mat-form-field>
   </div>
   <div>
-    <mat-input-container [dividerColor]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
+    <mat-form-field [color]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
       <input type="text" mat-input matInput formControlName="lastName" placeholder="Last Name" required/>
       <mat-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</mat-hint>
-    </mat-input-container>
+    </mat-form-field>
   </div>
   <div formGroupName="passwords">
     <div>
-      <mat-input-container [dividerColor]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
+      <mat-form-field [color]="formErrors['passwords.password'] ? 'warn' : 'primary'" class="full-width">
         <input (focus)="showPasswordStrength()" (blur)="hidePasswordStrength()" mat-input matInput type="password"
                formControlName="password"
                placeholder="Password"
@@ -25,7 +25,7 @@
         <mat-hint align="end" idealColor="warn" *ngIf="formErrors['passwords.password']">
           {{formErrors['passwords.password']}}
         </mat-hint>
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div *ngIf="passwordStrengthVisible" class="margin-top margin-bottom">
       <mat-progress-bar
@@ -35,15 +35,15 @@
       </mat-progress-bar>
     </div>
     <div>
-      <mat-input-container [dividerColor]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
+      <mat-form-field [color]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
         <input mat-input matInput type="password" formControlName="confirmPassword"
                placeholder="Confirm Password" required/>
         <mat-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</mat-hint>
-      </mat-input-container>
+      </mat-form-field>
     </div>
   </div>
   <div [ngClass]="{'error-theme': formErrors.country}">
-    <mat-input-container class="full-width">
+    <mat-form-field class="full-width">
       <input type="text" matInput hidden="true"/>
       <mat-select color="primary" placeholder="Country" formControlName="country" class="full-width" required>
         <mat-option *ngFor="let country of countries" [value]="country">
@@ -51,7 +51,7 @@
         </mat-option>
       </mat-select>
       <mat-hint align="end" idealColor="warn" *ngIf="formErrors.country">{{formErrors.country}}</mat-hint>
-    </mat-input-container>
+    </mat-form-field>
   </div>
 
 </div>

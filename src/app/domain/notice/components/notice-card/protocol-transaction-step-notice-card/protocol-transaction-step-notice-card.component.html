@@ -24,7 +24,7 @@
             <div fxFlex="none">
                 <button mat-icon-button matTooltipPosition="above" *ngFor="let action of actions?.mainActions"
                         (click)="onAction(action)"
-                        [idealColor]="action.color"
+                        [idealColor]="action.idealColor"
                         [matTooltip]="action.title">
                     <mat-icon class="icon-20">{{action.icon}}</mat-icon>
                 </button>

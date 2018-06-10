@@ -1,8 +1,8 @@
 <form [formGroup]="form">
-  <mat-input-container class="full-width">
+  <mat-form-field class="full-width">
     <input matInput autocomplete="off" [placeholder]="searchPlaceholder" [matAutocomplete]="reactiveAuto"
            [formControl]="searchField">
-  </mat-input-container>
+  </mat-form-field>
   <mat-autocomplete #reactiveAuto="matAutocomplete">
     <mat-option (click)="onOptionSelected(agent)" *ngFor="let agent of agents" [value]="getValue(agent)">
       <div>

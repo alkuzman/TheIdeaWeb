@@ -1,11 +1,13 @@
+import {map, startWith} from 'rxjs/operators';
 /**
  * Created by AKuzmanoski on 19/02/2017.
  */
-import {Component, OnInit, Input, EventEmitter, Output} from "@angular/core";
-import {FormGroup, FormControl, FormBuilder} from "@angular/forms";
-import {Keyword} from "../../../model/ideas/keyword";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {Observable} from "rxjs/Observable";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Keyword} from '../../../model/ideas/keyword';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {Observable} from 'rxjs';
+
 @Component({
   moduleId: module.id,
   selector: "ideal-keyword-search",
@@ -13,7 +15,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class KeywordSearchComponent implements OnInit {
   _keywords: Keyword[] = [];
-  @Input("hint") hint = "";
+  @Input() hint = "";
   form: FormGroup;
   searchField: FormControl;
   keywordResults: Observable<Keyword[]>;
@@ -29,9 +31,9 @@ export class KeywordSearchComponent implements OnInit {
     }
   }
 
-  @Input("searchPlaceholder") searchPlaceholder = "Search";
-  @Input("stopKeywords") stopKeywords: string[];
-  @Input("clearAfterSelect") clearAfterSelect = false;
+  @Input() searchPlaceholder = "Search";
+  @Input() stopKeywords: string[];
+  @Input() clearAfterSelect = false;
   @Output("keywordSelected") keywordSelected: EventEmitter<string> = new EventEmitter<string>();
   @Output("inputFocused") inputFocused: EventEmitter<void> = new EventEmitter<void>();
 
@@ -47,9 +49,9 @@ export class KeywordSearchComponent implements OnInit {
     this.form = this.formBuilder.group({
       searchField: this.searchField
     });
-    this.keywordResults = this.searchField.valueChanges
-      .startWith(null)
-      .map(val => this.search(val));
+    this.keywordResults = this.searchField.valueChanges.pipe(
+      startWith(null),
+      map(val => this.search(val)));
   }
 
   search(value: string): Keyword[] {

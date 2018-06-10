@@ -1,13 +1,16 @@
+import {Observable, throwError as observabconsthrowError} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 /**
  * Created by AKuzmanoski on 07/03/2017.
  */
-import {Injectable} from "@angular/core";
-import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
-import {SolutionQuality} from "../../model/analyzers/analysis/solution-quality";
-import {Observable} from "rxjs";
-import {Headers, Response} from "@angular/http";
-import {Award} from "../../model/awards/award";
-import {Badge} from "../../model/awards/badges/badge";
+import {Injectable} from '@angular/core';
+import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service';
+import {SolutionQuality} from '../../model/analyzers/analysis/solution-quality';
+import {Headers, Response} from '@angular/http';
+import {Award} from '../../model/awards/award';
+import {Badge} from '../../model/awards/badges/badge';
+
 @Injectable()
 export class AwardService {
   private awardsUrl = "/api/awards";
@@ -17,31 +20,31 @@ export class AwardService {
   }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || {};
   }
 
   private handleError(error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
+    const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
-    return Observable.throw(error);
+    return observabconsthrowError(error);
   }
 
   getHeaders(): Headers {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return headers;
   }
 
   public generateAwards(solutionQuality: SolutionQuality): Observable<Award<Badge<any, any>>[]> {
-    let url: string = this.awardsUrl + "/factory";
-    let body = JSON.stringify(solutionQuality);
-    return this.http.post(url, body, {headers: this.getHeaders()})
-      .map((response: Response) => this.extractData(response))
-      .catch((error: any) => this.handleError(error));
+    const url: string = this.awardsUrl + "/factory";
+    const body = JSON.stringify(solutionQuality);
+    return this.http.post(url, body, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => this.extractData(response)),
+      catchError((error: any) => this.handleError(error)));
 
   }
 }

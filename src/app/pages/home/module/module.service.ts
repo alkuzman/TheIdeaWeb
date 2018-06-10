@@ -1,9 +1,10 @@
+import {Observable, of as observableOf} from 'rxjs';
 /**
  * Created by AKuzmanoski on 20/12/2016.
  */
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {Module} from "./module";
+import {Injectable} from '@angular/core';
+import {Module} from './module';
+
 @Injectable()
 export class ModuleService {
   private _modules: Module[] = [
@@ -85,6 +86,6 @@ export class ModuleService {
   }
 
   public get modules(): Observable<Module[]> {
-    return Observable.of(this._modules);
+    return observableOf(this._modules);
   }
 }

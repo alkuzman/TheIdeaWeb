@@ -1,72 +1,74 @@
+import {Observable, throwError as observableThrowError} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
-import {Observable} from "rxjs/Observable";
-import {Headers, Response} from "@angular/http";
-import {Epoid} from "../../model/security/data/epoid";
-import {ProtocolSession} from "../../model/security/protocol-session";
+import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service';
+import {Headers, Response} from '@angular/http';
+import {Epoid} from '../../model/security/data/epoid';
+import {ProtocolSession} from '../../model/security/protocol-session';
 
 @Injectable()
 export class ProtocolTransactionService {
-    private epoidUrl: string = "/protocol/epoid";
-    private sessionKeyWithServerUrl = "/protocol/keys";
-    private transactionUrl: string = "/api/protocoltransactions";
-    private transactionRequestUrl: string = "/protocol/transactions";
+  private epoidUrl = '/protocol/epoid';
+  private sessionKeyWithServerUrl = '/protocol/keys';
+  private transactionUrl = '/api/protocoltransactions';
+  private transactionRequestUrl = '/protocol/transactions';
 
-    constructor(private http: JwtHttpService) {
+  constructor(private http: JwtHttpService) {
 
-    }
+  }
 
-    private extractData(res: Response) {
-        let body = res.json();
-        return body || {};
-    }
+  public getNewEpoid(merchant: string): Observable<Epoid> {
+    const url = this.epoidUrl + '/new?merchant=' + merchant;
+    return this.http.get(url, {headers: this.getHeaders()}, false).pipe(
+      map((response: Response) => this.extractData(response)),
+      catchError((error: any) => this.handleError(error)));
+  }
 
-    private extractRawData(res: Response) {
-        return res.text() || {};
-    }
+  public saveProtocolSession(protocolSession: ProtocolSession): Observable<ProtocolSession> {
+    const url = this.transactionUrl + '/session/' + protocolSession.id;
+    const body = JSON.stringify(protocolSession);
+    return this.http.put(url, body, {headers: this.getHeaders()}, true).pipe(
+      map((response: Response) => this.extractData(response)),
+      catchError((error: any) => this.handleError(error)));
+  }
 
-    private handleError(error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(error);
-    }
+  public getSessionKeyWithServer(email: string): Observable<string> {
+    const url = this.sessionKeyWithServerUrl + '?email=' + email + '&applicationName=iDeal';
+    return this.http.get(url, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => this.extractRawData(response)),
+      catchError((error: any) => this.handleError(error)));
+  }
 
-    private getHeaders(): Headers {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return headers;
-    }
+  public sendTransactionRequestToServer(jsonMessage: string, email: string): Observable<string> {
+    const url = this.transactionRequestUrl + '?email=' + email + '&applicationName=iDeal';
+    return this.http.post(url, jsonMessage, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => response.text()),
+      catchError((error: any) => this.handleError(error)));
+  }
 
-    public getNewEpoid(merchant: string): Observable<Epoid> {
-        const url = this.epoidUrl + "/new?merchant=" + merchant;
-        return this.http.get(url, {headers: this.getHeaders()}, false)
-            .map((response: Response) => this.extractRawData(response))
-            .catch((error: any) => this.handleError(error));
-    }
+  private extractData(res: Response) {
+    const body = res.json();
+    return body || {};
+  }
 
-    public saveProtocolSession(protocolSession: ProtocolSession): Observable<ProtocolSession> {
-        const url = this.transactionUrl + "/session/" + protocolSession.id;
-        const body = JSON.stringify(protocolSession);
-        return this.http.put(url, body, {headers: this.getHeaders()}, true)
-            .map((response: Response) => this.extractData(response))
-            .catch((error: any) => this.handleError(error));
-    }
+  private extractRawData(res: Response): string {
+    return res.text() || '';
+  }
 
-    public getSessionKeyWithServer(email: string): Observable<string> {
-        const url = this.sessionKeyWithServerUrl + "?email=" + email + "&applicationName=iDeal";
-        return this.http.get(url, {headers: this.getHeaders()})
-            .map((response: Response) => response.text())
-            .catch((error: any) => this.handleError(error));
-    }
+  private handleError(error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    const errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return observableThrowError(error);
+  }
 
-    public sendTransactionRequestToServer(jsonMessage: string, email: string): Observable<string> {
-        const url = this.transactionRequestUrl + "?email=" + email + "&applicationName=iDeal";
-        return this.http.post(url, jsonMessage,{headers: this.getHeaders()})
-            .map((response: Response) => response.text())
-            .catch((error: any) => this.handleError(error));
-    }
+  private getHeaders(): Headers {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return headers;
+  }
 
 }

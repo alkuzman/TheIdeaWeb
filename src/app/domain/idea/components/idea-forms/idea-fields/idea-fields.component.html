@@ -3,16 +3,17 @@
     <h3 class="ideal-headline" idealColor="primary">Problem</h3>
     <ideal-problem-fields formGroupName="problemFields" [titleLabel]="problemTitleLabel" [bodyLabel]="problemBodyLabel"
                           [tagsLabel]="problemTagsLabel" name="ideaProblem" [form]="problemFields"
-                          [problem]="idea.problem" [submitted]="_submitted" (contentChanged)="onContentChanged()"></ideal-problem-fields>
+                          [problem]="idea.problem" [submitted]="_submitted"
+                          (contentChanged)="onContentChanged()"></ideal-problem-fields>
     <h3 class="ideal-headline" idealColor="primary">Idea</h3>
   </div>
   <div fxLayout="column">
     <div fxFlex="100%" fxLayout="row" fxLayout.xs="column">
-      <mat-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
+      <mat-form-field color="primary" fxFlex="60%" fxFlex.xs="100%">
         <input type="text" matInput formControlName="title"
                [placeholder]="titleLabel" required/>
         <mat-error align="start">{{validationMessages.title.required}}</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       <div fxFlex="35%" fxFlex.xs="100%"
            fxFlexOffset="5%" fxFlexOffset.xs="0">
         <ideal-keyword-selector (inputFocused)="getKeywords()" formControlName="keywords" [suggestedKeywords]="keywords"
@@ -21,13 +22,13 @@
       </div>
     </div>
     <div fxFlex="100%">
-    <mat-input-container color="primary" class="full-width">
+      <mat-form-field color="primary" class="full-width">
       <textarea style="resize: none;" matInput mat-autosize minRows="4" [placeholder]="sneakPeakLabel"
                 class="fullWidth"
                 formControlName="snackPeak" required></textarea>
-      <mat-hint>Provide short description which will give a taste to a potential buyer</mat-hint>
-      <mat-error align="start">{{validationMessages.snackPeak.required}}</mat-error>
-    </mat-input-container>
+        <mat-hint>Provide short description which will give a taste to a potential buyer</mat-hint>
+        <mat-error align="start">{{validationMessages.snackPeak.required}}</mat-error>
+      </mat-form-field>
     </div>
   </div>
 </div>

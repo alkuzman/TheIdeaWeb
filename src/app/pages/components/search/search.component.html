@@ -1,9 +1,9 @@
 <form (ngSubmit)="submit()" style="font: 100 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;">
-  <mat-input-container dividerColor="accent" style="width: 100%">
+  <mat-form-field color="accent" style="width: 100%">
     <input matInput name="value" [(ngModel)]="value" #search type="text"/>
     <mat-icon style="margin-right: 14px;" matPrefix>search</mat-icon>
     <button matSuffix mat-icon-button type="button" style="width: 24px; height: 24px; margin-bottom: -20px;" (click)="clear()">
       <mat-icon class="mat-toolbar-icon">clear</mat-icon>
     </button>
-  </mat-input-container>
+  </mat-form-field>
 </form>
