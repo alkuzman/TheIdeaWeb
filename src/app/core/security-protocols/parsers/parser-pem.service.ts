@@ -1,11 +1,11 @@
-import {Injectable} from "@angular/core";
-import Certificate from "pkijs/src/Certificate";
-import {arrayBufferToString, toBase64} from "pvutils";
-import * as asn1js from "asn1js";
-import {KeysService} from "../keys/keys.service";
-import {Observable} from "rxjs/Observable";
-import {AlgorithmService} from "../algorithms/algorithms.service";
-import {SimpleCryptographicOperations} from "../cryptographic-operations/simple-cryptographic-operations";
+import {Injectable} from '@angular/core';
+import Certificate from 'pkijs/src/Certificate';
+import {arrayBufferToString, toBase64} from 'pvutils';
+import * as asn1js from 'asn1js';
+import {KeysService} from '../keys/keys.service';
+import {Observable} from 'rxjs';
+import {AlgorithmService} from '../algorithms/algorithms.service';
+import {SimpleCryptographicOperations} from '../cryptographic-operations/simple-cryptographic-operations';
 
 /**
  * Created by Viki on 2/26/2017.

@@ -1,12 +1,12 @@
 <mat-card class="ideal-text-editor-card">
   <ideal-text-editor-toolbar></ideal-text-editor-toolbar>
   <mat-card-content>
-    <mat-input-container class="ideal-text-editor-body">
+    <mat-form-field class="ideal-text-editor-body">
     <textarea (blur)="onBlur($event)" (input)="onInput($event)" mat-autosize minRows="4" matInput [placeholder]="title"
               [(ngModel)]="value"
               (ngModelChange)="onChange($event)">
     </textarea>
       <mat-hint align="end">{{getNumberOfCharacters()}}</mat-hint>
-    </mat-input-container>
+    </mat-form-field>
   </mat-card-content>
 </mat-card>

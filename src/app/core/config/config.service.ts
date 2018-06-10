@@ -1,6 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {JwtHttpService} from "../authentication/jwt/jwt-http.service";
+import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {JwtHttpService} from '../authentication/jwt/jwt-http.service';
 
 /**
  * An injected class which grabs the application
@@ -27,7 +28,7 @@ export class ConfigService {
    * return a Promise for its resolution.
    */
   public getConfig(path): Observable<any> {
-    return this._http.get(path)
-      .map(res => res.json());
+    return this._http.get(path).pipe(
+      map(res => res.json()));
   }
 }

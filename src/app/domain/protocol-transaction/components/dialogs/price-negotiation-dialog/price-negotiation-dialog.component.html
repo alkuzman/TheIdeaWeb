@@ -1,9 +1,9 @@
 <h4 *ngIf="lastPrice" align="right">Last Payment {{lastPrice}}</h4>
 <h3 mat-dialog-title>Enter price:</h3>
 <div mat-dialog-content fxLayout="row">
-  <mat-input-container fxFlex="80%">
+  <mat-form-field fxFlex="80%">
     <input matInput type="number" [(ngModel)]="price.value" placeholder="Price" required/>
-  </mat-input-container>
+  </mat-form-field>
   <ideal-currency-select [(ngModel)]="price.currency" placeholder="Currency" fxFlex="20%"></ideal-currency-select>
 </div>
 <mat-dialog-actions>

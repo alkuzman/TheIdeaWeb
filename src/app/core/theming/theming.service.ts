@@ -1,5 +1,5 @@
-import {Injectable, EventEmitter} from "@angular/core";
-import {Subject} from "rxjs/Subject";
+import {EventEmitter, Injectable} from '@angular/core';
+
 /**
  * Created by AKuzmanoski on 13/12/2016.
  */

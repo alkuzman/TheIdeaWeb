@@ -1,7 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Response} from "@angular/http";
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {throwError as observableThrowError} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Response} from '@angular/http';
+import {Router} from '@angular/router';
+
 /**
  * Created by AKuzmanoski on 05/01/2017.
  */
@@ -12,11 +13,11 @@ export class ErrorHandlingService {
   }
 
   handleError(error: Response) {
-    if (error.status == 404) {
-      this.router.navigate(["/errors", "page-not-found"]);
+    if (error.status === 404) {
+      this.router.navigate(['/errors', 'page-not-found']);
       return null;
+    } else {
+      return observableThrowError(error);
     }
-    else
-      return Observable.throw(error);
   }
 }

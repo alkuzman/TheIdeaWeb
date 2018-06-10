@@ -1,23 +1,28 @@
-import {Directive, ElementRef, Renderer, Input} from "@angular/core";
+import {Directive, ElementRef, HostBinding, Input, Renderer2} from '@angular/core';
+
 /**
  * Created by AKuzmanoski on 02/03/2017.
  */
 @Directive({
-  selector: '[ideal-badge]',
-  host: {
-    '[class.ideal-badge]': 'true'
-  }
+  selector: '[ideal-badge]'
 })
-export class IdealBadge {
+export class IdealBadgeDirective {
+  @HostBinding('class.ideal-badge') idealBadge = true;
+
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+  }
+
   private _position: string;
 
   @Input()
-  get position(): string { return this._position; }
+  get position(): string {
+    return this._position;
+  }
+
   set position(value: string) {
     console.log(value);
-    this._updatePosition(value); }
-
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+    this._updatePosition(value);
+  }
 
   _updatePosition(position: string) {
     this._setElementPosition(this._position, false);
@@ -30,8 +35,12 @@ export class IdealBadge {
   }
 
   _setElementPosition(position: string, isAdd: boolean) {
-    if (position != null && position != '') {
-      this._renderer.setElementClass(this._getHostElement(), `ideal-badge-${position}`, isAdd);
+    if (position != null && position !== '') {
+      if (isAdd) {
+        this._renderer.addClass(this._getHostElement(), `ideal-badge-${position}`);
+      } else {
+        this._renderer.removeChild(this._getHostElement(), `ideal-badge-${position}`);
+      }
     }
   }
 }

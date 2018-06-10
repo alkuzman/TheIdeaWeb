@@ -1,12 +1,12 @@
 <form [formGroup]="form" (submit)="onOptionSelected()">
-  <mat-input-container style="width: 100%;">
+  <mat-form-field style="width: 100%;">
     <input matInput
            autocomplete="off"
            (focus)="onFocus()"
            [placeholder]="searchPlaceholder" [matAutocomplete]="reactiveAuto"
            [formControl]="searchField">
     <mat-hint align="start">{{hint}}</mat-hint>
-  </mat-input-container>
+  </mat-form-field>
   <mat-autocomplete #reactiveAuto="matAutocomplete">
     <mat-option *ngFor="let keyword of keywordResults | async" [value]="keyword.phrase">
       <div>

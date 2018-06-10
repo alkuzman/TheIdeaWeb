@@ -1,9 +1,9 @@
 <div novalidate [formGroup]="form" fxLayout="column">
   <div fxLayout.xs="column" fxLayout="row">
-    <mat-input-container color="primary" fxFlex="60%" fxFlex.xs="100%">
+    <mat-form-field color="primary" fxFlex="60%" fxFlex.xs="100%">
       <input matInput formControlName="title" [placeholder]="titleLabel" required/>
       <mat-error *ngIf="formErrors.title == 'required'" align="start">{{validationMessages.title.required}}</mat-error>
-    </mat-input-container>
+    </mat-form-field>
     <div fxFlex="35%" fxFlex.xs="100%" fxFlexOffset="5%" fxFlexOffset.xs="0">
       <ideal-keyword-selector (inputFocused)="getKeywords()" class="full-width"
                               formControlName="keywords" [suggestedKeywords]="keywords"

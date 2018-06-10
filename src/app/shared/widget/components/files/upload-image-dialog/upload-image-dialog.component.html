@@ -3,9 +3,9 @@
 </h2>
 <form novalidate (ngSubmit)="submit()">
   <div mat-dialog-content>
-    <mat-input-container style="min-width: 250px;">
+    <mat-form-field style="min-width: 250px;">
       <input name="imageUrl" matInput placeholder="Place image url here" [(ngModel)]="imageUrl"/>
-    </mat-input-container>
+    </mat-form-field>
   </div>
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
     <button mat-button type="button" (click)="cancel()" color="primary">CANCEL</button>

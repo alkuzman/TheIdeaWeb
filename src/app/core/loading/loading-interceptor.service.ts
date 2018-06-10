@@ -1,24 +1,25 @@
-import {delay} from 'rxjs/operators';
-import {EventEmitter, Injectable} from '@angular/core';
-import {LoadingState} from './loading-state';
-import {Observable} from 'rxjs';
+import {EventEmitter} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {LoadingState} from './loading-state';
+import {delay} from 'rxjs/operators';
 
-/**
- * Created by AKuzmanoski on 14/01/2017.
- */
-@Injectable()
-export class LoadingService {
+// TODO provide this service when the HttpClient will be included
+export class LoadingInterceptorService implements HttpInterceptor {
+  private _loadingState: LoadingState;
+  private _loadingStateChange: EventEmitter<LoadingState> = new EventEmitter<LoadingState>(true);
+
   private numOfLoadings = 0;
+
   private indefiniteLoading: LoadingState = new LoadingState();
 
-  private _loadingStateChange: EventEmitter<LoadingState> = new EventEmitter<LoadingState>(true);
+  constructor() {
+  }
 
   public get loadingStateChange(): Observable<LoadingState> {
     return this._loadingStateChange.asObservable().pipe(delay(10));
   }
-
-  private _loadingState: LoadingState;
 
   private set loadingState(loadingState: LoadingState) {
     this._loadingState = loadingState;
@@ -36,14 +37,22 @@ export class LoadingService {
   }
 
   public load(loadingState: LoadingState = this.indefiniteLoading) {
+    console.log(this.loadingState);
     this.loadingState = loadingState;
     this.numOfLoadings++;
   }
 
   public loadingDone(): void {
     this.numOfLoadings--;
-    console.log(this.numOfLoadings);
-    // TODO quick fix applied here, it will be solved when http client with inceptor will be included.
-    this.loadingState = null;
+    if (this.numOfLoadings === 0) {
+      this.loadingState = null;
+    }
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.load();
+    const result = next.handle(req);
+    this.loadingDone();
+    return result;
   }
 }

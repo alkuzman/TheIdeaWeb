@@ -1,8 +1,11 @@
-import {Injectable, Inject} from "@angular/core";
-import {Member} from "../../model/authentication/member";
-import {Observable} from "rxjs";
-import {JwtHttpService} from "../../../core/authentication/jwt/jwt-http.service";
-import {Http, Headers, Response} from "@angular/http";
+import {Observable, throwError as observableThrowError} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
+import {Inject, Injectable} from '@angular/core';
+import {Member} from '../../model/authentication';
+import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service';
+import {Headers, Response} from '@angular/http';
+
 /**
  * Created by Viki on 2/16/2017.
  */
@@ -11,28 +14,28 @@ import {Http, Headers, Response} from "@angular/http";
 @Injectable()
 export class MemberService {
 
-  membersUrl: string = "/api/members";
+  membersUrl = '/api/members';
 
   constructor(@Inject(JwtHttpService) private http: JwtHttpService) {
   }
 
   save(member: Member): Observable<Member> {
-    let body = JSON.stringify(member);
-    let headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.membersUrl, body, {headers: headers})
-      .map(this.extractData)
-      .catch(this.handleError);
+    const body = JSON.stringify(member);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post(this.membersUrl, body, {headers: headers}).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
   }
 
   extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || {};
   }
 
   handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
+    const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
-    return Observable.throw(error);
+    return observableThrowError(error);
   }
 }

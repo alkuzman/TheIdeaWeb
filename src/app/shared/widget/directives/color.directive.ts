@@ -1,4 +1,5 @@
-import {Renderer, ElementRef, Directive, Input, OnInit} from "@angular/core";
+import {Directive, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+
 /**
  * Created by AKuzmanoski on 27/12/2016.
  */
@@ -7,12 +8,12 @@ import {Renderer, ElementRef, Directive, Input, OnInit} from "@angular/core";
 })
 /** Highlight the attached element in gold */
 export class ColorDirective implements OnInit {
-  @Input("idealColor") color: string;
+  @Input('idealColor') idealColor: string;
 
-  constructor(private renderer: Renderer, private el: ElementRef) {
+  constructor(private renderer: Renderer2, private el: ElementRef) {
   }
 
   ngOnInit() {
-    this.renderer.setElementClass(this.el.nativeElement, this.color != null ? this.color : 'accent', true);
+    this.renderer.addClass(this.el.nativeElement, this.idealColor != null ? this.idealColor : 'accent');
   }
 }

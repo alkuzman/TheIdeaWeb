@@ -12,6 +12,12 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "jszip": [
+        "../node_modules/jszip/dist/jszip.js",
+        "../node_modules/pbkdf2/index.js"
+      ]
+    },
     "lib": [
       "es2016",
       "dom"

@@ -1,19 +1,19 @@
 <ideal-widget-avatar-chooser name="organizationProfilePicture" [(ngModel)]="organization.profilePicture"
                              radius="50"></ideal-widget-avatar-chooser>
 <div [formGroup]="form" fxLayout="column">
-  <mat-input-container [dividerColor]="formErrors.name ? 'warn' : 'primary'">
+  <mat-form-field [color]="formErrors.name ? 'warn' : 'primary'">
     <input mat-input matInput formControlName="name" placeholder="Name" required>
     <mat-hint idealColor="warn" *ngIf="formErrors.name" align="end">{{formErrors.name}}</mat-hint>
-  </mat-input-container>
-  <mat-input-container [dividerColor]="formErrors.email ? 'warn' : 'primary'">
+  </mat-form-field>
+  <mat-form-field [color]="formErrors.email ? 'warn' : 'primary'">
     <input mat-input matInput formControlName="email" placeholder="Email" required>
     <mat-hint idealColor="warn" *ngIf="formErrors.email" align="end">{{formErrors.email}}</mat-hint>
-  </mat-input-container>
+  </mat-form-field>
   <!--
-    <mat-input-container>
+    <mat-form-field>
         <textarea matInput placeholder="Place your description here. Be specific"
                   formControlName="description">
         </textarea>
-    </mat-input-container>
+    </mat-form-field>
     -->
 </div>

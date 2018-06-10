@@ -1,5 +1,6 @@
-import {Route, PreloadingStrategy} from "@angular/router";
-import {of} from "rxjs/observable/of";
+import {PreloadingStrategy, Route} from '@angular/router';
+import {of} from 'rxjs';
+
 /**
  * Created by AKuzmanoski on 02/12/2016.
  */

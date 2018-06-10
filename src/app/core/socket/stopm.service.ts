@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {Subject} from "rxjs/Rx";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import * as Stomp from "stompjs";
-import {StompConfig} from "./";
-import {JwtSecurityContext} from "../authentication/jwt/jwt-security-context.service";
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs/Rx';
+import {BehaviorSubject} from 'rxjs';
+import * as Stomp from 'stompjs';
+import {StompConfig} from './';
+import {JwtSecurityContext} from '../authentication/jwt/jwt-security-context.service';
 
 /** possible states for the STOMP service */
 export enum STOMPState {

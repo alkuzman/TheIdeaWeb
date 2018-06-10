@@ -2,10 +2,10 @@
   <mat-sidenav mode="over" #sidenav>
     <mat-toolbar style="font: 100 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;" color="primary">
       <ideal-authenticated-user-named-avatar (click)="sidenav.toggle()" [routerLink]="['/users', 'me']"
-                                             style="margin-top: 60px; cursor: pointer;" [profilePictureRadius]="25"
+                                             style="padding: 16px; cursor: pointer;" [profilePictureRadius]="25"
                                              nameFontSize="10pt"
                                              descriptionFontSize="8pt"></ideal-authenticated-user-named-avatar>
-      <mat-toolbar-row>
+      <mat-toolbar-row style="height: 50%">
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-nav-list denese>

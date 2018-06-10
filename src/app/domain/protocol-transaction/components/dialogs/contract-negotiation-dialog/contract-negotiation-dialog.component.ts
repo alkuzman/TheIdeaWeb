@@ -1,9 +1,10 @@
+import {map, startWith} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
-import {Contract} from "../../../../model/payment/contract";
-import {ContractService} from "../../../../services/contract/contract.service";
-import {Observable} from "rxjs/Observable";
-import {FormControl} from "@angular/forms";
-import {MatDialogRef} from "@angular/material";
+import {Contract} from '../../../../model';
+import {ContractService} from '../../../../services/contract/contract.service';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'ideal-contract-negotiation-dialog',
@@ -31,9 +32,9 @@ export class ContractNegotiationDialogComponent implements OnInit {
     this.contractService.getContracts().subscribe((contracts: Contract[]) => {
       this.contracts = contracts;
 
-      this.filteredContracts = this.contractControl.valueChanges
-        .startWith(null)
-        .map(contract => contract ? this.filterContracts(contract) : this.contracts.slice());
+      this.filteredContracts = this.contractControl.valueChanges.pipe(
+        startWith(null),
+        map(contract => contract ? this.filterContracts(contract) : this.contracts.slice()));
     });
   }
 

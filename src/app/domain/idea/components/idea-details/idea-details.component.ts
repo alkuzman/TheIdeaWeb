@@ -1,10 +1,11 @@
 /**
  * Created by PC on 10/10/2016.
  */
-import {Idea} from "../../../model/ideas/idea";
-import {Component, OnInit, HostBinding, trigger, transition, animate, style, state, Input} from "@angular/core";
-import {Alignment} from "../../../../shared/widget/components/avatars/named-avatar/enum-alignment";
-import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
+import {Idea} from '../../../model/ideas';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Alignment} from '../../../../shared/widget/components/avatars/named-avatar/enum-alignment';
+import {AnalyzerService} from '../../../../core/analyzers/analyzer.service';
 
 @Component({
   moduleId: module.id,

@@ -1,14 +1,16 @@
-import {Component, OnInit, trigger, state, style, transition, animate, HostBinding} from "@angular/core";
-import {Alignment} from "../../../shared/widget/components/avatars/named-avatar/enum-alignment";
-import {User} from "../../../domain/model/authentication/user";
+import {Component, HostBinding, OnInit} from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Alignment} from '../../../shared/widget/components/avatars/named-avatar/enum-alignment';
+import {User} from '../../../domain/model/authentication';
+
 /**
  * Created by Viki on 10/28/2016.
  */
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-auth-card",
-  templateUrl: "auth-card.component.html",
+  selector: 'ideal-auth-card',
+  templateUrl: 'auth-card.component.html',
   animations: [
     trigger('routeAnimation', [
       state('*',
@@ -34,13 +36,12 @@ import {User} from "../../../domain/model/authentication/user";
   ]
 })
 export class AuthCardComponent implements OnInit {
-  @HostBinding("@routeAnimation") routeAnimation() {
-    return true;
-  }
-
   namedAvatarAlignment: Alignment = Alignment.center;
   user: User;
 
+  @HostBinding('@routeAnimation') routeAnimation() {
+    return true;
+  }
 
   ngOnInit(): void {
 

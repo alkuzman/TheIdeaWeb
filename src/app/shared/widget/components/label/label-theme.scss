@@ -38,7 +38,7 @@
   }
 
   .ideal-circle-label, .ideal-raised-label {
-    // Default properties when not using any [color] value.
+    // Default properties when not using any [idealColor] value.
     color: mat-color($foreground, text);
     background-color: mat-color($background, raised-button);
 

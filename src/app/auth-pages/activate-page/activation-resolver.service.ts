@@ -1,12 +1,13 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
-import {UserService} from "../../domain/services/user/user.service";
-import {User} from "../../domain/model/authentication/user";
-import {Response} from "@angular/http";
-import {RedirectService} from "../../core/navigation/redirect.service";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+import {catchError} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {ErrorHandlingService} from '../../core/error-handling/error-handling.service';
+import {UserService} from '../../domain/services/user/user.service';
+import {User} from '../../domain/model/authentication';
+import {Response} from '@angular/http';
+import {RedirectService} from '../../core/navigation/redirect.service';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 /**
  * Created by Viki on 2/11/2017.
@@ -26,7 +27,7 @@ export class ActivationResolverService implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> | Promise<User> | User {
     this.code = route.queryParams['code'];
     this.mail = route.queryParams['user'];
-    return this.userService.activateUser(this.code, this.mail).catch((error: any) => this.onError(error));
+    return this.userService.activateUser(this.code, this.mail).pipe(catchError((error: any) => this.onError(error)));
   }
 
   onError(error: Response) {
