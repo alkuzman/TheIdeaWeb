@@ -14,5 +14,12 @@
       "port": 8090
     },
     "secure": false
+  },
+  "/ideal-analyzer": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "pathRewrite": {
+      "^/ideal-analyzer": ""
+    }
   }
 }

@@ -5,7 +5,6 @@ import {Idea} from '../../../model/ideas';
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Alignment} from '../../../../shared/widget/components/avatars/named-avatar/enum-alignment';
-import {AnalyzerService} from '../../../../core/analyzers/analyzer.service';
 
 @Component({
   moduleId: module.id,
@@ -38,32 +37,19 @@ import {AnalyzerService} from '../../../../core/analyzers/analyzer.service';
 })
 export class IdeaDetailsComponent implements OnInit {
 
-  @HostBinding('style.display') get display() {
-    return 'block';
-  }
-
   ownerAvatarAlignment: Alignment = Alignment.center;
-
   @Input() idea: Idea;
   errorMessage: any;
   docs: any;
 
-  constructor(private analyzerService: AnalyzerService) {
+  constructor() {
 
+  }
+
+  @HostBinding('style.display') get display() {
+    return 'block';
   }
 
   ngOnInit(): void {
-    console.log(this.idea);
-    this.getWikipediaDocuments();
-  }
-
-  getWikipediaDocuments() {
-    this.analyzerService.getSymilarDocuments(this.idea.title, {limit: "5"}).subscribe((docs: any) => {
-      this.docs = docs;
-    });
-  }
-
-  getWikiName(value: string) {
-    return value.replace(" ", "_");
   }
 }

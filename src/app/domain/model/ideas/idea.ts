@@ -1,15 +1,14 @@
-import {BaseEntityImpl} from "../base-entity-impl";
-import {Problem} from "./problem";
-import {User} from "../authentication/user";
-import {Award} from "../awards/award";
-import {Badge} from "../awards/badges/badge";
-import {DigitalGoods} from "./digital_goods";
-import {AbstractDigitalGoods} from "./abstract_digital_goods";
+import {Problem} from './problem';
+import {Award} from '../awards/award';
+import {Badge} from '../awards/badges/badge';
+import {AbstractDigitalGoods} from './abstract_digital_goods';
+import {TitledEntity} from './titled-entity';
+
 /**
  * Created by PC on 10/10/2016.
  */
 
-export class Idea extends AbstractDigitalGoods {
+export class Idea extends AbstractDigitalGoods implements TitledEntity {
   public problem: Problem;
   public snackPeak: string;
   public title: string;
@@ -17,12 +16,12 @@ export class Idea extends AbstractDigitalGoods {
   public awards: Award<Badge<any, any>>[];
 
   getText(): string {
-    return "";
+    return '';
   }
 
   toString(): string {
-    return super.toString() + "\n" +
-      "title: " + this.title + "\n" +
-      "problem: " + this.problem.toString();
+    return super.toString() + '\n' +
+      'title: ' + this.title + '\n' +
+      'problem: ' + this.problem.toString();
   }
 }

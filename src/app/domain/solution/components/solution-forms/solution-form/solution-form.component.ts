@@ -1,25 +1,25 @@
 /**
  * Created by AKuzmanoski on 26/10/2016.
  */
-import {AfterViewChecked, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Solution} from "../../../../model/ideas/solution";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {Problem} from "../../../../model/ideas/problem";
-import {Idea} from "../../../../model/ideas/idea";
+import {AfterViewChecked, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Solution} from '../../../../model/ideas';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {Problem} from '../../../../model/ideas';
+import {Idea} from '../../../../model/ideas';
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-solution-form",
-  templateUrl: "solution-form.component.html"
+  selector: 'ideal-solution-form',
+  templateUrl: 'solution-form.component.html'
 })
 export class SolutionFormComponent implements OnInit, AfterViewChecked {
-  @Input("submitText") submitText = "Submit";
-  @Input("solution") solution: Solution;
-  @Input("showIdeaFields") showIdeaFields = true;
-  @Input("showProblemFields") showProblemFields = true;
-  @Output("solutionReady") solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
-  @Output("dirty") dirty: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input('submitText') submitText = 'Submit';
+  @Input('solution') solution: Solution;
+  @Input('showIdeaFields') showIdeaFields = true;
+  @Input('showProblemFields') showProblemFields = true;
+  @Output('solutionReady') solutionReady: EventEmitter<Solution> = new EventEmitter<Solution>();
+  @Output('dirty') dirty: EventEmitter<boolean> = new EventEmitter<boolean>();
   form: FormGroup;
   fields: FormGroup;
   submitted = false;
@@ -50,7 +50,7 @@ export class SolutionFormComponent implements OnInit, AfterViewChecked {
     if (this.form.valid) {
       this.solutionReady.emit(this.solution);
     } else {
-      this.snackBar.open("Cannot create idea. Validation errors", undefined, <MatSnackBarConfig>{duration: 3000});
+      this.snackBar.open('Cannot create idea. Validation errors', undefined, <MatSnackBarConfig>{duration: 3000});
     }
   }
 

@@ -2,7 +2,8 @@
  * Created by AKuzmanoski on 11/10/2016.
  */
 
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
+
 @Injectable()
 export class Logger {
   logs: string[] = []; // capture logs for testing

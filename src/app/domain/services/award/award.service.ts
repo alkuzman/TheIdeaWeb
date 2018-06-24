@@ -13,9 +13,24 @@ import {Badge} from '../../model/awards/badges/badge';
 
 @Injectable()
 export class AwardService {
-  private awardsUrl = "/api/awards";
+  private awardsUrl = '/api/awards';
 
   constructor(private http: JwtHttpService) {
+
+  }
+
+  getHeaders(): Headers {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return headers;
+  }
+
+  public generateAwards(solutionQuality: SolutionQuality): Observable<Award<Badge<any, any>>[]> {
+    const url: string = this.awardsUrl + '/factory';
+    const body = JSON.stringify(solutionQuality);
+    return this.http.post(url, body, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => this.extractData(response)),
+      catchError((error: any) => this.handleError(error)));
 
   }
 
@@ -31,20 +46,5 @@ export class AwardService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
     return observabconsthrowError(error);
-  }
-
-  getHeaders(): Headers {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return headers;
-  }
-
-  public generateAwards(solutionQuality: SolutionQuality): Observable<Award<Badge<any, any>>[]> {
-    const url: string = this.awardsUrl + "/factory";
-    const body = JSON.stringify(solutionQuality);
-    return this.http.post(url, body, {headers: this.getHeaders()}).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
-
   }
 }
