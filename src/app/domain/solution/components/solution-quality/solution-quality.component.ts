@@ -1,26 +1,31 @@
 /**
  * Created by AKuzmanoski on 24/02/2017.
  */
-import {Component, Input} from "@angular/core";
-import {SolutionQuality} from "../../../model/analyzers/analysis/solution-quality";
-import {SolutionQualityStatus} from "../../../model/analyzers/analysis/solution-quality-status";
-import {MatDialog} from "@angular/material";
-import {Award} from "../../../model/awards/award";
-import {AwardService} from "../../../services/award/award.service";
-import {Badge} from "../../../model/awards/badges/badge";
-import {AbstractValueAccessor, MakeProvider} from "../../../../shared/abstract-value-accessor";
+import {Component, Input} from '@angular/core';
+import {SolutionQuality} from '../../../model/analyzers/analysis/solution-quality';
+import {SolutionQualityStatus} from '../../../model/analyzers/analysis/solution-quality-status';
+import {MatDialog} from '@angular/material';
+import {Award} from '../../../model/awards/award';
+import {AwardService} from '../../../services/award/award.service';
+import {Badge} from '../../../model/awards/badges/badge';
+import {AbstractValueAccessor, MakeProvider} from '../../../../shared/abstract-value-accessor';
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-solution-quality",
-  templateUrl: "solution-quality.component.html",
+  selector: 'ideal-solution-quality',
+  templateUrl: 'solution-quality.component.html',
   providers: [MakeProvider(SolutionQualityComponent)]
 })
 export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<any, any>>[]> {
-  _solutionQuality: SolutionQuality;
   awards: Award<Badge<any, any>>[];
 
-  @Input("solutionQuality") set solutionQuality(solutionQuality: SolutionQuality) {
+  _solutionQuality: SolutionQuality;
+
+  constructor(public dialog: MatDialog, private awardService: AwardService) {
+    super([]);
+  }
+
+  @Input('solutionQuality') set solutionQuality(solutionQuality: SolutionQuality) {
     this._solutionQuality = solutionQuality;
     if (solutionQuality != null) {
       this.updateAwards();
@@ -40,11 +45,7 @@ export class SolutionQualityComponent extends AbstractValueAccessor<Award<Badge<
         }
       }
       this.notify();
-    })
-  }
-
-  constructor(public dialog: MatDialog, private awardService: AwardService) {
-    super([]);
+    });
   }
 
   public getQualityStatusName(qualityStatus: SolutionQualityStatus): string {

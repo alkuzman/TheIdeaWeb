@@ -3,7 +3,7 @@
  */
 export class LoadingState {
 
-  constructor(public mode: string = "indeterminate", public value: number = 0, public bufferValue: number = 0) {
+  constructor(public mode: string = 'indeterminate', public value: number = 0, public bufferValue: number = 0) {
 
   }
 }

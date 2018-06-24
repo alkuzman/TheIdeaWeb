@@ -11,7 +11,6 @@ import {NavigationService} from './navigation/navigation.service';
 import {ErrorHandlingService} from './error-handling/error-handling.service';
 import {PasswordStrengthService} from './helper/services/password-strength.service';
 import {LoadingService} from './loading/loading.service';
-import {AnalyzerService} from './analyzers/analyzer.service';
 import {ScrollService} from './scrolling/scroll-service';
 import {RedirectService} from './navigation/redirect.service';
 import {ConfigService} from './config/config.service';
@@ -39,21 +38,29 @@ import {AccessFromUrlNotAllowedGuard} from './guards/access-from-url-not-allowed
 import {DiscardChangesGuard} from './guards/discard_changes.guard';
 import {MyTesterService} from './security-protocols/my-tester.service';
 import {CertificateOperationsService} from './security-protocols/certificates/certificate-operations.service';
+import {AnalyzerModule} from './analyzers/analyzer.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {LoadingInterceptorService} from './loading/loading-interceptor.service';
 
 
 @NgModule({
-  imports: [SharedModule, SecurityModule],
+  imports: [SharedModule, SecurityModule, AnalyzerModule],
   declarations: [],
   exports: [],
   providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
-    JwtHttpService, ErrorHandlingService, PasswordStrengthService, AnalyzerService, ScrollService, STOMPService,
+    JwtHttpService, ErrorHandlingService, PasswordStrengthService, ScrollService, STOMPService,
     SocketService, KeysService, UserCertificationService, SecurityProfileConstructorService,
     SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
     ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
     ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
     DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard,
-    AccessFromUrlNotAllowedGuard, MyTesterService, CertificateOperationsService]
+    AccessFromUrlNotAllowedGuard, MyTesterService, CertificateOperationsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptorService,
+      multi: true
+    }]
 })
 export class CoreModule {
 }

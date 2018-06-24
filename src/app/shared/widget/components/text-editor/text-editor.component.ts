@@ -1,9 +1,8 @@
 /**
  * Created by AKuzmanoski on 19/10/2016.
  */
-import {Component, Input, OnInit, EventEmitter, Output} from "@angular/core";
-import {MakeProvider, AbstractValueAccessor} from "../../../abstract-value-accessor";
-import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AbstractValueAccessor, MakeProvider} from '../../../abstract-value-accessor';
 
 @Component({
   moduleId: module.id,
@@ -13,12 +12,12 @@ import {AnalyzerService} from "../../../../core/analyzers/analyzer.service";
   providers: [MakeProvider(TextEditorComponent)]
 })
 export class TextEditorComponent extends AbstractValueAccessor<string> implements OnInit {
-  @Input("title") title: string = "Body";
-  @Output("blur") blur: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
-  @Output("input") input: EventEmitter<Event> = new EventEmitter<Event>();
+  @Input('title') title = 'Body';
+  @Output('blur') blur: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+  @Output('input') input: EventEmitter<Event> = new EventEmitter<Event>();
 
-  constructor(private analyzerService: AnalyzerService) {
-    super("");
+  constructor() {
+    super('');
   }
 
   ngOnInit(): void {
@@ -26,7 +25,7 @@ export class TextEditorComponent extends AbstractValueAccessor<string> implement
   }
 
   getNumberOfCharacters(): number {
-    return this.value.length
+    return this.value.length;
   }
 
   onBlur(value: FocusEvent): void {

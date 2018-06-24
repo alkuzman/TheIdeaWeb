@@ -9,10 +9,10 @@ import {Directive, ElementRef, HostBinding, Input, Renderer2} from '@angular/cor
 export class IdealBadgeDirective {
   @HostBinding('class.ideal-badge') idealBadge = true;
 
+  private _position: string;
+
   constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
   }
-
-  private _position: string;
 
   @Input()
   get position(): string {
@@ -20,7 +20,6 @@ export class IdealBadgeDirective {
   }
 
   set position(value: string) {
-    console.log(value);
     this._updatePosition(value);
   }
 

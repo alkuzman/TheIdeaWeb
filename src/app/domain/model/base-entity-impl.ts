@@ -1,4 +1,5 @@
-import {BaseEntity} from "./base-entity";
+import {BaseEntity} from './base-entity';
+
 /**
  * Created by Aleskandar Kuzmanoski on 10/10/2016.
  */
@@ -13,9 +14,9 @@ export abstract class BaseEntityImpl implements BaseEntity {
   }
 
   toString(): string {
-    return "id: " + this.id + "\n" +
-      "creationDate: " + this.creationDate + "\n" +
-      "lastModified: " + this.lastModified + "\n" +
-      "type: " + this.type;
+    return 'id: ' + this.id + '\n' +
+      'creationDate: ' + this.creationDate + '\n' +
+      'lastModified: ' + this.lastModified + '\n' +
+      'type: ' + this.type;
   }
 }

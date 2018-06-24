@@ -1,6 +1,6 @@
-import {Observable, throwError as observableThrowError} from 'rxjs';
+import {Observable, throwError as observableThrowError, of} from 'rxjs';
 
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, delay} from 'rxjs/operators';
 /**
  * Created by Viki on 11/18/2016.
  */
@@ -10,7 +10,7 @@ import {JwtSecurityContext} from './jwt-security-context.service';
 import {JwtHelper} from 'angular2-jwt';
 import {JwtRefreshAccessTokenService} from './jwt-refresh-access-token.service';
 import {Router} from '@angular/router';
-import {User} from '../../../domain/model/authentication/user';
+import {User} from '../../../domain/model/authentication';
 import {JwtHttpService} from './jwt-http.service';
 
 /**
@@ -89,7 +89,7 @@ export class JwtAuthenticationService {
     }
     console.log('REFRESH SCHEDULED');
 
-    let delay = 0;
+    let d = 0;
     const token = this.securityContext.accessToken;
     // If access token is null just refresh token immediately.
     if (token != null) {
@@ -97,10 +97,9 @@ export class JwtAuthenticationService {
       const jwtExp = this.jwtHelper.decodeToken(token).exp;
       const exp = new Date(0);
       exp.setUTCSeconds(jwtExp);
-      delay = exp.valueOf() - now;
+      d = exp.valueOf() - now;
     }
-
-    Observable.of(true).delay(delay).subscribe(() => {
+    of(true).pipe(delay(d)).subscribe(() => {
       this.refreshAccessTokenService.getNewAccessToken()
         .subscribe((t: string) => this.scheduleRefresh(),
           (error: Response) => this.refreshTokenExpired(error)); // some function that deals with refreshing the token

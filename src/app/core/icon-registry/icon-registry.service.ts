@@ -1,31 +1,35 @@
-import {Injectable} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
-import {MatIconRegistry} from "@angular/material";
+import {Injectable} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
+
 /**
  * Created by AKuzmanoski on 26/02/2017.
  */
 @Injectable()
 export class IconRegistryService {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+  }
+
+  public register(): void {
+    this.iconRegistry.addSvgIcon(
       'light_bulb',
-      sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/light-bulb.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/light-bulb.svg')
     );
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'problem_coverage_award',
-      sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/problem-coverage-award.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/problem-coverage-award.svg')
     );
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'innovativeness_award',
-      sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/innovativeness-award.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/innovativeness-award.svg')
     );
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'snack_peak_award',
-      sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/snack-peak-award.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/snack-peak-award.svg')
     );
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'award',
-      sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/award.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/award.svg')
     );
   }
 }

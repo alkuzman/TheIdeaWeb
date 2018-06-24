@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Rx';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import * as Stomp from 'stompjs';
 import {StompConfig} from './';
 import {JwtSecurityContext} from '../authentication/jwt/jwt-security-context.service';
@@ -14,6 +13,8 @@ export enum STOMPState {
   DISCONNECTING
 }
 
+@Injectable()
+export class STOMPService {
 /**
  * Angular2 STOMP Service using stomp.js
  *
@@ -23,35 +24,80 @@ export enum STOMPState {
  * asynchronous value streaming by wiring the STOMP
  * messages into a Subject observable.
  */
-@Injectable()
-export class STOMPService {
+
 
   /* Service parameters */
+// Configuration structure with MQ creds
+  private config: StompConfig;
+// STOMP Client from stomp.js
+  private client: Stomp.Client;
+// Resolve Promise made to calling class, when connected
+  private resolvePromise: (...args: any[]) => void;
+// Timer
+  private timer: NodeJS.Timer;
 
   // State of the STOMPService
   public state: BehaviorSubject<STOMPState>;
-
   // Publishes new messages to Observers
   public messages: Subject<Stomp.Message>;
+  // Callback run on successfully connecting to server
+  public on_connect = () => {
 
-  // Configuration structure with MQ creds
-  private config: StompConfig;
+    console.log('Connected');
 
-  // STOMP Client from stomp.js
-  private client: Stomp.Client;
+    // Indicate our connected state to observers
+    this.state.next(STOMPState.CONNECTED);
 
-  // Resolve Promise made to calling class, when connected
-  private resolvePromise: (...args: any[]) => void;
+    // Subscribe to message queues
+    this.subscribe();
 
-  // Timer
-  private timer: NodeJS.Timer;
+    // Resolve our Promise to the caller
+    this.resolvePromise();
+
+    // Clear callback
+    this.resolvePromise = null;
+
+    // Clear timer
+    this.timer = null;
+  };
+  // Handle errors from stomp.js
+  public on_error = (error: string | Stomp.Message) => {
+
+    if (typeof error === 'object') {
+      error = (<Stomp.Message>error).body;
+    }
+
+    console.error(`Error: ${error}`);
+
+    // Check for dropped connection and try reconnecting
+    if (error.indexOf('Lost connection') !== -1) {
+
+      // Reset state indicator
+      this.state.next(STOMPState.CLOSED);
+
+      // Attempt reconnection
+      console.log('Reconnecting in 5 seconds...');
+      this.timer = setTimeout(() => {
+        this.configure();
+        this.try_connect();
+      }, 5000);
+    }
+  };
+  // On message RX, notify the Observable with the message object
+  public on_message = (message: Stomp.Message) => {
+
+    if (message.body) {
+      this.messages.next(message);
+    } else {
+      console.error('Empty message received!');
+    }
+  };
 
   /** Constructor */
   public constructor(private authentication: JwtSecurityContext) {
     this.messages = new Subject<Stomp.Message>();
     this.state = new BehaviorSubject<STOMPState>(STOMPState.CLOSED);
   }
-
 
   /** Set up configuration */
   public configure(config?: StompConfig): void {
@@ -84,8 +130,7 @@ export class STOMPService {
 
     // Set function to debug print messages
     this.client.debug = this.config.debug || this.config.debug == null ? this.debug : null;
-  }
-
+  };
 
   /**
    * Perform connection to STOMP broker, returning a Promise
@@ -112,10 +157,9 @@ export class STOMPService {
     this.state.next(STOMPState.TRYING);
 
     return new Promise(
-      (resolve, reject) => this.resolvePromise = resolve
+      (resolve) => this.resolvePromise = resolve
     );
-  }
-
+  };
 
   /** Disconnect the STOMP client and clean up */
   public disconnect(disconnectCallback: () => any): void {
@@ -134,12 +178,11 @@ export class STOMPService {
       this.client.disconnect(
         () => {
           this.state.next(STOMPState.CLOSED);
-          disconnectCallback()
+          disconnectCallback();
         }
       );
     }
-    }
-
+  };
 
   /** Send a message to all topics */
   public publish(message: string): void {
@@ -147,8 +190,7 @@ export class STOMPService {
     for (const t of this.config.publish) {
       this.client.send(t, {}, message);
     }
-  }
-
+  };
 
   /** Subscribe to server message queues */
   public subscribe(): void {
@@ -162,8 +204,7 @@ export class STOMPService {
     if (this.config.subscribe.length > 0) {
       this.state.next(STOMPState.SUBSCRIBED);
     }
-  }
-
+  };
 
   /**
    * Callback Functions
@@ -177,63 +218,5 @@ export class STOMPService {
     if (window.console && console.log && console.log.apply) {
       console.log.apply(console, args);
     }
-  }
-
-
-  // Callback run on successfully connecting to server
-  public on_connect = () => {
-
-    console.log('Connected');
-
-    // Indicate our connected state to observers
-    this.state.next(STOMPState.CONNECTED);
-
-    // Subscribe to message queues
-    this.subscribe();
-
-    // Resolve our Promise to the caller
-    this.resolvePromise();
-
-    // Clear callback
-    this.resolvePromise = null;
-
-    // Clear timer
-    this.timer = null;
-  }
-
-
-  // Handle errors from stomp.js
-  public on_error = (error: string | Stomp.Message) => {
-
-    if (typeof error === 'object') {
-      error = (<Stomp.Message>error).body;
-    }
-
-    console.error(`Error: ${error}`);
-
-    // Check for dropped connection and try reconnecting
-    if (error.indexOf('Lost connection') !== -1) {
-
-      // Reset state indicator
-      this.state.next(STOMPState.CLOSED);
-
-      // Attempt reconnection
-      console.log('Reconnecting in 5 seconds...');
-      this.timer = setTimeout(() => {
-        this.configure();
-        this.try_connect();
-      }, 5000);
-    }
-  }
-
-
-  // On message RX, notify the Observable with the message object
-  public on_message = (message: Stomp.Message) => {
-
-    if (message.body) {
-      this.messages.next(message);
-    } else {
-      console.error('Empty message received!');
-    }
-    }
+  };
 }
