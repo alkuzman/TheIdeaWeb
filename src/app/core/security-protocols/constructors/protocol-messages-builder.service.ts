@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {SecurityProfile} from '../../../domain/model/security/security-profile';
-import {JwtSecurityContext} from '../../authentication/jwt/jwt-security-context.service';
 import {KeysService} from '../keys/keys.service';
 import {CryptographicOperations} from '../cryptographic-operations/cryptographic-operations';
 import {UserService} from '../../../domain/services/user/user.service';
@@ -21,7 +20,7 @@ import {SecurityProfileConstructorService} from './security-profile-constructor.
 import {SimpleCryptographicOperations} from '../cryptographic-operations/simple-cryptographic-operations';
 import {AlgorithmService} from '../algorithms/algorithms.service';
 import {SolutionService} from '../../../domain/services/solution/solution.service';
-import {Solution} from '../../../domain/model/ideas/solution';
+import {Solution} from '../../../domain/model/ideas';
 import {DecryptingService} from '../decrypting.service';
 import {EncryptingService} from '../encrypting.service';
 import {ProtocolTransactionService} from '../../../domain/services/protocol-transaction/protocol-transaction.service';
@@ -42,6 +41,7 @@ import {UserCertificationService} from '../certificates/user-certification.servi
 import {ProtocolMessagesReconstructionService} from './protocol-messages-reconstruction.service';
 import {CertificateOperationsService} from '../certificates/certificate-operations.service';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {SecurityProfileContext} from '../../../domain/security/security-profile-context/security-profile-context';
 
 /**
  * Created by Viki on 2/21/2017.
@@ -59,7 +59,7 @@ export class ProtocolMessagesBuilderService {
               private pemParser: ParserPemService,
               private noticeService: NoticeService,
               private solutionService: SolutionService,
-              private securityContext: JwtSecurityContext,
+              private securityProfileContext: SecurityProfileContext,
               private decryptingService: DecryptingService,
               private encryptingService: EncryptingService,
               private protocolTransactionService: ProtocolTransactionService,
@@ -122,7 +122,7 @@ export class ProtocolMessagesBuilderService {
 
                             // Encrypt and add none in participant one data
                             this.cryptographicOperations.encrypt(this.algorithmService.getAsymmetricEncryptionAlgorithm().algorithm,
-                              simpleSecurityProfile.publicKey, obj.nonce + "").subscribe((encryptedNonce: string) => {
+                              simpleSecurityProfile.publicKey, obj.nonce + '').subscribe((encryptedNonce: string) => {
 
                               participant.nonce = encryptedNonce;
 
@@ -258,9 +258,9 @@ export class ProtocolMessagesBuilderService {
 
         // Construct message data
         const data = {
-          "identity": this.userService.getAuthenticatedUser().email,
-          "tid": previousMessageData.tid + 1,
-          "nonce": previousMessageData.nonce
+          'identity': this.userService.getAuthenticatedUser().email,
+          'tid': previousMessageData.tid + 1,
+          'nonce': previousMessageData.nonce
         };
 
         // Convert the message data into JSON
@@ -283,8 +283,8 @@ export class ProtocolMessagesBuilderService {
               simpleProfile.privateKeySigning, hashedData).subscribe((signedHashedData: string) => {
 
               const message = {
-                "signature": signedHashedData,
-                "data": dataEncrypted
+                'signature': signedHashedData,
+                'data': dataEncrypted
               };
               const jsonMessage: string = JSON.stringify(message);
 
@@ -333,8 +333,8 @@ export class ProtocolMessagesBuilderService {
 
                       // Construct data for encryption
                       const data = {
-                        "goodsIntegrity": hashedEncryptedSolution,
-                        "epoid": epoid
+                        'goodsIntegrity': hashedEncryptedSolution,
+                        'epoid': epoid
                       };
 
                       // Convert data into json
@@ -349,8 +349,8 @@ export class ProtocolMessagesBuilderService {
                           jsonData).subscribe((encryptedJsonData: string) => {
 
                           const message = {
-                            "goods": encryptedGoods,
-                            "dataIntegrity": encryptedJsonData
+                            'goods': encryptedGoods,
+                            'dataIntegrity': encryptedJsonData
                           };
 
                           const jsonMessage = JSON.stringify(message);
@@ -375,14 +375,14 @@ export class ProtocolMessagesBuilderService {
                                   previousNotice: ProtocolTransactionStepFourNotice, previousData: PreviousNoticesData) {
 
     // Get data from previous messages
-    const dataStepTwoRecipient: ProtocolTransactionStepTwoDataRecipient = previousData["ProtocolTransactionStepTwoDataRecipient"];
-    const dataStepFourRecipient: ProtocolTransactionStepFourDataRecipient = previousData["ProtocolTransactionStepFourDataRecipient"];
-    const dataStepOneOriginator: ProtocolTransactionStepOneDataOriginator = previousData["ProtocolTransactionStepOneDataOriginator"];
+    const dataStepTwoRecipient: ProtocolTransactionStepTwoDataRecipient = previousData['ProtocolTransactionStepTwoDataRecipient'];
+    const dataStepFourRecipient: ProtocolTransactionStepFourDataRecipient = previousData['ProtocolTransactionStepFourDataRecipient'];
+    const dataStepOneOriginator: ProtocolTransactionStepOneDataOriginator = previousData['ProtocolTransactionStepOneDataOriginator'];
 
     // Get application data
     const appData = {
-      "goodsType": dataStepOneOriginator.goodsType,
-      "paymentType": dataStepOneOriginator.paymentType
+      'goodsType': dataStepOneOriginator.goodsType,
+      'paymentType': dataStepOneOriginator.paymentType
     };
 
     // Construct simple security profile
@@ -405,7 +405,7 @@ export class ProtocolMessagesBuilderService {
                   simpleProfile.privateKeyEncryption, encryptedServerKey)
                   .subscribe((decryptedServerKey: string) => {
 
-                    this.keysService.importKey(decryptedServerKey, "raw", this.algorithmService.SYMMETRIC_ALG)
+                    this.keysService.importKey(decryptedServerKey, 'raw', this.algorithmService.SYMMETRIC_ALG)
                       .subscribe((serverSharedKey: CryptoKey) => {
 
                         // Encrypt payment information
@@ -418,18 +418,18 @@ export class ProtocolMessagesBuilderService {
                           .subscribe((encryptedPaymentInformation: string) => {
 
                             console.log(encryptedPaymentInformation);
-                            console.log("=====Payment======");
+                            console.log('=====Payment======');
                             console.log(dataStepTwoRecipient.payment.getText());
                             // Construct EPO
                             const epo = {
-                              "identity": this.userService.getAuthenticatedUser().email,
-                              "productId": protocolSession.digitalGoods.id,
-                              "payment": dataStepTwoRecipient.payment.getText(),
-                              "merchant": protocolSession.digitalGoods.owner.email,
-                              "goodsIntegrity": this.simpleCryptographicOperations.hash(dataStepFourRecipient.goods),
-                              "appData": JSON.stringify(appData),
-                              "epoid": JSON.stringify(dataStepFourRecipient.epoid),
-                              "paymentInformation": {
+                              'identity': this.userService.getAuthenticatedUser().email,
+                              'productId': protocolSession.digitalGoods.id,
+                              'payment': dataStepTwoRecipient.payment.getText(),
+                              'merchant': protocolSession.digitalGoods.owner.email,
+                              'goodsIntegrity': this.simpleCryptographicOperations.hash(dataStepFourRecipient.goods),
+                              'appData': JSON.stringify(appData),
+                              'epoid': JSON.stringify(dataStepFourRecipient.epoid),
+                              'paymentInformation': {
                                 text: encryptedPaymentInformation,
                                 iv: this.simpleCryptographicOperations.convertUint8ToString(new Uint8Array(<ArrayBuffer> alg.counter))
                               }
@@ -440,8 +440,8 @@ export class ProtocolMessagesBuilderService {
 
                             // Construct data
                             const data = {
-                              "epo": epo,
-                              "nonce": nonce
+                              'epo': epo,
+                              'nonce': nonce
                             };
 
                             // Parse data into json
@@ -466,8 +466,8 @@ export class ProtocolMessagesBuilderService {
 
                                     // Construct message
                                     const message = {
-                                      "signature": encryptedSignature,
-                                      "data": encryptedData
+                                      'signature': encryptedSignature,
+                                      'data': encryptedData
                                     };
 
                                     // Parse message into json
@@ -498,7 +498,7 @@ export class ProtocolMessagesBuilderService {
   public buildProtocolMessageSix(userData: string, password: string, protocolSession: ProtocolSession,
                                  previousNotice: ProtocolTransactionStepFiveNotice, previousData: PreviousNoticesData) {
 
-    const stepFiveData: ProtocolTransactionStepFiveDataRecipient = previousData["ProtocolTransactionStepFiveDataRecipient"];
+    const stepFiveData: ProtocolTransactionStepFiveDataRecipient = previousData['ProtocolTransactionStepFiveDataRecipient'];
 
     // Construct simple security profile
     this.securityProfileConstructor.getSecurityProfileSimple(password, this.securityProfile)
@@ -514,7 +514,7 @@ export class ProtocolMessagesBuilderService {
               .subscribe((decryptedServerKey: string) => {
 
                 // Import session key
-                this.keysService.importKey(decryptedServerKey, "raw", this.algorithmService.SYMMETRIC_ALG)
+                this.keysService.importKey(decryptedServerKey, 'raw', this.algorithmService.SYMMETRIC_ALG)
                   .subscribe((sessionKeyServer: CryptoKey) => {
 
                     // Get encryption goods key
@@ -522,18 +522,18 @@ export class ProtocolMessagesBuilderService {
                       simpleProfile.privateKeyEncryption)
                       .subscribe((goodsEncryptionKey: CryptoKey) => {
 
-                        this.keysService.exportKey(goodsEncryptionKey, "raw")
+                        this.keysService.exportKey(goodsEncryptionKey, 'raw')
                           .subscribe((goodsEncryptionKeyStr: string) => {
                             // Construct signature data
                             const signatureData = {
-                              "signature": stepFiveData.signature,
-                              "epo": stepFiveData.epo,
-                              "nonce": stepFiveData.nonce,
-                              "key": goodsEncryptionKeyStr
+                              'signature': stepFiveData.signature,
+                              'epo': stepFiveData.epo,
+                              'nonce': stepFiveData.nonce,
+                              'key': goodsEncryptionKeyStr
                             };
 
                             if (userData != null) {
-                              signatureData["merchantAccount"] = userData;
+                              signatureData['merchantAccount'] = userData;
                             }
 
                             // Sign signature data
@@ -543,8 +543,8 @@ export class ProtocolMessagesBuilderService {
 
                                 // Construct message data
                                 const data = {
-                                  "signature": signature,
-                                  "data": signatureData
+                                  'signature': signature,
+                                  'data': signatureData
                                 };
 
                                 // Encrypt message data
@@ -560,8 +560,8 @@ export class ProtocolMessagesBuilderService {
 
                                     // Construct message
                                     const message = {
-                                      "text": encryptedData,
-                                      "iv": this.simpleCryptographicOperations
+                                      'text': encryptedData,
+                                      'iv': this.simpleCryptographicOperations
                                         .convertUint8ToString(new Uint8Array(<ArrayBuffer> alg.counter))
                                     };
 
@@ -612,8 +612,8 @@ export class ProtocolMessagesBuilderService {
   }
 
   private initializeSecurityProfile(): void {
-    this.securityProfile = this.securityContext.securityProfile;
-    this.securityContext.securityProfileObservable().subscribe((securityProfile: SecurityProfile) => {
+    this.securityProfile = this.securityProfileContext.get();
+    this.securityProfileContext.getObservable().subscribe((securityProfile: SecurityProfile) => {
       this.securityProfile = securityProfile;
     });
   }
@@ -623,7 +623,7 @@ export class ProtocolMessagesBuilderService {
       notice.previousStepNotice.activated = true;
     }
     this.noticeService.addNotice(notice).subscribe(() => {
-      console.log("SENT");
+      console.log('SENT');
     });
   }
 
@@ -632,7 +632,7 @@ export class ProtocolMessagesBuilderService {
 
     return Observable.create((observer) => {
       const protocolTransactionStepOneDataForRecipient: ProtocolTransactionStepOneDataRecipient =
-        previousData["ProtocolTransactionStepOneDataRecipient"];
+        previousData['ProtocolTransactionStepOneDataRecipient'];
 
       // Different approaches based on the goods type
       if (protocolTransactionStepOneDataForRecipient.goodsType === DigitalGoodsType.Solution) {

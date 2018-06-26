@@ -8,7 +8,7 @@ import {Announcement} from '../../../domain/model/sharing/announcement';
 import {Observable} from 'rxjs';
 import {AnnouncementService} from '../../../domain/services/announcement/announcement.service';
 import {ErrorHandlingService} from '../../../core/error-handling/error-handling.service';
-import {Response} from '@angular/http';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()
 export class AnnouncementFeedListResolverService implements Resolve<Announcement[]> {
@@ -20,14 +20,14 @@ export class AnnouncementFeedListResolverService implements Resolve<Announcement
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Announcement[]>
     | Promise<Announcement[]>
     | Announcement[] {
-    const type: string = route.data["type"];
-    const pageSize: number = route.data["pageSize"];
-    const query: string = route.queryParams["query"];
+    const type: string = route.data['type'];
+    const pageSize: number = route.data['pageSize'];
+    const query: string = route.queryParams['query'];
     return this.announcementServcie.getAnnouncementList({
       type: type,
       query: query,
-      offset: "0",
+      offset: '0',
       limit: pageSize.toString()
-    }).pipe(catchError((error: Response) => this.errorHandlingService.handleError(error)));
+    }).pipe(catchError((error: HttpErrorResponse) => this.errorHandlingService.handleError(error)));
   }
 }

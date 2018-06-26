@@ -1,9 +1,5 @@
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
-import {JwtAuthenticationService} from './authentication/jwt/jwt-authentication.service';
-import {JwtHttpService} from './authentication/jwt/jwt-http.service';
-import {JwtSecurityContext} from './authentication/jwt/jwt-security-context.service';
-import {JwtRefreshAccessTokenService} from './authentication/jwt/jwt-refresh-access-token.service';
 import {NotAuthenticatedGuard} from './guards/not-authenticated.guard';
 import {AuthenticatedGuard} from './guards/authenticated.guard';
 import {ThemingService} from './theming/theming.service';
@@ -41,21 +37,29 @@ import {CertificateOperationsService} from './security-protocols/certificates/ce
 import {AnalyzerModule} from './analyzers/analyzer.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoadingInterceptorService} from './loading/loading-interceptor.service';
+import {AuthenticationModule} from './authentication/authentication.module';
+import {SecurityProfileContext} from '../domain/security/security-profile-context/security-profile-context';
+import {SECURITY_CONTEXTS} from './authentication/base-security-context';
 
 
 @NgModule({
-  imports: [SharedModule, SecurityModule, AnalyzerModule],
+  imports: [SharedModule, AuthenticationModule, SecurityModule, AnalyzerModule],
   declarations: [],
   exports: [],
-  providers: [IconRegistryService, JwtSecurityContext, JwtAuthenticationService, JwtRefreshAccessTokenService, ThemingService,
+  providers: [IconRegistryService, ThemingService,
     NavigationService, RedirectService, NotAuthenticatedGuard, ConfigService, AuthenticatedGuard, LoadingService,
-    JwtHttpService, ErrorHandlingService, PasswordStrengthService, ScrollService, STOMPService,
+    ErrorHandlingService, PasswordStrengthService, ScrollService, STOMPService,
     SocketService, KeysService, UserCertificationService, SecurityProfileConstructorService,
     SimpleCryptographicOperations, CryptographicOperations, SecurityProfileConstructorService,
     ProtocolMessagesBuilderService, HelperService, ParserPemService, SecurityProfileService,
     ProtocolMessagesReconstructionService, HelperService, ParserPemService, EncryptingService,
     DecryptingService, ProtocolTransactionStepNoticeConstructor, AlgorithmService, DiscardChangesGuard,
     AccessFromUrlNotAllowedGuard, MyTesterService, CertificateOperationsService,
+    {
+      provide: SECURITY_CONTEXTS,
+      useExisting: SecurityProfileContext,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptorService,

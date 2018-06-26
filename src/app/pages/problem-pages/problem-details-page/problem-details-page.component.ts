@@ -1,16 +1,17 @@
 /**
  * Created by AKuzmanoski on 14/11/2016.
  */
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Problem} from "../../../domain/model/ideas/problem";
-import {Idea} from "../../../domain/model/ideas/idea";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {Solution} from "../../../domain/model/ideas/solution";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Problem} from '../../../domain/model/ideas/problem';
+import {Idea} from '../../../domain/model/ideas/idea';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {Solution} from '../../../domain/model/ideas/solution';
+
 @Component({
   moduleId: module.id,
-  selector: "ideal-problem-details-page",
-  templateUrl: "problem-details-page.component.html"
+  selector: 'ideal-problem-details-page',
+  templateUrl: 'problem-details-page.component.html'
 })
 export class ProblemDetailsPageComponent implements OnInit {
   problem: Problem;
@@ -21,9 +22,9 @@ export class ProblemDetailsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {problem: Problem}) => {
+    this.route.data.subscribe((data: { problem: Problem }) => {
       this.problem = data.problem;
-    })
+    });
   }
 
   onIdeaListReady(ideaList: Idea[]) {
@@ -31,11 +32,11 @@ export class ProblemDetailsPageComponent implements OnInit {
   }
 
   onSolutionReady(solution: Solution) {
-    this.snackBar.open("Idea successfully created!", undefined, <MatSnackBarConfig>{duration: 2000});
-    this.router.navigate(["/ideas", solution.idea.id]);
+    this.snackBar.open('Idea successfully created!', undefined, <MatSnackBarConfig>{duration: 2000});
+    this.router.navigate(['/ideas', solution.idea.id]);
   }
 
   announce() {
-    this.router.navigate(["/announcements", "new"], {queryParams: {sharableId: this.problem.id}});
+    this.router.navigate(['/announcements', 'new'], {queryParams: {sharableId: this.problem.id}});
   }
 }

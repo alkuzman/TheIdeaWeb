@@ -3,8 +3,8 @@
  */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Problem} from '../../../model/ideas';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {Organization, User} from '../../../model/authentication';
+import {timer} from 'rxjs';
 
 @Component({
   moduleId: module.id,
@@ -29,8 +29,8 @@ export class ProblemListComponent implements OnInit {
   ngOnInit(): void {
     const maxNum = this.problems.length;
     let index = 0;
-    const timer = TimerObservable.create(0, 40);
-    const subscription = timer.subscribe(t => {
+    const timerObservable = timer(0, 40);
+    const subscription = timerObservable.subscribe(t => {
       if (index >= maxNum) {
         subscription.unsubscribe();
         return;

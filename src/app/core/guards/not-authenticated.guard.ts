@@ -1,10 +1,11 @@
 /**
  * Created by Viki on 11/17/2016.
  */
-import {CanActivate, Router} from "@angular/router";
-import {Injectable} from "@angular/core";
-import {JwtAuthenticationService} from "../authentication/jwt/jwt-authentication.service";
-import {MatSnackBar} from "@angular/material";
+import {CanActivate, Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
+import {AuthenticationService} from '../authentication/authentication.service';
+
 /**
  * Created by Viki on 11/17/2016.
  */
@@ -12,14 +13,14 @@ import {MatSnackBar} from "@angular/material";
 @Injectable()
 export class NotAuthenticatedGuard implements CanActivate {
 
-  constructor(private authenticationService: JwtAuthenticationService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private authenticationService: AuthenticationService, private router: Router, private snackBar: MatSnackBar) {
 
   }
 
   canActivate() {
     if (this.authenticationService.isAuthenticated()) {
-      this.snackBar.open("You are already authenticated", undefined, {duration: 3000});
-      this.router.navigate(["home"]);
+      this.snackBar.open('You are already authenticated', undefined, {duration: 3000});
+      this.router.navigate(['home']);
       return false;
     } else {
       return true;

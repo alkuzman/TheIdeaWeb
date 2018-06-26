@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {User} from '../../../domain/model/authentication/user';
+import {User} from '../../../domain/model/authentication';
 import {KeysService} from '../../../core/security-protocols/keys/keys.service';
 import {UserCertificationService} from '../../../core/security-protocols/certificates/user-certification.service';
 import {SecurityProfile} from '../../../domain/model/security/security-profile';
 import {CertificateService} from '../../../domain/services/certificate/certificate.service';
 import {SecurityProfileConstructorService} from '../../../core/security-protocols/constructors/security-profile-constructor.service';
-import {CertificateType} from '../../../domain/model/enumerations/certificate-type';
+import {CertificateType} from '../../../domain/model/enumerations';
 import {SecurityProfileService} from '../../../domain/services/security-profile/security-profile.service';
 import {EncryptionPair} from '../../../domain/model/security/encryption-pair';
 import {ParserPemService} from '../../../core/security-protocols/parsers/parser-pem.service';
@@ -13,7 +13,7 @@ import {SimpleCryptographicOperations} from '../../../core/security-protocols/cr
 import {Observable} from 'rxjs';
 import {RedirectService} from '../../../core/navigation/redirect.service';
 import {UserService} from '../../../domain/services/user/user.service';
-import {JwtSecurityContext} from '../../../core/authentication/jwt/jwt-security-context.service';
+import {SecurityProfileContext} from '../../../domain/security/security-profile-context/security-profile-context';
 
 /**
  * Created by Viki on 2/11/2017.
@@ -57,7 +57,7 @@ export class SecurityProfileInitializationPageComponent implements OnInit {
               private redirectService: RedirectService,
               private userService: UserService,
               private cdRef: ChangeDetectorRef,
-              private securityContext: JwtSecurityContext) {
+              private securityProfileContext: SecurityProfileContext) {
   }
 
   ngOnInit(): void {
@@ -115,8 +115,8 @@ export class SecurityProfileInitializationPageComponent implements OnInit {
   finish() {
     this.user.securityProfileInitialized = true;
     this.saveSecurityProfile(this.passwordEntered && this.saveDecision).subscribe((sp: SecurityProfile) => {
-      this.securityContext.securityProfile = sp;
-      console.log(this.securityContext.securityProfile);
+      this.securityProfileContext.set(sp);
+      console.log(sp);
       const queryParams = {'email': this.user.email};
       this.redirectService.login(queryParams);
       // TODO: Maybe should redirect to other page
