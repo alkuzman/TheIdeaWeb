@@ -227,15 +227,15 @@
   dependencies:
     url "^0.11.0"
 
-"@klupps/analyzer-api@https://AKuzmanoski@bitbucket.org/AKuzmanoski/kluppsanalyzerapi.git":
+"@klupps/analyzer-api@git+ssh://git@bitbucket.org:kluppsteam/kluppsanalyzerapi.git":
   version "0.0.1"
-  resolved "https://AKuzmanoski@bitbucket.org/AKuzmanoski/kluppsanalyzerapi.git#51efa18cabc5c50c9418cf3437d29528fbabb733"
+  resolved "git+ssh://git@bitbucket.org:kluppsteam/kluppsanalyzerapi.git#51efa18cabc5c50c9418cf3437d29528fbabb733"
   dependencies:
     protobufjs "^6.8.6"
 
-"@klupps/analyzer-sdk@https://AKuzmanoski@bitbucket.org/kluppsteam/kluppstextanalyzersdkbuilds.git":
+"@klupps/analyzer-sdk@git+ssh://git@bitbucket.org:kluppsteam/kluppstextanalyzersdkbuilds.git":
   version "0.0.1"
-  resolved "https://AKuzmanoski@bitbucket.org/kluppsteam/kluppstextanalyzersdkbuilds.git#99fa2b1f735e08fb9599d5a66ed20e0b1c64948a"
+  resolved "git+ssh://git@bitbucket.org:kluppsteam/kluppstextanalyzersdkbuilds.git#99fa2b1f735e08fb9599d5a66ed20e0b1c64948a"
   dependencies:
     tslib "^1.9.0"
 
