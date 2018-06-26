@@ -1,22 +1,24 @@
-import {Component, EventEmitter, Output, Input, OnInit} from "@angular/core";
-import {User} from "../../../../model/authentication/user";
-import {UserService} from "../../../../services/user/user.service";
-import {Response} from "@angular/http";
-import {UserObjectService} from "../../../../services/user/user-object.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {User} from '../../../../model/authentication/user';
+import {UserService} from '../../../../services/user/user.service';
+import {Response} from '@angular/http';
+import {UserObjectService} from '../../../../services/user/user-object.service';
+import {HttpErrorResponse} from '@angular/common/http';
+
 /**
  * Created by Viki on 11/1/2016.
  */
 
 @Component({
   moduleId: module.id,
-  selector: "ideal-get-user-email-form",
-  templateUrl: "get-user-email-form.component.html"
+  selector: 'ideal-get-user-email-form',
+  templateUrl: 'get-user-email-form.component.html'
 })
 export class GetUserEmailFormComponent implements OnInit {
-  @Input("email") email: string;
+  @Input('email') email: string;
   user: User = new User();
-  @Output("userReady") userReady: EventEmitter<User> = new EventEmitter<User>();
-  @Output("userNotFound") userNotFound: EventEmitter<User> = new EventEmitter<User>();
+  @Output('userReady') userReady: EventEmitter<User> = new EventEmitter<User>();
+  @Output('userNotFound') userNotFound: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(private userService: UserService, private userObjectService: UserObjectService) {
 
@@ -33,8 +35,8 @@ export class GetUserEmailFormComponent implements OnInit {
 
   findUserByEmail(user: User) {
     this.user = user;
-    this.userService.getUserByEmail(this.user.email).subscribe((user: User) => this.onUserReady(user),
-      (error: any) => this.onError(error));
+    this.userService.getUserByEmail(this.user.email).subscribe((u: User) => this.onUserReady(u),
+      (error: HttpErrorResponse) => this.onError(error));
   }
 
   onUserReady(user: User) {
@@ -43,7 +45,7 @@ export class GetUserEmailFormComponent implements OnInit {
     this.userReady.emit(user);
   }
 
-  onError(error: Response) {
+  onError(error: HttpErrorResponse) {
     this.notify();
     this.userNotFound.emit(this.user);
   }

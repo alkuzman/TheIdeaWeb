@@ -1,10 +1,7 @@
-import {Observable, throwError as observabconsthrowError} from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service';
-import {Headers, Response} from '@angular/http';
 import {Currency} from '../../model/helpers/currency';
+import {HttpClient} from '@angular/common/http';
 
 /**
  * Created by Viki on 2/21/2017.
@@ -13,33 +10,12 @@ import {Currency} from '../../model/helpers/currency';
 
 @Injectable()
 export class CurrencyService {
-  private currenciesUrl = "/api/currencies";
+  private currenciesUrl = '/api/currencies';
 
-  constructor(private http: JwtHttpService) {
-  }
-
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || {};
-  }
-
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
-    return observabconsthrowError(error);
-  }
-
-  private getHeaders(): Headers {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return headers;
+  constructor(private http: HttpClient) {
   }
 
   public getCurrencies(): Observable<Currency[]> {
-    return this.http.get(this.currenciesUrl, {headers: this.getHeaders()}).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
+    return this.http.get<Currency[]>(this.currenciesUrl);
   }
-
 }

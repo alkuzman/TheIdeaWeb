@@ -1,9 +1,9 @@
-import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
-import {Problem} from "../../../../model/ideas/problem";
-import {JwtSecurityContext} from "../../../../../core/authentication/jwt/jwt-security-context.service";
-import {User} from "../../../../model/authentication/user";
-import {ProblemService} from "../../../../services/problem/problem.service";
-import {UserService} from "../../../../services/user/user.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Problem} from '../../../../model/ideas/problem';
+import {User} from '../../../../model/authentication/user';
+import {ProblemService} from '../../../../services/problem/problem.service';
+import {UserService} from '../../../../services/user/user.service';
+
 /**
  * Created by AKuzmanoski on 24/10/2016.
  */
@@ -14,9 +14,9 @@ import {UserService} from "../../../../services/user/user.service";
   styleUrls: ['problem-form-new.component.scss'],
 })
 export class NewProblemFormComponent implements OnInit {
-  @Input("submitText") submitText: string = "Save";
+  @Input('submitText') submitText = 'Save';
   problem: Problem;
-  @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
+  @Output('problemReady') problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
   active = true;
   errorMessage: any;
 
@@ -30,7 +30,7 @@ export class NewProblemFormComponent implements OnInit {
 
   save(p: Problem): boolean {
     this.problem = p;
-    let questioner: User = this.userService.getAuthenticatedUser();
+    const questioner: User = this.userService.getAuthenticatedUser();
     this.problem.questioner = questioner;
     this.problemService.addProblem(this.problem)
       .subscribe(

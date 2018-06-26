@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import * as Stomp from 'stompjs';
 import {StompConfig} from './';
-import {JwtSecurityContext} from '../authentication/jwt/jwt-security-context.service';
 
 /** possible states for the STOMP service */
 export enum STOMPState {
@@ -15,27 +14,26 @@ export enum STOMPState {
 
 @Injectable()
 export class STOMPService {
-/**
- * Angular2 STOMP Service using stomp.js
- *
- * @description This service handles subscribing to a
- * message queue using the stomp.js library, and returns
- * values via the ES6 Observable specification for
- * asynchronous value streaming by wiring the STOMP
- * messages into a Subject observable.
- */
+  /**
+   * Angular2 STOMP Service using stomp.js
+   *
+   * @description This service handles subscribing to a
+   * message queue using the stomp.js library, and returns
+   * values via the ES6 Observable specification for
+   * asynchronous value streaming by wiring the STOMP
+   * messages into a Subject observable.
+   */
 
-
-  /* Service parameters */
-// Configuration structure with MQ creds
+    // Configuration structure with MQ creds
   private config: StompConfig;
-// STOMP Client from stomp.js
+  // STOMP Client from stomp.js
   private client: Stomp.Client;
-// Resolve Promise made to calling class, when connected
+  // Resolve Promise made to calling class, when connected
   private resolvePromise: (...args: any[]) => void;
-// Timer
+  // Timer
   private timer: NodeJS.Timer;
 
+  /* Service parameters */
   // State of the STOMPService
   public state: BehaviorSubject<STOMPState>;
   // Publishes new messages to Observers
@@ -94,7 +92,7 @@ export class STOMPService {
   };
 
   /** Constructor */
-  public constructor(private authentication: JwtSecurityContext) {
+  public constructor() {
     this.messages = new Subject<Stomp.Message>();
     this.state = new BehaviorSubject<STOMPState>(STOMPState.CLOSED);
   }

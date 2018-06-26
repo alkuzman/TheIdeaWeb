@@ -1,68 +1,66 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
-import {User} from "../../../../model/authentication/user";
-import {UserService} from "../../../../services/user/user.service";
-import {Response} from "@angular/http";
-import {Credentials} from "../../../helper/Credentials";
-import {UserObjectService} from "../../../../services/user/user-object.service";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {User} from '../../../../model/authentication/user';
+import {UserService} from '../../../../services/user/user.service';
+import {Credentials} from '../../../helper/Credentials';
+import {UserObjectService} from '../../../../services/user/user-object.service';
+import {HttpErrorResponse} from '@angular/common/http';
+
 /**
  * Created by Viki on 11/1/2016.
  */
 
 @Component({
-    moduleId: module.id,
-    selector: "ideal-check-user-password-form",
-    templateUrl: "check-user-password-form.component.html"
+  moduleId: module.id,
+  selector: 'ideal-check-user-password-form',
+  templateUrl: 'check-user-password-form.component.html'
 })
 export class CheckUserPasswordFormComponent implements OnInit {
-    @Output("usernameNotChecked") usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
-    @Output("passwordCorrect") passwordCorrect: EventEmitter<User> = new EventEmitter<User>();
-    @Output("passwordIncorrect") passwordIncorrect: EventEmitter<void> = new EventEmitter<void>();
-    @Output("userNotActivated") userNotActivated: EventEmitter<void> = new EventEmitter<void>();
+  @Output('usernameNotChecked') usernameNotChecked: EventEmitter<void> = new EventEmitter<void>();
+  @Output('passwordCorrect') passwordCorrect: EventEmitter<User> = new EventEmitter<User>();
+  @Output('passwordIncorrect') passwordIncorrect: EventEmitter<void> = new EventEmitter<void>();
+  @Output('userNotActivated') userNotActivated: EventEmitter<void> = new EventEmitter<void>();
+  user: User;
 
-    constructor(private userService: UserService, private userObjectService: UserObjectService) {
-    }
-
-    user: User;
-
-    ngOnInit(): void {
-        this.user = Object.assign({}, this.userObjectService.user);
-        if (this.user == null) {
-            this.usernameNotChecked.emit();
-        }
-        this.user.password = "";
-    }
-
-    checkUserPassword(credentials: Credentials) {
-        this.userService.loginUser(credentials).subscribe((response: Response) => this.onPasswordCorrect(response),
-            (error: Response) => this.onError(error));
-    }
-
-    onError(error: Response) {
-        console.log(error.text());
-        if (error.status == 401) {
-            if (JSON.parse(error.text()).errorCode == 11) {
-                this.notifyUserNotActivated();
-            }
-            else if (JSON.parse(error.text()).errorCode == 10) {
-                this.notifyPasswordWrong();
-            }
-        }
-    }
-
-  onPasswordCorrect(response: Response) {
-    this.notifyPasswordCorrect()
+  constructor(private userService: UserService, private userObjectService: UserObjectService) {
   }
 
-    notifyPasswordCorrect(): void {
-        this.passwordCorrect.emit(this.user);
+  ngOnInit(): void {
+    this.user = Object.assign({}, this.userObjectService.user);
+    if (this.user == null) {
+      this.usernameNotChecked.emit();
     }
+    this.user.password = '';
+  }
 
-    notifyPasswordWrong(): void {
-        this.passwordIncorrect.emit();
-    }
+  checkUserPassword(credentials: Credentials) {
+    this.userService.loginUser(credentials).subscribe((response: any) => this.onPasswordCorrect(response),
+      (error: HttpErrorResponse) => this.onError(error));
+  }
 
-    notifyUserNotActivated(): void {
-        this.userNotActivated.emit();
+  onError(error: HttpErrorResponse) {
+    if (error.status === 401) {
+      if (error.error.errorCode === 11) {
+        this.notifyUserNotActivated();
+      } else if (error.error.errorCode === 10) {
+        this.notifyPasswordWrong();
+      }
     }
+  }
+
+  onPasswordCorrect(response: any) {
+    this.notifyPasswordCorrect();
+  }
+
+  notifyPasswordCorrect(): void {
+    this.passwordCorrect.emit(this.user);
+  }
+
+  notifyPasswordWrong(): void {
+    this.passwordIncorrect.emit();
+  }
+
+  notifyUserNotActivated(): void {
+    this.userNotActivated.emit();
+  }
 }
 

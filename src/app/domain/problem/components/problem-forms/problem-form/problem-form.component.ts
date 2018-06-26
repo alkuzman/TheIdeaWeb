@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Problem} from "../../../../model/ideas/problem";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Problem} from '../../../../model/ideas';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 /**
  * Created by AKuzmanoski on 17/10/2016.
@@ -13,9 +13,9 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
   styleUrls: ['problem-form.component.scss'],
 })
 export class ProblemFormComponent implements OnInit {
-  @Input("submitText") submitText = "Submit";
-  @Input("problem") problem: Problem;
-  @Output("problemReady") problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
+  @Input('submitText') submitText = 'Submit';
+  @Input('problem') problem: Problem;
+  @Output('problemReady') problemReady: EventEmitter<Problem> = new EventEmitter<Problem>();
   errorMessage: any;
   form: FormGroup;
   fields: FormGroup;
@@ -40,7 +40,7 @@ export class ProblemFormComponent implements OnInit {
     if (this.form.valid) {
       this.problemReady.emit(this.problem);
     } else {
-      this.snackBar.open("Cannot save problem. Validation errors", undefined, <MatSnackBarConfig>{duration: 3000});
+      this.snackBar.open('Cannot setContext problem. Validation errors', undefined, <MatSnackBarConfig>{duration: 3000});
     }
   }
 

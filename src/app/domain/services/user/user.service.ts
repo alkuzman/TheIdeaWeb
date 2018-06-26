@@ -1,14 +1,13 @@
-import {Observable, throwError as observableThrowError} from 'rxjs';
+import {Observable} from 'rxjs';
 
-import {catchError, map} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {Headers, Response, URLSearchParams} from '@angular/http';
 import {User} from '../../model/authentication';
 import {Credentials} from '../../user/helper/Credentials';
-import {JwtAuthenticationService} from '../../../core/authentication/jwt/jwt-authentication.service';
-import {JwtSecurityContext} from '../../../core/authentication/jwt/jwt-security-context.service';
 import {UserObjectService} from './user-object.service';
-import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
+import {UserContext} from '../../user/security-context/user-context';
 
 /**
  * Created by AKuzmanoski on 29/10/2016.
@@ -18,91 +17,61 @@ import {JwtHttpService} from '../../../core/authentication/jwt/jwt-http.service'
 export class UserService {
   private usersUrl = '/api/users';
 
-  constructor(private http: JwtHttpService, private jwtAuthenticationService: JwtAuthenticationService,
-              private jwtSecurityContext: JwtSecurityContext, private userObjectService: UserObjectService) {
+  constructor(private http: HttpClient,
+              private authenticationService: AuthenticationService,
+              private userObjectService: UserObjectService,
+              private userContext: UserContext) {
   }
 
   getUserById(id: number): Observable<User> {
     const url = this.usersUrl + '/' + id;
-    /*let params = new URLSearchParams();
-     params.set('id', id.toString()); // the user-pages's search value*/
-    return this.http.get(url).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
+    return this.http.get<User>(url);
   }
 
   activateUser(code: string, mail: string): Observable<User> {
     const url = this.usersUrl + '/activation?code=' + code + '&user=' + mail;
-    return this.http.get(url).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
+    return this.http.get<User>(url);
   }
 
   resendActivationCode(email: string): Observable<void> {
     const url = this.usersUrl + '/activationCode?email=' + email;
-    return this.http.get(url).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
+    return this.http.get<void>(url);
   }
 
-  addUser(user: User): Promise<User> {
-    const body = JSON.stringify(user);
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.usersUrl, body, {headers: headers})
-      .toPromise()
-      .then((response: Response) => this.extractData(response))
-      .catch((error: any) => this.handleError(error));
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(this.usersUrl, user);
   }
 
-  getUserByEmail(email: string) {
+  getUserByEmail(email: string): Observable<User> {
     const url = this.usersUrl;
-    const params = new URLSearchParams();
-    params.set('email', email); // the user-pages's search value*/
-    return this.http.get(url, {search: params}).pipe(
-      map((response: Response) => this.extractData(response)),
-      catchError((error: any) => this.handleError(error)));
+    let params = new HttpParams();
+    params = params.set('email', email); // the user-pages's search value*/
+    console.log(params);
+    return this.http.get<User>(url, {params: params});
   }
 
   loginUser(credentials: Credentials) {
-    return this.jwtAuthenticationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe).pipe(
-      map((response: Response) => this.extractLoginData(response)),
-      catchError((error: any) => this.handleError(error)));
+    return this.authenticationService.authenticate(credentials.user.email, credentials.user.password, credentials.rememberMe).pipe(
+      tap((response: any) => this.onLogin(response)));
   }
 
   public logout(): void {
-    this.jwtAuthenticationService.signOut();
+    this.authenticationService.signOut();
   }
 
   public isLoggedIn(): boolean {
-    return this.jwtSecurityContext.isAuthenticated();
+    return this.authenticationService.isAuthenticated();
   }
 
   public getAuthenticatedUser(): User {
-    return this.jwtSecurityContext.principal;
+    return this.userContext.get();
   }
 
   public getAuthenticatedUserObservable(): Observable<User> {
-    return this.jwtAuthenticationService.userObservable();
+    return this.userContext.getObservable();
   }
 
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || {};
-  }
-
-  private handleError(error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    return observableThrowError(error);
-  }
-
-  private extractLoginData(res: Response) {
-    const body = res.json();
-    // this.jwtSecurityContext.securityProfileEncryption = body.securityProfileEncryption;
-    // this.jwtSecurityContext.securityProfileSigning = body.securityProfileSigning;
-    this.jwtSecurityContext.securityProfile = body.securityProfile;
-    this.jwtSecurityContext.principal = this.userObjectService.user;
+  private onLogin(res: any) {
     this.userObjectService.removeUser();
-    return body || {};
   }
 }

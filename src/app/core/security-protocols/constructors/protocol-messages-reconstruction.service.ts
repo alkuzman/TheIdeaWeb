@@ -3,7 +3,6 @@ import {empty as observableEmpty, Observable, Subject} from 'rxjs';
 import {expand} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {SecurityProfile} from '../../../domain/model/security/security-profile';
-import {JwtSecurityContext} from '../../authentication/jwt/jwt-security-context.service';
 import {CryptographicOperations} from '../cryptographic-operations/cryptographic-operations';
 import {HelperService} from '../helper.service';
 import {KeysService} from '../keys/keys.service';
@@ -56,6 +55,7 @@ import {EncryptingService} from '../encrypting.service';
 import {IdeaService} from '../../../domain/services/idea/idea.service';
 import {SolutionService} from '../../../domain/services/solution/solution.service';
 import {ProtocolTransactionStepSevenData} from '../../../domain/model/security/data/protocol-transaction-step-seven-data';
+import {SecurityProfileContext} from '../../../domain/security/security-profile-context/security-profile-context';
 
 /**
  * Created by Viki on 3/1/2017.
@@ -68,7 +68,7 @@ export class ProtocolMessagesReconstructionService {
   private securityProfile: SecurityProfile;
   private protocolSessionSubject: Subject<ProtocolSession>;
 
-  constructor(private securityContext: JwtSecurityContext,
+  constructor(private securityProfileContext: SecurityProfileContext,
               private cryptographicOperations: CryptographicOperations,
               private simpleCryptographicOperations: SimpleCryptographicOperations,
               private helper: HelperService,
@@ -456,8 +456,8 @@ export class ProtocolMessagesReconstructionService {
   }
 
   private initializeSecurityProfile() {
-    this.securityProfile = this.securityContext.securityProfile;
-    this.securityContext.securityProfileObservable().subscribe((securityProfile: SecurityProfile) => {
+    this.securityProfile = this.securityProfileContext.get();
+    this.securityProfileContext.getObservable().subscribe((securityProfile: SecurityProfile) => {
       this.securityProfile = securityProfile;
     });
   }
@@ -867,7 +867,7 @@ export class ProtocolMessagesReconstructionService {
               if (messageGoodsHashed === dataIntegrity.goodsIntegrity) {
                 result.epoid = JSON.parse(dataIntegrity.epoid);
 
-                // Update protocol session in order to save the encrypted goods
+                // Update protocol session in order to setContext the encrypted goods
                 protocolSession.participantOneSessionData.encryptedGoods = result.goods;
                 this.transactionService.saveProtocolSession(protocolSession)
                   .subscribe((value: ProtocolSession) => {

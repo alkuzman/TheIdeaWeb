@@ -45,7 +45,8 @@ export class LoadingService {
 
   public loadingDone(): void {
     this.numOfLoadings--;
-    // TODO quick fix applied here, it will be solved when http client with inceptor will be included.
-    this.loadingState = null;
+    if (this.numOfLoadings === 0) {
+      this.loadingState = null;
+    }
   }
 }

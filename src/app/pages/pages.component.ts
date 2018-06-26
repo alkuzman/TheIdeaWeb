@@ -9,10 +9,10 @@ import {ScrollService} from '../core/scrolling/scroll-service';
 import {RedirectService} from '../core/navigation/redirect.service';
 import {SocketService} from '../core/socket/socket.service';
 import {NoticeService} from '../domain/services/notice/notice.service';
-import {JwtSecurityContext} from '../core/authentication/jwt/jwt-security-context.service';
 import {Subscription} from 'rxjs';
 import {NavigationItemGroup} from '../core/navigation/navigation-item-group';
 import {Notice} from '../domain/model/sharing/notice';
+import {AuthenticationService} from '../core/authentication/authentication.service';
 
 @Component({
   moduleId: module.id,
@@ -27,15 +27,16 @@ export class PagesComponent implements OnInit, OnDestroy {
   // Subject<LoadingState> = new BehaviorSubject(null);
   loadingState: LoadingState;
   numberOfNotifications = 0;
-  accessTokenSubscription: Subscription;
+  authenticationSubscription: Subscription;
   loadingStateSubscription: Subscription;
   socketNoticeSubscription: Subscription;
   socketNoticeCountSubscription: Subscription;
 
   constructor(private navigationService: NavigationService, private loadingService: LoadingService,
               private scrollService: ScrollService, private redirectService: RedirectService,
-              private socketService: SocketService, private securityContext: JwtSecurityContext,
-              private noticeService: NoticeService, private ch: ChangeDetectorRef) {
+              private socketService: SocketService,
+              private noticeService: NoticeService, private ch: ChangeDetectorRef,
+              private authenticationService: AuthenticationService) {
 
   }
 
@@ -71,8 +72,8 @@ export class PagesComponent implements OnInit, OnDestroy {
     this.socketNoticeCountSubscription = this.socketService.newNoticeCountMessage().subscribe((count: number) => {
       this.numberOfNotifications = count;
     });
-    this.accessTokenSubscription = this.securityContext.accessTokenObservable().subscribe((token: string) => {
-      if (!this.securityContext.isValid(token)) {
+    this.authenticationSubscription = this.authenticationService.authenticationObservable().subscribe((authenticated: boolean) => {
+      if (!authenticated) {
         this.setNumberOfNotifications(0);
         return;
       }
@@ -88,7 +89,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.socketNoticeSubscription.unsubscribe();
-    this.accessTokenSubscription.unsubscribe();
+    this.authenticationSubscription.unsubscribe();
     this.loadingStateSubscription.unsubscribe();
   }
 

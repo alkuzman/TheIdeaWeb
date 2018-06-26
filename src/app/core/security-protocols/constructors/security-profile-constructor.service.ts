@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
-import {SecurityProfile} from "../../../domain/model/security/security-profile";
-import {User} from "../../../domain/model/authentication/user";
-import {CertificateType} from "../../../domain/model/enumerations/certificate-type";
-import {EncryptionPair} from "../../../domain/model/security/encryption-pair";
-import {SimpleSecurityProfile} from "../../../domain/model/security/simple-security-profile";
-import {Observable} from "rxjs";
-import {KeysService} from "../keys/keys.service";
-import {ParserPemService} from "../parsers/parser-pem.service";
-import {HelperService} from "../helper.service";
-import {AlgorithmService} from "../algorithms/algorithms.service";
+import {Injectable} from '@angular/core';
+import {SecurityProfile} from '../../../domain/model/security/security-profile';
+import {User} from '../../../domain/model/authentication/user';
+import {CertificateType} from '../../../domain/model/enumerations/certificate-type';
+import {EncryptionPair} from '../../../domain/model/security/encryption-pair';
+import {SimpleSecurityProfile} from '../../../domain/model/security/simple-security-profile';
+import {Observable} from 'rxjs';
+import {KeysService} from '../keys/keys.service';
+import {ParserPemService} from '../parsers/parser-pem.service';
+import {AlgorithmService} from '../algorithms/algorithms.service';
+
 /**
  * Created by Viki on 2/12/2017.
  */
@@ -16,62 +16,62 @@ import {AlgorithmService} from "../algorithms/algorithms.service";
 @Injectable()
 export class SecurityProfileConstructorService {
 
-    constructor(private keysService: KeysService, private pemParser: ParserPemService,
-                private algorithmService: AlgorithmService) {
+  constructor(private keysService: KeysService, private pemParser: ParserPemService,
+              private algorithmService: AlgorithmService) {
+  }
+
+  public createSecurityProfile(certificationRequestPEM: string, certificatePEM: string, privateKeyEncrypted: string,
+                               type: CertificateType, user: User, encryptionPair: EncryptionPair,
+                               encryptedSessionKey: string): SecurityProfile {
+
+    const securityProfile: SecurityProfile = new SecurityProfile();
+
+    securityProfile.certificationRequestPEM = certificationRequestPEM;
+    securityProfile.certificatePEM = certificatePEM;
+    securityProfile.encryptedSymmetricKey = encryptedSessionKey;
+    securityProfile.certificateType = type;
+    securityProfile.agent = user;
+    securityProfile.encryptionPair = encryptionPair;
+    if (privateKeyEncrypted !== undefined) {
+      securityProfile.encryptedPrivateKey = privateKeyEncrypted;
     }
+    return securityProfile;
+  }
 
-    public createSecurityProfile(certificationRequestPEM: string, certificatePEM: string, privateKeyEncrypted: string,
-                                 type: CertificateType, user: User, encryptionPair: EncryptionPair,
-                                 encryptedSessionKey: string): SecurityProfile {
+  public getSecurityProfileSimple(password: string, securityProfile: SecurityProfile): Observable<SimpleSecurityProfile> {
+    return Observable.create((observer) => {
 
-        let securityProfile: SecurityProfile = new SecurityProfile();
+      // Initialize result
+      const result: SimpleSecurityProfile = new SimpleSecurityProfile();
 
-        securityProfile.certificationRequestPEM = certificationRequestPEM;
-        securityProfile.certificatePEM = certificatePEM;
-        securityProfile.encryptedSymmetricKey = encryptedSessionKey;
-        securityProfile.certificateType = type;
-        securityProfile.agent = user;
-        securityProfile.encryptionPair = encryptionPair;
-        if (privateKeyEncrypted !== undefined) {
-            securityProfile.encryptedPrivateKey = privateKeyEncrypted;
-        }
-        return securityProfile;
-    }
+      // Initialize certificate
+      result.certificate = this.pemParser.parseCertificateFromPem(securityProfile.certificatePEM);
 
-    public getSecurityProfileSimple(password: string, securityProfile: SecurityProfile): Observable<SimpleSecurityProfile> {
-        return Observable.create((observer) => {
+      // Initialize encryption public key
+      this.pemParser.parsePublicKeyFromPem(securityProfile.encryptionPair.publicPem)
+        .subscribe((publicKey: CryptoKey) => {
+          result.publicKey = publicKey;
 
-            // Initialize result
-            let result: SimpleSecurityProfile = new SimpleSecurityProfile();
+          // Initialize encryption private key
+          this.keysService.extractPrivateKey(securityProfile.encryptionPair.privateEncrypted,
+            password, this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKeyEncryption) => {
+            result.privateKeyEncryption = privateKeyEncryption;
 
-            // Initialize certificate
-            result.certificate = this.pemParser.parseCertificateFromPem(securityProfile.certificatePEM);
+            // Initialize signing private key
+            this.keysService.extractPrivateKey(securityProfile.encryptedPrivateKey, password,
+              this.algorithmService.ASYMMETRIC_SIGNING_ALG).subscribe((privateKeySigning: CryptoKey) => {
+              result.privateKeySigning = privateKeySigning;
 
-            // Initialize encryption public key
-            this.pemParser.parsePublicKeyFromPem(securityProfile.encryptionPair.publicPem)
-                .subscribe((publicKey: CryptoKey) => {
-                    result.publicKey = publicKey;
-
-                    // Initialize encryption private key
-                    this.keysService.extractPrivateKey(securityProfile.encryptionPair.privateEncrypted,
-                        password, this.algorithmService.ASYMMETRIC_ENCRYPTION_ALG).subscribe((privateKeyEncryption) => {
-                        result.privateKeyEncryption = privateKeyEncryption;
-
-                        // Initialize signing private key
-                        this.keysService.extractPrivateKey(securityProfile.encryptedPrivateKey, password,
-                            this.algorithmService.ASYMMETRIC_SIGNING_ALG).subscribe((privateKeySigning: CryptoKey) => {
-                            result.privateKeySigning = privateKeySigning;
-
-                            // Initialize symmetric key
-                            this.keysService.decryptSymmetricKeyWithPasswordKey(securityProfile
-                                .encryptedSymmetricKey, password).subscribe((symmetricKey: CryptoKey) => {
-                                result.symmetricKey = symmetricKey;
-                                observer.next(result);
-                            });
-                        });
-                    });
-                });
+              // Initialize symmetric key
+              this.keysService.decryptSymmetricKeyWithPasswordKey(securityProfile
+                .encryptedSymmetricKey, password).subscribe((symmetricKey: CryptoKey) => {
+                result.symmetricKey = symmetricKey;
+                observer.next(result);
+              });
+            });
+          });
         });
+    });
 
-    }
+  }
 }
