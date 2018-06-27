@@ -628,6 +628,10 @@ angular-froala-wysiwyg@^2.7.2:
     "@types/jquery" "^2.0.40"
     froala-editor "2.8.4"
 
+angular2-jwt@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/angular2-jwt/-/angular2-jwt-0.2.3.tgz#54efdda3ceedba85f6a37b165f22ac22b8adf021"
+
 angular2-moment@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/angular2-moment/-/angular2-moment-1.9.0.tgz#d198a4d9bc825f61de19106ac7ea07a78569f5a1"
@@ -5817,6 +5821,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
 rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
+
+rxjs-compat@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.2.1.tgz#f5a5e4bd700db414e82aa7cb34e5c9222c6d3756"
 
 rxjs@6.2.0:
   version "6.2.0"

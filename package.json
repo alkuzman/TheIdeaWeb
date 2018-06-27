@@ -7,7 +7,7 @@
     "ng": "ng",
     "postinstall": "node patch.js",
     "build:aot": "ng build --prod -sm",
-    "start": "ng serve --aot --proxy-config proxy.conf.json",
+    "start": "ng serve --aot --proxy-config proxy.conf.json --host ideal.com --ssl true --ssl-key \"ssl/server.key\" --ssl-cert \"ssl/server.crt\"",
     "start.aot": "ng serve --aot --proxy-config proxy.conf.json --host ideal.com",
     "i18n": "ng xi18n --output-path src/locale --locale en",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",

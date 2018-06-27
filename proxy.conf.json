@@ -1,22 +1,22 @@
 {
   "/api": {
-    "target": "http://localhost:8080",
+    "target": "https://ideal.com:8080",
     "secure": false
   },
   "/processing": {
-    "target": "http://localhost:5000",
+    "target": "https://ideal.com:5000",
     "secure": false
   },
   "/protocol": {
     "target": {
-      "host": "localhost",
-      "protocol": "http",
+      "host": "ideal.com",
+      "protocol": "https",
       "port": 8090
     },
     "secure": false
   },
   "/ideal-analyzer": {
-    "target": "http://localhost:5000",
+    "target": "https://ideal.com:5000",
     "secure": false,
     "pathRewrite": {
       "^/ideal-analyzer": ""
