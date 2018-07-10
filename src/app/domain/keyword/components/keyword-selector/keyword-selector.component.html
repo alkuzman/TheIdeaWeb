@@ -1,13 +1,29 @@
-<ideal-keyword-search [hint]="hint" (inputFocused)="onInputFocused()" [searchPlaceholder]="searchPlaceholder" [keywords]="suggestedKeywords" [clearAfterSelect]="true" (keywordSelected)="onKeywordSelected($event)" [stopKeywords]="value"></ideal-keyword-search>
-<mat-chip-list>
-  <div *ngFor="let keyword of value; let i = index" class="margin-bottom">
+<mat-form-field class="example-chip-list" style="width: 100%">
+  <mat-chip-list #chipList>
     <mat-chip
-      color="primary"
-      selected="true">
-      {{keyword}}
-      <button type="button" (click)="remove(keyword, i)" mat-icon-button class="chip-button">
-        <mat-icon>clear</mat-icon>
-      </button>
+      *ngFor="let chip of value"
+      [selectable]="true"
+      [removable]="true"
+      (removed)="remove(chip)">
+      {{chip}}
+      <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
-  </div>
-</mat-chip-list>
+    <input
+      (focus)="onInputFocused()"
+      [placeholder]="searchPlaceholder"
+      #keywordInput
+      [formControl]="inputCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="false"
+      (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let keyword of filteredKeywords" [value]="keyword.phrase">
+      {{keyword.phrase}}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-hint>{{hint}}</mat-hint>
+</mat-form-field>
+
