@@ -3,8 +3,8 @@
     <button type="button" matTooltip="{{badge?.name | idealClean:!namesAsTooltips}}" [style.width]="_buttonSize + 'px'"
             [style.height]="_buttonSize + 'px'"
             [style.line-height]="_buttonSize + 'px'"
-            mat-icon-button color="primary" (click)="clicked()" [disabled]="badge?.id == undefined">
-      <mat-icon [style.width]="_iconSize + 'px'" [style.height]="_iconSize + 'px'"
+            mat-icon-button [color]="color" (click)="clicked()" [disabled]="badge?.id == undefined">
+      <mat-icon style="opacity: 0.54" [style.width]="_iconSize + 'px'" [style.height]="_iconSize + 'px'"
                [svgIcon]="getIconName(badge)"></mat-icon>
     </button>
   </div>
