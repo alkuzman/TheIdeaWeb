@@ -16,21 +16,21 @@ export class IdeaActionsService {
         'title': 'Announce',
         'description': 'Announce that you have new idea. In this way everybody would have chance to see your idea',
         'icon': 'announcement',
-        'color': 'primary',
+        'color': 'accent',
         'scope': 'owner'
       },
       {
         'title': 'Send',
         'description': 'Send this idea to particular client',
         'icon': 'send',
-        'color': 'primary',
+        'color': 'accent',
         'scope': 'owner'
       },
       {
         'title': 'Buy',
         'description': 'Buy this idea',
         'icon': 'shop',
-        'color': 'primary',
+        'color': 'accent',
         'scope': 'notOwner'
       },
       {
@@ -52,7 +52,7 @@ export class IdeaActionsService {
       {
         'title': 'Details',
         'description': 'Open details for this idea',
-        'icon': 'more',
+        'icon': 'details',
         'color': 'default',
         'scope': 'user'
       },

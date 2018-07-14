@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="space-around">
   <ideal-award-item [namesAsTooltips]="namesAsTooltips" [iconSize]="iconSize"
                     [maxWidth]="maxWidth" *ngFor="let award of awards" [award]="award"
-                    (selected)="onAwardSelected(award)" [color]="color">
+                    (selected)="onAwardSelected(award)">
   </ideal-award-item>
   <div *ngIf="!awards || !awards.length" [style.max-width]="maxWidth + 'px'">
     <div fxLayout="row" fxLayoutAlign="center">
-        <mat-icon [style.opacity]="0.38" [style.width]="iconSize + 'px'" [style.height]="iconSize + 'px'"
+        <mat-icon [style.opacity]="0.26" [style.width]="iconSize + 'px'" [style.height]="iconSize + 'px'"
                  [svgIcon]="noAwardsIcon"></mat-icon>
     </div>
     <div *ngIf="!namesAsTooltips" fxLayout="row" fxLayoutAlign="center">
