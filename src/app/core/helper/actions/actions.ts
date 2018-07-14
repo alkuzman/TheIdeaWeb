@@ -1,5 +1,4 @@
-import {Action} from './action';
-
+import {Action} from "./action";
 /**
  * Created by AKuzmanoski on 28/12/2016.
  */

@@ -15,7 +15,7 @@
         <mat-list-item *ngFor="let navigationItem of navigationItemGroup.items"
                        (click)="sidenav.toggle()"
                        [routerLink]="navigationItem.url" routerLinkActive="activeLink primary">
-          <mat-icon class="icon-middle" mat-list-avatar>
+          <mat-icon class="icon-middle" [ngStyle]="{'color': navigationItem.color}" mat-list-avatar>
             {{navigationItem.icon}}
           </mat-icon>
           <h4 style="position: relative" mat-line>
@@ -39,7 +39,7 @@
         *ngIf="loadingState"
         [value]="loadingState?.value"
         [bufferValue]="loadingState?.bufferValue"
-        color="primary"
+        color="accent"
         [mode]="loadingState?.mode">
       </mat-progress-bar>
     </div>

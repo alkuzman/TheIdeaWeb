@@ -1,40 +1,25 @@
 <mat-card>
-  <div style="float: right">
-    <button [matMenuTriggerFor]="appMenu" mat-icon-button>
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
-              [matTooltip]="action.description" matTooltipPosition="left">
-        <mat-icon class="icon-20">{{action.icon}}</mat-icon>
-        <span>{{action.title}}</span>
-      </button>
-    </mat-menu>
-  </div>
   <mat-card-header>
-    <img mat-card-avatar style="cursor: pointer" [routerLink]="['/users', idea.owner.id]" [src]="idea?.owner | idealUserProfilePicture"/>
+    <img mat-card-avatar (click)="getOwner()" [src]="idea?.owner | idealUserProfilePicture" />
     <mat-card-title>
-      <a idealColor="primary" [routerLink]="['/users', idea.owner.id]">
-        <strong>
-          {{idea?.owner?.firstName}} {{idea?.owner?.lastName}}
-        </strong>
-      </a>
+      <strong idealColor="accent" (click)="getOwner()">
+        {{idea?.owner?.firstName}} {{idea?.owner?.lastName}}
+      </strong>
       created idea which solves
-      <a idealColor="primary" [routerLink]="['/problems', idea.problem.id]">
-        <strong>
-          {{idea?.problem?.title}}
-        </strong>
-      </a>
+      <strong idealColor="accent" (click)="getProblem()">
+        {{idea?.problem?.title}}
+      </strong>
     </mat-card-title>
     <mat-card-subtitle>{{idea?.creationDate | amTimeAgo}}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content style="cursor: pointer;"  (click)="getContent()">
-    <mat-card-title>{{idea?.title}}</mat-card-title>
-    <div class="mat-body-1">{{idea?.snackPeak}}</div>
+  <mat-card-content (click)="getContent()">
+    <mat-card-title-group>
+      <mat-card-title>{{idea?.title}}</mat-card-title>
+      <mat-card-subtitle><div class="mat-body-1">{{idea?.snackPeak}}</div></mat-card-subtitle>
+    </mat-card-title-group>
   </mat-card-content>
-  <mat-divider></mat-divider>
   <mat-card-actions>
-    <div fxLayout="row" fxLayoutAlign="space-between">
+    <div fxLayout="row">
       <div fxFlex="none">
         <button mat-icon-button matTooltipPosition="above" *ngFor="let action of actions?.mainActions"
                 (click)="onAction(action)"
@@ -43,9 +28,18 @@
           <mat-icon class="icon-20">{{action.icon}}</mat-icon>
         </button>
       </div>
-      <div fxFlex="none" *ngIf="idea.awards">
-        <ideal-award-list color="accent" [namesAsTooltips]="true" [iconSize]="24"
-                          [awards]="idea.awards"></ideal-award-list>
+      <div fxFlex></div>
+      <div fxFlex="none">
+        <button [matMenuTriggerFor]="appMenu" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #appMenu="matMenu">
+          <button mat-menu-item *ngFor="let action of actions?.menuActions" (click)="onAction(action)"
+                  [matTooltip]="action.description" matTooltipPosition="left">
+            <mat-icon class="icon-20">{{action.icon}}</mat-icon>
+            <span>{{action.title}}</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
   </mat-card-actions>

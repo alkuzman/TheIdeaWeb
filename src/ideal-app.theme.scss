@@ -18,7 +18,7 @@ $mat-light-theme-background: map-merge($mat-light-theme-background, (
 ));
 
 $ideal-app-primary: mat-palette($mat-light-blue);
-$ideal-app-accent: mat-palette($mat-amber);
+$ideal-app-accent: mat-palette($mat-yellow);
 
 // The warn palette is optional (defaults to red).
 $ideal-app-warn: mat-palette($mat-red);
@@ -33,8 +33,8 @@ $ideal-app-theme: mat-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-
 @include ideal-app-theme($ideal-app-theme);
 
 .idea-theme {
-  $ideal-idea-primary: mat-palette($mat-cyan);
-  $ideal-idea-accent: mat-palette($mat-purple);
+  $ideal-idea-primary: mat-palette($mat-deep-orange);
+  $ideal-idea-accent: mat-palette($mat-yellow);
   $ideal-idea-warn: mat-palette($mat-red);
 
   $ideal-idea-theme: mat-light-theme($ideal-idea-primary, $ideal-idea-accent, $ideal-idea-warn);
@@ -55,8 +55,8 @@ $ideal-app-theme: mat-light-theme($ideal-app-primary, $ideal-app-accent, $ideal-
 }
 
 .problem-theme {
-  $ideal-problem-primary: mat-palette($mat-purple);
-  $ideal-problem-accent: mat-palette($mat-cyan);
+  $ideal-problem-primary: mat-palette($mat-purple, 500, 700, 800);
+  $ideal-problem-accent: mat-palette($mat-green, A200);
   $ideal-problem-warn: mat-palette($mat-red);
 
   $ideal-problem-theme: mat-light-theme($ideal-problem-primary, $ideal-problem-accent, $ideal-problem-warn);
