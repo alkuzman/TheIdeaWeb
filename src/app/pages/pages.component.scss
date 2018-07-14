@@ -1,5 +1,9 @@
-.activeLink {
-  background: rgba(100, 100, 255, 0.2);
+mat-icon {
+  opacity: 0.54;
+}
+
+.activeLink mat-icon {
+  opacity: 0.87 !important;
 }
 
 mat-sidenav {

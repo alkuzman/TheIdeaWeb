@@ -17,6 +17,7 @@ export class AwardListComponent {
   @Input('iconSize') iconSize = 44;
   @Input('maxWidth') maxWidth = 88;
   @Input('namesAsTooltips') namesAsTooltips = false;
+  @Input('color') color: string;
   @Output('awardSelected') awardSelected: EventEmitter<Award<Badge<any, any>>> = new EventEmitter<Award<Badge<any, any>>>();
   noAwardsIcon = 'award';
   noAwardsName = 'No awards found';
