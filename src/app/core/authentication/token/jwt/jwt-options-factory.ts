@@ -8,7 +8,8 @@ export function jwtOptionsFactory(accessTokenContext: AccessTokenContext) {
     headerName: 'X-Authorization',
     skipWhenExpired: true,
     blacklistedRoutes: [
-      /.*api\/auth\/.*/
+      /.*api\/auth\/.*/,
+      '/api/users'
     ]
   };
 }

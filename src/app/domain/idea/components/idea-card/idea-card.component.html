@@ -14,13 +14,13 @@
   <mat-card-header>
     <img mat-card-avatar style="cursor: pointer" [routerLink]="['/users', idea.owner.id]" [src]="idea?.owner | idealUserProfilePicture"/>
     <mat-card-title>
-      <a idealColor="primary" [routerLink]="['/users', idea.owner.id]">
+      <a idealColor="primary" style="text-decoration: none" [routerLink]="['/users', idea.owner.id]">
         <strong>
           {{idea?.owner?.firstName}} {{idea?.owner?.lastName}}
         </strong>
       </a>
-      created idea which solves
-      <a idealColor="primary" [routerLink]="['/problems', idea.problem.id]">
+      published idea which solves
+      <a idealColor="primary" style="text-decoration: none" [routerLink]="['/problems', idea.problem.id]">
         <strong>
           {{idea?.problem?.title}}
         </strong>

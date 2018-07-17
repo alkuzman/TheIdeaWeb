@@ -6,6 +6,7 @@ import {catchError, mergeMap} from 'rxjs/operators';
 import {RefreshAccessTokenService} from './refresh-access-token.service';
 import {AccessTokenContext} from './access-token-context';
 import {TokenValidator} from './token-validator';
+import {RefreshTokenContext} from './refresh-token-context';
 
 @Injectable()
 export class RefreshTokenInterceptorService implements HttpInterceptor {
@@ -13,12 +14,16 @@ export class RefreshTokenInterceptorService implements HttpInterceptor {
   constructor(private refreshTokenService: RefreshAccessTokenService,
               private jwtInterceptor: JwtInterceptor,
               private accessTokenContext: AccessTokenContext,
-              private tokenValidator: TokenValidator) {
+              private tokenValidator: TokenValidator,
+              private refreshTokenContext: RefreshTokenContext) {
 
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.jwtInterceptor.isWhitelistedDomain(req) && !this.jwtInterceptor.isBlacklistedRoute(req)) {
+    console.log('intercept');
+    if (this.jwtInterceptor.isWhitelistedDomain(req)
+      && !this.jwtInterceptor.isBlacklistedRoute(req)
+      && this.tokenValidator.isValid(this.refreshTokenContext.get())) {
       if (!this.tokenValidator.isValid(this.accessTokenContext.get())) {
         return this.refreshTokenAndResend(req, next);
       }
@@ -32,6 +37,7 @@ export class RefreshTokenInterceptorService implements HttpInterceptor {
           return throwError(err);
         }));
     } else {
+      console.log('intercept3');
       return next.handle(req);
     }
   }

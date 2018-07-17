@@ -1,8 +1,30 @@
-<mat-card>
-  <mat-card-content>
-    <ideal-user-named-avatar [alignment]="ownerAvatarAlignment" [(ngModel)]="problem.questioner"
-                             [profilePictureRadius]="25"></ideal-user-named-avatar>
-    <h2>{{problem?.title}}</h2>
-    <p>{{problem?.text}}</p>
-  </mat-card-content>
-</mat-card>
+<mat-card-title-group>
+  <mat-card-subtitle>
+    <mat-chip-list style="display: inline-block">
+      <mat-chip *ngFor="let keyword of problem.keywords">
+        <a [routerLink]="['/keywords', keyword]" style="text-decoration: none" idealColor="primary">
+          {{keyword}}
+        </a>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-subtitle>
+  <mat-card-title *ngIf="!hideTitle">
+    {{problem.title}}
+  </mat-card-title>
+</mat-card-title-group>
+<mat-card-header>
+  <img mat-card-avatar style="cursor: pointer" [routerLink]="['/users', problem.questioner.id]"
+       [src]="problem?.questioner | idealUserProfilePicture"/>
+  <mat-card-title>
+    <span>asked by&nbsp;</span>
+    <a idealColor="primary" style="text-decoration: none" [routerLink]="['/users', problem.questioner.id]">
+      <strong>
+        {{problem?.questioner?.firstName}} {{problem?.questioner?.lastName}}
+      </strong>
+    </a>
+  </mat-card-title>
+  <mat-card-subtitle>{{problem?.creationDate | amTimeAgo}}</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <div [innerHtml]="problem?.text"></div>
+</mat-card-content>

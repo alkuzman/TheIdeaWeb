@@ -1,11 +1,65 @@
-<ideal-problem-details [problem]="idea?.problem"></ideal-problem-details>
-<mat-card class="margin-top">
-  <mat-card-content>
-    <ideal-user-named-avatar [alignment]="ownerAvatarAlignment" [(ngModel)]="idea.owner"
-                             [profilePictureRadius]="25"></ideal-user-named-avatar>
-    <h2>{{idea?.title}}</h2>
-    <div>
-      {{idea?.snackPeak}}
-    </div>
-  </mat-card-content>
-</mat-card>
+<div fxLayout="row" fxLayout.lt-md="column">
+  <div fxFlex="70%" fxFlex.lt-md="100%">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{idea.problem.title}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ideal-problem-details [hideTitle]="true" [problem]="idea?.problem"></ideal-problem-details>
+      <mat-card-actions style="text-align: right; margin-bottom: 0;">
+        <button type="button" mat-button color="primary" [routerLink]="['/problems', idea.problem.id]">
+          Details
+        </button>
+      </mat-card-actions>
+    </mat-expansion-panel>
+    <mat-card class="margin-top">
+      <mat-card-title-group>
+        <mat-card-title>{{idea?.title}}</mat-card-title>
+        <mat-card-subtitle>
+          <mat-chip-list style="display: inline-block">
+            <mat-chip *ngFor="let keyword of idea?.keywords">
+              <a [routerLink]="['/keywords', keyword]" style="text-decoration: none" idealColor="primary">
+                {{keyword}}
+              </a>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-header>
+        <img mat-card-avatar style="cursor: pointer" [routerLink]="['/users', idea?.owner?.id]"
+             [src]="idea?.owner | idealUserProfilePicture"/>
+        <mat-card-title>
+          <span>answered by&nbsp;</span>
+          <a fxFlex="none" idealColor="primary" style="text-decoration: none"
+             [routerLink]="['/users', idea?.owner?.id]">
+            <strong>
+              {{idea?.owner?.firstName}} {{idea?.owner?.lastName}}
+            </strong>
+          </a>
+        </mat-card-title>
+        <mat-card-subtitle>{{idea?.creationDate | amTimeAgo}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          {{idea?.snackPeak}}
+        </div>
+      </mat-card-content>
+      <mat-card-actions style="text-align: right;">
+        <button
+          mat-raised-button
+          type="button"
+          *ngFor="let action of actions.mainActions"
+          [color]="action.color"
+          [matTooltip]="action.description">
+          <mat-icon>{{action.icon}}</mat-icon>
+          {{action.title}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div fxFlex="30%" fxFlex.lt-md="100%">
+    <h3 class="mat-title margin-left">Other ideas</h3>
+    <ideal-idea-list-loader [problemId]="idea.problem.id"></ideal-idea-list-loader>
+  </div>
+</div>

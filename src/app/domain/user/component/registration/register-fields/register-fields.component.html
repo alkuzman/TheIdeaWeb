@@ -4,15 +4,15 @@
 </div>
 <div [formGroup]="form">
   <div>
-    <mat-form-field [color]="formErrors.firstName ? 'warn' : 'primary'" class="full-width">
+    <mat-form-field [color]="formErrors?.firstName ? 'warn' : 'primary'" class="full-width">
       <input mat-input matInput formControlName="firstName" placeholder="First Name" required/>
-      <mat-hint *ngIf="formErrors.firstName" align="end" idealColor="warn">{{formErrors.firstName}}</mat-hint>
+      <mat-hint *ngIf="formErrors?.firstName" align="end" idealColor="warn">{{formErrors?.firstName}}</mat-hint>
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field [color]="formErrors.lastName ? 'warn' : 'primary'" class="full-width">
+    <mat-form-field [color]="formErrors?.lastName ? 'warn' : 'primary'" class="full-width">
       <input type="text" mat-input matInput formControlName="lastName" placeholder="Last Name" required/>
-      <mat-hint *ngIf="formErrors.lastName" align="end" idealColor="warn">{{formErrors.lastName}}</mat-hint>
+      <mat-hint *ngIf="formErrors?.lastName" align="end" idealColor="warn">{{formErrors?.lastName}}</mat-hint>
     </mat-form-field>
   </div>
   <div formGroupName="passwords">
@@ -38,11 +38,11 @@
       <mat-form-field [color]="formErrors.passwords ? 'warn' : 'primary'" class="full-width">
         <input mat-input matInput type="password" formControlName="confirmPassword"
                placeholder="Confirm Password" required/>
-        <mat-hint align="end" idealColor="warn" *ngIf="formErrors.passwords">{{formErrors.passwords}}</mat-hint>
+        <mat-hint align="end" idealColor="warn" *ngIf="formErrors?.passwords">{{formErrors?.passwords}}</mat-hint>
       </mat-form-field>
     </div>
   </div>
-  <div [ngClass]="{'error-theme': formErrors.country}">
+  <div [ngClass]="{'error-theme': formErrors?.country}">
     <mat-form-field class="full-width">
       <input type="text" matInput hidden="true"/>
       <mat-select color="primary" placeholder="Country" formControlName="country" class="full-width" required>
@@ -50,7 +50,7 @@
           {{country}}
         </mat-option>
       </mat-select>
-      <mat-hint align="end" idealColor="warn" *ngIf="formErrors.country">{{formErrors.country}}</mat-hint>
+      <mat-hint align="end" idealColor="warn" *ngIf="formErrors?.country">{{formErrors?.country}}</mat-hint>
     </mat-form-field>
   </div>
 

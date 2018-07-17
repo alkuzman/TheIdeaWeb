@@ -29,7 +29,7 @@ export class IdeaActionsService {
       {
         'title': 'Buy',
         'description': 'Buy this idea',
-        'icon': 'shop',
+        'icon': 'add_shopping_cart',
         'color': 'primary',
         'scope': 'notOwner'
       },

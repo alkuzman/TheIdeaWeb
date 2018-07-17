@@ -12,16 +12,17 @@ import {ProblemModule} from '../problem/problem.module';
 import {IdeaCardComponent} from './components/idea-card/idea-card.component';
 import {IdeaDetailsLoaderComponent} from './components/idea-details/idea-details-loader/idea-details-loader.component';
 import {UserModule} from '../user/user.module';
-import {IdeaListLoaderComponenet} from './components/idea-list/idea-list-loader/idea-list-loader.component';
+import {IdeaListLoaderComponent} from './components/idea-list/idea-list-loader/idea-list-loader.component';
 import {KeywordModule} from '../keyword/keyword.module';
 import {AwardModule} from '../award/award.module';
+import {MatExpansionModule} from '@angular/material';
 
 @NgModule({
-  imports: [SharedModule, ProblemModule, UserModule, KeywordModule, AwardModule],
+  imports: [SharedModule, ProblemModule, UserModule, KeywordModule, AwardModule, MatExpansionModule],
   declarations: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent,
-    IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+    IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponent],
   exports: [NewIdeaComponent, IdeaDetailsComponent, IdeasComponent,
-    IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponenet],
+    IdeaFormComponent, IdeaFieldsComponent, IdeaCardComponent, IdeaDetailsLoaderComponent, IdeaListLoaderComponent],
 })
 export class IdeaModule {
 

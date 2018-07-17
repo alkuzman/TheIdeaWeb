@@ -4,7 +4,8 @@
 import {Idea} from '../../../model/ideas';
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Alignment} from '../../../../shared/widget/components/avatars/named-avatar/enum-alignment';
+import {Actions} from '../../../../core/helper/actions/actions';
+import {IdeaActionsService} from '../../../services/idea/idea-actions.service';
 
 @Component({
   moduleId: module.id,
@@ -36,13 +37,10 @@ import {Alignment} from '../../../../shared/widget/components/avatars/named-avat
   ]
 })
 export class IdeaDetailsComponent implements OnInit {
-
-  ownerAvatarAlignment: Alignment = Alignment.center;
   @Input() idea: Idea;
-  errorMessage: any;
-  docs: any;
+  actions: Actions;
 
-  constructor() {
+  constructor(private ideaActionsService: IdeaActionsService) {
 
   }
 
@@ -51,5 +49,6 @@ export class IdeaDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actions = this.ideaActionsService.getActions(this.idea);
   }
 }

@@ -32,11 +32,13 @@ export class NewRegistrationFormComponent implements OnInit {
 
   save(user: User): void {
     this.user = user;
+    console.log('here');
     this.userService.addUser(this.user).subscribe(
       (u: User) => this.onUserReady(u), (error: any) => this.onError(error));
   }
 
   onUserReady(user: User): void {
+    console.log('user');
     this.user = user;
     this.notify();
   }
