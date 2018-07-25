@@ -72,6 +72,7 @@ export class UserService {
   }
 
   private onLogin(res: any) {
+    this.userContext.set(this.userObjectService.user);
     this.userObjectService.removeUser();
   }
 }
