@@ -27,11 +27,11 @@ export class ProtocolTransactionService {
 
   public getSessionKeyWithServer(email: string): Observable<string> {
     const url = this.sessionKeyWithServerUrl + '?email=' + email + '&applicationName=iDeal';
-    return this.http.get<string>(url);
+    return this.http.get(url, {responseType: 'text'});
   }
 
   public sendTransactionRequestToServer(jsonMessage: string, email: string): Observable<string> {
     const url = this.transactionRequestUrl + '?email=' + email + '&applicationName=iDeal';
-    return this.http.post<string>(url, jsonMessage);
+    return this.http.post(url, jsonMessage, {responseType: 'text'});
   }
 }
