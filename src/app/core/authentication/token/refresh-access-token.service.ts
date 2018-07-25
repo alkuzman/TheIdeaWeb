@@ -1,15 +1,17 @@
 import {Observable, throwError} from 'rxjs';
 
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {RefreshTokenContext} from './refresh-token-context';
 import {TokenValidator} from './token-validator';
 import {AuthenticationService} from '../authentication.service';
 import {AccessTokenContext} from './access-token-context';
 
 /**
- * Created by Viki on 11/18/2016.
+ * This service is used for getting new access token
+ * @author Klupps Team
+ * @version MVP
  */
 
 @Injectable()
@@ -24,30 +26,54 @@ export class RefreshAccessTokenService {
               private accessTokenContext: AccessTokenContext) {
   }
 
-  getNewAccessToken(): Observable<string> {
-    const token = this.refreshTokenContext.get();
-    if (!this.tokenValidator.isValid(token)) {
+  /**
+   * Get new access token. If this operation is unsuccessful the user will be signed out.
+   * @returns observable of string or error
+   */
+  public getNewAccessToken(): Observable<string> {
+    // First check whether the refresh token is valid;
+    const refreshToken = this.refreshTokenContext.get();
+    if (!this.tokenValidator.isValid(refreshToken)) {
       this.authenticationService.signOut();
-      return throwError('invalid token');
+      return throwError('Invalid refresh token token');
     }
-    return this.http.get<string>(this.url, {headers: this.getHeaders(token)}).pipe(tap(newToken => this.onNewAccessToken(newToken)),
+    // Ask for new access token
+    return this.http.get<any>(this.url, {headers: this.getHeaders(refreshToken)}).pipe(
+      map(tokenObject => tokenObject.token),
+      tap(accessToken => this.storeAccessToken(accessToken)),
       catchError((response: any) => this.handleError(response)));
   }
 
-  private getHeaders(token: string): HttpHeaders {
+  /**
+   * Set the authorization header to the refresh token.
+   * @param refreshToken which will be used as authorization header
+   */
+  private getHeaders(refreshToken: string): HttpHeaders {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    headers = headers.append('X-Authorization', 'Bearer ' + token);
+    headers = headers.append('X-Authorization', 'Bearer ' + refreshToken);
     return headers;
   }
 
-  private onNewAccessToken(token: any) {
-    this.accessTokenContext.set(token.token);
+  /**
+   * First checks whether the token is valid. If the token is valid it will be stored in the {@link AccessTokenContext}
+   * otherwise the user will be signed out.
+   * @param token new token
+   */
+  private storeAccessToken(token: string) {
+    if (this.tokenValidator.isValid(token)) {
+      this.accessTokenContext.set(token);
+      return token;
+    } else {
+      this.authenticationService.signOut();
+    }
   }
 
-  private handleError(error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
+  /**
+   * Sign out if access denied
+   * @param error {@link HttpErrorResponse}
+   */
+  private handleError(error: HttpErrorResponse) {
     if (error.status === 401) {
       this.authenticationService.signOut();
     }

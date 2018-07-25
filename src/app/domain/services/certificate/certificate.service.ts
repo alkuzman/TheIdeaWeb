@@ -20,27 +20,27 @@ export class CertificateService {
 
   public sign(pemCertificationRequest: string): Observable<string> {
     const url: string = this.certificatesUrl + '/sign';
-    return this.http.post<string>(url, pemCertificationRequest);
+    return this.http.post(url, pemCertificationRequest, {responseType: 'text'});
   }
 
   public get(filterProperties: CertificatesFilterProperties): Observable<string> {
     const params = PropertiesToUrlSearchParams.transform(filterProperties);
     const url: string = this.certificatesUrl;
-    return this.http.get<string>(url, {params: params});
+    return this.http.get(url, {params: params, responseType: 'text'});
   }
 
   public getIssuerCertificate(): Observable<string> {
     const url: string = this.certificatesUrl + '/issuer';
-    return this.http.get<string>(url);
+    return this.http.get(url, {responseType: 'text'});
   }
 
   public getPublicKey(filterProperties: CertificatesFilterProperties): Observable<string> {
     const params = PropertiesToUrlSearchParams.transform(filterProperties);
     const url = this.certificatesUrl + '/publickey';
-    return this.http.get<string>(url, {params: params});
+    return this.http.get(url, {params: params, responseType: 'text'});
   }
 
   public getIdealSecureCertificate(): Observable<string> {
-    return this.http.get<string>(this.idealSecureCertificate);
+    return this.http.get(this.idealSecureCertificate, {responseType: 'text'});
   }
 }
