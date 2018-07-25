@@ -8,7 +8,11 @@ export class LocalStore implements PersistentStore {
     try {
       object = JSON.parse(data);
     } catch (e) {
-      object = data;
+      if (data === 'undefined') {
+        object = undefined;
+      } else {
+        object = data;
+      }
     }
     return of(object);
   }

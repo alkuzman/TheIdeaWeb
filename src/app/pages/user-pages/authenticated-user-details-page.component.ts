@@ -1,13 +1,14 @@
 /**
  * Created by AKuzmanoski on 25/12/2016.
  */
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {UserService} from "../../domain/services/user/user.service";
-import {User} from "../../domain/model/authentication/user";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {UserService} from '../../domain/services/user/user.service';
+import {User} from '../../domain/model/authentication/user';
+
 @Component({
   moduleId: module.id,
-  selector: "ideal-authenticated-user-details",
+  selector: 'ideal-authenticated-user-details',
   template: ``
 })
 export class AuthenticationUserDetailsPageComponent implements OnInit {
@@ -16,10 +17,11 @@ export class AuthenticationUserDetailsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let authenticatedUser: User = this.userService.getAuthenticatedUser();
-    if (authenticatedUser != null)
-      this.router.navigate(["/users", authenticatedUser.id]);
-    else
-      this.router.navigate(["/auth"]);
+    const authenticatedUser: User = this.userService.getAuthenticatedUser();
+    if (authenticatedUser != null && authenticatedUser !== undefined) {
+      this.router.navigate(['/users', authenticatedUser.id]);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
 }
