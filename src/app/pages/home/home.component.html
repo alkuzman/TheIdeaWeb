@@ -17,7 +17,7 @@
       <div fxFlex="none" *ngFor="let category of categories; let i = index"
            [fxLayout]="i % 2 == 1 ? 'row-reverse' : 'row'" fxLayoutGap="40px" fxLayout.xs="column-reverse">
         <div fxFlex="50%" fxFlex.xs="none" fxLayout="column" fxLayoutAlign="center">
-          <h2 fxFlex="none" style="margin-top: 0px;" class="ideal-headline">{{category.title}}</h2>
+          <h2 fxFlex="none" style="margin-top: 0;" class="ideal-headline">{{category.title}}</h2>
           <div fxFlex="none" fxLayout="column">
             <p fxFlex="none" class="ideal-body-1" style="justify-content: center;">
               {{category.description}}
@@ -29,7 +29,7 @@
         </div>
         <div fxFlex="50%" fxFlex.xs="none" style="text-align: center" fxLayout="row">
           <div fxFlex="90%" fxFlexOffset="5%" fxFlex.xs="50%" fxFlexOffset.xs="25%">
-            <ideal-smoot-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smoot-image-widget>
+            <ideal-smooth-image-widget class="fit-image" [idealSrc]="category.image.src"></ideal-smooth-image-widget>
           </div>
         </div>
       </div>

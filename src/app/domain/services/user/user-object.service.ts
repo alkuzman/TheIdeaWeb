@@ -1,5 +1,6 @@
-import {Injectable} from "@angular/core";
-import {User} from "../../model/authentication/user";
+import {Injectable} from '@angular/core';
+import {User} from '../../model/authentication';
+
 /**
  * Created by AKuzmanoski on 25/11/2016.
  */
@@ -8,12 +9,10 @@ export class UserObjectService {
   private _user: User;
 
   public get user(): User {
-    console.log(this._user);
     return this._user;
   }
 
   public set user(user: User) {
-    console.log(this._user);
     this._user = user;
   }
 
