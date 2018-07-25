@@ -11,7 +11,7 @@ import {AvatarChooserComponent} from './components/avatars/avatar-chooser/widget
 import {UploadImageDialogComponent} from './components/files/upload-image-dialog/upload-image-dialog.component';
 import {TextEditorToolbarComponent} from './components/text-editor/toolbar/text-editor-toolbar.component';
 import {TextEditorComponent} from './components/text-editor/text-editor.component';
-import {SmoothImageWidget} from './components/images/smooth-image.widget';
+import {SmoothImageWidgetComponent} from './components/images/smooth-image-widget.component';
 import {ColorDirective} from './directives/color.directive';
 import {PasswordMatcherDirective} from './directives/password-matcher.directive';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -47,13 +47,14 @@ import {BackgroundColorDirective} from './directives/background-color/background
 
 @NgModule({
   declarations: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective,
-    AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent, TextEditorComponent, SmoothImageWidget, ColorDirective,
+    AvatarChooserComponent, UploadImageDialogComponent, TextEditorToolbarComponent,
+    TextEditorComponent, SmoothImageWidgetComponent, ColorDirective,
     PasswordMatcherDirective, IdealInputIdle, EmailValidatorDirective, IdealBadgeDirective, DiscardChangesDialogComponent, DocComponent,
     DocHeaderComponent, DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent,
     DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent,
     DocSectionComponent, StaggerDirective, TextDirective, ShortTextDirective, BackgroundColorDirective],
   exports: [WidgetAvatarComponent, WidgetNamedAvatarComponent, WidgetLabeledInput, StringValueAccessorDirective, AvatarChooserComponent,
-    UploadImageDialogComponent, TextEditorComponent, SmoothImageWidget, ColorDirective, PasswordMatcherDirective, IdealInputIdle,
+    UploadImageDialogComponent, TextEditorComponent, SmoothImageWidgetComponent, ColorDirective, PasswordMatcherDirective, IdealInputIdle,
     EmailValidatorDirective, IdealLabelModule, IdealBadgeDirective, DiscardChangesDialogComponent, DocComponent, DocHeaderComponent,
     DocTitleComponent, DocSubtitleComponent, DocTextTextFigureLayoutComponent, DocTextFigureFigureLayoutComponent,
     DocTextFigureLayoutComponent, TextComponent, FigureComponent, ShortTextComponent, DocContentComponent, DocTableContentsComponent,
