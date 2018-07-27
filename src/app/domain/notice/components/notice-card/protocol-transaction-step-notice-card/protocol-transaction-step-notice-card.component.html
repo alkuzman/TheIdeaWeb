@@ -7,14 +7,14 @@
             </strong>
             sent you notice for
             <strong idealColor="accent" (click)="getIdea()">
-                {{notice?.protocolSession?.digitalGoods?.getText()}}
+              {{notice?.protocolSession?.digitalGoods?.title}}
             </strong>
         </mat-card-title>
         <mat-card-subtitle>{{notice?.creationDate | amTimeAgo}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content (click)="getContent()">
         <mat-card-title-group>
-            <mat-card-title>{{notice?.protocolSession?.digitalGoods?.getText()}}</mat-card-title>
+          <mat-card-title>{{notice?.protocolSession?.digitalGoods?.title}}</mat-card-title>
             <mat-card-subtitle>{{notice | protocolTransactionStepNoticeMessage}}</mat-card-subtitle>
         </mat-card-title-group>
     </mat-card-content>

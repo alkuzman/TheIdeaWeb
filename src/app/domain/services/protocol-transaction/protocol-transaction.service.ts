@@ -22,7 +22,7 @@ export class ProtocolTransactionService {
 
   public saveProtocolSession(protocolSession: ProtocolSession): Observable<ProtocolSession> {
     const url = this.transactionUrl + '/session/' + protocolSession.id;
-    return this.http.put<ProtocolSession>(url, ProtocolSession);
+    return this.http.put<ProtocolSession>(url, protocolSession);
   }
 
   public getSessionKeyWithServer(email: string): Observable<string> {

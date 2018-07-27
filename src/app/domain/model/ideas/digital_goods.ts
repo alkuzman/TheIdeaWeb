@@ -1,10 +1,9 @@
+import {BaseEntity} from '../base-entity';
+import {User} from '../authentication/user';
+import {TitledEntity} from './titled-entity';
 
+export interface DigitalGoods extends BaseEntity, TitledEntity {
+  owner: User;
 
-import {BaseEntity} from "../base-entity";
-import {User} from "../authentication/user";
-
-export interface DigitalGoods extends BaseEntity {
-    owner: User;
-
-    getText(): string;
+  getText(): string;
 }

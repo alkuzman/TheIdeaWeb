@@ -2,16 +2,15 @@ import {Problem} from './problem';
 import {Award} from '../awards/award';
 import {Badge} from '../awards/badges/badge';
 import {AbstractDigitalGoods} from './abstract_digital_goods';
-import {TitledEntity} from './titled-entity';
+import {Shareable} from '../sharing/shareable';
 
 /**
  * Created by PC on 10/10/2016.
  */
 
-export class Idea extends AbstractDigitalGoods implements TitledEntity {
+export class Idea extends AbstractDigitalGoods implements Shareable {
   public problem: Problem;
   public snackPeak: string;
-  public title: string;
   public keywords: string[];
   public awards: Award<Badge<any, any>>[];
 
