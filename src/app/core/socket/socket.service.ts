@@ -5,18 +5,18 @@ import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {STOMPService} from './stopm.service';
 import {ConfigService} from '../config/config.service';
 import {Message} from 'stompjs';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {StompConfig} from './stomp.config';
 import {Notice} from '../../domain/model/sharing/notice';
 import {AccessTokenContext} from '../authentication/token/access-token-context';
 import {TokenValidator} from '../authentication/token/token-validator';
-import {BehaviorSubject} from 'rxjs/index';
+import {RefreshAccessTokenService} from '../authentication/token/refresh-access-token.service';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Injectable()
 export class SocketService implements OnInit, OnDestroy {
 
     private config: StompConfig;
-    private first = true;
     private configured = false;
     private messages: Observable<Message>;
     private noticeMessage: BehaviorSubject<Notice> = new BehaviorSubject<Notice>(null);
@@ -43,35 +43,47 @@ export class SocketService implements OnInit, OnDestroy {
     constructor(private stomp: STOMPService,
                 private accessTokenContext: AccessTokenContext,
                 private tokenValidator: TokenValidator,
-                private configService: ConfigService) {
+                private configService: ConfigService,
+                private refreshTokenService: RefreshAccessTokenService,
+                private authenticationService: AuthenticationService) {
         configService.getConfig('/assets/socket/config.json').subscribe(
             (config: StompConfig) => {
                 // ... then pass it to (and connect) STOMP:
                 this.config = config;
-                let token: string = this.accessTokenContext.get();
-                if (!this.tokenValidator.isValid(token)) {
-                    token = '';
-                }
-                this.config.user = this.formToken(token);
-                this.stomp.configure(config);
-                this.configured = true;
-                this.stomp.try_connect().then(this.on_connect);
-            }
-        );
+
+                this.tryConnect(this.authenticationService.isAuthenticated());
+            });
 
         accessTokenContext.getObservable().subscribe((token: string) => {
-            if (this.first || !this.configured) {
-                this.first = false;
-                return;
-            }
-            if (!this.tokenValidator.isValid(token)) {
-                token = '';
-            }
+            this.tryConnect(this.authenticationService.isAuthenticated());
+        });
+    }
 
-            this.stomp.disconnect(() => {
+    private tryConnect(isAuthenticated: boolean) {
+        if (isAuthenticated) {
+            this.getToken().subscribe((token: string) => {
                 this.config.user = this.formToken(token);
+                this.stomp.configure(this.config);
+                this.configured = true;
                 this.stomp.try_connect().then(this.on_connect);
             });
+        } else {
+            this.stomp.disconnect(() => {
+            });
+        }
+    }
+
+    private getToken(): Observable<string> {
+        return Observable.create(observer => {
+            let token: string = this.accessTokenContext.get();
+            if (!this.tokenValidator.isValid(token)) {
+                this.refreshTokenService.getNewAccessToken()
+                    .subscribe((newToken: string) => {
+                        token = newToken;
+                        observer.next(token)
+                    });
+            }
+            observer.next(token);
         });
     }
 
